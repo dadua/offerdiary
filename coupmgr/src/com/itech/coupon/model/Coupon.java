@@ -13,7 +13,7 @@ public class Coupon {
 	private Date creationDate;
 	private Date expiryDate;
 	private User owner;
-	private CouponPermission permission;
+	private CouponPermission permission =  CouponPermission.PRIVATE;
 	private String tags;
 
 	public long getId() {

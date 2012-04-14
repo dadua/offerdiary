@@ -16,6 +16,9 @@ public class SecurityManagerImpl implements SecurityManager {
 	}
 
 	public SecurityContextHolder getSecurityContextHolder() {
+		if (securityContextHolder == null) {
+			securityContextHolder = new ThreadLocalSecurityContextHolder();
+		}
 		return securityContextHolder;
 	}
 

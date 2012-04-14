@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+
+<%@page import="java.util.List"%>
+<%@page import="com.itech.coupon.model.Coupon"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 			<%--
@@ -44,7 +46,26 @@
 		
 		<div class="container" >
 			<div class="row-fluid">
-				<div class="span9 thumbnails" id="couponContainer" >
+				<div class="span9" id="couponContainer" >
+ <% 
+ 	List<Coupon> myCoupons = (List<Coupon>) request.getAttribute("myCoupons");
+ %>	
+ <ul class="thumbnails">
+ <% 
+    for (Coupon coupon : myCoupons) {
+    	 
+    	%>
+    		<li class="span3">
+				<div class="thumbnail">
+				<img src="http://placehold.it/260x180" alt="">
+				<h5><%=coupon.getDetail()%></h5>
+				<p>Thumbnail caption right here...</p>
+				</div>
+			</li>
+    	<%
+	}
+%>
+</ul>
 				&nbsp;
 				</div>
 				<div class="span3" >
