@@ -184,7 +184,7 @@ public class StoreDAOImpl extends CommonBaseDAOImpl<Store> implements StoreDAO {
 
 	private List<Store> readDataFrom(ResultSet resultSet) throws SQLException {
 		ArrayList<Store> stores = new ArrayList<Store>();
-		if (resultSet.next()) {
+		while (resultSet.next()) {
 			Store store = new Store();
 			store.setDescription(resultSet.getString(StoreModelConstants.COL_DESCRIPTION));
 			store.setId(resultSet.getLong(StoreModelConstants.COL_ID));
