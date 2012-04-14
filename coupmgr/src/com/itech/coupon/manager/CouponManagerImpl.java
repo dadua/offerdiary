@@ -30,7 +30,10 @@ public class CouponManagerImpl implements CouponManager{
 	}
 
 	@Override
-	public void save(List<Coupon> coupons) {
+	public void save(List<Coupon> coupons, User owner) {
+		for (Coupon coupon: coupons) {
+			coupon.setOwner(owner);
+		}
 		getCouponDAO().addOrUpdate(coupons);
 
 	}
