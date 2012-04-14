@@ -16,6 +16,7 @@ import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.CouponConstants;
 import com.itech.coupon.manager.CouponManager;
+import com.itech.coupon.manager.CouponManagerImpl;
 import com.itech.coupon.model.Coupon;
 import com.itech.coupon.model.User;
 
@@ -23,13 +24,18 @@ public class CouponAction extends CommonAction{
 	private CouponManager couponManager;
 
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
-
+		User loggedInUser = getLoggedInUser();
+		List<Coupon> coupons = new ArrayList<Coupon>();
+		if (loggedInUser != null) {
+			coupons = getCouponManager().searchBy(loggedInUser);
+		}
+		req.setAttribute("myCoupons", coupons);
 		return new Forward(CouponConstants.WALLET_PAGE);
 	}
 
 	public Response getMyCoupons (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
-		List<Coupon> coupons = null;
+		List<Coupon> coupons = new ArrayList<Coupon>();
 		if (loggedInUser != null) {
 			coupons = getCouponManager().searchBy(loggedInUser);
 		} else {
@@ -66,6 +72,9 @@ public class CouponAction extends CommonAction{
 		this.couponManager = couponManager;
 	}
 	public CouponManager getCouponManager() {
+		if (couponManager == null) {
+			couponManager = new CouponManagerImpl();
+		}
 		return couponManager;
 	}
 }
