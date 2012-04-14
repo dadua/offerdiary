@@ -18,4 +18,10 @@ public abstract class  CommonBaseDAOImpl<T> implements CommonBaseDAO<T>{
 		return connection;
 	}
 
+
+	public void setConnection(Connection con) {
+		connection = con;
+
+	}
+
 }

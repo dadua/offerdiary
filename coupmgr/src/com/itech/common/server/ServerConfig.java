@@ -19,9 +19,9 @@ public class ServerConfig {
 	public static boolean isRefreshStaticData;
 
 
-	public static void init() throws FileNotFoundException, IOException {
+	public static void init(String serverConfigFile) throws FileNotFoundException, IOException {
 		Properties properties = new Properties();
-		String path = ProjectContextListener.getServletContext().getRealPath("db.properties");
+		String path = serverConfigFile;
 		File file = new File(path);
 		FileInputStream fileInputStream = new FileInputStream(file);
 		properties.load(fileInputStream);

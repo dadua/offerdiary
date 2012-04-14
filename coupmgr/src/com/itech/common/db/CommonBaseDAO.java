@@ -1,5 +1,6 @@
 package com.itech.common.db;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface CommonBaseDAO <T>{
@@ -14,5 +15,7 @@ public interface CommonBaseDAO <T>{
 	T getById(long id);
 
 	List<T> getAll();
+
+	public void setConnection(Connection con);
 
 }

@@ -5,6 +5,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/client"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/samples"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
         <property name="context-root" value="couponmgr"/>
         <property name="java-output-path" value="/couponmgr/build/classes"/>
     </wb-module>
