@@ -125,7 +125,12 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 				ps.setString(4, coupon.getDetail());
 				ps.setDate(5, coupon.getCreationDate());
 				ps.setDate(6, coupon.getExpiryDate());
-				ps.setLong(7, coupon.getOwner().getId());
+				//TODO: Duds to take care of this issue
+				if (coupon.getOwner() != null )  {
+					ps.setLong(7, coupon.getOwner().getId());
+				} else {
+					ps.setLong(7, -1);
+				}
 				ps.setString(8, coupon.getPermission().toString());
 				ps.setString(9, coupon.getTags());
 				ps.addBatch();

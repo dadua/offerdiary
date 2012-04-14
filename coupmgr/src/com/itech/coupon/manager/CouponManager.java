@@ -8,7 +8,7 @@ import com.itech.coupon.model.User;
 
 public interface CouponManager {
 	public void save(Coupon coupon);
-	public void save(List<Coupon> coupon);
+	public void save(List<Coupon> coupon, User user);
 	public List<Coupon> searchBy(User owner);
 	public List<Coupon> searchBy(Store store);
 	public List<Coupon> searchBy(List<String> tags);
