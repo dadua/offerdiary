@@ -10,8 +10,9 @@ import com.itech.common.db.DBConnectionManager;
 
 public class ProjectLoader {
 	private static final Logger logger = Logger.getLogger(ProjectLoader.class);
-	public static void init() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ServerConfig.init();
+
+	public static void init(String serverConfigFile) throws FileNotFoundException, IOException, ClassNotFoundException {
+		ServerConfig.init(serverConfigFile);
 		DBConnectionManager.init();
 		//DBConnectionManager.testDb();
 	}

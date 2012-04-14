@@ -7,6 +7,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.PropertyConfigurator;
 
 public class ProjectContextListener implements ServletContextListener{
+	private static final String SERVER_CONFIG_PROPERTIES = "db.properties";
 	private static ServletContext servletContext;
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
@@ -20,7 +21,7 @@ public class ProjectContextListener implements ServletContextListener{
 		try {
 			String log4jFile = ProjectContextListener.getServletContext().getRealPath("log4j.properties");
 			PropertyConfigurator.configure(log4jFile);
-			ProjectLoader.init();
+			ProjectLoader.init(SERVER_CONFIG_PROPERTIES);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
