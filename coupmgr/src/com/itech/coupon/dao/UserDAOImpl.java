@@ -142,7 +142,7 @@ public class UserDAOImpl extends CommonBaseDAOImpl<User> implements UserDAO {
 
 	private List<User> readDataFrom(ResultSet resultSet) throws SQLException {
 		ArrayList<User> users = new ArrayList<User>();
-		if (resultSet.next()) {
+		while (resultSet.next()) {
 			User user = new User();
 			user.setAge(resultSet.getInt(UserModelConstants.COL_AGE));
 			user.setEmailId(resultSet.getString(UserModelConstants.COL_EMAIL_ID));

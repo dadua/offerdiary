@@ -57,9 +57,9 @@
     	%>
     		<li class="span3">
 				<div class="thumbnail">
-				<img src="http://placehold.it/260x180" alt="">
-				<h5><%=coupon.getDetail()%></h5>
-				<p>Thumbnail caption right here...</p>
+				<h3>Details:  <%=coupon.getDetail()%></h3>
+				<h5>Code:  <%=coupon.getCode()%></h5>
+				<h5>Discount:  <%=coupon.getDiscount()%></h5>
 				</div>
 			</li>
     	<%

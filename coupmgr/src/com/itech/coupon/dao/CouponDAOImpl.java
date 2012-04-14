@@ -262,7 +262,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 
 	private List<Coupon> readDataFrom(ResultSet resultSet) throws SQLException {
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
-		if (resultSet.next()) {
+		while (resultSet.next()) {
 			Coupon coupon = new Coupon();
 			coupon.setCode(resultSet.getString(CouponModelConstants.COL_CODE));
 			coupon.setCreationDate(resultSet.getDate(CouponModelConstants.COL_CREATION_DATE));
