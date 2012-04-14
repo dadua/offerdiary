@@ -21,6 +21,7 @@
 					var resultData = $.parseJSON(data);
 					var user = resultData.result;
 					$('#userName').html('Welcome '+ user.name + '!');
+					$('#goToWallet').submit();
 				});
 			});
 		</script>
@@ -45,12 +46,34 @@
 		
 		<div class="container" >
 			<div class="row">
-				<div class="span6" >
-					Jump In to the Coupon Manager
+				<div class="span9" >
+					<div class="thumbnail">
+						<img src="images/facebook.jpg" />
+						<div class="caption" >
+							<h3>
+							Section Details:
+							</h3>
+							<p>
+								Jump In to the Coupon Manager.
+								This section will contain a video describing functionality.
+							</p>
+						</div>
+					</div>
 				</div>
-				<div class="span6" >
-					<div >
-						<input id="loginToFb" type="button" value="Login via Fb" />
+				<div class="span3" >
+					<div class="hero-unit" >
+						<div class="row">
+							<div class="well">
+							This is another well container
+							</div>
+						</div>
+						
+						<div class="row">
+							<form id="goToWallet" action="wallet.do">
+								<input id="loginToFb" class="btn btn-large"  type="button" value="Login via Fb" />
+								<input type="hidden" name="login" value="success" />
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

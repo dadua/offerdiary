@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
+import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.CouponConstants;
@@ -20,6 +21,11 @@ import com.itech.coupon.model.User;
 
 public class CouponAction extends CommonAction{
 	private CouponManager couponManager;
+
+	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
+
+		return new Forward(CouponConstants.WALLET_PAGE);
+	}
 
 	public Response getMyCoupons (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
