@@ -86,7 +86,6 @@
 		</div>
 		
 		
-		
 		<%@include file="fbInitAboveBodyEnd.jsp" %>
 	</body>
 </html>
