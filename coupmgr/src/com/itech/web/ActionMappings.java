@@ -24,6 +24,8 @@ public class ActionMappings {
 		add(new ActionMapping("testFbAction.do", FbLoginAction.class, "testFbAction"));
 
 
+
+		add(new ActionMapping("wallet.do", CouponAction.class, "goToMyWallet"));
 		add(new ActionMapping("getMyCoupons.do", CouponAction.class, "getMyCoupons"));
 		add(new ActionMapping("saveCoupons.do", CouponAction.class, "saveCoupons"));
 		add(new ActionMapping("deleteCoupons.do", CouponAction.class, "deleteCoupons"));
