@@ -71,9 +71,9 @@
 				    	%>
 				    		<li class="span3">
 								<div class="thumbnail">
-								<h3>Details:  <%=coupon.getDetail()%></h3>
-								<h5>Code:  <%=coupon.getCode()%></h5>
-								<h5>Discount:  <%=coupon.getDiscount()%></h5>
+								<h3>Details: </h3> <%=coupon.getDetail()%>
+								<h5>Code:</h5>  <%=coupon.getCode()%>
+								<h5>Discount:</h5> <%=coupon.getDiscount()%>
 								</div>
 							</li>
 				    	<%
