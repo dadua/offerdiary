@@ -18,8 +18,25 @@
 		<script type="text/javascript">
 			var it = it || {};
 			it.wallet = it.wallet || {};
+			
+			it.wallet.appendCoupons = function(coupons) {
+				for (var i=0; i<coupons.length;i++) {
+					this.appendCoupon(coupons[i]);
+				}
+			};
+			
+			it.wallet.appendCoupon = function (coupon) {
+	    		var couponHtml = '<li class="span3"><div class="thumbnail"> <span class="label label-success pull-right">Yo! New Coupon Added</span><h3>Details:';
+	    		couponHtml += coupon.detail;
+	    		couponHtml += '</h3><h5>Code:';
+	    		couponHtml += coupon.code;
+	    		couponHtml += '</h5><h5>Discount:';
+	    		couponHtml += coupon.discount;
+	    		couponHtml +=  '</h5></div></li>';
+	    		$(couponHtml).appendTo('.thumbnails');
+			};
+			
 			it.wallet.addCoupon = function () {
-				debugger;
 				var code = $('#code').val();
 				var detail = $('#discountDetails').val();
 				var coupon = {
@@ -30,9 +47,14 @@
 				coupons.push(coupon);
 				$.post('saveCoupons.do',
 						{'coupons': JSON.stringify(coupons)},
-						function() {
-							if(console) {
-								console.debug('Coupon Saved');
+						function(data) {
+							var ret = $.parseJSON(data);
+							if (ret.success === true) {
+								it.wallet.appendCoupons(ret.result);
+								$('#addCouponModal').modal('hide');
+								setTimeout("$('div.thumbnail span.label').hide();", 5000)
+							} else {
+								//Add failed
 							}
 						});
 			};
@@ -71,9 +93,9 @@
 				    	%>
 				    		<li class="span3">
 								<div class="thumbnail">
-								<h3>Details: </h3> <%=coupon.getDetail()%>
-								<h5>Code:</h5>  <%=coupon.getCode()%>
-								<h5>Discount:</h5> <%=coupon.getDiscount()%>
+								<h3>Details:  <%=coupon.getDetail()%> </h3>
+								<h5>Code: <%=coupon.getCode()%> </h5>
+								<h5>Discount: <%=coupon.getDiscount()%> </h5>
 								</div>
 							</li>
 				    	<%

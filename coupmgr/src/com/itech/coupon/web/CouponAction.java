@@ -52,10 +52,10 @@ public class CouponAction extends CommonAction{
 		Type type = new TypeToken<List<Coupon>>() { }.getType();
 		List<Coupon> coupons = gson.fromJson(couponsJson, type);
 		getCouponManager().save(coupons, getLoggedInUser());
-		Result<String> result = new Result<String>("Successfully Added the coupons");
-		Type resultStringType = new TypeToken<Result<String>>() {
+		Result<List<Coupon>> result = new Result<List<Coupon>>(true, coupons, "Successfully Added the coupons");
+		Type resultCouponsType = new TypeToken<Result<List<Coupon>>>() {
 		}.getType();
-		return new CommonBeanResponse(result, resultStringType);
+		return new CommonBeanResponse(result, resultCouponsType);
 	}
 
 	public Response deleteCoupons (HttpServletRequest req, HttpServletResponse resp) {
