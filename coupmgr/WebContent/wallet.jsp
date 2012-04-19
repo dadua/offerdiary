@@ -26,7 +26,11 @@
 			};
 			
 			it.wallet.appendCoupon = function (coupon) {
-	    		var couponHtml = '<li class="span3"><div class="thumbnail"> <span class="label label-success pull-right">Yo! New Coupon Added</span><h3>Details:';
+	    		var couponHtml = '<li class="span3" id="coupon_';
+	    		couponHtml += coupon.id;
+	    		couponHtml += '" ><div class="thumbnail coupon" > <span class="label label-success pull-right">Yo! New Coupon Added</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
+	    		couponHtml += coupon.id;
+	    		couponHtml += '" ></span><h3>Details:';
 	    		couponHtml += coupon.detail;
 	    		couponHtml += '</h3><h5>Code:';
 	    		couponHtml += coupon.code;
@@ -51,18 +55,51 @@
 							var ret = $.parseJSON(data);
 							if (ret.success === true) {
 								it.wallet.appendCoupons(ret.result);
-								$('#addCouponModal').modal('hide');
-								setTimeout("$('div.thumbnail span.label').hide();", 5000)
+								setTimeout("$('div.thumbnail span.label').hide().remove();", 5000);
 							} else {
-								//Add failed
+								//Handle error case
 							}
+							$('#addCouponModal').modal('hide');
 						});
+			};
+			
+			it.wallet.trashCoupon = function(e) {
+				var target = e.target;
+				var targetId = target.id;
+				var couponIdExtractRegex = /^couponTrash_(.*)/;
+				var couponId = couponIdExtractRegex.exec(targetId)[1];
+				var couponIds = [];
+				couponIds.push(couponId);
+				debugger;
+				$.post('deleteCoupons.do', {'couponIds': couponIds}, function(data) {
+					var ret = $.parseJSON(data);
+					if (ret.success === true) {
+						$('#coupon_'+ret.result.id).remove();
+					} else {
+						//Handle error case
+					}
+				});
 			};
 			
 			$(function() {
 				$('#addCouponToWallet').click(it.wallet.addCoupon);
+				
+				$('.icon-trash').hover(function(e) {
+					$(this).removeClass('icon-white');
+				}, function(e){
+					$(this).addClass('icon-white');
+				});
+				
+				$('.coupon-trash').click(it.wallet.trashCoupon);
 			});
+			
 		</script>
+		<style type="text/css">
+			.coupon {
+				background: none repeat scroll 0 0 #CCCCFF;
+			};
+			
+		</style>
 	</head>
 	<body>
 			<div class="it-nav navbar navbar-fixed-top">
@@ -91,8 +128,9 @@
 				 <% 
 				    for (Coupon coupon : myCoupons) {
 				    	%>
-				    		<li class="span3">
-								<div class="thumbnail">
+				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
+								<div class="thumbnail coupon"  >
+								<span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_<%=coupon.getId()%>"></span>
 								<h3>Details:  <%=coupon.getDetail()%> </h3>
 								<h5>Code: <%=coupon.getCode()%> </h5>
 								<h5>Discount: <%=coupon.getDiscount()%> </h5>
