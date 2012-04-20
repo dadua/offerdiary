@@ -71,10 +71,10 @@
 				var couponId = couponIdExtractRegex.exec(targetId)[1];
 				var couponIds = [];
 				couponIds.push(couponId);
-				$.post('deleteCoupons.do', {'couponIds': couponIds}, function(data) {
+				$.post('deleteCoupons.do', {'couponIds': JSON.stringify(couponIds)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
-						$('#'+targetId).remove();
+						$('#coupon_'+couponId).remove();
 					} else {
 						//Handle error case
 					}
