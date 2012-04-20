@@ -28,7 +28,7 @@
 			it.wallet.appendCoupon = function (coupon) {
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
-	    		couponHtml += '" ><div class="thumbnail coupon" > <span class="label label-success pull-right">Yo! New Coupon Added</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
+	    		couponHtml += '" ><div class="thumbnail coupon" > <span class="label label-success">Yo! New Coupon Added</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ></span><h3>Details:';
 	    		couponHtml += coupon.detail;
@@ -55,6 +55,7 @@
 							var ret = $.parseJSON(data);
 							if (ret.success === true) {
 								it.wallet.appendCoupons(ret.result);
+								it.wallet.addHandlers();
 								setTimeout("$('div.thumbnail span.label').hide().remove();", 5000);
 							} else {
 								//Handle error case
@@ -64,7 +65,6 @@
 			};
 			
 			it.wallet.trashCoupon = function(e) {
-				debugger;
 				var target = e.target;
 				var targetId = target.id;
 				var couponIdExtractRegex = /^couponTrash_(.*)/;
@@ -81,16 +81,19 @@
 				});
 			};
 			
-			$(function() {
-				$('#addCouponToWallet').click(it.wallet.addCoupon);
+			it.wallet.addHandlers = function () {
 				
 				$('.icon-trash').hover(function(e) {
 					$(this).removeClass('icon-white');
 				}, function(e){
 					$(this).addClass('icon-white');
 				});
-				
 				$('.coupon-trash').click(it.wallet.trashCoupon);
+			};
+			
+			$(function() {
+				$('#addCouponToWallet').click(it.wallet.addCoupon);
+				it.wallet.addHandlers();
 			});
 			
 		</script>
