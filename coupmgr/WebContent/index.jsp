@@ -25,25 +25,36 @@
 				});
 			});
 		</script>
+		<style type="text/css">
+			.mainHeading {
+				color: #999;
+				padding: 5px;
+			}
+			.centerAlign{
+				text-align: center;
+			}
+			.footerLink{
+				color: #234;
+			}
+		</style>
 	</head>
 	
-	<body>
-		<div class="it-nav navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<ul class="nav">
-						<li class="active">
-							<a href="#">Home</a>
-						</li>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Privacy</a></li>
-					</ul>
-				</div>
+	<body >
+		<div class="navbar navbar-fixed-top">
+      		<div class="navbar-inner">
+        		<div class="container">          
+          			<span class="brand">
+								<h1 class="mainHeading" >Coupon Wallet</h1>
+					</span>
+        		</div>
+      		</div>
+ 		</div>
+		<div class="row">
+		 	<div class="span6 offset3" style="padding: 50px;">
+		 	
+					
 			</div>
-		</div>
-		
+		</div>	
 		<div class="container" >
 			<div class="row">
 				<div class="span9" >
@@ -84,6 +95,28 @@
 				</div>
 			</div>
 		</div>
+			
+			
+			
+				<div class="centerAlign">
+					<ul class="nav nav-pills footerLink">
+						<li class="active">
+							<a href="#" class="footerLink"><i class="icon-home icon-white"></i>&nbsp;Home</a>
+						</li>
+						<li>
+							<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>&nbsp;About Us</a>
+						</li>
+						<li>
+							<a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>&nbsp; Blog</a>
+						</li>
+						<li>
+							<a href="#" class="footerLink"><i class="icon-comment icon-white"></i>&nbsp;Terms</a>
+						</li>
+						<li>
+							<a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>&nbsp;Privacy</a>
+						</li>
+					</ul>
+				</div>
 		
 		
 		<%@include file="fbInitAboveBodyEnd.jsp" %>
