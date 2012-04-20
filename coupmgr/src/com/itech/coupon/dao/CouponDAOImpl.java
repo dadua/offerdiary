@@ -269,6 +269,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 		ArrayList<Coupon> coupons = new ArrayList<Coupon>();
 		while (resultSet.next()) {
 			Coupon coupon = new Coupon();
+			coupon.setId(resultSet.getLong(CouponModelConstants.COL_ID));
 			coupon.setCode(resultSet.getString(CouponModelConstants.COL_CODE));
 			coupon.setCreationDate(resultSet.getDate(CouponModelConstants.COL_CREATION_DATE));
 			coupon.setDetail(resultSet.getString(CouponModelConstants.COL_DETAIL));

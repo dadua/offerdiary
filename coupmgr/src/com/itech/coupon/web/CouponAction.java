@@ -56,11 +56,11 @@ public class CouponAction extends CommonAction{
 	}
 
 	public Response deleteCoupons (HttpServletRequest req, HttpServletResponse resp) {
-		String couponsJson = req.getParameter(CouponConstants.COUPON_LIST_PARAM_KEY);
+		String couponsJson = req.getParameter(CouponConstants.COUPON_IDS_PARAM_KEY);
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Coupon>>() { }.getType();
-		List<Coupon> coupons = gson.fromJson(couponsJson, type);
-		getCouponManager().delete(coupons);
+		Type type = new TypeToken<List<String>>() { }.getType();
+		List<String> couponIds = gson.fromJson(couponsJson, type);
+		getCouponManager().deleteByIds(couponIds);
 		Result<String> result = new Result<String>("Successfully Deleted the coupons");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
