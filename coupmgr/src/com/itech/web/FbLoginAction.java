@@ -15,8 +15,6 @@ import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.coupon.manager.UserManager;
-import com.itech.coupon.manager.UserManagerImpl;
 import com.itech.coupon.model.User;
 import com.itech.fb.client.FbAdapter;
 import com.itech.fb.model.FbCreds;
@@ -49,9 +47,8 @@ public class FbLoginAction extends CommonAction{
 		String sessionJson = req.getParameter("fbData");
 		Gson gson = new Gson();
 		FbCreds fbCreds = gson.fromJson(sessionJson, FbCreds.class);
-		UserManager userManager = new UserManagerImpl();
 		FbService fbService = new FbService(fbCreds);
-		User user = userManager.saveFbUser(fbService);
+		User user = getUserManager().saveFbUser(fbService);
 		updateLoggedInUser(req, user);
 		Result<User> result = new Result<User>(true, user);
 		Type userResultType = new TypeToken<Result<User>>() {

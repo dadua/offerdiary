@@ -3,32 +3,29 @@ package com.itech.common.db;
 import java.sql.Connection;
 
 public class ConnectionFactoryImpl implements ConnectionFactory{
-	private ConnectionUtil scorConnectionUtil;
+	private ConnectionUtil connectionUtil;
 
 	@Override
 	public Connection getCurrentConnection() {
-		return getScorConnectionUtil().getCurrentConnection();
+		return getConnectionUtil().getCurrentConnection();
 	}
 
 	@Override
 	public void commitCurrentConnection() {
-		getScorConnectionUtil().commitCurrentConnection();
+		getConnectionUtil().commitCurrentConnection();
 	}
 
 	@Override
 	public void rollbackCurrentConnection() {
-		getScorConnectionUtil().rollbackCurrentConnection();
+		getConnectionUtil().rollbackCurrentConnection();
 	}
 
-	public void setScorConnectionUtil(ConnectionUtil scorConnectionUtil) {
-		this.scorConnectionUtil = scorConnectionUtil;
+	public void setConnectionUtil(ConnectionUtil connectionUtil) {
+		this.connectionUtil = connectionUtil;
 	}
 
-	public ConnectionUtil getScorConnectionUtil() {
-		if (scorConnectionUtil == null) {
-			scorConnectionUtil = new ConnectionUtilImpl();
-		}
-		return scorConnectionUtil;
+	public ConnectionUtil getConnectionUtil() {
+		return connectionUtil;
 	}
 
 }
