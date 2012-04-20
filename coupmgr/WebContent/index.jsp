@@ -59,7 +59,7 @@
 			<div class="row">
 				<div class="span9" >
 					<div class="thumbnail">
-						<img src="images/facebook.jpg" />
+						<img src="images/CWallet.jpg"/>
 						<div class="caption" >
 							<h3>
 							Section Details:
