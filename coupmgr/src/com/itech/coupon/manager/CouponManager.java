@@ -17,5 +17,6 @@ public interface CouponManager {
 	public List<Coupon> searchBy(User owner, List<String> tags);
 	public Coupon getById(long id);
 	public void delete(List<Coupon> coupons);
+	public void deleteByIds(List<String> couponIds);
 
 }

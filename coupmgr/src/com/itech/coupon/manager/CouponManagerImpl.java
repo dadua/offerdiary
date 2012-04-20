@@ -1,5 +1,6 @@
 package com.itech.coupon.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.coupon.dao.CouponDAO;
@@ -43,6 +44,17 @@ public class CouponManagerImpl implements CouponManager{
 	}
 
 	@Override
+	public void deleteByIds(List<String> couponIds) {
+		List<Coupon> coupons = new ArrayList<Coupon>();
+		for(String couponId : couponIds) {
+			Coupon coupon = new Coupon();
+			coupon.setId(Long.parseLong(couponId));
+			coupons.add(coupon);
+		}
+		getCouponDAO().delete(coupons);
+	}
+
+	@Override
 	public List<Coupon> searchBy(User owner) {
 		return getCouponDAO().getByOwner(owner);
 	}
@@ -72,9 +84,6 @@ public class CouponManagerImpl implements CouponManager{
 	}
 
 	public UserManager getUserManager() {
-		if (userManager == null) {
-			userManager = new UserManagerImpl();
-		}
 		return userManager;
 	}
 
@@ -93,5 +102,6 @@ public class CouponManagerImpl implements CouponManager{
 	public StoreManager getStoreManager() {
 		return storeManager;
 	}
+
 
 }

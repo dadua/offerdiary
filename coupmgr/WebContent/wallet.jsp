@@ -64,17 +64,17 @@
 			};
 			
 			it.wallet.trashCoupon = function(e) {
+				debugger;
 				var target = e.target;
 				var targetId = target.id;
 				var couponIdExtractRegex = /^couponTrash_(.*)/;
 				var couponId = couponIdExtractRegex.exec(targetId)[1];
 				var couponIds = [];
 				couponIds.push(couponId);
-				debugger;
 				$.post('deleteCoupons.do', {'couponIds': couponIds}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
-						$('#coupon_'+ret.result.id).remove();
+						$('#'+targetId).remove();
 					} else {
 						//Handle error case
 					}
