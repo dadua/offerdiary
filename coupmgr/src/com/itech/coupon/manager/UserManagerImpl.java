@@ -1,7 +1,6 @@
 package com.itech.coupon.manager;
 
 import com.itech.coupon.dao.UserDAO;
-import com.itech.coupon.dao.UserDAOImpl;
 import com.itech.coupon.model.Gender;
 import com.itech.coupon.model.LoginType;
 import com.itech.coupon.model.User;
@@ -58,9 +57,6 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	public UserDAO getUserDAO() {
-		if (userDAO == null) {
-			userDAO = new UserDAOImpl();
-		}
 		return userDAO;
 	}
 

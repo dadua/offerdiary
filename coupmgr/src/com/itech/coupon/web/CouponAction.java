@@ -15,13 +15,10 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.CouponConstants;
-import com.itech.coupon.manager.CouponManager;
-import com.itech.coupon.manager.CouponManagerImpl;
 import com.itech.coupon.model.Coupon;
 import com.itech.coupon.model.User;
 
 public class CouponAction extends CommonAction{
-	private CouponManager couponManager;
 
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
@@ -70,14 +67,4 @@ public class CouponAction extends CommonAction{
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
-	public void setCouponManager(CouponManager couponManager) {
-		this.couponManager = couponManager;
-	}
-
-	public CouponManager getCouponManager() {
-		if (couponManager == null) {
-			couponManager = new CouponManagerImpl();
-		}
-		return couponManager;
-	}
 }

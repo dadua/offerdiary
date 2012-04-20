@@ -3,7 +3,7 @@ package com.itech.common.db;
 import java.sql.Connection;
 
 public abstract class  CommonBaseDAOImpl<T> implements CommonBaseDAO<T>{
-	private final ConnectionFactory connectionFactory = new ConnectionFactoryImpl();
+	private ConnectionFactory connectionFactory;
 	private Connection connection;
 
 	public CommonBaseDAOImpl() {
@@ -13,7 +13,7 @@ public abstract class  CommonBaseDAOImpl<T> implements CommonBaseDAO<T>{
 
 	public Connection getConnection() {
 		if (connection == null) {
-			return connectionFactory.getCurrentConnection();
+			return getConnectionFactory().getCurrentConnection();
 		}
 		return connection;
 	}
@@ -22,6 +22,16 @@ public abstract class  CommonBaseDAOImpl<T> implements CommonBaseDAO<T>{
 	public void setConnection(Connection con) {
 		connection = con;
 
+	}
+
+
+	public ConnectionFactory getConnectionFactory() {
+		return connectionFactory;
+	}
+
+
+	public void setConnectionFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
 	}
 
 }

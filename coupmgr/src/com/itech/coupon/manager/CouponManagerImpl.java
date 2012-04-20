@@ -3,7 +3,6 @@ package com.itech.coupon.manager;
 import java.util.List;
 
 import com.itech.coupon.dao.CouponDAO;
-import com.itech.coupon.dao.CouponDAOImpl;
 import com.itech.coupon.model.Coupon;
 import com.itech.coupon.model.Store;
 import com.itech.coupon.model.User;
@@ -84,9 +83,6 @@ public class CouponManagerImpl implements CouponManager{
 	}
 
 	public CouponDAO getCouponDAO() {
-		if (couponDAO == null) {
-			couponDAO = new CouponDAOImpl();
-		}
 		return couponDAO;
 	}
 
@@ -95,9 +91,6 @@ public class CouponManagerImpl implements CouponManager{
 	}
 
 	public StoreManager getStoreManager() {
-		if (storeManager == null) {
-			storeManager = new StoreManagerImpl();
-		}
 		return storeManager;
 	}
 
