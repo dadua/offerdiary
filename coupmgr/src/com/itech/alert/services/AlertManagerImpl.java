@@ -35,6 +35,18 @@ public class AlertManagerImpl implements AlertManager {
 		getAlertDAO().addOrUpdate(alert);
 	}
 
+	@Override
+	public void deleteByIds(List<String> alertIds) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void markAlertsRead(User loggedInUser) {
+		// TODO Auto-generated method stub
+
+	}
+
 	public void setAlertDAO(AlertDAO alertDAO) {
 		this.alertDAO = alertDAO;
 	}
@@ -42,5 +54,8 @@ public class AlertManagerImpl implements AlertManager {
 	public AlertDAO getAlertDAO() {
 		return alertDAO;
 	}
+
+
+
 
 }
