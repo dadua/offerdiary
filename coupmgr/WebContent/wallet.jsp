@@ -12,9 +12,9 @@
 				<meta charset="UTF-8">
 			 --%>
 		<title>Coupon Wallet</title>
-		<%@include file="jqueryAllInclude.html" %>
-		<%@include file="fbLoginAboveHeadJs.jsp" %>
-		<%@include file="bootstrapHeadInclude.html" %>
+		
+		<%@include file="commonHeader.jsp" %>
+		
 		<script type="text/javascript">
 			var it = it || {};
 			it.wallet = it.wallet || {};
@@ -105,22 +105,8 @@
 		</style>
 	</head>
 	<body>
-			<div class="it-nav navbar navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<ul class="nav">
-						<li class="active">
-							<a href="#">Home</a>
-						</li>
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Privacy</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		
+	
+		<%@include file="navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span9" id="couponContainer" >
@@ -172,7 +158,7 @@
 			</div>
 		</div>
 		
-		<%@include file="fbInitAboveBodyEnd.jsp" %>
+		<%@include file="footer.jsp" %>
 	
 	</body>
 </html>
