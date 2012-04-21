@@ -20,13 +20,15 @@ import com.itech.coupon.model.User;
 
 public class CouponAction extends CommonAction{
 
+	private static final String MY_COUPONS_ATTR_KEY = "myCoupons";
+
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Coupon> coupons = new ArrayList<Coupon>();
 		if (loggedInUser != null) {
 			coupons = getCouponManager().searchBy(loggedInUser);
 		}
-		req.setAttribute("myCoupons", coupons);
+		req.setAttribute(MY_COUPONS_ATTR_KEY, coupons);
 		return new Forward(CouponConstants.WALLET_PAGE);
 	}
 
