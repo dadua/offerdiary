@@ -48,6 +48,8 @@
 
 			$(function(){
 				it.wallet.addHandlers();
+				$('div.tabbable ul.nav li').removeClass('active');
+				$('#alertTab').addClass('active');
 			});
 			
 			
@@ -64,7 +66,10 @@
 		<%@include file="navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
-				<div class="span9" id="couponContainer" >
+				<div class="span2" >
+					<%@include file="walletTabs.jsp" %>
+				</div>
+				<div class="span10" id="alertContainer" >
 				 <% 
 				 	List<Alert> myAlerts = (List<Alert>) request.getAttribute("myAlerts");
 				 %>	
