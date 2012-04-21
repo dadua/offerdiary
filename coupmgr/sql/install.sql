@@ -42,7 +42,7 @@ CREATE  TABLE IF NOT EXISTS `ALERT_CONFIG` (
   `alert_type` VARCHAR(50) NULL,
   `trigger_time` DATETIME NULL ,
   `creation_time` DATETIME NULL ,
-  `status` ENUM('active','suspended','handled') NULL ,
+  `status` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) );
 
 CREATE  TABLE IF NOT EXISTS `ALERT` (
@@ -50,7 +50,7 @@ CREATE  TABLE IF NOT EXISTS `ALERT` (
   `data_type` VARCHAR(50) NULL ,
   `data_id` INT NULL ,
   `alert_type` VARCHAR(50) NULL,
-  `alert_status` ENUM('new','read') NULL ,
+  `alert_status`  VARCHAR(50) NULL ,
   `creation_time` DATETIME NULL ,
   `user_id` INT NULL,
   `message` TEXT NULL,
