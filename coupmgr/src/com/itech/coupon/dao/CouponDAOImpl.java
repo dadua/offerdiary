@@ -17,6 +17,25 @@ import com.itech.coupon.model.constants.CouponModelConstants;
 public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDAO {
 
 	@Override
+	public Coupon getByAutoGuid(String guid) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from  " + CouponModelConstants.TABLE_COUPON + "" +
+			" where AUTOGUID = ?";
+			ps = getConnection().prepareStatement(sql);
+			ps.setString(1, guid);
+			rs = ps.executeQuery();
+			Coupon coupons = readSingleDataFrom(rs);
+			return coupons;
+		} catch (SQLException e) {
+			throw new RuntimeException("Database error", e);
+		} finally {
+			DBConnectionManager.cleanDbPsRS(ps, rs);
+		}
+	}
+
+	@Override
 	public List<Coupon> getByOwner(User owner) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -115,7 +134,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + CouponModelConstants.TABLE_COUPON + "" +
-			" (STORE_ID, CODE, DISCOUNT, DETAIL, CREATION_DATE, EXPIRY_DATE, OWNER_ID, PERMISSION, TAGS) " +
+			" (STORE_ID, CODE, DISCOUNT, DETAIL, CREATION_DATE, EXPIRY_DATE, OWNER_ID, PERMISSION, TAGS, AUTOGUID) " +
 			" values (?, ?, ?, ?, ?, ?,?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (Coupon coupon : coupons) {
@@ -133,6 +152,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 				}
 				ps.setString(8, coupon.getPermission().toString());
 				ps.setString(9, coupon.getTags());
+				ps.setString(10, coupon.getAutoGUID());
 				ps.addBatch();
 			}
 			ps.executeBatch();
@@ -281,11 +301,11 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 			coupon.setPermission(CouponPermission.valueOf(resultSet.getString(CouponModelConstants.COL_PERMISSION)));
 			coupon.setStoreId(resultSet.getLong(CouponModelConstants.COL_STORE_ID));
 			coupon.setTags(resultSet.getString(CouponModelConstants.COL_TAGS));
+			coupon.setAutoGUID(resultSet.getString(CouponModelConstants.COL_AUTOGUID));
 			coupons.add(coupon);
 		}
 		return coupons;
 	}
-
 
 
 }

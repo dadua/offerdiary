@@ -3,6 +3,7 @@ package com.itech.coupon.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.itech.common.CommonUtilities;
 import com.itech.coupon.dao.CouponDAO;
 import com.itech.coupon.model.Coupon;
 import com.itech.coupon.model.Store;
@@ -28,18 +29,26 @@ public class CouponManagerImpl implements CouponManager{
 
 	@Override
 	public void save(Coupon coupon) {
+		String guid = CommonUtilities.getGUID();
+		coupon.setAutoGUID(guid);
 		getCouponDAO().addOrUpdate(coupon);
-		couponEventGenerator.couponCreated(coupon);
+		Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
+		coupon.setId(couponFromDB.getId());
+		getCouponEventGenerator().couponCreated(coupon);
 	}
 
 	@Override
 	public void save(List<Coupon> coupons, User owner) {
 		for (Coupon coupon: coupons) {
+			String guid = CommonUtilities.getGUID();
+			coupon.setAutoGUID(guid);
 			coupon.setOwner(owner);
 		}
 		getCouponDAO().addOrUpdate(coupons);
 
 		for (Coupon coupon: coupons) {
+			Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
+			coupon.setId(couponFromDB.getId());
 			couponEventGenerator.couponCreated(coupon);
 		}
 

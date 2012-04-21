@@ -15,6 +15,8 @@ public interface CouponDAO extends CommonBaseDAO<Coupon>{
 
 	public List<Coupon> getByTag(String tag);
 
+	public Coupon getByAutoGuid(String guid);
+
 	public List<Coupon> getByTags(List<String> tags);
 
 	public List<Coupon> getBy(User owner, Store store);
