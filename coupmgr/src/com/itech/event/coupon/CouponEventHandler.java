@@ -50,7 +50,7 @@ public class CouponEventHandler implements EventHandler {
 		AlertConfig alertConfig = new AlertConfig();
 		alertConfig.setCreationTime(new Date(System.currentTimeMillis()));
 		alertConfig.setDataType(AlertDataTypes.COUPON.toString());
-		alertConfig.setId(couponEvent.getCoupon().getId());
+		alertConfig.setDataId(couponEvent.getCoupon().getId());
 		Date triggerTime = calculateTriggerTime(couponEvent);
 		alertConfig.setTriggerTime(triggerTime);
 		alertConfig.setStatus(AlertConfig.ActivationStatus.ACTIVE);

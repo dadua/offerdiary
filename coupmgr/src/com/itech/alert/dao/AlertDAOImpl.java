@@ -28,19 +28,18 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + AlertModelConstant.TABLE_ALERT +
-					" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
-					" values (?, ?, ?, ?, ?, ?, ?, ?)";
+			" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
+			" values (?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (Alert alert : alerts)  {
-				ps.setLong(1, alert.getId());
-				ps.setString(2, alert.getDataType());
-				ps.setFloat(3, alert.getDataId());
-				ps.setString(4, alert.getAlertType());
-				ps.setString(5, alert.getAlertStatus().toString());
-				ps.setDate(6, alert.getCreationTime());
-				ps.setLong(7, alert.getUserId());
+				ps.setString(1, alert.getDataType());
+				ps.setFloat(2, alert.getDataId());
+				ps.setString(3, alert.getAlertType());
+				ps.setString(4, alert.getAlertStatus().toString());
+				ps.setDate(5, alert.getCreationTime());
+				ps.setLong(6, alert.getUserId());
 				ps.setString(7, alert.getMessage());
-				ps.setString(7, alert.getMessageHTML());
+				ps.setString(8, alert.getMessageHTML());
 				ps.addBatch();
 			}
 			ps.executeBatch();
@@ -103,7 +102,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
-			Alert alert = readSingleDataFrom(rs); 
+			Alert alert = readSingleDataFrom(rs);
 			return alert;
 		} catch (SQLException e) {
 			throw new RuntimeException("Database error", e);
