@@ -134,13 +134,9 @@ public class FbAdapter {
 		accessToken = UtilHttp.parseQueryString(authResponse).get("access_token").get(0);
 	}
 
-	public FbProfile getProfile() {
-		FbProfile fbProfile = new FbProfile();
-		/* TODO:
-		 * Separate out URL Fetchers as is common
-		 * Also should have maps of JSON keys to model members.
-		 * Have to throw proper exception after catching
-		 */
+	private FbProfile fbProfile = null;
+
+	private void fetchFbProfile() {
 		try {
 			UtilHttp utilHttpGet = new UtilHttp();
 			ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
@@ -153,6 +149,7 @@ public class FbAdapter {
 			if (profileJsonObj.has("error")) {
 				//TODO: This error case has to be handled
 			}
+			fbProfile = new FbProfile();
 			fbProfile.setId(profileJsonObj.getString("id"));
 			fbProfile.setFullName(profileJsonObj.getString("name"));
 			fbProfile.setFirstName(profileJsonObj.getString("first_name"));
@@ -162,12 +159,10 @@ public class FbAdapter {
 			fbProfile.setTimeZone(profileJsonObj.getString("timezone"));
 			fbProfile.setEmailId(profileJsonObj.getString("email"));
 			fbProfile.setLocale(profileJsonObj.getString("locale"));
-
 		} catch (Exception e) {
 			//TODO: Throw FbAdapterException
 			e.printStackTrace();
 		}
-		return fbProfile;
 	}
 
 	public FbAlbum createFbAlbum(String albumName, String albumDescription) {
@@ -444,5 +439,16 @@ public class FbAdapter {
 
 	public String getAccessToken() {
 		return accessToken;
+	}
+
+	public void setFbProfile(FbProfile fbProfile) {
+		this.fbProfile = fbProfile;
+	}
+
+	public FbProfile getFbProfile() {
+		if (fbProfile == null) {
+			fetchFbProfile();
+		}
+		return fbProfile;
 	}
 }

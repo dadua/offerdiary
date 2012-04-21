@@ -29,7 +29,7 @@ public class FbService {
 	}
 
 	public FbProfile getUserProfile() {
-		return fbAdapter.getProfile();
+		return fbAdapter.getFbProfile();
 	}
 
 	public FbAlbum createAlbum(String albumName, String albumDescription) {
