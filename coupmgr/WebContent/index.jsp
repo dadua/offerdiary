@@ -32,16 +32,16 @@
 					</div>
 				</div>
 				<div class="span3" >
-					<div id="actionsContainer" class="hero-unit">
+					<div id="actionsContainer" class="hero-unit hide">
 						<div class="row">
-							<div class="well" id="walletAction" style="display: none;">
-							<a class="btn btn-primary" href="wallet.do">Access my wallet</a>
+							<div class="well hide" id="walletAction">
+								<a class="btn btn-primary" href="wallet.do">Access my wallet</a>
 							</div>
 						</div>
 						
 						<div class="row">
 							<form id="goToWallet" action="wallet.do" method="post">
-								<input id="loginToFb" class="btn btn-large"  type="button" value="Login via Fb" />
+								<input id="loginToFb" class="btn btn-large hide"  type="button" value="Login via Fb" />
 								<input type="hidden" name="login" value="success" />
 							</form>
 						</div>
