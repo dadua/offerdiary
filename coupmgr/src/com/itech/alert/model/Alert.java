@@ -11,6 +11,8 @@ public class Alert {
 	private long id;
 	private String dataType;
 	private long dataId;
+	private String alertType;
+
 	private AlertStatus alertStatus;
 	private Date creationTime;
 	private long userId;
@@ -91,6 +93,13 @@ public class Alert {
 
 	public String getMessageHTML() {
 		return messageHTML;
+	}
+	public String getAlertType() {
+		return alertType;
+	}
+
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
 	}
 
 }
