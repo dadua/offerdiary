@@ -21,7 +21,11 @@
 				var onServerUpChange =function(data) {
 					var resultData = $.parseJSON(data);
 					var user = resultData.result;
-					$('#userName').html('Welcome '+ user.name + '!');
+					$('#userContainer').html('Welcome '+ user.name + '!').append(
+							'<span><img src="http://graph.facebook.com/'+ user.userId +'/picture" /></span>'
+							);
+					$('#walletAction').show();
+					$("#loginToFb").hide();
 				};
 		
 				var onServerUpGotoWallet =function(data) {
@@ -37,10 +41,10 @@
 			.mainHeading {
 				color: #999;
 				padding: 5px;
-			}
-			.centerAlign{
 				text-align: center;
 			}
+			
+			
 			.footerLink{
 				color: #234;
 			}
@@ -50,19 +54,19 @@
 	<body >
 		<div class="navbar navbar-fixed-top">
       		<div class="navbar-inner">
-        		<div class="container">          
-          			<span class="brand">
-								<h1 class="mainHeading" >Coupon Wallet</h1>
+        		<div class="container">
+	        		<ul class="nav">
+						<li class="active">
+							<h1 class="mainHeading" >Coupon Wallet</h1>
+						</li>
+						<li>
+						</li>
+					</ul>
+					<span class="pull-right mainHeading" id="userContainer" >
 					</span>
         		</div>
       		</div>
  		</div>
-		<div class="row">
-		 	<div class="span6 offset3" style="padding: 50px;">
-		 	
-					
-			</div>
-		</div>	
 		<div class="container" >
 			<div class="row">
 				<div class="span9" >
@@ -80,15 +84,15 @@
 					</div>
 				</div>
 				<div class="span3" >
-					<div class="hero-unit" >
+					<div id="actionsContainer" class="hero-unit">
 						<div class="row">
-							<div class="well">
-							This is another well container
+							<div class="well" id="walletAction" style="display: none;">
+							<a class="btn btn-primary" href="wallet.do">Access my wallet</a>
 							</div>
 						</div>
 						
 						<div class="row">
-							<form id="goToWallet" action="wallet.do">
+							<form id="goToWallet" action="wallet.do" method="post">
 								<input id="loginToFb" class="btn btn-large"  type="button" value="Login via Fb" />
 								<input type="hidden" name="login" value="success" />
 							</form>
@@ -96,36 +100,30 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="span6" >
-					<span id="userName">
-					</span>
-				</div>
-			</div>
 		</div>
 			
-			
-			
-				<div class="centerAlign">
-					<ul class="nav nav-pills footerLink">
-						<li class="active">
-							<a href="#" class="footerLink"><i class="icon-home icon-white"></i>&nbsp;Home</a>
-						</li>
-						<li>
-							<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>&nbsp;About Us</a>
-						</li>
-						<li>
-							<a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>&nbsp; Blog</a>
-						</li>
-						<li>
-							<a href="#" class="footerLink"><i class="icon-comment icon-white"></i>&nbsp;Terms</a>
-						</li>
-						<li>
-							<a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>&nbsp;Privacy</a>
-						</li>
-					</ul>
-				</div>
-		
+		<div class="row">
+			<div class="container" >
+				<ul class="nav nav-pills footerLink">
+					<li class="active">
+						<a href="#" class="footerLink"><i class="icon-home icon-white"></i>&nbsp;Home</a>
+					</li>
+					<li>
+						<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>&nbsp;About Us</a>
+					</li>
+					<li>
+						<a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>&nbsp; Blog</a>
+					</li>
+					<li>
+						<a href="#" class="footerLink"><i class="icon-comment icon-white"></i>&nbsp;Terms</a>
+					</li>
+					<li>
+						<a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>&nbsp;Privacy</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
 		
 		<%@include file="fbInitAboveBodyEnd.jsp" %>
 	</body>
