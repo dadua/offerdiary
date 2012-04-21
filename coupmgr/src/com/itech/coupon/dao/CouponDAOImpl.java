@@ -302,7 +302,9 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 			coupon.setStoreId(resultSet.getLong(CouponModelConstants.COL_STORE_ID));
 			coupon.setTags(resultSet.getString(CouponModelConstants.COL_TAGS));
 			coupon.setAutoGUID(resultSet.getString(CouponModelConstants.COL_AUTOGUID));
-			coupon.setExpiryDateInMillis(coupon.getExpiryDate().getTime());
+			if (coupon.getExpiryDate() != null) {
+				coupon.setExpiryDateInMillis(coupon.getExpiryDate().getTime());
+			}
 			coupons.add(coupon);
 		}
 		return coupons;
