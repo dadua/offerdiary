@@ -32,6 +32,7 @@
 		<property name="couponDAO" ref="itech.CouponDAO"/>
 		<property name="storeManager" ref="itech.StoreManager"/>
 		<property name="userManager" ref="itech.UserManager"/>
+		<property name="couponEventGenerator" ref="itech.CouponEventGenerator"/>
 	</bean>
    
    	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
@@ -53,7 +54,33 @@
    	<bean name="itech.StoreDAO" class="com.itech.coupon.dao.StoreDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
 	</bean>
    
+    <bean name="itech.AlertConfigManager" class="com.itech.alert.services.AlertConfigManagerImpl">
+    	<property name="alertConfigDAO" ref="itech.AlertConfigDAO"/>
+    </bean>
+    
+    <bean name="itech.AlertManager" class="com.itech.alert.services.AlertManagerImpl">
+    
+    </bean>
+    
+    <bean name="itech.AlertConfigDAO" class="com.itech.alert.dao.AlertConfigDAOImpl" parent="itech.CommonBaseDAO"/>
+    
+    <bean name="itech.AlertDAO" class="com.itech.alert.dao.AlertDAOImpl" parent="itech.CommonBaseDAO"/>
    
+   	<bean name="itech.handler.CouponEventHandler" class="com.itech.event.coupon.CouponEventHandler">
+   		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
+   	</bean>
+   	
+   	<bean name="itech.EventEngine" class="com.itech.event.services.EventEngineImpl">
+   		<property name="eventHandlers">
+   			<list>
+   				<ref bean="itech.handler.CouponEventHandler"/>
+   			</list>
+   		</property>
+   	</bean>
+   	
+   	<bean name="itech.CouponEventGenerator" class="com.itech.event.coupon.CouponEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
 	
 	  
 </beans>

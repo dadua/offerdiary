@@ -5,6 +5,7 @@ import java.sql.Date;
 
 public class Coupon {
 	private long id;
+	private String autoGUID;
 	private Store store;
 	private long storeId;
 	private String code;
@@ -81,6 +82,12 @@ public class Coupon {
 	}
 	public String getTags() {
 		return tags;
+	}
+	public void setAutoGUID(String autoGUID) {
+		this.autoGUID = autoGUID;
+	}
+	public String getAutoGUID() {
+		return autoGUID;
 	}
 
 
