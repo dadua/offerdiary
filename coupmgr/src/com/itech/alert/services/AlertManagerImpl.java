@@ -36,7 +36,7 @@ public class AlertManagerImpl implements AlertManager {
 	}
 
 	@Override
-	public void deleteByIds(List<String> alertIds) {
+	public void deleteByIds(List<Long> alertIds) {
 		// TODO Auto-generated method stub
 
 	}

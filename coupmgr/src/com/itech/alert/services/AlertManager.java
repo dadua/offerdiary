@@ -16,7 +16,7 @@ public interface AlertManager {
 
 	void deleteAlertsFor(String dataType, long dataId);
 
-	void deleteByIds(List<String> alertIds);
+	void deleteByIds(List<Long> alertIds);
 
 	void markAlertsRead(User loggedInUser);
 
