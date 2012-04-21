@@ -142,7 +142,7 @@
 								<label>Code: </label>
 								<input id="code" type="text" class="span3" placeholder="Coupon Code?">
 								<label>Discount Description: </label>
-								<input id="discountDetails" type="text" class="span3" placeholder="Discount Details">
+								<textarea class="span3" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label>Store Name</label>
 								<input id="storeName" type="text" class="span3" placeholder="Store Name">
 							</form>
