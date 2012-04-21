@@ -24,14 +24,13 @@ public class ActionMappings {
 		add(new ActionMapping("setFbAdapter.do", FbLoginAction.class, "setFbAdapter"));
 		add(new ActionMapping("testFbAction.do", FbLoginAction.class, "testFbAction"));
 
-
-
 		add(new ActionMapping("wallet.do", CouponAction.class, "goToMyWallet"));
 		add(new ActionMapping("getMyCoupons.do", CouponAction.class, "getMyCoupons"));
+		add(new ActionMapping("coupons.do", CouponAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveCoupons.do", CouponAction.class, "saveCoupons"));
 		add(new ActionMapping("deleteCoupons.do", CouponAction.class, "deleteCoupons"));
 
-		add(new ActionMapping("goToMyAlerts.do", AlertAction.class, "goToMyAlerts"));
+		add(new ActionMapping("alerts.do", AlertAction.class, "goToMyAlerts"));
 		add(new ActionMapping("getMyAlerts.do", AlertAction.class, "getMyAlerts"));
 		add(new ActionMapping("deleteAlerts.do", AlertAction.class, "deleteAlerts"));
 		add(new ActionMapping("markAlertsRead.do", AlertAction.class, "markAlertRead"));
