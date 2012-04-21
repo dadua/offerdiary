@@ -12,17 +12,25 @@
 			 --%>
 		<title>Coupon Wallet</title>
 		<%@include file="jqueryAllInclude.html" %>
-		<%@include file="fbLoginAboveHeadJs.jsp" %>
 		<%@include file="bootstrapHeadInclude.html" %>
+		<%@include file="fbLoginAboveHeadJs.jsp" %>
 		<script type="text/javascript">
 			var it = it || {};
 			$(function() {
-				it.fb.setActionOnServerUp(function(data) {
+					
+				var onServerUpChange =function(data) {
 					var resultData = $.parseJSON(data);
 					var user = resultData.result;
 					$('#userName').html('Welcome '+ user.name + '!');
+				};
+		
+				var onServerUpGotoWallet =function(data) {
+					onServerUpChange(data);
 					$('#goToWallet').submit();
-				});
+				};
+			 
+				$('#loginToFb').click({onServerUp: onServerUpGotoWallet}, it.fb.checkAndLogin);
+				it.fb.checkLoginStatusAndUpdateServer(function(){}, onServerUpChange);
 			});
 		</script>
 		<style type="text/css">
