@@ -13,4 +13,5 @@ public class CouponModelConstants {
 	public static final String COL_OWNER_ID = "OWNER_ID";
 	public static final String COL_PERMISSION = "PERMISSION";
 	public static final String COL_TAGS = "TAGS";
+	public static final String COL_AUTOGUID = "AUTOGUID";
 }
