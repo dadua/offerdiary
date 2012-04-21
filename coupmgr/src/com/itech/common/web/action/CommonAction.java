@@ -2,6 +2,7 @@ package com.itech.common.web.action;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.itech.alert.services.AlertManager;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.security.SecurityManager;
@@ -18,6 +19,8 @@ public class CommonAction {
 	private CouponManager couponManager;
 	private UserManager userManager;
 	private StoreManager storeManager;
+	private AlertManager alertManager;
+
 	public User getLoggedInUser() {
 		return getSecurityManager().getLoggedInUser();
 	}
@@ -81,6 +84,17 @@ public class CommonAction {
 			securityManager = ServiceLocator.getInstance().getBean(SecurityManager.class);
 		}
 		return securityManager;
+	}
+
+	public void setAlertManager(AlertManager alertManager) {
+		this.alertManager = alertManager;
+	}
+
+	public AlertManager getAlertManager() {
+		if (alertManager == null) {
+			alertManager = ServiceLocator.getInstance().getBean(AlertManager.class);
+		}
+		return alertManager;
 	}
 
 
