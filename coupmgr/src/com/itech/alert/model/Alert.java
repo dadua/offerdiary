@@ -14,15 +14,19 @@ public class Alert {
 	private AlertStatus alertStatus;
 	private Date creationTime;
 	private long userId;
+	private String message;
+	private String messageHTML;
 
 	public Alert(long userId, String dataType, long dataId, AlertStatus alertStatus,
-			Date creationTime) {
+			Date creationTime, String message, String messageHTML) {
 		super();
 		this.userId = userId;
 		this.dataType = dataType;
 		this.dataId = dataId;
 		this.alertStatus = alertStatus;
 		this.creationTime = creationTime;
+		this.message = message;
+		this.messageHTML = messageHTML;
 	}
 
 	public long getId() {
@@ -71,6 +75,22 @@ public class Alert {
 
 	public void setCreationTime(Date creationTime) {
 		this.creationTime = creationTime;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessageHTML(String messageHTML) {
+		this.messageHTML = messageHTML;
+	}
+
+	public String getMessageHTML() {
+		return messageHTML;
 	}
 
 }
