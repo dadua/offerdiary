@@ -25,8 +25,7 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 		setInstance(this);
 
 		try {
-			logger.info("Initializing Config loader.");
-
+			getConnectionUtil().createNewConnection();
 			logger.info("Initializing beans");
 			Map<String, Initialize> beansToBeInitialized =  applicationContext.getBeansOfType(Initialize.class);
 			for (Entry<String, Initialize> initializeEntry : beansToBeInitialized.entrySet()) {
