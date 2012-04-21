@@ -42,12 +42,12 @@
 			
 			it.wallet.addCoupon = function () {
 				var code = $('#code').val();
-				var expiryInMillis = $('#expiryDate').datepicker('getDate').getTime();
+				var expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime();
 				var detail = $('#discountDetails').val();
 				var coupon = {
 					code: code,
 					detail: detail,
-					expiryInMillis: expiryInMillis
+					expiryDateInMillis: expiryDateInMillis
 				};
 				var coupons = [];
 				coupons.push(coupon);

@@ -1,5 +1,6 @@
 package com.itech.coupon.manager;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,9 @@ public class CouponManagerImpl implements CouponManager{
 	public void save(Coupon coupon) {
 		String guid = CommonUtilities.getGUID();
 		coupon.setAutoGUID(guid);
+		if (coupon.getExpiryDate() == null && coupon.getExpiryDateInMillis() !=0) {
+			coupon.setExpiryDate(new Date(coupon.getExpiryDateInMillis()));
+		}
 		getCouponDAO().addOrUpdate(coupon);
 		Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
 		coupon.setId(couponFromDB.getId());
@@ -43,6 +47,9 @@ public class CouponManagerImpl implements CouponManager{
 	public void save(List<Coupon> coupons, User owner) {
 		for (Coupon coupon: coupons) {
 			String guid = CommonUtilities.getGUID();
+			if (coupon.getExpiryDate() == null && coupon.getExpiryDateInMillis() !=0) {
+				coupon.setExpiryDate(new Date(coupon.getExpiryDateInMillis()));
+			}
 			coupon.setAutoGUID(guid);
 			coupon.setOwner(owner);
 		}
