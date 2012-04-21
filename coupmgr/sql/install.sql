@@ -38,6 +38,7 @@ CREATE  TABLE IF NOT EXISTS `ALERT_CONFIG` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `data_type` VARCHAR(50) NOT NULL ,
   `data_id` INT NOT NULL ,
+  `alert_type` VARCHAR(50) NULL,
   `trigger_time` DATETIME NOT NULL ,
   `creation_time` DATETIME NOT NULL ,
   `status` ENUM('active','suspended','handled') NOT NULL ,
