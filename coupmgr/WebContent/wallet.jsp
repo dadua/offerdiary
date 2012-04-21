@@ -43,9 +43,10 @@
 			it.wallet.addCoupon = function () {
 				var code = $('#code').val();
 				var detail = $('#discountDetails').val();
-				var coupon = {
+				var expiryDate = $('#expiryDate').val();				var coupon = {
 					code: code,
-					detail: detail
+					detail: detail,
+					expiryDate: expiryDate
 				};
 				var coupons = [];
 				coupons.push(coupon);
@@ -60,6 +61,9 @@
 							} else {
 								//Handle error case
 							}
+							$('#addCouponModal').modal('hide');
+						}, function(data) {
+							//Handle error case
 							$('#addCouponModal').modal('hide');
 						});
 			};
@@ -94,6 +98,7 @@
 			$(function() {
 				$('#addCouponToWallet').click(it.wallet.addCoupon);
 				it.wallet.addHandlers();
+				$('#expiryDate').datepicker();
 			});
 			
 		</script>
@@ -140,11 +145,11 @@
 						<div class="modal-body" >
 							<form class="well">
 								<label>Code: </label>
-								<input id="code" type="text" class="span3" placeholder="Coupon Code?">
+								<input id="code" type="text" class="span3" placeholder="Coupon Code?" />
 								<label>Discount Description: </label>
 								<textarea class="span3" id="discountDetails" placeholder="Discount Details"></textarea>
-								<label>Store Name</label>
-								<input id="storeName" type="text" class="span3" placeholder="Store Name">
+								<label> Expiry Date: </label>
+								<input id="expiryDate" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
 							</form>
 						</div>
 						<div class="modal-footer" >

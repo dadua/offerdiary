@@ -1,4 +1,4 @@
-<%@include file="jqueryAllInclude.html" %>
+		<%@include file="jqueryAllInclude.html" %>
 		<%@include file="bootstrapHeadInclude.html" %>
 		<%@include file="fbLoginAboveHeadJs.jsp" %>
 		<script type="text/javascript">
