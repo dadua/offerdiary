@@ -1,12 +1,12 @@
-		<div class="container">
-		<hr>
+		<footer class="footer container">
+			<hr>
 			<div class="span3">
 			&nbsp;
 			</div>
 			<div class="span6" >
 				<ul class="nav nav-pills footerLink">
 					<li>
-						<a href="#" class="footerLink"><i class="icon-home icon-white"></i>Home</a>
+						<a href="home.do" class="footerLink"><i class="icon-home icon-white"></i>Home</a>
 					</li>
 					<li>
 						<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>About Us</a>
@@ -25,6 +25,6 @@
 			<div class="span3">
 			&nbsp;
 			</div>
-		</div>
+		</footer>
 		
 		<%@include file="fbInitAboveBodyEnd.jsp" %>

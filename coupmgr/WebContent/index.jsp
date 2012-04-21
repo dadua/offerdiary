@@ -35,7 +35,7 @@
 					<div id="actionsContainer" class="hero-unit hide">
 						<div class="row">
 							<div class="well hide" id="walletAction">
-								<a class="btn btn-primary" href="wallet.do">Access my wallet</a>
+								<a class="btn btn-primary btn-large" href="wallet.do">Access my wallet</a>
 							</div>
 						</div>
 						

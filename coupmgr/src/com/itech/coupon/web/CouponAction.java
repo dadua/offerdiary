@@ -22,6 +22,11 @@ public class CouponAction extends CommonAction{
 
 	private static final String MY_COUPONS_ATTR_KEY = "myCoupons";
 
+	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(CouponConstants.INDEX_PAGE);
+
+	}
+
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Coupon> coupons = new ArrayList<Coupon>();
