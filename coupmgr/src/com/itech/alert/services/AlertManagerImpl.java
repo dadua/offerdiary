@@ -11,32 +11,28 @@ public class AlertManagerImpl implements AlertManager {
 
 	@Override
 	public void delete(Alert alert) {
-		// TODO Auto-generated method stub
-
+		getAlertDAO().delete(alert);
 	}
 
 	@Override
 	public void deleteAlertsFor(String dataType, long dataId) {
-		// TODO Auto-generated method stub
+		getAlertDAO().deleteAlertsFor(dataType, dataId);
 
 	}
 
 	@Override
 	public List<Alert> getAlertsFor(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAlertDAO().getAlertsForUser(user);
 	}
 
 	@Override
 	public List<Alert> getAlertsFor(String dataType, long dataId) {
-		// TODO Auto-generated method stub
-		return null;
+		return getAlertDAO().getAlertsForDataType(dataType, dataId);
 	}
 
 	@Override
 	public void save(Alert alert) {
-		// TODO Auto-generated method stub
-
+		getAlertDAO().addOrUpdate(alert);
 	}
 
 	public void setAlertDAO(AlertDAO alertDAO) {

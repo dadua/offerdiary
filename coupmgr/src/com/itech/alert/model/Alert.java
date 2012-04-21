@@ -1,6 +1,6 @@
 package com.itech.alert.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Alert {
 
@@ -12,7 +12,6 @@ public class Alert {
 	private String dataType;
 	private long dataId;
 	private String alertType;
-
 	private AlertStatus alertStatus;
 	private Date creationTime;
 	private long userId;
@@ -29,6 +28,10 @@ public class Alert {
 		this.creationTime = creationTime;
 		this.message = message;
 		this.messageHTML = messageHTML;
+	}
+	
+	public Alert(){
+		
 	}
 
 	public long getId() {
