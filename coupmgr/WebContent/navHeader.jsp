@@ -2,8 +2,8 @@
       		<div class="navbar-inner">
         		<div class="container">
 	        		<ul class="nav">
-						<li class="active">
-							<h1 class="mainHeading" >Coupon Wallet</h1>
+						<li>
+							<h1 class="mainHeading" ><a class="btn btn-inverse btn-large" href="home.do" >Coupon Wallet</a></h1>
 						</li>
 						<li>
 						</li>

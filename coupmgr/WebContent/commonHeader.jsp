@@ -35,8 +35,8 @@
 				text-align: center;
 			}
 			
-			
 			.footerLink{
 				color: #234;
+				font-size: .88em;
 			}
 		</style>
