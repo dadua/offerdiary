@@ -16,4 +16,8 @@ public interface AlertDAO extends CommonBaseDAO<Alert>{
 
 	List<Alert> getAlertsForDataType(String dataType, long dataId);
 
+	void deleteByIds(List<Long> alertIds);
+
+	void markAlertsRead(User loggedInUser);
+
 }

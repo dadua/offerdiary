@@ -49,7 +49,6 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		} finally {
 			DBConnectionManager.cleanDbPsRS(ps, rs);
 		}
-
 	}
 
 	@Override
@@ -202,10 +201,52 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		}
 	}
 
+	@Override
+	public void deleteByIds(List<Long> uniqueIds) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			String sql = "delete from " + AlertModelConstant.TABLE_ALERT +
+			" where id=?" ;
+			ps = getConnection().prepareStatement(sql);
+			for (Long id : uniqueIds)  {
+				ps.setLong(1, id);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+		} catch (SQLException e) {
+			throw new RuntimeException("Database error", e);
+		} finally {
+			DBConnectionManager.cleanDbPsRS(ps, rs);
+		}
+	}
+
+	@Override
+	public void markAlertsRead(User user) {
+		if(null == user){
+			return;
+		}
+		long user_id = user.getId();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			String sql = "update "+ AlertModelConstant.TABLE_ALERT+ " set alert_status = '"+ Alert.AlertStatus.READ.toString()+"'"+
+				" where user_id = ?";
+			ps = getConnection().prepareStatement(sql);
+			ps.setLong(1, user_id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("Database error", e);
+		} finally {
+			DBConnectionManager.cleanDbPsRS(ps, rs);
+		}
+	}
 
 	@Override
 	public List<Alert> getAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 }
