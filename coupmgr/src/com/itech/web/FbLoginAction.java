@@ -44,12 +44,15 @@ public class FbLoginAction extends CommonAction{
 
 
 	public Response setFbAdapter (HttpServletRequest req, HttpServletResponse resp) {
-		String sessionJson = req.getParameter("fbData");
-		Gson gson = new Gson();
-		FbCreds fbCreds = gson.fromJson(sessionJson, FbCreds.class);
-		FbService fbService = new FbService(fbCreds);
-		User user = getUserManager().saveFbUser(fbService);
-		updateLoggedInUser(req, user);
+		User user = getLoggedInUser();
+		if (user == null) {
+			String sessionJson = req.getParameter("fbData");
+			Gson gson = new Gson();
+			FbCreds fbCreds = gson.fromJson(sessionJson, FbCreds.class);
+			FbService fbService = new FbService(fbCreds);
+			user = getUserManager().saveFbUser(fbService);
+			updateLoggedInUser(req, user);
+		}
 		Result<User> result = new Result<User>(true, user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
