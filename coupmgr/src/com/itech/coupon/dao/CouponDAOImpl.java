@@ -135,7 +135,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 		try {
 			String sql = "insert into " + CouponModelConstants.TABLE_COUPON + "" +
 			" (STORE_ID, CODE, DISCOUNT, DETAIL, CREATION_DATE, EXPIRY_DATE, OWNER_ID, PERMISSION, TAGS, AUTOGUID) " +
-			" values (?, ?, ?, ?, ?, ?,?, ?, ?)";
+			" values (?, ?, ?, ?, ?, ?,?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (Coupon coupon : coupons) {
 				ps.setLong(1, coupon.getStoreId());
