@@ -37,20 +37,22 @@ CREATE  TABLE IF NOT EXISTS `COUPONS` (
   
 CREATE  TABLE IF NOT EXISTS `ALERT_CONFIG` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `data_type` VARCHAR(50) NOT NULL ,
-  `data_id` INT NOT NULL ,
+  `data_type` VARCHAR(50) NULL ,
+  `data_id` INT NULL ,
   `alert_type` VARCHAR(50) NULL,
-  `trigger_time` DATETIME NOT NULL ,
-  `creation_time` DATETIME NOT NULL ,
-  `status` ENUM('active','suspended','handled') NOT NULL ,
+  `trigger_time` DATETIME NULL ,
+  `creation_time` DATETIME NULL ,
+  `status` ENUM('active','suspended','handled') NULL ,
   PRIMARY KEY (`id`) );
 
 CREATE  TABLE IF NOT EXISTS `ALERT` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `data_type` VARCHAR(50) NOT NULL ,
-  `data_id` INT NOT NULL ,
-  `alert_status` ENUM('new','read') NOT NULL ,
-  `creation_time` DATETIME NOT NULL ,
+  `data_type` VARCHAR(50) NULL ,
+  `data_id` INT NULL ,
+  `alert_type` VARCHAR(50) NULL,
+  `alert_status` ENUM('new','read') NULL ,
+  `creation_time` DATETIME NULL ,
+  `user_id` INT NULL,
   `message` TEXT NULL,
   `html_message` TEXT NULL,
   PRIMARY KEY (`id`) );
