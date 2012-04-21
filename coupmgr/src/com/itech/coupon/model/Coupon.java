@@ -13,6 +13,7 @@ public class Coupon {
 	private String detail;
 	private Date creationDate;
 	private Date expiryDate;
+	private long expiryDateInMillis;
 	private User owner;
 	private CouponPermission permission =  CouponPermission.PRIVATE;
 	private String tags;
@@ -88,6 +89,12 @@ public class Coupon {
 	}
 	public String getAutoGUID() {
 		return autoGUID;
+	}
+	public void setExpiryDateInMillis(long expiryDateInMillis) {
+		this.expiryDateInMillis = expiryDateInMillis;
+	}
+	public long getExpiryDateInMillis() {
+		return expiryDateInMillis;
 	}
 
 
