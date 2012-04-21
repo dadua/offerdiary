@@ -1,6 +1,6 @@
 package com.itech.alert.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class AlertConfig {
 	public enum ActivationStatus {
@@ -10,6 +10,7 @@ public class AlertConfig {
 	private long id;
 	private String dataType;
 	private long dataId;
+	private String alertType;
 	private Date triggerTime;
 	private Date creationTime;
 	private ActivationStatus status;
@@ -66,7 +67,12 @@ public class AlertConfig {
 		return creationTime;
 	}
 
+	public String getAlertType() {
+		return alertType;
+	}
 
-
+	public void setAlertType(String alertType) {
+		this.alertType = alertType;
+	}
 
 }
