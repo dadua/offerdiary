@@ -1,6 +1,7 @@
 package com.itech.event.coupon;
 
-import java.util.Date;
+
+import java.sql.Date;
 
 import com.itech.alert.model.AlertConfig;
 import com.itech.alert.model.AlertDataTypes;
@@ -29,7 +30,7 @@ public class CouponEventHandler implements EventHandler {
 
 	private void handleCouponCreated(CouponEvent couponEvent) {
 		AlertConfig alertConfig = createAlertConfigFor(couponEvent);
-		if (alertConfig.getTriggerTime().before(new Date())) {
+		if (alertConfig.getTriggerTime().before(new Date(System.currentTimeMillis()))) {
 			return;
 		}
 		alertConfigManager.save(alertConfig);
@@ -47,7 +48,7 @@ public class CouponEventHandler implements EventHandler {
 
 	private AlertConfig createAlertConfigFor(CouponEvent couponEvent) {
 		AlertConfig alertConfig = new AlertConfig();
-		alertConfig.setCreationTime(new Date());
+		alertConfig.setCreationTime(new Date(System.currentTimeMillis()));
 		alertConfig.setDataType(AlertDataTypes.COUPON.toString());
 		alertConfig.setId(couponEvent.getCoupon().getId());
 		Date triggerTime = calculateTriggerTime(couponEvent);
