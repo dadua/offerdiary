@@ -1,6 +1,6 @@
 package com.itech.alert.services;
 
-import java.util.Date;
+import java.sql.Date;
 
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertConfig;
@@ -37,7 +37,7 @@ public class CouponAlertGenerator implements AlertGenerator {
 		String alertMessage = "Your coupon is expiring on: " + coupon.getExpiryDate()  + "\n" +
 		"Coupon Detail:\n " + coupon.getDetail();
 		Alert alert = new Alert(coupon.getOwner().getId(), AlertDataTypes.COUPON.toString(),
-				coupon.getId(), AlertStatus.NEW, new Date(), alertMessage, alertMessage);
+				coupon.getId(), AlertStatus.NEW, new Date(System.currentTimeMillis()), alertMessage, alertMessage);
 		return alert;
 	}
 	public void setAlertManager(AlertManager alertManager) {

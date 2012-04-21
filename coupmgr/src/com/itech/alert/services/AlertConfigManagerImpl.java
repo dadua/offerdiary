@@ -1,6 +1,5 @@
 package com.itech.alert.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.alert.dao.AlertConfigDAO;
@@ -9,15 +8,42 @@ import com.itech.alert.model.AlertConfig;
 public class AlertConfigManagerImpl implements AlertConfigManager {
 	private AlertConfigDAO alertConfigDAO;
 
+	
 	@Override
-	public void save(AlertConfig alertConfig) {
-		// TODO Auto-generated method stub
-
+	public void delete(AlertConfig alertConfig) {
+		getAlertConfigDAO().delete(alertConfig);
 	}
 
 	@Override
-	public List<AlertConfig> getActiveExpiredConfigs() {
-		return new ArrayList<AlertConfig>();
+	public void deleteAlertConfigFor(String dataType, long dataId) {
+		getAlertConfigDAO().deleteForDataType(dataType, dataId);
+	}
+	
+	@Override
+	public List<AlertConfig> getAllActiveExpiredAlertConfigs() {
+		return getAlertConfigDAO().getAllAlertConfigExpiredWithStatus(AlertConfig.ActivationStatus.ACTIVE);
+	}
+
+	@Override
+	public List<AlertConfig> getAllActiveAlertConfigs() {
+		return getAlertConfigDAO().getAllAlertConfigWithStatus(AlertConfig.ActivationStatus.ACTIVE);
+	}
+	
+	@Override
+	public List<AlertConfig> getAllSuspendedAlertConfigs() {
+		return getAlertConfigDAO().getAllAlertConfigWithStatus(AlertConfig.ActivationStatus.SUSPENDED);
+		
+	}
+
+	@Override
+	public List<AlertConfig> getAllHandledAlertConfigs() {
+		return getAlertConfigDAO().getAllAlertConfigWithStatus(AlertConfig.ActivationStatus.HANDLED);
+	}
+
+	
+	@Override
+	public void save(AlertConfig alertConfig) {
+		getAlertConfigDAO().addOrUpdate(alertConfig);
 	}
 
 	public void setAlertConfigDAO(AlertConfigDAO alertConfigDAO) {
@@ -26,17 +52,5 @@ public class AlertConfigManagerImpl implements AlertConfigManager {
 	public AlertConfigDAO getAlertConfigDAO() {
 		return alertConfigDAO;
 	}
-
-	@Override
-	public void delete(AlertConfig alertConfig) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void deleteAlertConfigFor(String dataType, long dataId) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

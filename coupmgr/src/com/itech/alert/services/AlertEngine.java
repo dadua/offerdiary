@@ -27,7 +27,7 @@ public class AlertEngine implements Initialize, Runnable{
 	@Override
 	public void run() {
 		while (true) {
-			List<AlertConfig> alertConfigs = alertConfigManager.getActiveExpiredConfigs();
+			List<AlertConfig> alertConfigs = alertConfigManager.getAllActiveExpiredAlertConfigs();
 			for (AlertConfig alertConfig : alertConfigs) {
 				for (AlertGenerator alertGenerator : alertGenerators) {
 					if (alertGenerator.handles(alertConfig)) {
