@@ -53,7 +53,7 @@
 				coupons.push(coupon);
 				$.post('saveCoupons.do',
 						{'coupons': JSON.stringify(coupons)},
-						function(data) {
+						function (data) {
 							var ret = $.parseJSON(data);
 							if (ret.success === true) {
 								it.wallet.appendCoupons(ret.result);
@@ -62,9 +62,6 @@
 							} else {
 								//Handle error case
 							}
-							$('#addCouponModal').modal('hide');
-						}, function(data) {
-							//Handle error case
 							$('#addCouponModal').modal('hide');
 						});
 			};
