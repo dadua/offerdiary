@@ -57,8 +57,8 @@ public class AlertAction extends CommonAction{
 	public Response deleteAlerts (HttpServletRequest req, HttpServletResponse resp) {
 		String alertIdsJson = req.getParameter(AlertConstants.ALERT_IDS_PARAM_KEY);
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<String>>() { }.getType();
-		List<String> alertIds = gson.fromJson(alertIdsJson, type);
+		Type type = new TypeToken<List<Long>>() { }.getType();
+		List<Long> alertIds = gson.fromJson(alertIdsJson, type);
 		getAlertManager().deleteByIds(alertIds);
 		Result<String> result = new Result<String>("Successfully Deleted the coupons");
 		Type resultStringType = new TypeToken<Result<String>>() {
