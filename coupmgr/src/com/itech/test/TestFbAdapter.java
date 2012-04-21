@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.itech.fb.client.FbAdapter;
 import com.itech.fb.model.FbAlbum;
-import com.itech.fb.model.FbAuthor;
 import com.itech.fb.model.FbLike;
 import com.itech.fb.model.FbLikes;
 import com.itech.fb.model.FbPage;
@@ -21,20 +20,20 @@ public class TestFbAdapter {
 
 		String accessToken = "AAAAAAITEghMBADepw6WjtTAJdAScgmx9z8B173ZBCw2gDeMywdlikKlt2TZA5226A5MDAlOh4tN6ZA0L3z8bPATLxZBgpCVGI7BDe7uQqZCEzYk52t5NS";
 		FbAdapter fbAdapter = FbAdapterFactory.getFbAdapter(accessToken);
-		FbProfile profile = fbAdapter.getProfile();
+		FbProfile profile = fbAdapter.getFbProfile();
 		System.out.println(profile.getFirstName());
 		//		testAlbumCreateAndPost(fbAdapter);
-//		testPostToWall(fbAdapter);
-//		testGetLikes(fbAdapter);
+		//		testPostToWall(fbAdapter);
+		//		testGetLikes(fbAdapter);
 		testGetFbPages(fbAdapter);
 	}
 
 	private static void testGetFbPages(FbAdapter fbAdapter) {
 		FbLikes likes = fbAdapter.getLikes();
 		FbService fbService = new FbService(fbAdapter);
-		
+
 		List<FbPage> authorPagesFromLikes = fbService.getAuthorPagesFromLikes(likes);
-		
+
 		for (FbPage authorPage: authorPagesFromLikes) {
 			System.out.println(authorPage.getDescription());
 		}
@@ -42,12 +41,12 @@ public class TestFbAdapter {
 
 	private static void testGetLikes(FbAdapter fbAdapter) {
 		FbLikes likes = fbAdapter.getLikes();
-		
+
 		List<FbLike> fbLikes = likes.getData();
-		
+
 		for (FbLike like: fbLikes) {
 			//System.out.println(like.getName());
-			
+
 			if ("author".equalsIgnoreCase(like.getCategory())) {
 				System.out.println(like.getName());
 			}
