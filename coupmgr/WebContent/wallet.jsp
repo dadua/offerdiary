@@ -102,7 +102,7 @@
 		</script>
 		<style type="text/css">
 			.coupon {
-				background: none repeat scroll 0 0 #CCCCFF;
+				background: none repeat scroll 0 0 #E6E7FF;
 			};
 			
 		</style>

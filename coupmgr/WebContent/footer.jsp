@@ -1,22 +1,29 @@
-		<div class="row">
-			<div class="container" >
+		<div class="container">
+		<hr>
+			<div class="span3">
+			&nbsp;
+			</div>
+			<div class="span6" >
 				<ul class="nav nav-pills footerLink">
-					<li class="active">
-						<a href="#" class="footerLink"><i class="icon-home icon-white"></i>&nbsp;Home</a>
+					<li>
+						<a href="#" class="footerLink"><i class="icon-home icon-white"></i>Home</a>
 					</li>
 					<li>
-						<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>&nbsp;About Us</a>
+						<a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>About Us</a>
 					</li>
 					<li>
-						<a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>&nbsp; Blog</a>
+						<a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>Blog</a>
 					</li>
 					<li>
-						<a href="#" class="footerLink"><i class="icon-comment icon-white"></i>&nbsp;Terms</a>
+						<a href="#" class="footerLink"><i class="icon-comment icon-white"></i>Terms</a>
 					</li>
 					<li>
-						<a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>&nbsp;Privacy</a>
+						<a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>Privacy</a>
 					</li>
 				</ul>
+			</div>
+			<div class="span3">
+			&nbsp;
 			</div>
 		</div>
 		
