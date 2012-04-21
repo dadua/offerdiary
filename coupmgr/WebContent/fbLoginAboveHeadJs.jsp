@@ -15,22 +15,20 @@ TODO: Make Permission Flexible
 <script>
 	$(function() {
 		$(":button").button();
-		$('#loginToFb').click(it.fb.checkOrLogin);
 	});
 	
 	var it = it|| {};
-	it.fb = it.fb || {};
-	
 	it.fb = function () {
 		
-		var onServerUp = null;
+		var lastOnServerUp = null;
+		
 		var updatePageOnLogin = function(data){
 			if (console) {
 				console.debug('Server updated');
 			}
 		};
 		
-		var serverUpdate = function(fbData) {
+		var serverUpdate = function(fbData, onServerUp) {
 			var fbDJson = JSON.stringify(fbData);
 			if (typeof onServerUp === 'function') {
 				$.post('setFbAdapter.do', {'fbData': fbDJson}, onServerUp);
@@ -41,35 +39,47 @@ TODO: Make Permission Flexible
 		
 		var handleFbResp = function(response) {
 			if (response.authResponse) {
-				serverUpdate(response.authResponse);
+				serverUpdate(response.authResponse, lastOnServerUp);
 			} else {
 				alert('User LogIn failed!!');
 			}
 		};
 		
-		var checkOrLogin = function() {
+		var checkLoginStatusAndUpdateServer = function (onUserNotLoggedInHandler, onServerUp) {
 			FB.getLoginStatus(function(resp) {
 				if (resp.status === 'connected') {
-					//it.toFetchId.setUser(resp.authResponse.userID);
-					serverUpdate(resp.authResponse);
+					serverUpdate(resp.authResponse, onServerUp);
 				} else {
-					try {
-						FB.login(handleFbResp, {
-							scope: 'publish_stream, email'});
-					} catch (e) {
-						$('#errPopupBlocked').show();
-					}
+					if (typeof onUserNotLoggedInHandler === 'function') {
+						onUserNotLoggedInHandler();
+					} 
 				}
 			});
 		};
 		
+		var checkAndLogin = function(e) {
+			var onServerUp = e.data.onServerUp;
+			if (typeof onServerUp === 'function') {
+				lastOnServerUp = onServerUp;
+			}
+			checkLoginStatusAndUpdateServer(function() {
+				try {
+					FB.login(handleFbResp, {
+						scope: 'publish_stream, email'});
+					} catch (e) {
+						$('#errPopupBlocked').show();
+					}
+			}, onServerUp);
+		};
+		
 		return {
-			checkOrLogin: checkOrLogin,
+			checkLoginStatusAndUpdateServer: checkLoginStatusAndUpdateServer,
+			checkAndLogin: checkAndLogin,
 			setActionOnServerUp: function(func) {
 				if (typeof func === 'function') {
-					onServerUp = func;
+					lastOnServerUp = func;
 				} else {
-					throw {message: 'a function object has to be inputted'};
+					throw {message: 'a function object has to be inputted'}; 
 				}
 			}
 		};
