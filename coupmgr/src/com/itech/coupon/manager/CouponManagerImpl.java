@@ -34,7 +34,9 @@ public class CouponManagerImpl implements CouponManager{
 		getCouponDAO().addOrUpdate(coupon);
 		Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
 		coupon.setId(couponFromDB.getId());
-		getCouponEventGenerator().couponCreated(coupon);
+		if (coupon.getExpiryDate() != null) {
+			getCouponEventGenerator().couponCreated(coupon);
+		}
 	}
 
 	@Override
@@ -49,7 +51,9 @@ public class CouponManagerImpl implements CouponManager{
 		for (Coupon coupon: coupons) {
 			Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
 			coupon.setId(couponFromDB.getId());
-			couponEventGenerator.couponCreated(coupon);
+			if (coupon.getExpiryDate() != null) {
+				getCouponEventGenerator().couponCreated(coupon);
+			}
 		}
 
 	}
