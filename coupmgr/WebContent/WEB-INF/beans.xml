@@ -91,7 +91,8 @@
 			</list>
 		</property>
 		<property name="alertHandlers">
-		
+			<list>
+			</list>
 		</property>
 	</bean>
 	<bean id="itech.CouponAlertGenerator" class="com.itech.alert.services.CouponAlertGenerator">

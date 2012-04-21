@@ -1,5 +1,6 @@
 package com.itech.alert.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.alert.dao.AlertConfigDAO;
@@ -16,8 +17,7 @@ public class AlertConfigManagerImpl implements AlertConfigManager {
 
 	@Override
 	public List<AlertConfig> getActiveExpiredConfigs() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<AlertConfig>();
 	}
 
 	public void setAlertConfigDAO(AlertConfigDAO alertConfigDAO) {

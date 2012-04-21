@@ -2,12 +2,15 @@ package com.itech.alert.services;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.itech.alert.handler.AlertHandler;
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertConfig;
 import com.itech.common.services.Initialize;
 
 public class AlertEngine implements Initialize, Runnable{
+	private final Logger logger = Logger.getLogger(AlertEngine.class);
 	private AlertConfigManager alertConfigManager;
 	private List<AlertHandler> alertHandlers;
 	private List<AlertGenerator> alertGenerators;
@@ -23,14 +26,22 @@ public class AlertEngine implements Initialize, Runnable{
 
 	@Override
 	public void run() {
-		List<AlertConfig> alertConfigs = alertConfigManager.getActiveExpiredConfigs();
-		for (AlertConfig alertConfig : alertConfigs) {
-			for (AlertGenerator alertGenerator : alertGenerators) {
-				if (alertGenerator.handles(alertConfig)) {
-					Alert alert = alertGenerator.createAlert(alertConfig);
-					handleAlert(alert);
-					break;
+		while (true) {
+			List<AlertConfig> alertConfigs = alertConfigManager.getActiveExpiredConfigs();
+			for (AlertConfig alertConfig : alertConfigs) {
+				for (AlertGenerator alertGenerator : alertGenerators) {
+					if (alertGenerator.handles(alertConfig)) {
+						Alert alert = alertGenerator.createAlert(alertConfig);
+						handleAlert(alert);
+						break;
+					}
 				}
+			}
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e) {
+				logger.error("Exception in alert engine", e);
+				break;
 			}
 		}
 	}
