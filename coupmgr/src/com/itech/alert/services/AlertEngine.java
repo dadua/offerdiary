@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.itech.alert.handler.AlertHandler;
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertConfig;
+import com.itech.common.db.ConnectionUtil;
 import com.itech.common.services.Initialize;
 
 public class AlertEngine implements Initialize, Runnable{
@@ -14,7 +15,7 @@ public class AlertEngine implements Initialize, Runnable{
 	private AlertConfigManager alertConfigManager;
 	private List<AlertHandler> alertHandlers;
 	private List<AlertGenerator> alertGenerators;
-
+	private ConnectionUtil connectionUtil;
 
 	@Override
 	public void init() {
@@ -27,15 +28,24 @@ public class AlertEngine implements Initialize, Runnable{
 	@Override
 	public void run() {
 		while (true) {
-			List<AlertConfig> alertConfigs = alertConfigManager.getAllActiveExpiredAlertConfigs();
-			for (AlertConfig alertConfig : alertConfigs) {
-				for (AlertGenerator alertGenerator : alertGenerators) {
-					if (alertGenerator.handles(alertConfig)) {
-						Alert alert = alertGenerator.createAlert(alertConfig);
-						handleAlert(alert);
-						break;
+			try {
+				getConnectionUtil().createNewConnection();
+				List<AlertConfig> alertConfigs = alertConfigManager.getAllActiveExpiredAlertConfigs();
+				for (AlertConfig alertConfig : alertConfigs) {
+					for (AlertGenerator alertGenerator : alertGenerators) {
+						if (alertGenerator.handles(alertConfig)) {
+							Alert alert = alertGenerator.createAlert(alertConfig);
+							handleAlert(alert);
+							getConnectionUtil().commitCurrentConnection();
+							break;
+						}
 					}
 				}
+
+			} catch (Exception e) {
+				logger.error("Exception in alert engine", e);
+			}finally {
+				getConnectionUtil().releaseCurrentConnection();
 			}
 			try {
 				Thread.sleep(60000);
@@ -79,6 +89,16 @@ public class AlertEngine implements Initialize, Runnable{
 
 	public List<AlertGenerator> getAlertGenerators() {
 		return alertGenerators;
+	}
+
+
+	public void setConnectionUtil(ConnectionUtil connectionUtil) {
+		this.connectionUtil = connectionUtil;
+	}
+
+
+	public ConnectionUtil getConnectionUtil() {
+		return connectionUtil;
 	}
 
 

@@ -29,7 +29,7 @@ public class CouponAlertGenerator implements AlertGenerator {
 		Alert alert = createAlertFor(alertConfig);
 		getAlertManager().save(alert);
 		alertConfig.setStatus(AlertConfig.ActivationStatus.HANDLED);
-		getAlertConfigManager().save(alertConfig);
+		getAlertConfigManager().delete(alertConfig);
 		return alert;
 	}
 	private Alert createAlertFor(AlertConfig alertConfig) {

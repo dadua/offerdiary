@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.alert.model.AlertConfig;
-import com.itech.alert.model.AlertConfig.ActivationStatus;
 import com.itech.alert.model.AlertConfigModelConstant;
+import com.itech.alert.model.AlertConfig.ActivationStatus;
 import com.itech.common.db.CommonBaseDAOImpl;
 import com.itech.common.db.DBConnectionManager;
 
@@ -16,7 +16,7 @@ import com.itech.common.db.DBConnectionManager;
 public class AlertConfigDAOImpl extends CommonBaseDAOImpl<AlertConfig> implements
 AlertConfigDAO {
 
-	
+
 	@Override
 	public boolean addOrUpdate(AlertConfig config) {
 		List<AlertConfig> configs = new ArrayList<AlertConfig>();
@@ -30,17 +30,16 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + AlertConfigModelConstant.TABLE_ALERT_CONFIG  +
-					" (DATA_TYPE, DATA_ID, ALERT_TYPE,TRIGGER_TIME,CREATION_TIME, STATUS) " +
-					" values (?, ?, ?, ?, ?)";
+			" (DATA_TYPE, DATA_ID, ALERT_TYPE,TRIGGER_TIME,CREATION_TIME, STATUS) " +
+			" values (?, ?, ?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (AlertConfig config : configs)  {
-				ps.setLong(1, config.getId());
-				ps.setString(2, config.getDataType());
-				ps.setLong(3, config.getDataId());
-				ps.setString(4, config.getAlertType());
-				ps.setDate(5, config.getTriggerTime());
-				ps.setDate(6, config.getCreationTime());
-				ps.setString(7, config.getStatus().toString());
+				ps.setString(1, config.getDataType());
+				ps.setLong(2, config.getDataId());
+				ps.setString(3, config.getAlertType());
+				ps.setDate(4, config.getTriggerTime());
+				ps.setDate(5, config.getCreationTime());
+				ps.setString(6, config.getStatus().toString());
 				ps.addBatch();
 			}
 			ps.executeBatch();
@@ -51,7 +50,7 @@ AlertConfigDAO {
 			DBConnectionManager.cleanDbPsRS(ps, rs);
 		}
 	}
-	
+
 
 	@Override
 	public boolean delete(long uniqueId) {
@@ -71,7 +70,7 @@ AlertConfigDAO {
 		}
 	}
 
-	
+
 	@Override
 	public boolean delete(List<AlertConfig> configs) {
 		PreparedStatement ps = null;
@@ -103,7 +102,7 @@ AlertConfigDAO {
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
-			AlertConfig config = readSingleDataFrom(rs); 
+			AlertConfig config = readSingleDataFrom(rs);
 			return config;
 		} catch (SQLException e) {
 			throw new RuntimeException("Database error", e);
@@ -111,12 +110,12 @@ AlertConfigDAO {
 			DBConnectionManager.cleanDbPsRS(ps, rs);
 		}
 	}
-	
+
 	private AlertConfig readSingleDataFrom(ResultSet rs) throws SQLException {
 		List<AlertConfig> configs = readDataFrom(rs);
 		return configs.size() == 0? null : configs.get(0);
 	}
-	
+
 	private List<AlertConfig> readDataFrom(ResultSet resultSet) throws SQLException {
 		ArrayList<AlertConfig> configs = new ArrayList<AlertConfig>();
 		while (resultSet.next()) {
@@ -196,7 +195,7 @@ AlertConfigDAO {
 			DBConnectionManager.cleanDbPsRS(ps, rs);
 		}
 	}
-	
+
 	@Override
 	public List<AlertConfig> getAll() {
 		// TODO Auto-generated method stub

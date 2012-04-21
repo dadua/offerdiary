@@ -94,6 +94,7 @@
 			<list>
 			</list>
 		</property>
+		<property name="connectionUtil" ref="itech.ConnectionUtil"/>
 	</bean>
 	<bean id="itech.CouponAlertGenerator" class="com.itech.alert.services.CouponAlertGenerator">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
