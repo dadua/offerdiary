@@ -37,14 +37,12 @@ public class AlertManagerImpl implements AlertManager {
 
 	@Override
 	public void deleteByIds(List<Long> alertIds) {
-		// TODO Auto-generated method stub
-
+		getAlertDAO().deleteByIds(alertIds);
 	}
 
 	@Override
 	public void markAlertsRead(User loggedInUser) {
-		// TODO Auto-generated method stub
-
+		getAlertDAO().markAlertsRead(loggedInUser);
 	}
 
 	public void setAlertDAO(AlertDAO alertDAO) {
