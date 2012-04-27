@@ -39,4 +39,12 @@
 				color: #234;
 				font-size: .88em;
 			}
+			.tab-text{
+				font-family: verdana;
+				font-size: 1.10em;
+			};
+			.medium-tab-text{
+				font-family: verdana;
+				font-size: 1.50em;
+			};
 		</style>
