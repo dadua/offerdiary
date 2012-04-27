@@ -104,18 +104,23 @@
 			.coupon {
 				background: none repeat scroll 0 0 #E6E7FF;
 			};
-			
 		</style>
 	</head>
 	<body>
 	
 		<%@include file="navHeader.jsp" %>
 		
-		
+		<div class="container">
+			<div class="row">
+				<div class="span6 offset2">
+					<%@include file="walletTabs.jsp" %>
+				</div>
+			</div>
+		</div>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span2" >
-					<%@include file="walletTabs.jsp" %>
+					<%@include file="storeTabs.jsp" %>
 				</div>
 				<div class="span6" id="couponContainer" >
 				 <% 
