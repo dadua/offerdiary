@@ -18,14 +18,19 @@ public class TestFbAdapter {
 	 */
 	public static void main(String[] args) {
 
-		String accessToken = "AAAAAAITEghMBADepw6WjtTAJdAScgmx9z8B173ZBCw2gDeMywdlikKlt2TZA5226A5MDAlOh4tN6ZA0L3z8bPATLxZBgpCVGI7BDe7uQqZCEzYk52t5NS";
+		String accessToken = "AAACqK9c7qWQBANMYfsUAQOZAbW0sq56GtjRkB0AxVcrWekEV6wPNkWblmPypph6pyv5Iv2clrV1caMlDOVgVpBC7NMKn6guNbQhv38wZDZD";
 		FbAdapter fbAdapter = FbAdapterFactory.getFbAdapter(accessToken);
 		FbProfile profile = fbAdapter.getFbProfile();
 		System.out.println(profile.getFirstName());
 		//		testAlbumCreateAndPost(fbAdapter);
 		//		testPostToWall(fbAdapter);
 		//		testGetLikes(fbAdapter);
-		testGetFbPages(fbAdapter);
+		//		testGetFbPages(fbAdapter);
+		testPostRequest(fbAdapter, profile);
+	}
+
+	private static void testPostRequest(FbAdapter fbAdapter, FbProfile profile) {
+		fbAdapter.createAppToUserRequest(profile, "Test App to User Notification");
 	}
 
 	private static void testGetFbPages(FbAdapter fbAdapter) {

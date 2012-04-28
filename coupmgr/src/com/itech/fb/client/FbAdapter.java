@@ -89,10 +89,10 @@ public class FbAdapter {
 	private void initAuthUrl() {
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("client_id", applicationId));
+			params.add(new BasicNameValuePair("client_id", this.applicationId));
 			params.add(new BasicNameValuePair("scope", FB_APP_PERMISSIONS));
-			params.add(new BasicNameValuePair("redirect_uri", callbackURL));
-			authUrl = URIUtils.createURI("https", FB_GRAPH_URL, -1,
+			params.add(new BasicNameValuePair("redirect_uri", this.callbackURL));
+			this.authUrl = URIUtils.createURI("https", FB_GRAPH_URL, -1,
 					FB_OAUTH_APP_AUTHORIZATION_URL_PATH, URLEncodedUtils.format(params, "UTF-8"), null);
 		} catch (Exception e) {
 			logger.error("Error in url creation", e);
@@ -101,11 +101,11 @@ public class FbAdapter {
 	}
 
 	public URI getAuthUrl() {
-		return authUrl;
+		return this.authUrl;
 	}
 
 	public String getAuthUrlString() {
-		return authUrl.toString();
+		return this.authUrl.toString();
 	}
 
 	private URI accessTokenFetchUrl;
@@ -115,11 +115,11 @@ public class FbAdapter {
 	private void initAccessFetchUrl() {
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("client_id", applicationId));
-			params.add(new BasicNameValuePair("client_secret", applicationSecret));
-			params.add(new BasicNameValuePair("code", userCode));
-			params.add(new BasicNameValuePair("redirect_uri", callbackURL));
-			accessTokenFetchUrl = URIUtils.createURI("https", FB_GRAPH_URL, -1,
+			params.add(new BasicNameValuePair("client_id", this.applicationId));
+			params.add(new BasicNameValuePair("client_secret", this.applicationSecret));
+			params.add(new BasicNameValuePair("code", this.userCode));
+			params.add(new BasicNameValuePair("redirect_uri", this.callbackURL));
+			this.accessTokenFetchUrl = URIUtils.createURI("https", FB_GRAPH_URL, -1,
 					FB_OAUTH_APP_ACCESS_TOKEN_URL_PATH, URLEncodedUtils.format(params, "UTF-8"), null);
 		} catch(Exception e) {
 			logger.error("Error in url creation", e);
@@ -130,8 +130,8 @@ public class FbAdapter {
 
 	private void fetchAccessTokenFromFb () {
 		UtilHttp utilHttpGet = new UtilHttp();
-		String authResponse = utilHttpGet.getHttpResponse(accessTokenFetchUrl.toString());
-		accessToken = UtilHttp.parseQueryString(authResponse).get("access_token").get(0);
+		String authResponse = utilHttpGet.getHttpResponse(this.accessTokenFetchUrl.toString());
+		this.accessToken = UtilHttp.parseQueryString(authResponse).get("access_token").get(0);
 	}
 
 	private FbProfile fbProfile = null;
@@ -140,7 +140,7 @@ public class FbAdapter {
 		try {
 			UtilHttp utilHttpGet = new UtilHttp();
 			ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, "me",
 					URLEncodedUtils.format(params, "UTF-8"),null);
 			String profileJsonStr = utilHttpGet.getHttpResponse(url.toString());
@@ -149,19 +149,42 @@ public class FbAdapter {
 			if (profileJsonObj.has("error")) {
 				//TODO: This error case has to be handled
 			}
-			fbProfile = new FbProfile();
-			fbProfile.setId(profileJsonObj.getString("id"));
-			fbProfile.setFullName(profileJsonObj.getString("name"));
-			fbProfile.setFirstName(profileJsonObj.getString("first_name"));
-			fbProfile.setLastName(profileJsonObj.getString("last_name"));
-			fbProfile.setProfileUrl(profileJsonObj.getString("link"));
-			fbProfile.setGender(profileJsonObj.getString("gender"));
-			fbProfile.setTimeZone(profileJsonObj.getString("timezone"));
-			fbProfile.setEmailId(profileJsonObj.getString("email"));
-			fbProfile.setLocale(profileJsonObj.getString("locale"));
+			this.fbProfile = new FbProfile();
+			this.fbProfile.setId(profileJsonObj.getString("id"));
+			this.fbProfile.setFullName(profileJsonObj.getString("name"));
+			this.fbProfile.setFirstName(profileJsonObj.getString("first_name"));
+			this.fbProfile.setLastName(profileJsonObj.getString("last_name"));
+			this.fbProfile.setProfileUrl(profileJsonObj.getString("link"));
+			this.fbProfile.setGender(profileJsonObj.getString("gender"));
+			this.fbProfile.setTimeZone(profileJsonObj.getString("timezone"));
+			this.fbProfile.setEmailId(profileJsonObj.getString("email"));
+			this.fbProfile.setLocale(profileJsonObj.getString("locale"));
 		} catch (Exception e) {
 			//TODO: Throw FbAdapterException
 			e.printStackTrace();
+		}
+	}
+
+
+	public void createAppToUserRequest(FbProfile profile, String message) {
+
+		URI url;
+		try {
+			url = URIUtils.createURI("https", FB_GRAPH_URL, -1, profile.getId()+"/apprequests",
+					null, null);
+
+			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
+			params.add(new BasicNameValuePair("message", message));
+
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+
+			HttpClient httpClient = new DefaultHttpClient();
+			httpClient.execute(httpPost);
+
+		} catch (Exception e) {
+			logger.error("AppRequest to user failed", e);
 		}
 	}
 
@@ -178,7 +201,7 @@ public class FbAdapter {
 					null, null);
 
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			params.add(new BasicNameValuePair("name", albumName));
 			params.add(new BasicNameValuePair("message", albumDescription));
 
@@ -220,7 +243,7 @@ public class FbAdapter {
 					null, null);
 
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			params.add(new BasicNameValuePair("link", link));
 			params.add(new BasicNameValuePair("picture", linkPicture));
 			params.add(new BasicNameValuePair("name", name));
@@ -244,7 +267,7 @@ public class FbAdapter {
 	public FbLikes getLikes() {
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, "me/likes",
 					URLEncodedUtils.format(params, "UTF-8"), null);
 
@@ -269,7 +292,7 @@ public class FbAdapter {
 	public FbPage getFbPageById(String id) {
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, id,
 					URLEncodedUtils.format(params, "UTF-8"), null);
 
@@ -287,7 +310,7 @@ public class FbAdapter {
 
 	public void setCoverPhotoFromAlbumId(FbAlbum fbAlbum) {
 		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-		params.add(new BasicNameValuePair("access_token", accessToken));
+		params.add(new BasicNameValuePair("access_token", this.accessToken));
 
 		try {
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, fbAlbum.getId()+"/picture",
@@ -314,7 +337,7 @@ public class FbAdapter {
 
 	public List<BasicNameValuePair> setFbAlbumLinkFromFbAlbumId(FbAlbum fbAlbum) {
 		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-		params.add(new BasicNameValuePair("access_token", accessToken));
+		params.add(new BasicNameValuePair("access_token", this.accessToken));
 		try {
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, fbAlbum.getId(),
 					URLEncodedUtils.format(params, "UTF-8"), null);
@@ -356,7 +379,7 @@ public class FbAdapter {
 		FbPhoto fbPhoto = new FbPhoto();
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			params.add(new BasicNameValuePair("message", photoCaption));
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, albumId+"/photos",
 					URLEncodedUtils.format(params, "UTF-8"), null);
@@ -390,7 +413,7 @@ public class FbAdapter {
 		FbPhoto fbPhoto = new FbPhoto();
 		try {
 			List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-			params.add(new BasicNameValuePair("access_token", accessToken));
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
 			params.add(new BasicNameValuePair("message", photoCaption));
 			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, albumId+"/photos",
 					URLEncodedUtils.format(params, "UTF-8"), null);
@@ -425,7 +448,7 @@ public class FbAdapter {
 	}
 
 	public String getUserCode() {
-		return userCode;
+		return this.userCode;
 	}
 
 	private void initializeOauthUrls() {
@@ -438,7 +461,7 @@ public class FbAdapter {
 	}
 
 	public String getAccessToken() {
-		return accessToken;
+		return this.accessToken;
 	}
 
 	public void setFbProfile(FbProfile fbProfile) {
@@ -446,9 +469,9 @@ public class FbAdapter {
 	}
 
 	public FbProfile getFbProfile() {
-		if (fbProfile == null) {
+		if (this.fbProfile == null) {
 			fetchFbProfile();
 		}
-		return fbProfile;
+		return this.fbProfile;
 	}
 }
