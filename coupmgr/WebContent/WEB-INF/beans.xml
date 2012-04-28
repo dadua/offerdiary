@@ -101,4 +101,21 @@
 		<property name="alertManager" ref="itech.AlertManager"/>
 		<property name="couponManager" ref="itech.CouponManager"/>
 	</bean>  
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="croceaten@gmail.com" />
+		<property name="password" value="solidcore" />
+		<property name="javaMailProperties">
+	   		<props>
+       	      	<prop key="mail.smtp.auth">true</prop>
+       	      	<prop key="mail.smtp.starttls.enable">true</prop>
+       	   </props>
+		</property>
+	</bean>
+ 
+	<bean id="emailManager" class="com.itech.email.services.EmailManagerImpl">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
 </beans>
