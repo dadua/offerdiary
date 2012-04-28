@@ -14,7 +14,7 @@
 					<a href="#" >Cards</a>
 				</li>
 				<li id="alertTab" >
-					<a href="#" >Notifications</a>
+					<a href="alerts.do" >Notifications</a>
 				</li>
 				<li id="alertTab" >
 					<a href="#" >Friends</a>
