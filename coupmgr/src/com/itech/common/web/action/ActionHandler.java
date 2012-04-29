@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.itech.common.db.ConnectionUtil;
+import com.itech.common.db.hibernate.HibernateSessionFactory;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
@@ -16,6 +17,7 @@ import com.itech.web.ActionMappings;
 public class ActionHandler {
 	private static SecurityContextHolder securityContextHolder;
 	private static ConnectionUtil connectionUtil;
+	private static HibernateSessionFactory hibernateSessionFactory;
 	public static void handleAction(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType( "text/html; charset=UTF-8" );
 		response.setHeader( "Cache-Control", "no-cache" );
@@ -33,6 +35,7 @@ public class ActionHandler {
 			User user = (User) request.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 			getSecurityContextHolder().setContext(new SecurityContext(user));
 			getConnectionUtil().createNewConnection();
+			getHibernateSessionFactory().openNewSession();
 			ActionMapping actionMapping = ActionMappings.getAction(actionName);
 			Object actionBean = actionMapping.getBeanClass().newInstance();
 
@@ -40,9 +43,11 @@ public class ActionHandler {
 					HttpServletRequest.class, HttpServletResponse.class );
 			Response responseAction = (Response) executeMethod.invoke(actionBean, request, response);
 			getConnectionUtil().commitCurrentConnection();
+			getHibernateSessionFactory().getCurrentSession().flush();
 			return responseAction;
 		} finally {
 			getConnectionUtil().releaseCurrentConnection();
+			getHibernateSessionFactory().closeCurrentSession();
 		}
 	}
 
@@ -80,6 +85,13 @@ public class ActionHandler {
 			connectionUtil = ServiceLocator.getInstance().getBean(ConnectionUtil.class);
 		}
 		return connectionUtil;
+	}
+
+	public static HibernateSessionFactory getHibernateSessionFactory() {
+		if (hibernateSessionFactory == null) {
+			hibernateSessionFactory = ServiceLocator.getInstance().getBean(HibernateSessionFactory.class);
+		}
+		return hibernateSessionFactory;
 	}
 
 

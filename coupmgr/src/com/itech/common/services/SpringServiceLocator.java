@@ -25,20 +25,20 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 		setInstance(this);
 
 		try {
-			getConnectionUtil().createNewConnection();
+			//getConnectionUtil().createNewConnection();
 			logger.info("Initializing beans");
 			Map<String, Initialize> beansToBeInitialized =  applicationContext.getBeansOfType(Initialize.class);
 			for (Entry<String, Initialize> initializeEntry : beansToBeInitialized.entrySet()) {
 				logger.info("Initializing bean : " + initializeEntry.getKey());
 				initializeEntry.getValue().init();
-				getConnectionUtil().commitCurrentConnection();
+				//getConnectionUtil().commitCurrentConnection();
 			}
 			logger.info("All beans initialized successfully");
 		} catch (Exception e) {
 			logger.error("Failed to initialize beans.", e);
 			throw e;
 		} finally {
-			getConnectionUtil().releaseCurrentConnection();
+			//getConnectionUtil().releaseCurrentConnection();
 		}
 	}
 

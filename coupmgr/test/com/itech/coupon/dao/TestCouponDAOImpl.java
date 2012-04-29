@@ -16,7 +16,7 @@ public class TestCouponDAOImpl extends CommonTestDao<Coupon>{
 	public void setUp() throws Exception {
 		super.setUp();
 		couponDAO = new CouponDAOImpl();
-		couponDAO.setConnection(con);
+		((CouponDAOImpl)couponDAO).setConnection(con);
 	}
 
 	@Override

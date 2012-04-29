@@ -93,7 +93,7 @@ AlertConfigDAO {
 	}
 
 	@Override
-	public AlertConfig getById(long id) {
+	public AlertConfig getById(Long id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {

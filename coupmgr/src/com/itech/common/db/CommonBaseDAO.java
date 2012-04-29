@@ -1,6 +1,5 @@
 package com.itech.common.db;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface CommonBaseDAO <T>{
@@ -12,10 +11,8 @@ public interface CommonBaseDAO <T>{
 
 	public boolean delete(List<T> objs);
 
-	T getById(long id);
+	T getById(Long id);
 
 	List<T> getAll();
-
-	public void setConnection(Connection con);
 
 }

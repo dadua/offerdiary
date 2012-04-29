@@ -159,7 +159,7 @@ public class StoreDAOImpl extends CommonBaseDAOImpl<Store> implements StoreDAO {
 	}
 
 	@Override
-	public Store getById(long id) {
+	public Store getById(Long id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {

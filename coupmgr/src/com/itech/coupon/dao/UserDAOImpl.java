@@ -117,7 +117,7 @@ public class UserDAOImpl extends CommonBaseDAOImpl<User> implements UserDAO {
 	}
 
 	@Override
-	public User getById(long id) {
+	public User getById(Long id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -147,7 +147,7 @@ public class UserDAOImpl extends CommonBaseDAOImpl<User> implements UserDAO {
 			user.setAge(resultSet.getInt(UserModelConstants.COL_AGE));
 			user.setEmailId(resultSet.getString(UserModelConstants.COL_EMAIL_ID));
 			user.setGender(Gender.valueOf(resultSet.getString(UserModelConstants.COL_GENDER)));
-			user.setId(resultSet.getInt(UserModelConstants.COL_ID));
+			user.setId(resultSet.getLong(UserModelConstants.COL_ID));
 			user.setLanguage(resultSet.getString(UserModelConstants.COL_LANGUAGE));
 			user.setLocation(resultSet.getString(UserModelConstants.COL_LOCATION));
 			user.setName(resultSet.getString(UserModelConstants.COL_NAME));

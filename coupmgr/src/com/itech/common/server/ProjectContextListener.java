@@ -22,6 +22,7 @@ public class ProjectContextListener implements ServletContextListener{
 			String log4jFile = ProjectContextListener.getServletContext().getRealPath("log4j.properties");
 			PropertyConfigurator.configure(log4jFile);
 			ProjectLoader.init(getServletContext().getRealPath(SERVER_CONFIG_PROPERTIES));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

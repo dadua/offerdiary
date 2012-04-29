@@ -47,7 +47,8 @@
    	<bean name="itech.CouponDAO" class="com.itech.coupon.dao.CouponDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
 	</bean>
 	
-	<bean name="itech.UserDAO" class="com.itech.coupon.dao.UserDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
+	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
 	</bean>
    
    

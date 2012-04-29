@@ -1,24 +1,59 @@
 package com.itech.coupon.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.itech.coupon.model.constants.UserModelConstants;
+
+@Entity
+@Table(name="USERS")
 public class User {
 
-	private long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name=UserModelConstants.COL_ID)
+	private Long id;
+
+	@Column(name=UserModelConstants.COL_USER_ID)
 	private String userId;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name=UserModelConstants.COL_LOGIN_TYPE)
 	private LoginType loginType = LoginType.UNKNOWN;
+
+	@Column(name=UserModelConstants.COL_PASSWORD)
 	private String password;
+
+	@Column(name=UserModelConstants.COL_NAME)
 	private String name;
+
+	@Column(name=UserModelConstants.COL_AGE)
 	private int age;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name=UserModelConstants.COL_GENDER)
 	private Gender gender = Gender.UNKNOWN;
+
+	@Column(name=UserModelConstants.COL_LOCATION)
 	private String location;
+
+	@Column(name=UserModelConstants.COL_LANGUAGE)
 	private String language;
+
+	@Column(name=UserModelConstants.COL_EMAIL_ID)
 	private String emailId;
 
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

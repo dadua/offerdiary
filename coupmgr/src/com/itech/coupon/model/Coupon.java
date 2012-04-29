@@ -2,9 +2,24 @@ package com.itech.coupon.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.itech.coupon.model.constants.CouponModelConstants;
+
+@Entity
+@Table(name="COUPONS")
 public class Coupon {
-	private long id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name=CouponModelConstants.COL_ID)
+	private Long id;
+
+	@Column(name=CouponModelConstants.COL_AUTOGUID)
 	private String autoGUID;
 	private Store store;
 	private long storeId;
@@ -18,10 +33,10 @@ public class Coupon {
 	private CouponPermission permission =  CouponPermission.PRIVATE;
 	private String tags;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Store getStore() {

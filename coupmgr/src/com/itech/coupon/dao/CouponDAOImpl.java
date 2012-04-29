@@ -210,7 +210,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 	}
 
 	@Override
-	public Coupon getById(long id) {
+	public Coupon getById(Long id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -296,7 +296,7 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 			coupon.setDiscount(resultSet.getFloat(CouponModelConstants.COL_DISCOUNT));
 			coupon.setExpiryDate(resultSet.getDate(CouponModelConstants.COL_EXPIRY_DATE));
 			User user = new User();
-			user.setId(resultSet.getInt(CouponModelConstants.COL_OWNER_ID));
+			user.setId(resultSet.getLong(CouponModelConstants.COL_OWNER_ID));
 			coupon.setOwner(user);
 			coupon.setPermission(CouponPermission.valueOf(resultSet.getString(CouponModelConstants.COL_PERMISSION)));
 			coupon.setStoreId(resultSet.getLong(CouponModelConstants.COL_STORE_ID));

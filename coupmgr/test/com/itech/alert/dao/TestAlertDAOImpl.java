@@ -20,13 +20,13 @@ public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 	public void setUp() throws Exception {
 		super.setUp();
 		alertDAO = new AlertDAOImpl();
-		alertDAO.setConnection(con);
+		((AlertDAOImpl)alertDAO).setConnection(con);
 	}
 
 	public void testMarkAlertsRead() throws Exception {
 		executeCleanInsert("TestAlertDAOImpl_NewAlertExists_in.xml");
 		User user = new User();
-		user.setId(649283);
+		user.setId(649283l);
 		alertDAO.markAlertsRead(user);
 		QueryDataSet tableData = getQueryDataSet(AlertModelConstant.TABLE_ALERT, getSelectAllQuery());
 		IDataSet expectedTableData = getFlatXmlDataSet("TestAlertDAOImpl_updateReadStatus_out.xml");
@@ -58,7 +58,7 @@ public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 	public void testGetAlertsForuser() throws Exception{
 		executeCleanInsert("TestAlertDAOImpl_NewAlertExists_in.xml");
 		User user = new User();
-		user.setId(649283);
+		user.setId(649283l);
 		List<Alert> outListAlert = alertDAO.getAlertsForUser(user);
 
 		Alert alert = getExpectedAlert(103);

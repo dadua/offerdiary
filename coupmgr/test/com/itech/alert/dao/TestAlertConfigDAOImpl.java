@@ -19,7 +19,7 @@ public class TestAlertConfigDAOImpl extends CommonTestDao<AlertConfig>{
 	public void setUp() throws Exception {
 		super.setUp();
 		alertConfigDAO = new AlertConfigDAOImpl();
-		alertConfigDAO.setConnection(con);
+		((AlertConfigDAOImpl)alertConfigDAO).setConnection(con);
 	}
 
 
@@ -56,7 +56,7 @@ public class TestAlertConfigDAOImpl extends CommonTestDao<AlertConfig>{
 
 	public void testGetById() throws Exception{
 		executeCleanInsert("TestAlertConfigDAOImpl_NewAlertConfigExists_in.xml");
-		AlertConfig alertConfig = alertConfigDAO.getById(103);
+		AlertConfig alertConfig = alertConfigDAO.getById(103l);
 		assertEquals(103, alertConfig.getId());
 	}
 
