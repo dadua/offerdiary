@@ -45,7 +45,7 @@ public abstract class CommonTestDao<T> extends CommonTestBase {
 	}
 
 	public void initDAO(CommonBaseDAO<T> dao) {
-		dao.setConnection(con);
+		//dao.setConnection(con);
 	}
 
 

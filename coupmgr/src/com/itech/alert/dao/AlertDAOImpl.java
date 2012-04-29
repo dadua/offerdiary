@@ -92,7 +92,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 
 
 	@Override
-	public Alert getById(long id) {
+	public Alert getById(Long id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -231,7 +231,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "update "+ AlertModelConstant.TABLE_ALERT+ " set alert_status = '"+ Alert.AlertStatus.READ.toString()+"'"+
-				" where user_id = ?";
+			" where user_id = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, user_id);
 			ps.executeUpdate();
@@ -248,5 +248,5 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		return null;
 	}
 
-	
+
 }

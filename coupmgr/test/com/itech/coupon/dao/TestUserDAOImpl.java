@@ -18,7 +18,7 @@ public class TestUserDAOImpl extends CommonTestDao<User>{
 	public void setUp() throws Exception {
 		super.setUp();
 		userDAO = new UserDAOImpl();
-		userDAO.setConnection(con);
+		((UserDAOImpl)userDAO).setConnection(con);
 	}
 
 	@Override
