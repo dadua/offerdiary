@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -50,7 +50,7 @@ public class UtilHttp {
 		try {
 			URL url = new URL(urlString );
 			URLConnection urlCon = url.openConnection();
-			urlCon.setConnectTimeout(connTimeOut);
+			urlCon.setConnectTimeout(this.connTimeOut);
 			urlCon.connect();
 			InputStream in = new BufferedInputStream(urlCon.getInputStream());
 			Reader reader = new InputStreamReader(in , "UTF-8");
@@ -82,7 +82,7 @@ public class UtilHttp {
 		try {
 			URL url = new URL(urlString );
 			URLConnection urlCon = url.openConnection();
-			urlCon.setConnectTimeout(connTimeOut);
+			urlCon.setConnectTimeout(this.connTimeOut);
 			urlCon.connect();
 			in = new BufferedInputStream(urlCon.getInputStream());
 		} catch (Exception ex) {
