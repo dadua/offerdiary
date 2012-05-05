@@ -71,5 +71,19 @@ public class EmailManagerImpl implements EmailManager {
 		helper.setSubject(subject);
 		helper.setText(htmlMsg, true);
 	}
+
+	@Override
+	public boolean sendMail(String to, String subject, String msg) {
+		try{
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message);
+			setMailContent(helper, "test.coupoxo@gmail.com", to, subject, msg);
+			mailSender.send(message);
+		}catch(MessagingException me){
+			logger.debug("Email sending failed for mail: to ["+to+"]" );
+			return false;
+		}
+		return true;
+	}
 }
 

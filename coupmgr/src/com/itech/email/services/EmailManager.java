@@ -13,6 +13,16 @@ public interface EmailManager {
 	 * @return
 	 */
 	public boolean sendMail(String from, String to, String subject, String msg);
+
+	/**
+	 * from is taken default as test.coupoxo@gmail.com
+	 * @param to
+	 * @param subject
+	 * @param msg
+	 * @return
+	 */
+	public boolean sendMail( String to, String subject, String msg);
+
 	/**
 	 * end Email with attachements; config taken from beans.xml for now
 	 * @param from from email address

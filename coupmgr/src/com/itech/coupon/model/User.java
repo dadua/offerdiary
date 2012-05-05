@@ -1,5 +1,7 @@
 package com.itech.coupon.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,7 +15,12 @@ import com.itech.coupon.model.constants.UserModelConstants;
 
 @Entity
 @Table(name="USERS")
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
