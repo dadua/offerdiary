@@ -21,7 +21,9 @@ public class Coupon {
 
 	@Column(name=CouponModelConstants.COL_AUTOGUID)
 	private String autoGUID;
+
 	private Store store;
+
 	private long storeId;
 	private String code;
 	private float discount;

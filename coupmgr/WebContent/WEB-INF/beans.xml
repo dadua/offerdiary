@@ -2,12 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
     
     
     
      <bean id="itech.ServiceLocator" class="com.itech.common.services.SpringServiceLocator" scope="singleton">
-		<property name="connectionUtil" ref="itech.ConnectionUtil"/>
 	</bean>
 
 
