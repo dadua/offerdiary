@@ -12,13 +12,13 @@ import com.itech.coupon.model.User;
 public class HibernateCouponDAOImpl extends HibernateCommonBaseDAO<Coupon> implements CouponDAO{
 
 	@Override
-	protected String getClassName() {
-		return Coupon.class.getName();
+	protected Class getEntityClass() {
+		return Coupon.class;
 	}
 
 	@Override
 	public List<Coupon> getBy(User owner, Store store) {
-		String hql = "from " + getClassName() + " where owner = :owner";
+		String hql = "from " + getEntityClassName() + " where owner = :owner";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("owner", owner);
 		List list = query.list();
@@ -27,7 +27,7 @@ public class HibernateCouponDAOImpl extends HibernateCommonBaseDAO<Coupon> imple
 
 	@Override
 	public List<Coupon> getBy(User owner, List<String> tags) {
-		String hql = "from " + getClassName() + " where owner = :owner";
+		String hql = "from " + getEntityClassName() + " where owner = :owner";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("owner", owner);
 		List list = query.list();

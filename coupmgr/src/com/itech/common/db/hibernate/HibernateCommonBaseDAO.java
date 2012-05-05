@@ -40,16 +40,20 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	@Override
 	public List<T> getAll() {
-		String hql = "from " + getClassName();
+		String hql = "from " + getEntityClassName();
 		Query query = getSession().createQuery(hql);
 		return query.list();
 	}
 
-	protected abstract String getClassName();
+	protected abstract Class getEntityClass();
+
+	protected String getEntityClassName(){
+		return getEntityClass().getName();
+	}
 
 	@Override
 	public T getById(Long id) {
-		return (T) getSession().load(getClass(), id);
+		return (T) getSession().load(getEntityClass(), id);
 	}
 
 	protected Session getSession() {
