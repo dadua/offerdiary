@@ -2,8 +2,18 @@ package com.itech.offer.model;
 
 public class Offer {
 
+	private String merchantName;
+
+	private String address;
+
 	private String description;
+
 	private String validity;
+
+
+	public Offer() {
+
+	}
 
 	public Offer(String validity, String description) {
 		this.validity = validity;
@@ -28,8 +38,24 @@ public class Offer {
 
 	@Override
 	public String toString() {
-		return "Offer [description=" + this.description + ", validity=" + this.validity
+		return "Offer [merchantName=" + this.merchantName + ", address=" + this.address
+		+ ", description=" + this.description + ", validity=" + this.validity
 		+ "]";
 	}
 
+	public String getMerchantName() {
+		return this.merchantName;
+	}
+
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }
