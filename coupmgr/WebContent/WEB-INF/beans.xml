@@ -92,21 +92,29 @@
 		</property>
 		<property name="alertHandlers">
 			<list>
+				<ref bean="itech.handler.EmailAlerthandler"/>
 			</list>
 		</property>
 		<property name="connectionUtil" ref="itech.ConnectionUtil"/>
 	</bean>
+	
+	
+	<bean id="itech.handler.EmailAlerthandler" class="com.itech.alert.handler.EmailAlertHandler">
+		<property name="emailManager" ref="itech.emailManager"/>
+		<property name="userManager" ref="itech.UserManager"/>
+	</bean>
+	
 	<bean id="itech.CouponAlertGenerator" class="com.itech.alert.services.CouponAlertGenerator">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
 		<property name="alertManager" ref="itech.AlertManager"/>
 		<property name="couponManager" ref="itech.CouponManager"/>
 	</bean>  
 	
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="croceaten@gmail.com" />
-		<property name="password" value="solidcore" />
+		<property name="username" value="test.coupoxo@gmail.com" />
+		<property name="password" value="7cygod2012" />
 		<property name="javaMailProperties">
 	   		<props>
        	      	<prop key="mail.smtp.auth">true</prop>
@@ -115,7 +123,7 @@
 		</property>
 	</bean>
  
-	<bean id="emailManager" class="com.itech.email.services.EmailManagerImpl">
-		<property name="mailSender" ref="mailSender" />
+	<bean id="itech.emailManager" class="com.itech.email.services.EmailManagerImpl">
+		<property name="mailSender" ref="itech.mailSender" />
 	</bean>
 </beans>

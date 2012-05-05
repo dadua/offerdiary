@@ -17,6 +17,7 @@ public class EmailAlertHandler implements AlertHandler{
 
 	private EmailManager emailManager;
 	private UserManager userManager;
+
 	private static final String DEFAULT_NOTIFICATION_SUBJECT="Coupoxo Coupon Expiry Notification";
 	private static final String DEFAULT_TEST_COUPOXO_MAIL_ADDRESS= "test.coupoxo@gmail.com";
 	private final Logger logger = Logger.getLogger(EmailAlertHandler.class);
@@ -54,5 +55,14 @@ public class EmailAlertHandler implements AlertHandler{
 	public boolean handles(Alert alert) {
 		return true;
 	}
+
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+
 
 }
