@@ -17,11 +17,15 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
 public class UtilHttp {
-	public static final int CONN_TIME_OUT = (1000 * 10);//5 sec or 5000 ms;
+	public static final int CONN_TIME_OUT = (1000 * 10);//10 second timeout
 	private int connTimeOut = CONN_TIME_OUT;
 
 	public UtilHttp() {
 
+	}
+
+	public UtilHttp(int connTimeOut) {
+		this.connTimeOut = connTimeOut * 1000;
 	}
 
 	public static Map<String, List<String>> parseQueryString(String qs) {
@@ -41,9 +45,6 @@ public class UtilHttp {
 		return nameValues;
 	}
 
-	public UtilHttp(int connTimeOut) {
-		this.connTimeOut = connTimeOut * 1000;
-	}
 
 	public String getHttpResponse(String urlString) {
 		StringBuffer sb = new StringBuffer(10000);
@@ -69,7 +70,7 @@ public class UtilHttp {
 		return sb.toString();
 	}
 
-	public String getHttpResponse(String urlString, Map<String, String> paramsMap) {
+	public String getHttpResponseForGetRequest(String urlString, Map<String, String> paramsMap) {
 		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
 		for (Entry<String, String> entry : paramsMap.entrySet()) {
 			params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
@@ -92,5 +93,19 @@ public class UtilHttp {
 
 		}
 		return in;
+	}
+
+	private static final UtilHttp DEFAULT_UTIL_HTTP_TEN_SEC_TIMEOUT = new UtilHttp();
+
+	public static String fetchHttpResponse(String url) {
+		return DEFAULT_UTIL_HTTP_TEN_SEC_TIMEOUT.getHttpResponse(url);
+	}
+
+	public static String fetchHttpResponseForGetRequest(String url, Map<String, String> params ) {
+		return DEFAULT_UTIL_HTTP_TEN_SEC_TIMEOUT.getHttpResponseForGetRequest(url, params);
+	}
+
+	public static InputStream fetchHttpResponseAsInputStream(String url) {
+		return DEFAULT_UTIL_HTTP_TEN_SEC_TIMEOUT.getHttpResponseAsInputStream(url);
 	}
 }

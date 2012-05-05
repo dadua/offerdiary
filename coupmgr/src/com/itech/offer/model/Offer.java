@@ -26,4 +26,10 @@ public class Offer {
 		this.validity = validity;
 	}
 
+	@Override
+	public String toString() {
+		return "Offer [description=" + this.description + ", validity=" + this.validity
+		+ "]";
+	}
+
 }

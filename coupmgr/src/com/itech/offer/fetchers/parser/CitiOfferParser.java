@@ -3,19 +3,15 @@ package com.itech.offer.fetchers.parser;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.itech.offer.model.Offer;
 
-public class CitiOfferParser {
+public class CitiOfferParser extends CommonHttpParser {
 
-	private final Document doc;
-
-	public CitiOfferParser(String citiSpecialOfferHtml) {
-		this.doc = Jsoup.parse(citiSpecialOfferHtml);
+	public CitiOfferParser(String citiOfferHtml) {
+		super(citiOfferHtml);
 	}
 
 	public List<String> getCityOfferLinks() {
@@ -26,10 +22,6 @@ public class CitiOfferParser {
 			cityOfferLinks.add(relativeLinkUrl);
 		}
 		return cityOfferLinks;
-	}
-
-	public Document getDoc() {
-		return this.doc;
 	}
 
 	public List<Offer> getCuisineOffers() {
@@ -51,5 +43,4 @@ public class CitiOfferParser {
 	private String getValidity(Element element) {
 		return element.select(".validity_hd").text();
 	}
-
 }
