@@ -8,7 +8,9 @@ import com.itech.alert.handler.AlertHandler;
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertConfig;
 import com.itech.common.db.ConnectionUtil;
+import com.itech.common.db.hibernate.HibernateSessionFactory;
 import com.itech.common.services.Initialize;
+import com.itech.common.services.ServiceLocator;
 
 public class AlertEngine implements Initialize, Runnable{
 	private final Logger logger = Logger.getLogger(AlertEngine.class);
@@ -16,6 +18,7 @@ public class AlertEngine implements Initialize, Runnable{
 	private List<AlertHandler> alertHandlers;
 	private List<AlertGenerator> alertGenerators;
 	private ConnectionUtil connectionUtil;
+	private HibernateSessionFactory hibernateSessionFactory;
 
 	@Override
 	public void init() {
@@ -30,6 +33,7 @@ public class AlertEngine implements Initialize, Runnable{
 		while (true) {
 			try {
 				getConnectionUtil().createNewConnection();
+				getHibernateSessionFactory().openNewSession();
 				List<AlertConfig> alertConfigs = alertConfigManager.getAllActiveExpiredAlertConfigs();
 				for (AlertConfig alertConfig : alertConfigs) {
 					for (AlertGenerator alertGenerator : alertGenerators) {
@@ -41,11 +45,13 @@ public class AlertEngine implements Initialize, Runnable{
 						}
 					}
 				}
+				getHibernateSessionFactory().commitCurrentTransaction();
 
 			} catch (Exception e) {
 				logger.error("Exception in alert engine", e);
 			}finally {
 				getConnectionUtil().releaseCurrentConnection();
+				getHibernateSessionFactory().closeCurrentSession();
 			}
 			try {
 				Thread.sleep(60000);
@@ -99,6 +105,19 @@ public class AlertEngine implements Initialize, Runnable{
 
 	public ConnectionUtil getConnectionUtil() {
 		return connectionUtil;
+	}
+
+
+	public HibernateSessionFactory getHibernateSessionFactory() {
+		if (hibernateSessionFactory == null) {
+			hibernateSessionFactory = ServiceLocator.getInstance().getBean(HibernateSessionFactory.class);
+		}
+		return hibernateSessionFactory;
+	}
+
+
+	public void setHibernateSessionFactory(HibernateSessionFactory hibernateSessionFactory) {
+		this.hibernateSessionFactory = hibernateSessionFactory;
 	}
 
 
