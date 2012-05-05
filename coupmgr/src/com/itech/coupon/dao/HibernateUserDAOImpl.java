@@ -10,13 +10,13 @@ import com.itech.coupon.model.User;
 public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implements UserDAO {
 
 	@Override
-	protected String getClassName() {
-		return User.class.getName();
+	protected Class getEntityClass() {
+		return User.class;
 	}
 
 	@Override
 	public User getByUserId(String userId) {
-		String hql = "from " + getClassName() + " where userId = :userId";
+		String hql = "from " + getEntityClassName() + " where userId = :userId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("userId", userId);
 		List list = query.list();
