@@ -1,9 +1,7 @@
 package com.itech.test;
 
-import java.util.List;
-
 import com.itech.offer.fetchers.CitiOfferFetcher;
-import com.itech.offer.model.Offer;
+import com.itech.offer.fetchers.HsbcDiningOfferFetcher;
 
 public class TestCitiOfferFetcher {
 
@@ -12,7 +10,11 @@ public class TestCitiOfferFetcher {
 
 		CitiOfferFetcher fetcher = new CitiOfferFetcher();
 
-		List<Offer> fetchAllOffers = fetcher.fetchAllOffers();
+		//List<Offer> fetchAllOffers = fetcher.fetchAllOffers();
+
+		HsbcDiningOfferFetcher hsbcDiningOfferFetcher = new HsbcDiningOfferFetcher();
+
+		hsbcDiningOfferFetcher.fetchAllOffers();
 
 	}
 
