@@ -10,6 +10,13 @@ public class Offer {
 
 	private String validity;
 
+	private String location;
+
+	private String consumptionType;
+
+	private String consumptionSubType;
+
+	private String imageSrc;
 
 	public Offer() {
 
@@ -39,8 +46,10 @@ public class Offer {
 	@Override
 	public String toString() {
 		return "Offer [merchantName=" + this.merchantName + ", address=" + this.address
-		+ ", description=" + this.description + ", validity=" + this.validity
-		+ "]";
+				+ ", description=" + this.description + ", validity=" + this.validity
+				+ " imageSrc ="+this.imageSrc+", consumptionType = "+this.consumptionType
+				+", consumptionSubType = "+this.consumptionSubType+", location="+this.location
+				+"]";
 	}
 
 	public String getMerchantName() {
@@ -57,5 +66,37 @@ public class Offer {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getConsumptionType() {
+		return consumptionType;
+	}
+
+	public void setConsumptionType(String consumptionType) {
+		this.consumptionType = consumptionType;
+	}
+
+	public String getConsumptionSubType() {
+		return consumptionSubType;
+	}
+
+	public void setConsumptionSubType(String consumptionSubType) {
+		this.consumptionSubType = consumptionSubType;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 }
