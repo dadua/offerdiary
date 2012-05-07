@@ -6,6 +6,8 @@ public class Offer {
 
 	private String address;
 
+	private String merchantWebAdress;
+
 	private String description;
 
 	private String validity;
@@ -49,7 +51,7 @@ public class Offer {
 				+ ", description=" + this.description + ", validity=" + this.validity
 				+ " imageSrc ="+this.imageSrc+", consumptionType = "+this.consumptionType
 				+", consumptionSubType = "+this.consumptionSubType+", location="+this.location
-				+"]";
+				+", merchantWebAddress= "+this.merchantWebAdress+"]";
 	}
 
 	public String getMerchantName() {
@@ -98,5 +100,13 @@ public class Offer {
 
 	public void setImageSrc(String imageSrc) {
 		this.imageSrc = imageSrc;
+	}
+
+	public String getMerchantWebAdress() {
+		return merchantWebAdress;
+	}
+
+	public void setMerchantWebAdress(String merchantWebAdress) {
+		this.merchantWebAdress = merchantWebAdress;
 	}
 }
