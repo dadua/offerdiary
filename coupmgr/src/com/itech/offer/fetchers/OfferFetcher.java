@@ -2,12 +2,12 @@ package com.itech.offer.fetchers;
 
 import java.util.List;
 
-import com.itech.parser.offer.model.Offer;
+import com.itech.parser.offer.model.CardOfferVO;
 
 public interface OfferFetcher {
 
-	public List<Offer> fetchAllOffers();
+	public List<CardOfferVO> fetchAllOffers();
 
-	//	public List<Offer> fetchAllOffers(String place);
+	//	public List<CardOfferVO> fetchAllOffers(String place);
 
 }

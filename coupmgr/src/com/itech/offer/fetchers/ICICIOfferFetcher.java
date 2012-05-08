@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.ICICIOfferParser;
-import com.itech.parser.offer.model.Offer;
+import com.itech.parser.offer.model.CardOfferVO;
 
 public class ICICIOfferFetcher implements OfferFetcher{
 
@@ -16,30 +16,30 @@ public class ICICIOfferFetcher implements OfferFetcher{
 	public static final String ENTERTAINMENT_OFFERS_URL=ICICI_OFFERS_BASE_URL +"Entertainment.html";
 
 	@Override
-	public List<Offer> fetchAllOffers() {
-		List<Offer> shoppingOffers = getShoppingOffers();
-		List<Offer> entertainmentOffers= getEntertainmentOffers();
-		List<Offer> diningOffers= getDiningOffers();
-		List<Offer> allICICIOffers = new ArrayList<Offer>();
+	public List<CardOfferVO> fetchAllOffers() {
+		List<CardOfferVO> shoppingOffers = getShoppingOffers();
+		List<CardOfferVO> entertainmentOffers= getEntertainmentOffers();
+		List<CardOfferVO> diningOffers= getDiningOffers();
+		List<CardOfferVO> allICICIOffers = new ArrayList<CardOfferVO>();
 		allICICIOffers.addAll(shoppingOffers);
 		allICICIOffers.addAll(diningOffers);
 		allICICIOffers.addAll(entertainmentOffers);
 		return allICICIOffers;
 	}
 
-	private List<Offer> getDiningOffers() {
+	private List<CardOfferVO> getDiningOffers() {
 		String response = UtilHttp.fetchHttpResponse(DINING_OFFERS_URL);
 		ICICIOfferParser parser = new ICICIOfferParser(response);
 		return parser.getAllOffers();
 	}
 
-	private List<Offer> getEntertainmentOffers() {
+	private List<CardOfferVO> getEntertainmentOffers() {
 		String response = UtilHttp.fetchHttpResponse(ENTERTAINMENT_OFFERS_URL);
 		ICICIOfferParser parser = new ICICIOfferParser(response);
 		return parser.getAllOffers();
 	}
 
-	private List<Offer> getShoppingOffers() {
+	private List<CardOfferVO> getShoppingOffers() {
 		String response = UtilHttp.fetchHttpResponse(SHOPPING_OFFERS_URL);
 		ICICIOfferParser parser = new ICICIOfferParser(response);
 		return parser.getAllOffers();

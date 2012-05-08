@@ -13,7 +13,7 @@ public class TestCitiOfferFetcher {
 
 		//		CitiOfferFetcher fetcher = new CitiOfferFetcher();
 		//
-		//		List<Offer> fetchAllOffers = fetcher.fetchAllOffers();
+		//		List<CardOfferVO> fetchAllOffers = fetcher.fetchAllOffers();
 		//
 		//		System.out.println("Size is - "+fetchAllOffers.size());
 		//

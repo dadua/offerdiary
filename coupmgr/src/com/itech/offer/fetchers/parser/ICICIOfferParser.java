@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Element;
 
-import com.itech.parser.offer.model.Offer;
+import com.itech.parser.offer.model.CardOfferVO;
 
 public class ICICIOfferParser extends CommonHttpParser{
 
@@ -18,19 +18,19 @@ public class ICICIOfferParser extends CommonHttpParser{
 		super(html);
 	}
 
-	public List<Offer> getAllOffers() {
-		List<Offer> allOffers = new ArrayList<Offer>();
+	public List<CardOfferVO> getAllOffers() {
+		List<CardOfferVO> allOffers = new ArrayList<CardOfferVO>();
 		List<Element> OfferHolders = getDoc().select("body>table>tbody>tr>td>table>tbody>tr>td>table");
 		for(Element offerHolder : OfferHolders){
-			Offer offer = processOffer(offerHolder);
+			CardOfferVO offer = processOffer(offerHolder);
 			logger.info(offer);
 			allOffers.add(offer);
 		}
 		return allOffers;
 	}
 
-	private Offer processOffer(Element offerHolder) {
-		Offer offer = new Offer();
+	private CardOfferVO processOffer(Element offerHolder) {
+		CardOfferVO offer = new CardOfferVO();
 		String innerText =  offerHolder.text();
 		offer.setDescription(innerText);
 		offer.setMerchantWebAdress(getMerchantWebAdress(innerText));
@@ -39,7 +39,7 @@ public class ICICIOfferParser extends CommonHttpParser{
 	}
 
 	private String getValidity(String innerText) {
-		Pattern pattern = Pattern.compile("Offer valid till([a-zA-Z0-9]|\\s)*, 2012");
+		Pattern pattern = Pattern.compile("CardOfferVO valid till([a-zA-Z0-9]|\\s)*, 2012");
 		Matcher matcher = pattern.matcher(innerText);
 		if (matcher.find())
 		{
