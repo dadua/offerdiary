@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.ICICIOfferParser;
-import com.itech.offer.model.Offer;
+import com.itech.parser.offer.model.Offer;
 
 public class ICICIOfferFetcher implements OfferFetcher{
 

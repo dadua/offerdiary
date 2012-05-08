@@ -1,4 +1,4 @@
-package com.itech.offer.model;
+package com.itech.parser.offer.model;
 
 public class Offer {
 
