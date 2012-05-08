@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Element;
 
-import com.itech.offer.model.Offer;
+import com.itech.parser.offer.model.Offer;
 
 public class ICICIOfferParser extends CommonHttpParser{
 

@@ -6,7 +6,7 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.itech.offer.model.Offer;
+import com.itech.parser.offer.model.Offer;
 
 
 public class HsbcDiningOfferParser extends CommonHttpParser {

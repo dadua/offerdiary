@@ -2,7 +2,7 @@ package com.itech.offer.fetchers;
 
 import java.util.List;
 
-import com.itech.offer.model.Offer;
+import com.itech.parser.offer.model.Offer;
 
 public interface OfferFetcher {
 

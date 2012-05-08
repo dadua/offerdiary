@@ -30,7 +30,9 @@ public class HibernateSessionFactoryImpl  implements HibernateSessionFactory {
 		threadLocalSession.set(null);
 		try {
 			session.clear();
-			session.close();
+			if (session.isOpen()) {
+				session.close();
+			}
 		} catch (HibernateException ex) {
 			logger.error("Error occoured while closing Hibernate session.", ex);
 			throw new RuntimeException("Error occoured while closing Hibernate session.", ex);
