@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.itech.parser.offer.model.Offer;
+import com.itech.parser.offer.model.CardOfferVO;
 
 public class CitiOfferParser extends CommonHttpParser {
 
@@ -44,10 +44,10 @@ public class CitiOfferParser extends CommonHttpParser {
 	 * 
 	 * @return return list of citi cuisine offers
 	 */
-	public List<Offer> getCuisineOffers() {
+	public List<CardOfferVO> getCuisineOffers() {
 		String city = getCity();
 		Elements offerChunkHolder = getDoc().select(CUISINE_OFFER_CHUNK_HOLDER_DIV_SELECTOR);
-		List<Offer> citiCuisineoffers = new ArrayList<Offer>();
+		List<CardOfferVO> citiCuisineoffers = new ArrayList<CardOfferVO>();
 		for (Element offerChunk: offerChunkHolder) {
 			getAllOfferForCurrentOfferChunk(city,offerChunk, citiCuisineoffers);
 		}
@@ -69,7 +69,7 @@ public class CitiOfferParser extends CommonHttpParser {
 	 * @param citiCuisineoffers
 	 */
 	private void getAllOfferForCurrentOfferChunk(String city, Element offerChunk,
-			List<Offer> citiCuisineoffers) {
+			List<CardOfferVO> citiCuisineoffers) {
 
 		String cusineType=  getCusineType(offerChunk);
 		List<Element> allElementInsideOfferChunk = offerChunk.children();
@@ -81,7 +81,7 @@ public class CitiOfferParser extends CommonHttpParser {
 
 			if(TagUtil.DIV.equalsIgnoreCase(currentTagName)){
 				if(OFFER_HOLDER_DIV_CLASSNAME_SELECTOR.equalsIgnoreCase(currentElement.className())){
-					Offer offer = processNewOffer(currentElement);
+					CardOfferVO offer = processNewOffer(currentElement);
 					offer.setLocation(city);
 					offer.setConsumptionType(DINING_CONSPUTION_TYPE);
 					offer.setConsumptionSubType(cusineType);
@@ -94,7 +94,7 @@ public class CitiOfferParser extends CommonHttpParser {
 				}
 				Element offerHolder = allElementInsideOfferChunk.get(++i);
 				if(TagUtil.DIV.equalsIgnoreCase(offerHolder.tagName()) && OFFER_HOLDER_DIV_CLASSNAME_SELECTOR.equalsIgnoreCase(offerHolder.className())){
-					Offer offer = processNewOffer(currentElement, offerHolder);
+					CardOfferVO offer = processNewOffer(currentElement, offerHolder);
 					offer.setLocation(city);
 					offer.setConsumptionType(DINING_CONSPUTION_TYPE);
 					offer.setConsumptionSubType(cusineType);
@@ -105,14 +105,14 @@ public class CitiOfferParser extends CommonHttpParser {
 		}
 	}
 
-	private void debugOffer(Offer offer) {
+	private void debugOffer(CardOfferVO offer) {
 		logger.debug(offer);
 		logger.debug("----------------------------------------------------------------------------");
 	}
 
 	/*where an offer is composite entity*/
-	private Offer processNewOffer(Element validityElement, Element offerHolder) {
-		Offer offer = new Offer();
+	private CardOfferVO processNewOffer(Element validityElement, Element offerHolder) {
+		CardOfferVO offer = new CardOfferVO();
 		String validity = validityElement.text();
 		offer.setValidity(validity);
 		setOfferFields(offerHolder, offer);
@@ -120,15 +120,15 @@ public class CitiOfferParser extends CommonHttpParser {
 	}
 
 	/* where an offer block is individual entity*/
-	private Offer processNewOffer(Element offerHolder) {
-		Offer offer = new Offer();
+	private CardOfferVO processNewOffer(Element offerHolder) {
+		CardOfferVO offer = new CardOfferVO();
 		setOfferFields(offerHolder, offer);
 		String validity = getValidity(offerHolder);
 		offer.setValidity(validity);
 		return offer;
 	}
 
-	private void setOfferFields(Element offerHolder, Offer offer){
+	private void setOfferFields(Element offerHolder, CardOfferVO offer){
 		String merchantName = getMerchantName(offerHolder);
 		String description = getOfferDescription(offerHolder);
 		String imageSrc = getOffferImage(offerHolder);

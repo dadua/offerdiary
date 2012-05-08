@@ -1,6 +1,6 @@
 package com.itech.parser.offer.model;
 
-public class Offer {
+public class CardOfferVO {
 
 	private String merchantName;
 
@@ -20,11 +20,11 @@ public class Offer {
 
 	private String imageSrc;
 
-	public Offer() {
+	public CardOfferVO() {
 
 	}
 
-	public Offer(String validity, String description) {
+	public CardOfferVO(String validity, String description) {
 		this.validity = validity;
 		this.description = description;
 	}
@@ -47,7 +47,7 @@ public class Offer {
 
 	@Override
 	public String toString() {
-		return "Offer [merchantName=" + this.merchantName + ", address=" + this.address
+		return "CardOfferVO [merchantName=" + this.merchantName + ", address=" + this.address
 				+ ", description=" + this.description + ", validity=" + this.validity
 				+ " imageSrc ="+this.imageSrc+", consumptionType = "+this.consumptionType
 				+", consumptionSubType = "+this.consumptionSubType+", location="+this.location
