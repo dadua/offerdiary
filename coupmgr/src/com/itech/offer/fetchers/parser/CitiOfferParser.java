@@ -149,6 +149,7 @@ public class CitiOfferParser extends CommonHttpParser {
 	private String getOffferImage(Element offerHolder) {
 		Element image = offerHolder.select("img").first();
 		String url = image.attr("abs:src");
+		url = image.absUrl("src");
 		return url;
 	}
 
