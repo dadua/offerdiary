@@ -15,7 +15,12 @@
 		<property name="dataSource" ref="itech.DataSource" />
 		<property name="annotatedClasses">
 		<list>
-		<value>com.itech.coupon.model.User</value>
+			<value>com.itech.coupon.model.User</value>
+			<value>com.itech.offer.model.BankCard</value>
+			<value>com.itech.offer.model.Offer</value>
+			<value>com.itech.offer.model.Vendor</value>
+			<value>com.itech.offer.model.OfferBankCardAssoc</value>
+			<value>com.itech.offer.model.OfferUserAssoc</value>
 		</list>
 		</property>
 		<property name="hibernateProperties">
