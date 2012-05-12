@@ -28,7 +28,7 @@
 			it.wallet.appendCoupon = function (coupon) {
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
-	    		couponHtml += '" ><div class="thumbnail"><span class="label label-success">Done!</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
+	    		couponHtml += '" ><div class="thumbnail"><span class="label label-success">Done!</span><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ></span><h3>Details:';
 	    		couponHtml += coupon.detail;
@@ -98,7 +98,7 @@
 				}, function(e){
 					$(this).addClass('icon-white');
 				});
-				$('.coupon-trash').click(it.wallet.trashCoupon);
+				$('.coupon-trash').click(it.wallet.trashCoupon).tooltip();
 			};
 			
 			$(function() {
@@ -135,7 +135,7 @@
 				    	%>
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
 								<div class="thumbnail coupon"  >
-								<span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_<%=coupon.getId()%>"></span>
+								<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
 								<h3>Details:  <%=coupon.getDetail()%> </h3>
 								<h5>Code: <%=coupon.getCode()%> </h5>
 								<h5>Discount: <%=coupon.getDiscount()%> </h5>
