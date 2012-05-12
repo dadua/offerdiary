@@ -110,17 +110,10 @@
 	
 		<%@include file="navHeader.jsp" %>
 		
-		<div class="container">
-			<div class="row">
-				<div class="span6 offset2">
-					<%@include file="walletTabs.jsp" %>
-				</div>
-			</div>
-		</div>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span2" >
-					<%@include file="storeTabs.jsp" %>
+					<%@include file="walletTabs.jsp" %>
 				</div>
 				<div class="span6" id="couponContainer" >
 				 <% 
