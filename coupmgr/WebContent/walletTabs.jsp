@@ -1,5 +1,5 @@
 
-		<div class="tabbable tabs-below tab-text" style="padding-bottom: 18px;">
+		<div class="tabbable tabs-left">
 			<ul class="nav nav-tabs">
 				<li id="couponTab" class="active">
 					 <a href="coupons.do" >Coupons</a>
