@@ -1,31 +1,22 @@
 package com.itech.coupon.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.itech.common.db.PersistableEntity;
 import com.itech.coupon.model.constants.UserModelConstants;
 
 @Entity
 @Table(name="USERS")
-public class User implements Serializable{
+public class User extends PersistableEntity{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name=UserModelConstants.COL_ID)
-	private Long id;
 
 	@Column(name=UserModelConstants.COL_USER_ID)
 	private String userId;
@@ -56,13 +47,10 @@ public class User implements Serializable{
 	@Column(name=UserModelConstants.COL_EMAIL_ID)
 	private String emailId;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name=UserModelConstants.COL_USER_ROLE)
+	private final UserRole userRole = UserRole.CONSUMER;
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getUserId() {
 		return userId;
@@ -117,6 +105,9 @@ public class User implements Serializable{
 	}
 	public String getEmailId() {
 		return emailId;
+	}
+	public UserRole getUserRole() {
+		return userRole;
 	}
 
 
