@@ -28,7 +28,7 @@
 			it.wallet.appendCoupon = function (coupon) {
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
-	    		couponHtml += '" ><div class="thumbnail coupon" > <span class="label label-success">Yo! New Coupon Added</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
+	    		couponHtml += '" ><div class="thumbnail"><span class="label label-success">Done!</span><span class="icon-trash icon-white pull-right coupon-trash" id="couponTrash_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ></span><h3>Details:';
 	    		couponHtml += coupon.detail;
@@ -38,6 +38,10 @@
 	    		couponHtml += coupon.discount;
 	    		couponHtml +=  '</h5></div></li>';
 	    		$(couponHtml).appendTo('.thumbnails');
+	    		$('#coupon_'+coupon.id).addClass('coupon', 9000);
+	    		$('div.thumbnail span.label').hide('highlight', 5000, function(){
+	    			$(this).remove();
+	    		});
 			};
 			
 			it.wallet.clearCouponFormVals = function () {
@@ -63,7 +67,6 @@
 							if (ret.success === true) {
 								it.wallet.appendCoupons(ret.result);
 								it.wallet.addHandlers();
-								setTimeout("$('div.thumbnail span.label').hide().remove();", 5000);
 							} else {
 								//Handle error case
 							}
@@ -108,8 +111,9 @@
 		</script>
 		<style type="text/css">
 			.coupon {
-				background: none repeat scroll 0 0 #E6E7FF;
+				background-color: #E6E7FF;
 			};
+			
 		</style>
 	</head>
 	<body>
