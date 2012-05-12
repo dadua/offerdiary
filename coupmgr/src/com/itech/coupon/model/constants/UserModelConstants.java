@@ -13,4 +13,5 @@ public class UserModelConstants {
 	public static final String COL_LOCATION = "LOCATION";
 	public static final String COL_LANGUAGE = "LANGUAGE";
 	public static final String COL_EMAIL_ID = "EMAIL_ID";
+	public static final String COL_USER_ROLE = "USER_ROLE";
 }
