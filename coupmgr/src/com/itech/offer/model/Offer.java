@@ -14,17 +14,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
+import com.itech.offer.model.enums.DiscountType;
+import com.itech.offer.model.enums.OfferType;
 
 @Entity
 @Table(name="OFFERS")
 public class Offer extends PersistableEntity{
-	public enum DiscountType {
-		FIXED_AMMOUNT, PERCENTAGE, NO_DISCOUNT
-	}
-
-	public enum OfferType {
-		COUPON, OFFER, VOUCHER
-	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
