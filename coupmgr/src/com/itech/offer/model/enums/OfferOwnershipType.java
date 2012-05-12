@@ -1,5 +1,5 @@
 package com.itech.offer.model.enums;
 
-public enum OffeOwrnershipType {
+public enum OfferOwnershipType {
 	CREATOR, SHARED
 }
