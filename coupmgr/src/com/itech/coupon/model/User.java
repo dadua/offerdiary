@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
@@ -16,7 +19,13 @@ public class User extends PersistableEntity{
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
+	private Long id;
 
 	@Column(name=UserModelConstants.COL_USER_ID)
 	private String userId;
@@ -108,6 +117,16 @@ public class User extends PersistableEntity{
 	}
 	public UserRole getUserRole() {
 		return userRole;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getId() {
+		return id;
+	}
+	@Override
+	public boolean isTransient() {
+		return id == null;
 	}
 
 
