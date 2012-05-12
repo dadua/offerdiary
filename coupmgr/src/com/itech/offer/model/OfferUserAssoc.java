@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
 import com.itech.coupon.model.User;
-import com.itech.offer.model.enums.OffeOwrnershipType;
+import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferSharingType;
 
 @Entity
@@ -39,7 +39,7 @@ public class OfferUserAssoc extends PersistableEntity{
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="OWNERSHIP_TYPE")
-	private OffeOwrnershipType ownershipType = OffeOwrnershipType.CREATOR;
+	private OfferOwnershipType ownershipType = OfferOwnershipType.CREATOR;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="OFFER_SHARING_TYPE")
@@ -63,10 +63,10 @@ public class OfferUserAssoc extends PersistableEntity{
 	public void setOriginalUser(User originalUser) {
 		this.originalUser = originalUser;
 	}
-	public OffeOwrnershipType getOwnershipType() {
+	public OfferOwnershipType getOwnershipType() {
 		return ownershipType;
 	}
-	public void setOwnershipType(OffeOwrnershipType ownershipType) {
+	public void setOwnershipType(OfferOwnershipType ownershipType) {
 		this.ownershipType = ownershipType;
 	}
 	public OfferSharingType getOfferSharingType() {
