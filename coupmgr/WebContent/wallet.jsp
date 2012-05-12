@@ -1,3 +1,4 @@
+<%@page import="com.itech.offer.model.Offer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -54,8 +55,8 @@
 				var expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime();
 				var detail = $('#discountDetails').val();
 				var coupon = {
-					code: code,
-					detail: detail,
+					offerCode: code,
+					description: detail,
 					expiryDateInMillis: expiryDateInMillis
 				};
 				var coupons = [];
@@ -127,18 +128,18 @@
 				</div>
 				<div class="span6" id="couponContainer" >
 				 <% 
-				 	List<Coupon> myCoupons = (List<Coupon>) request.getAttribute("myCoupons");
+				 	List<Offer> myCoupons = (List<Offer>) request.getAttribute("myCoupons");
 				 %>	
 				 <ul class="thumbnails">
 				 <% 
-				    for (Coupon coupon : myCoupons) {
+				    for (Offer coupon : myCoupons) {
 				    	%>
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
 								<div class="thumbnail coupon"  >
 								<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
-								<h3>Details:  <%=coupon.getDetail()%> </h3>
-								<h5>Code: <%=coupon.getCode()%> </h5>
-								<h5>Discount: <%=coupon.getDiscount()%> </h5>
+								<h3>Details:  <%=coupon.getDescription()%> </h3>
+								<h5>Code: <%=coupon.getOfferCode()%> </h5>
+								<h5>Discount: <%=coupon.getDiscountValue()%> </h5>
 								</div>
 							</li>
 				    	<%

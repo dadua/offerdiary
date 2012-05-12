@@ -12,6 +12,7 @@ import com.itech.coupon.manager.CouponManager;
 import com.itech.coupon.manager.StoreManager;
 import com.itech.coupon.manager.UserManager;
 import com.itech.coupon.model.User;
+import com.itech.offer.manager.OfferManager;
 
 public class CommonAction {
 	private SecurityManager securityManager;
@@ -20,6 +21,7 @@ public class CommonAction {
 	private UserManager userManager;
 	private StoreManager storeManager;
 	private AlertManager alertManager;
+	private OfferManager offerManager;
 
 	public User getLoggedInUser() {
 		return getSecurityManager().getLoggedInUser();
@@ -95,6 +97,17 @@ public class CommonAction {
 			alertManager = ServiceLocator.getInstance().getBean(AlertManager.class);
 		}
 		return alertManager;
+	}
+
+	public OfferManager getOfferManager() {
+		if (offerManager == null) {
+			offerManager = ServiceLocator.getInstance().getBean(OfferManager.class);
+		}
+		return offerManager;
+	}
+
+	public void setOfferManager(OfferManager offerManager) {
+		this.offerManager = offerManager;
 	}
 
 

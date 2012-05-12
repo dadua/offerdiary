@@ -1,5 +1,9 @@
 package com.itech.offer.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Query;
+
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.OfferUserAssoc;
@@ -9,7 +13,16 @@ public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc
 	@Override
 	protected Class getEntityClass() {
 		// TODO Auto-generated method stub
-		return null;
+		return OfferUserAssoc.class;
+	}
+
+	@Override
+	public List<OfferUserAssoc> getOfferUserAssocForOffer(Long offerId) {
+		String hql = "select oua from " + getEntityClassName() + " oua where oua.offer.id = :offerId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offerId", offerId);
+		List list = query.list();
+		return list;
 	}
 
 }

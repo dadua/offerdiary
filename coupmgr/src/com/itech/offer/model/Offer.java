@@ -50,14 +50,12 @@ public class Offer extends PersistableEntity{
 	@Column(name="NAME")
 	private OfferType offerType = OfferType.OFFER; //coupon, voucher, offer
 
-
 	@ManyToOne
 	@JoinColumn(name="TARGET_VENDOR")
 	private Vendor targetVendor;
 
 	@Column(name="IMAGE_SOURCE")
 	private String imageSource;
-
 
 	@ManyToOne
 	@JoinColumn(name="SOURCE_VENDOR")
@@ -71,6 +69,22 @@ public class Offer extends PersistableEntity{
 
 	@Column(name="IS_PROTOTYPE")
 	private boolean isProtoType;
+
+	private Long daysToExpire;
+
+	private long expiryDateInMillis;
+
+	public void setDaysToExpire() {
+		Long timeMillis = System.currentTimeMillis();
+		Long expiryTime = getExpiry().getTime();
+		Long millisToExpire = expiryTime - timeMillis;
+		Long days = (millisToExpire)/(1000*60*24);
+		this.daysToExpire = days;
+	}
+
+	public Long getDaysToExpire() {
+		return this.daysToExpire;
+	}
 
 	public String getTitle() {
 		return title;
@@ -118,6 +132,7 @@ public class Offer extends PersistableEntity{
 
 	public void setExpiry(Date expiry) {
 		this.expiry = expiry;
+		setDaysToExpire();
 	}
 
 	public String getOfferCode() {
@@ -195,6 +210,14 @@ public class Offer extends PersistableEntity{
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public long getExpiryDateInMillis() {
+		return expiryDateInMillis;
+	}
+
+	public void setExpiryDateInMillis(long expiryDateInMillis) {
+		this.expiryDateInMillis = expiryDateInMillis;
 	}
 
 }

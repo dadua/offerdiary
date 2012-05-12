@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+
+	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl">
+		<property name="offerDAO"  ref="itech.offerDAO"/>
+		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
+	</bean>
+
+	<bean id="itech.offerDAO" class="com.itech.offer.dao.impl.OfferDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+
+	<bean id="itech.vendorDAO"  class="com.itech.offer.dao.impl.VendorDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+
+	<bean id="itech.banckCardDAO"  class="com.itech.offer.dao.impl.BankCardDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+
+	<bean id="itech.offerUserAssocDAO"  class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+
+</beans>
