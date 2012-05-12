@@ -40,6 +40,11 @@
 	    		$(couponHtml).appendTo('.thumbnails');
 			};
 			
+			it.wallet.clearCouponFormVals = function () {
+				$('.couponDetail').val('');
+			};
+			
+			
 			it.wallet.addCoupon = function () {
 				var code = $('#code').val();
 				var expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime();
@@ -97,6 +102,7 @@
 				$('#addCouponToWallet').click(it.wallet.addCoupon);
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
+				$('#addCouponModalBtn').click(it.wallet.clearCouponFormVals);
 			});
 			
 		</script>
@@ -146,11 +152,11 @@
 						<div class="modal-body" >
 							<form class="well">
 								<label>Code: </label>
-								<input id="code" type="text" class="span3" placeholder="Coupon Code?" />
+								<input id="code" type="text" class="span3 couponDetail" placeholder="Coupon Code?" />
 								<label>Discount Description: </label>
-								<textarea class="span3" id="discountDetails" placeholder="Discount Details"></textarea>
+								<textarea class="span3 couponDetail" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label> Expiry Date: </label>
-								<input id="expiryDate" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
+								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
 							</form>
 						</div>
 						<div class="modal-footer" >
@@ -158,7 +164,7 @@
 							<a id="addCouponToWallet" class="btn btn-primary">Add Coupon</a>
 						</div>
 					</div>
-					<a class="btn btn-primary btn-large" data-toggle="modal" href="#addCouponModal" >Add Coupon to Wallet</a>
+					<a id="addCouponModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addCouponModal" >Add Coupon to Wallet</a>
 						
 				</div>
 			</div>
