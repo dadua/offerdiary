@@ -27,7 +27,11 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	@Override
 	public boolean delete(long uniqueId) {
-		throw new RuntimeException("Not yet implemented");
+		String hql = "delete from "+getEntityClassName()+" where id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", uniqueId);
+		query.executeUpdate();
+		return true;
 	}
 
 	@Override
