@@ -10,10 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.coupon.model.constants.CouponModelConstants;
+import com.itech.offer.model.Offer;
 
 @Entity
 @Table(name="COUPONS")
-public class Coupon {
+public class Coupon extends Offer{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name=CouponModelConstants.COL_ID)
@@ -35,9 +36,11 @@ public class Coupon {
 	private CouponPermission permission =  CouponPermission.PRIVATE;
 	private String tags;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
