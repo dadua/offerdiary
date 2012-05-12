@@ -36,88 +36,92 @@ public class Coupon extends Offer{
 	private CouponPermission permission =  CouponPermission.PRIVATE;
 	private String tags;
 
-	@Override
-	public Long getId() {
-		return id;
+	private Long daysToExpire;
+
+	public void setDaysToExpire() {
+		Long timeMillis = System.currentTimeMillis();
+		Long expiryTime = getExpiryDate().getTime();
+		Long millisToExpire = expiryTime - timeMillis;
+		Long days = (millisToExpire)/(1000*60*24);
+		this.daysToExpire = days;
 	}
-	@Override
-	public void setId(Long id) {
-		this.id = id;
+
+	public Long getDaysToExpire() {
+		return this.daysToExpire;
 	}
+
 	public Store getStore() {
-		return store;
+		return this.store;
 	}
 	public void setStore(Store store) {
 		this.store = store;
 	}
 	public long getStoreId() {
-		return storeId;
+		return this.storeId;
 	}
 	public void setStoreId(long storeId) {
 		this.storeId = storeId;
 	}
 	public String getCode() {
-		return code;
+		return this.code;
 	}
 	public void setCode(String code) {
 		this.code = code;
 	}
 	public float getDiscount() {
-		return discount;
+		return this.discount;
 	}
 	public void setDiscount(float discount) {
 		this.discount = discount;
 	}
 	public String getDetail() {
-		return detail;
+		return this.detail;
 	}
 	public void setDetail(String detail) {
 		this.detail = detail;
 	}
 	public Date getCreationDate() {
-		return creationDate;
+		return this.creationDate;
 	}
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
 	public Date getExpiryDate() {
-		return expiryDate;
+		return this.expiryDate;
 	}
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
+		setDaysToExpire();
 	}
 	public void setPermission(CouponPermission permission) {
 		this.permission = permission;
 	}
 	public CouponPermission getPermission() {
-		return permission;
+		return this.permission;
 	}
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 	public User getOwner() {
-		return owner;
+		return this.owner;
 	}
 	public void setTags(String tags) {
 		this.tags = tags;
 	}
 	public String getTags() {
-		return tags;
+		return this.tags;
 	}
 	public void setAutoGUID(String autoGUID) {
 		this.autoGUID = autoGUID;
 	}
 	public String getAutoGUID() {
-		return autoGUID;
+		return this.autoGUID;
 	}
 	public void setExpiryDateInMillis(long expiryDateInMillis) {
 		this.expiryDateInMillis = expiryDateInMillis;
 	}
 	public long getExpiryDateInMillis() {
-		return expiryDateInMillis;
+		return this.expiryDateInMillis;
 	}
-
-
-
 
 }
