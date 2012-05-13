@@ -1,4 +1,5 @@
 		<footer class="footer container">
+		<div class="footer container">
 			<hr>
 			<div class="span3">
 			&nbsp;
@@ -25,6 +26,7 @@
 			<div class="span3">
 			&nbsp;
 			</div>
+		</div>
 		</footer>
 		
 		<%@include file="fbInitAboveBodyEnd.jsp" %>
