@@ -27,18 +27,38 @@
 			};
 			
 			it.wallet.appendCoupon = function (coupon) {
+				
+				var daysToExpire = coupon.daysToExpire;
+				var daysToExpireHtml = '<span class="daysToExpire" id="couponExpire_'+ coupon.id + '">';
+				if (daysToExpire < 0) {
+					daysToExpireHtml += 'Coupon Expired';
+				} else {
+					daysToExpireHtml += 'Days to expire: ';
+					daysToExpireHtml += daysToExpire;
+				}
+				daysToExpireHtml += '</span>';
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ><div class="thumbnail"><span class="label label-success">Done!</span><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ></span><h3>Details:';
-	    		couponHtml += coupon.detail;
+	    		couponHtml += coupon.description;
 	    		couponHtml += '</h3><h5>Code:';
-	    		couponHtml += coupon.code;
+	    		couponHtml += coupon.offerCode;
 	    		couponHtml += '</h5><h5>Discount:';
-	    		couponHtml += coupon.discount;
+	    		couponHtml += coupon.discountValue;
 	    		couponHtml +=  '</h5></div></li>';
 	    		$(couponHtml).appendTo('.thumbnails');
+	    		
+	    		/*
+	    		$('#coupon_'+coupon.id).prepend(daysToExpireHtml);
+	    		$('#couponExpire_'+coupon.id).position({
+	    				my: 'top center',
+	    				at: 'top center',
+	    				of: '#coupon_' + coupon.id,
+	    				offset: '15 0'
+				});
+	    		*/
 	    		$('#coupon_'+coupon.id).addClass('coupon', 9000);
 	    		$('div.thumbnail span.label').hide('highlight', 5000, function(){
 	    			$(this).remove();
@@ -85,6 +105,7 @@
 				$.post('deleteCoupons.do', {'couponIds': JSON.stringify(couponIds)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
+						$('#'+targetId).tooltip('hide');
 						$('#coupon_'+couponId).remove();
 					} else {
 						//Handle error case
@@ -113,7 +134,12 @@
 		<style type="text/css">
 			.coupon {
 				background-color: #E6E7FF;
-			};
+			}
+			
+			.daysToExpire {
+				border-style: dotted;
+				border-width: thick;
+			}
 			
 		</style>
 	</head>

@@ -18,7 +18,7 @@ public class OfferManagerImpl implements OfferManager {
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
-		if (offer.getExpiry() == null && offer.getExpiryDateInMillis() !=0) {
+		if ((offer.getExpiry() == null) && (offer.getExpiryDateInMillis() !=0)) {
 			offer.setExpiry(new Date(offer.getExpiryDateInMillis()));
 		}
 		offerDAO.addOrUpdate(offer);
@@ -38,10 +38,9 @@ public class OfferManagerImpl implements OfferManager {
 
 	@Override
 	public void addOffersForUser(List<Offer> offers, User user) {
-		offerDAO.addOrUpdate(offers);
-		for(Offer offer : offers){
-			OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
-			offerUserAssocDAO.addOrUpdate(offerUserAssoc);
+
+		for (Offer offer: offers) {
+			addOfferForUser(offer, user);
 		}
 	}
 
