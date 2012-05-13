@@ -29,9 +29,9 @@
 			it.wallet.appendCoupon = function (coupon) {
 				
 				var daysToExpire = coupon.daysToExpire;
-				var daysToExpireHtml = '<span class="daysToExpire" id="couponExpire_'+ coupon.id + '">';
+				var daysToExpireHtml = '<span class="daysToExpire label" id="couponExpire_'+ coupon.id + '">';
 				if (daysToExpire < 0) {
-					daysToExpireHtml += 'Coupon Expired';
+					daysToExpireHtml += 'Coupon Expired!!';
 				} else {
 					daysToExpireHtml += 'Days to expire: ';
 					daysToExpireHtml += daysToExpire;
@@ -39,7 +39,10 @@
 				daysToExpireHtml += '</span>';
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
-	    		couponHtml += '" ><div class="thumbnail"><span class="label label-success">Done!</span><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
+	    		couponHtml += '" >';
+	    		couponHtml += '<span class="label label-success">Done!</span>';
+	    		couponHtml += daysToExpireHtml;
+	    		couponHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" ></span><h3>Details:';
 	    		couponHtml += coupon.description;
@@ -51,16 +54,15 @@
 	    		$(couponHtml).appendTo('.thumbnails');
 	    		
 	    		/*
-	    		$('#coupon_'+coupon.id).prepend(daysToExpireHtml);
 	    		$('#couponExpire_'+coupon.id).position({
-	    				my: 'top center',
-	    				at: 'top center',
+	    				my: 'center top',
+	    				at: 'center top',
 	    				of: '#coupon_' + coupon.id,
-	    				offset: '15 0'
+	    				offset: '0 0'
 				});
 	    		*/
-	    		$('#coupon_'+coupon.id).addClass('coupon', 9000);
-	    		$('div.thumbnail span.label').hide('highlight', 5000, function(){
+	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
+	    		$('#coupon_'+coupon.id+ ' span.label-success').hide('highlight', 5000, function(){
 	    			$(this).remove();
 	    		});
 			};
@@ -137,8 +139,8 @@
 			}
 			
 			.daysToExpire {
-				border-style: dotted;
-				border-width: thick;
+				margin-left: 40%;
+				padding: 5px;
 			}
 			
 		</style>
@@ -160,12 +162,27 @@
 				 <% 
 				    for (Offer coupon : myCoupons) {
 				    	%>
+				    	
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
+				    			<span class="daysToExpire label" id="couponExpire_<%=coupon.getId() %>">
+				    			<%
+				    			if(coupon.getDaysToExpire() < 0) {
+				    			%>
+				    			Coupon Expired!!
+				    			<%
+				    			} else {
+				    			%>
+				    			Days to Expire: <%=coupon.getDaysToExpire()%>
+				    			<%
+				    			}
+				    			%>
+				    			</span>
+				    			
 								<div class="thumbnail coupon"  >
-								<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
-								<h3>Details:  <%=coupon.getDescription()%> </h3>
-								<h5>Code: <%=coupon.getOfferCode()%> </h5>
-								<h5>Discount: <%=coupon.getDiscountValue()%> </h5>
+									<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
+									<h3>Details:  <%=coupon.getDescription()%> </h3>
+									<h5>Code: <%=coupon.getOfferCode()%> </h5>
+									<h5>Discount: <%=coupon.getDiscountValue()%> </h5>
 								</div>
 							</li>
 				    	<%
