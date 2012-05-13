@@ -78,12 +78,12 @@ public class Offer extends PersistableEntity{
 		Long timeMillis = System.currentTimeMillis();
 		Long expiryTime = getExpiry().getTime();
 		Long millisToExpire = expiryTime - timeMillis;
-		Long days = (millisToExpire)/(1000*60*24);
-		this.daysToExpire = days;
+		Long days = (millisToExpire)/(1000*60*60*24);
+		daysToExpire = days;
 	}
 
 	public Long getDaysToExpire() {
-		return this.daysToExpire;
+		return daysToExpire;
 	}
 
 	public String getTitle() {
