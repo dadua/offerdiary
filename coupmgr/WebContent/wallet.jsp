@@ -26,9 +26,19 @@
 				}
 			};
 			
+			
+			it.wallet.getDaysToExpire = function(coupon) {
+				var expiryMillisUtc = coupon.expiryDateInMillis;
+				var d = new Date();
+				var currentMillisUtc = d.getTime();
+				var millisToExpire = (expiryMillisUtc - currentMillisUtc);
+				var daysToExpire = Math.floor(millisToExpire/(1000*60*60*24));
+				return daysToExpire;
+			}
+			
 			it.wallet.appendCoupon = function (coupon) {
 				
-				var daysToExpire = coupon.daysToExpire;
+				var daysToExpire = it.wallet.getDaysToExpire(coupon);
 				var daysToExpireHtml = '<span class="daysToExpire label" id="couponExpire_'+ coupon.id + '">';
 				if (daysToExpire < 0) {
 					daysToExpireHtml += 'Coupon Expired!!';

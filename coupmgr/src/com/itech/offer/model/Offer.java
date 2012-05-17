@@ -70,20 +70,15 @@ public class Offer extends PersistableEntity{
 	@Column(name="IS_PROTOTYPE")
 	private boolean isProtoType;
 
-	private Long daysToExpire;
-
+	@Column(name="EXPIRY_DATE_UTC_IN_MILLIS")
 	private long expiryDateInMillis;
 
-	public void setDaysToExpire() {
+	public Long getDaysToExpire() {
 		Long timeMillis = System.currentTimeMillis();
 		Long expiryTime = getExpiry().getTime();
 		Long millisToExpire = expiryTime - timeMillis;
 		Long days = (millisToExpire)/(1000*60*60*24);
-		daysToExpire = days;
-	}
-
-	public Long getDaysToExpire() {
-		return daysToExpire;
+		return days;
 	}
 
 	public String getTitle() {
@@ -132,7 +127,6 @@ public class Offer extends PersistableEntity{
 
 	public void setExpiry(Date expiry) {
 		this.expiry = expiry;
-		setDaysToExpire();
 	}
 
 	public String getOfferCode() {
