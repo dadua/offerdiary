@@ -99,6 +99,32 @@ public class Offer extends PersistableEntity{
 		}
 	}
 
+	public String getFormattedTimeToExpire() {
+		Long daysToExpire = getDaysToExpire();
+		if (daysToExpire < 30) {
+			return this.getFormattedDaysToExpire(daysToExpire);
+		} else if (daysToExpire < 365) {
+			return this.getFormattedMonthsToExpire(daysToExpire);
+		} else {
+			return this.getFormattedYearsToExpire(daysToExpire);
+		}
+	}
+
+	private String getFormattedYearsToExpire(Long daysToExpire) {
+		long yearsToExpire = daysToExpire/365;
+		return yearsToExpire + (yearsToExpire==1?" year, ":" years, ") + this.getFormattedMonthsToExpire(daysToExpire%365);
+	}
+
+	private String getFormattedMonthsToExpire(Long daysToExpire) {
+		long monthsToExpire = daysToExpire/30;
+		return monthsToExpire + (monthsToExpire==1?" month, ":" months, ") + this.getFormattedDaysToExpire(daysToExpire%30);
+	}
+
+	private String getFormattedDaysToExpire(Long daysToExpire) {
+		return daysToExpire + (daysToExpire==1?" day":" days") + " to expire";
+	}
+
+
 	public String getTitle() {
 		return title;
 	}
