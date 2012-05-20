@@ -36,10 +36,27 @@
 				return daysToExpire;
 			}
 			
+			it.wallet.getExpiryDateBasedClass = function(daysToExpire) {
+				if(daysToExpire < 0 ) {
+					return '';
+				} else if(daysToExpire < 14) {
+					return 'label-important';
+				} else if (daysToExpire < 30) {
+					return 'label-warning';
+				} else if (daysToExpire < 90) {
+					return 'label-info';
+				} else if (daysToExpire < 120) {
+					return 'label-inverse';
+				} else {
+					return 'label-success';
+				}
+			}
+			
 			it.wallet.appendCoupon = function (coupon) {
 				
 				var daysToExpire = it.wallet.getDaysToExpire(coupon);
-				var daysToExpireHtml = '<span class="daysToExpire label" id="couponExpire_'+ coupon.id + '">';
+				var labelClass = it.wallet.getExpiryDateBasedClass(daysToExpire);
+				var daysToExpireHtml = '<span class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
 				if (daysToExpire < 0) {
 					daysToExpireHtml += 'Coupon Expired!!';
 				} else {
@@ -50,7 +67,7 @@
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" >';
-	    		couponHtml += '<span class="label label-success">Done!</span>';
+	    		couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
 	    		couponHtml += daysToExpireHtml;
 	    		couponHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
@@ -72,7 +89,7 @@
 				});
 	    		*/
 	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
-	    		$('#coupon_'+coupon.id+ ' span.label-success').hide('highlight', 5000, function(){
+	    		$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
 	    			$(this).remove();
 	    		});
 			};
@@ -174,7 +191,7 @@
 				    	%>
 				    	
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
-				    			<span class="daysToExpire label" id="couponExpire_<%=coupon.getId() %>">
+				    			<span class="daysToExpire label <%=coupon.getExpiryDateBasedClass()%>" id="couponExpire_<%=coupon.getId() %>">
 				    			<%
 				    			if(coupon.getDaysToExpire() < 0) {
 				    			%>
