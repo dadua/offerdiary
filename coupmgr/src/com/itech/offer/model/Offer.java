@@ -81,6 +81,24 @@ public class Offer extends PersistableEntity{
 		return days;
 	}
 
+
+	public String getExpiryDateBasedClass() {
+		Long daysToExpire = getDaysToExpire();
+		if(daysToExpire < 0 ) {
+			return "";
+		} else if(daysToExpire < 14) {
+			return "label-important";
+		} else if (daysToExpire < 30) {
+			return "label-warning";
+		} else if (daysToExpire < 90) {
+			return "label-info";
+		} else if (daysToExpire < 120) {
+			return "label-inverse";
+		} else {
+			return "label-success";
+		}
+	}
+
 	public String getTitle() {
 		return title;
 	}
