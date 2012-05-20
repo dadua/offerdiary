@@ -52,16 +52,40 @@
 				}
 			}
 			
+			it.wallet.getFormattedDaysToExpire = function (daysToExpire) {
+				return daysToExpire + (daysToExpire==1?' day':' days')+' to expire';
+			}
+			
+			it.wallet.getFormattedMonthsToExpire = function(daysToExpire) {
+				var monthsToExpire = Math.floor(daysToExpire/30);
+				return monthsToExpire + (monthsToExpire==1?' month, ':' months, ') + this.getFormattedDaysToExpire(Math.floor(daysToExpire%30));
+			}
+			
+			it.wallet.getFormattedYearsToExpire = function(daysToExpire) {
+				var yearsToExpire = Math.floor(daysToExpire/365);
+				return yearsToExpire + (yearsToExpire==1?' year, ':' years, ') + this.getFormattedMonthsToExpire(Math.floor(daysToExpire%365));
+			}
+			
+			it.wallet.getFormattedTimeToExpire = function(daysToExpire) {
+				if (daysToExpire < 30) {
+					return this.getFormattedDaysToExpire(daysToExpire);
+				} else if (daysToExpire < 365) {
+					return this.getFormattedMonthsToExpire(daysToExpire);
+				} else {
+					return this.getFormattedYearsToExpire(daysToExpire);
+				}
+			};
+			
 			it.wallet.appendCoupon = function (coupon) {
 				
-				var daysToExpire = it.wallet.getDaysToExpire(coupon);
-				var labelClass = it.wallet.getExpiryDateBasedClass(daysToExpire);
+				var daysToExpire = this.getDaysToExpire(coupon);
+				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
 				var daysToExpireHtml = '<span class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
 				if (daysToExpire < 0) {
 					daysToExpireHtml += 'Coupon Expired!!';
 				} else {
-					daysToExpireHtml += 'Days to expire: ';
-					daysToExpireHtml += daysToExpire;
+					var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
+					daysToExpireHtml += formattedTimeToExpire;
 				}
 				daysToExpireHtml += '</span>';
 	    		var couponHtml = '<li class="span3" id="coupon_';
@@ -199,7 +223,7 @@
 				    			<%
 				    			} else {
 				    			%>
-				    			Days to Expire: <%=coupon.getDaysToExpire()%>
+				    			<%=coupon.getFormattedTimeToExpire()%>
 				    			<%
 				    			}
 				    			%>
