@@ -76,16 +76,30 @@
 				}
 			};
 			
+			it.wallet.getCompactFormattedTimeToExpire = function(timeToExpireString) {
+				if (timeToExpireString.length > 16) {
+					var displayedTimeToExpire = timeToExpireString.substring(0, 12);
+					displayedTimeToExpire += '<span class="hiddenTillAddSuccess" style="display:none" >';
+					displayedTimeToExpire += timeToExpireString.substring(12,16) ;
+					displayedTimeToExpire += '</span>';
+					displayedTimeToExpire += '<a class="daysToExpireDetails" href="#" title="'+timeToExpireString +'">...</a>';
+					return displayedTimeToExpire;
+				} else {
+					return timeToExpireString;
+				}
+			}
+			
 			it.wallet.appendCoupon = function (coupon) {
 				
 				var daysToExpire = this.getDaysToExpire(coupon);
 				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
 				var daysToExpireHtml = '<span class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
+				var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
 				if (daysToExpire < 0) {
 					daysToExpireHtml += 'Coupon Expired!!';
 				} else {
-					var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
-					daysToExpireHtml += formattedTimeToExpire;
+					var compactFormattedTime = this.getCompactFormattedTimeToExpire(formattedTimeToExpire);
+					daysToExpireHtml += compactFormattedTime;
 				}
 				daysToExpireHtml += '</span>';
 	    		var couponHtml = '<li class="span3" id="coupon_';
@@ -114,6 +128,7 @@
 	    		*/
 	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
 	    		$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
+	    			$(this).parent().find('span.hiddenTillAddSuccess').show();
 	    			$(this).remove();
 	    		});
 			};
@@ -174,6 +189,9 @@
 					$(this).addClass('icon-white');
 				});
 				$('.coupon-trash').click(it.wallet.trashCoupon).tooltip();
+				$('.daysToExpireDetails').tooltip({
+					placement: 'right'
+				});
 			};
 			
 			$(function() {
@@ -217,13 +235,14 @@
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
 				    			<span class="daysToExpire label <%=coupon.getExpiryDateBasedClass()%>" id="couponExpire_<%=coupon.getId() %>">
 				    			<%
+								String formattedTimeToExpire = coupon.getFormattedTimeToExpire();
 				    			if(coupon.getDaysToExpire() < 0) {
 				    			%>
 				    			Coupon Expired!!
 				    			<%
 				    			} else {
 				    			%>
-				    			<%=coupon.getFormattedTimeToExpire()%>
+				    			<%=coupon.getCompactFormattedTimeToExpire(formattedTimeToExpire)%>
 				    			<%
 				    			}
 				    			%>
