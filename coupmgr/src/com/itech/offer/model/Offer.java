@@ -110,6 +110,17 @@ public class Offer extends PersistableEntity{
 		}
 	}
 
+
+	public String getCompactFormattedTimeToExpire(String timeToExpireString) {
+		if (timeToExpireString.length() > 16) {
+			String displayedTimeToExpire = timeToExpireString.substring(0, 16);
+			displayedTimeToExpire += "<a class=\"daysToExpireDetails\" href=\"#\" title=\""+timeToExpireString + "\">...</a>";
+			return displayedTimeToExpire;
+		} else {
+			return timeToExpireString;
+		}
+	}
+
 	private String getFormattedYearsToExpire(Long daysToExpire) {
 		long yearsToExpire = daysToExpire/365;
 		return yearsToExpire + (yearsToExpire==1?" year, ":" years, ") + this.getFormattedMonthsToExpire(daysToExpire%365);
@@ -123,6 +134,8 @@ public class Offer extends PersistableEntity{
 	private String getFormattedDaysToExpire(Long daysToExpire) {
 		return daysToExpire + (daysToExpire==1?" day":" days") + " to expire";
 	}
+
+
 
 
 	public String getTitle() {
