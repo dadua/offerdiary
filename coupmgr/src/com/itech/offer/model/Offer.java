@@ -112,8 +112,13 @@ public class Offer extends PersistableEntity{
 
 
 	public String getCompactFormattedTimeToExpire(String timeToExpireString) {
-		if (timeToExpireString.length() > 16) {
-			String displayedTimeToExpire = timeToExpireString.substring(0, 16);
+		int lengthToTrimString = 16;
+		if (timeToExpireString.length() > lengthToTrimString) {
+			String displayedTimeToExpire = timeToExpireString.substring(0, lengthToTrimString);
+			String hiddenPartOfTimeToExpire = timeToExpireString.substring(lengthToTrimString);
+			displayedTimeToExpire += "<span class=\"hiddenPartOfTime\" style=\"display:none\">";
+			displayedTimeToExpire += hiddenPartOfTimeToExpire;
+			displayedTimeToExpire += "</span>";
 			displayedTimeToExpire += "<a class=\"daysToExpireDetails\" href=\"#\" title=\""+timeToExpireString + "\">...</a>";
 			return displayedTimeToExpire;
 		} else {

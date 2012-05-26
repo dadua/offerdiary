@@ -78,9 +78,13 @@
 			
 			it.wallet.getCompactFormattedTimeToExpire = function(timeToExpireString) {
 				if (timeToExpireString.length > 16) {
-					var displayedTimeToExpire = timeToExpireString.substring(0, 12);
+					var displayedTimeToExpire = timeToExpireString.substring(0, 12),
+					undisplayedTimeToExpire = timeToExpireString.substring(16, timeToExpireString.length);
 					displayedTimeToExpire += '<span class="hiddenTillAddSuccess" style="display:none" >';
-					displayedTimeToExpire += timeToExpireString.substring(12,16) ;
+					displayedTimeToExpire += timeToExpireString.substring(12,16);
+					displayedTimeToExpire += '</span>';
+					displayedTimeToExpire += '<span style="display:none" class="hiddenPartOfTime">';
+					displayedTimeToExpire += undisplayedTimeToExpire;
 					displayedTimeToExpire += '</span>';
 					displayedTimeToExpire += '<a class="daysToExpireDetails" href="#" title="'+timeToExpireString +'">...</a>';
 					return displayedTimeToExpire;
@@ -93,7 +97,7 @@
 				
 				var daysToExpire = this.getDaysToExpire(coupon);
 				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
-				var daysToExpireHtml = '<span class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
+				var daysToExpireHtml = '<div class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
 				var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
 				if (daysToExpire < 0) {
 					daysToExpireHtml += 'Coupon Expired!!';
@@ -101,7 +105,7 @@
 					var compactFormattedTime = this.getCompactFormattedTimeToExpire(formattedTimeToExpire);
 					daysToExpireHtml += compactFormattedTime;
 				}
-				daysToExpireHtml += '</span>';
+				daysToExpireHtml += '</div>';
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" >';
@@ -202,6 +206,9 @@
 				$('.coupon-trash').click(it.wallet.trashCoupon).tooltip();
 				$('.daysToExpireDetails').tooltip({
 					placement: 'right'
+				}).click(function(e){
+					$(this).parent().find('.hiddenPartOfTime').show();
+					$(this).tooltip('hide').remove();
 				});
 			};
 			
@@ -219,7 +226,8 @@
 			}
 			
 			.daysToExpire {
-				margin-left: 40%;
+				margin-left: 48%;
+				margin-right:10%;
 				padding: 5px;
 			}
 			
@@ -244,7 +252,7 @@
 				    	%>
 				    	
 				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
-				    			<span class="daysToExpire label <%=coupon.getExpiryDateBasedClass()%>" id="couponExpire_<%=coupon.getId() %>">
+				    			<div class="daysToExpire label <%=coupon.getExpiryDateBasedClass()%>" id="couponExpire_<%=coupon.getId() %>">
 				    			<%
 								String formattedTimeToExpire = coupon.getFormattedTimeToExpire();
 				    			if(coupon.getDaysToExpire() < 0) {
@@ -257,7 +265,7 @@
 				    			<%
 				    			}
 				    			%>
-				    			</span>
+				    			</div>
 				    			
 								<div class="thumbnail coupon"  >
 									<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
