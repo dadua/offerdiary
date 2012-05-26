@@ -1,6 +1,7 @@
 package com.itech.offer.manager;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.coupon.model.User;
@@ -8,6 +9,7 @@ import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.vo.OfferNotifyVO;
 
 
 public class OfferManagerImpl implements OfferManager {
@@ -78,5 +80,20 @@ public class OfferManagerImpl implements OfferManager {
 
 	public void setOfferUserAssocDAO(OfferUserAssocDAO offerUserAssocDAO) {
 		this.offerUserAssocDAO = offerUserAssocDAO;
+	}
+
+	@Override
+	public List<Offer> addOffersEventsConfigForUser(
+			List<OfferNotifyVO> offerNotificationVOs, User loggedInUser) {
+		List<Offer> offers = new ArrayList<Offer>();
+		for (OfferNotifyVO offerNotifyVO : offerNotificationVOs) {
+			Offer offer = offerNotifyVO.getOffer();
+			addOfferForUser(offer, loggedInUser);
+			offers.add(offer);
+			//TODO: Have to handle offerNotifyVO.getNotifyConfig()
+			// and fire the notification engine..
+		}
+
+		return offers;
 	}
 }

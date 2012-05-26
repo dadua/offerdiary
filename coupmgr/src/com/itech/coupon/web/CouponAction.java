@@ -17,6 +17,7 @@ import com.itech.common.web.action.Result;
 import com.itech.coupon.CouponConstants;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
+import com.itech.offer.vo.OfferNotifyVO;
 
 public class CouponAction extends CommonAction{
 
@@ -51,12 +52,12 @@ public class CouponAction extends CommonAction{
 	}
 
 	public Response saveCoupons (HttpServletRequest req, HttpServletResponse resp) {
-		String couponsJson = req.getParameter(CouponConstants.COUPON_LIST_PARAM_KEY);
+		String couponNotificationConfigsJson = req.getParameter(CouponConstants.COUPON_NOTIFICATION_CONFIG_PARAM_KEY);
 		Gson gson = new Gson();
-		Type type = new TypeToken<List<Offer>>() { }.getType();
-		List<Offer> coupons = gson.fromJson(couponsJson, type);
-		getOfferManager().addOffersForUser(coupons, getLoggedInUser());
-		Result<List<Offer>> result = new Result<List<Offer>>(true, coupons, "Successfully Added the coupons");
+		Type offerNotifyVOsType = new TypeToken<List<OfferNotifyVO>>() { }.getType();
+		List<OfferNotifyVO> offerNotificationVOs = gson.fromJson(couponNotificationConfigsJson, offerNotifyVOsType);
+		List<Offer> offersProcessed = getOfferManager().addOffersEventsConfigForUser(offerNotificationVOs, getLoggedInUser());
+		Result<List<Offer>> result = new Result<List<Offer>>(true, offersProcessed, "Successfully Added the coupons");
 		Type resultOffersType = new TypeToken<Result<List<Offer>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
