@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
+import com.itech.offer.vo.OfferNotifyVO;
 
 public interface OfferManager {
 
@@ -16,5 +17,8 @@ public interface OfferManager {
 	public List<Offer> getAllUnexpiredOffersForUser(User user);
 
 	public void deleteByIds(List<Long> offerIds);
+
+	//Returns persisted list of offers
+	public List<Offer> addOffersEventsConfigForUser(List<OfferNotifyVO> offerNotificationVOs, User loggedInUser);
 
 }

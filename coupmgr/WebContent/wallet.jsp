@@ -139,18 +139,29 @@
 			
 			
 			it.wallet.addCoupon = function () {
-				var code = $('#code').val();
-				var expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime();
-				var detail = $('#discountDetails').val();
-				var coupon = {
+				var code = $('#code').val(),
+				expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime(),
+				detail = $('#discountDetails').val(),
+				emailNotify = $('#emailNotify').is(":checked"),
+				fbNotify = $('#fbNotify').is(":checked"),
+				notifyConfig = {
+					emailNotify: emailNotify,
+					fbNotify: fbNotify
+					//Will include time to notify etc. here
+				},
+				coupon = {
 					offerCode: code,
 					description: detail,
-					expiryDateInMillis: expiryDateInMillis
-				};
-				var coupons = [];
-				coupons.push(coupon);
+					expiryDateInMillis: expiryDateInMillis,
+				},
+				offerNotificationConfig = {
+					offer: coupon,
+					notifyConfig: notifyConfig
+				},
+				couponNotificationConfigs = [];
+				couponNotificationConfigs.push(offerNotificationConfig);
 				$.post('saveCoupons.do',
-						{'coupons': JSON.stringify(coupons)},
+						{'offerNotificationConfigs': JSON.stringify(couponNotificationConfigs)},
 						function (data) {
 							var ret = $.parseJSON(data);
 							if (ret.success === true) {
@@ -275,6 +286,17 @@
 								<textarea class="span3 couponDetail" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label> Expiry Date: </label>
 								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
+								<label>Notifications Config: </label>
+								<div id="notificationConfig" >
+									<label class="checkbox inline" > 
+									<input name="notifications" type="checkbox" id="emailNotify" value="email" checked="checked" />
+									Email
+									</label>
+									<label class="checkbox inline" > 
+									<input name="notifications" type="checkbox" value="fb" id="fbNotify" class="disabled" disabled="disabled" />
+									Fb //TODO: with a icon
+									</label>
+								</div>
 							</form>
 						</div>
 						<div class="modal-footer" >
