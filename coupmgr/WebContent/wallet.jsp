@@ -139,6 +139,8 @@
 			
 			it.wallet.clearCouponFormVals = function () {
 				$('.couponDetail').val('');
+				$('#emailNotify').addClass('active');
+				$('#fbNotify').removeClass('active');
 			};
 			
 			
@@ -146,8 +148,8 @@
 				var code = $('#code').val(),
 				expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime(),
 				detail = $('#discountDetails').val(),
-				emailNotify = $('#emailNotify').is(":checked"),
-				fbNotify = $('#fbNotify').is(":checked"),
+				emailNotify = $('#emailNotify').hasClass('active'),
+				fbNotify = $('#fbNotify').hasClass('active'),
 				notifyConfig = {
 					emailNotify: emailNotify,
 					fbNotify: fbNotify
@@ -295,15 +297,9 @@
 								<label> Expiry Date: </label>
 								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label>Notifications Config: </label>
-								<div id="notificationConfig" >
-									<label class="checkbox inline" > 
-									<input name="notifications" type="checkbox" id="emailNotify" value="email" checked="checked" />
-									Email
-									</label>
-									<label class="checkbox inline" > 
-									<input name="notifications" type="checkbox" value="fb" id="fbNotify" class="disabled" disabled="disabled" />
-									Fb //TODO: with a icon
-									</label>
+								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
+									<button id="emailNotify" class="btn active"><i class="icon-envelope"></i>  Email</button>
+									<button id="fbNotify" class="btn">Fb</button>
 								</div>
 							</form>
 						</div>
