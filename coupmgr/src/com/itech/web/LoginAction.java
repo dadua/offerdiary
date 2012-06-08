@@ -53,7 +53,7 @@ public class LoginAction extends CommonAction{
 
 
 
-	public Response doSignupDone (HttpServletRequest req, HttpServletResponse resp) {
+	public Response doSignUpDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
 			String sessionJson = req.getParameter("fbData");
@@ -69,7 +69,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
-	public Response doEmailSignupDone (HttpServletRequest req, HttpServletResponse resp) {
+	public Response doEmailSignUpDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
 			String email = req.getParameter("email");
