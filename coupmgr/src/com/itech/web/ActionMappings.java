@@ -36,8 +36,10 @@ public class ActionMappings {
 		add(new ActionMapping("deleteAlerts.do", AlertAction.class, "deleteAlerts"));
 		add(new ActionMapping("markAlertsRead.do", AlertAction.class, "markAlertRead"));
 
-		add(new ActionMapping("login.do", LoginAction.class, "doLogin"));
-		add(new ActionMapping("signup.do", LoginAction.class, "doSingup"));
+		add(new ActionMapping("doLogin.do", LoginAction.class, "doLoginDone"));
+		add(new ActionMapping("doSignup.do", LoginAction.class, "doSignUpDone"));
+		add(new ActionMapping("doEmailLogin.do", LoginAction.class, "doEmailLoginDone"));
+		add(new ActionMapping("doEmailSignUp.do", LoginAction.class, "doEmailSignUpDone"));
 
 		add(new ActionMapping("logout.do", LoginAction.class, "doLogout"));
 

@@ -31,6 +31,18 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
+	public User saveEmailUser(String email, String password) {
+		User user = new User();
+		user.setLoginType(LoginType.INTERNAL);
+		user.setUserId(email);
+		user.setEmailId(email);
+		user.setPassword(password);
+		save(user);
+		return user;
+	}
+
+
+	@Override
 	public User getById(long id) {
 		return getUserDAO().getById(id);
 	}
@@ -59,5 +71,4 @@ public class UserManagerImpl implements UserManager {
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-
 }
