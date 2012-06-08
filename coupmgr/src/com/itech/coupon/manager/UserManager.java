@@ -7,7 +7,7 @@ public interface UserManager {
 	public void save(User user);
 	public User getByUserId(String userId);
 	public User getById(long id);
-
+	public User saveEmailUser(String email, String password);
 	public User saveFbUser(FbService fbService);
 
 }
