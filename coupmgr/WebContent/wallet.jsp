@@ -244,7 +244,7 @@
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span6" id="couponContainer" >
+				<div class="span7" id="couponContainer" >
 				 <% 
 				 	List<Offer> myCoupons = (List<Offer>) request.getAttribute("myCoupons");
 				 %>	
@@ -298,8 +298,8 @@
 								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
-									<button id="emailNotify" class="btn active"><i class="icon-envelope"></i>  Email</button>
-									<button id="fbNotify" class="btn">Fb</button>
+									<a id="emailNotify" class="btn active"><i class="icon-envelope"></i>  Email</a>
+									<a id="fbNotify" class="btn">Fb</a>
 								</div>
 							</form>
 						</div>
