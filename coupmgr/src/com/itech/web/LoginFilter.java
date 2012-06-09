@@ -65,7 +65,7 @@ public class LoginFilter implements Filter {
 
 	private boolean isBypass(String reqUrl) {
 		for (String bypassUrl : bypassUrls) {
-			if (bypassUrl.equalsIgnoreCase(reqUrl)) {
+			if (reqUrl.startsWith(bypassUrl)) {
 				return true;
 			}
 		}
