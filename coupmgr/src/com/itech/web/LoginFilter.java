@@ -55,7 +55,12 @@ public class LoginFilter implements Filter {
 				logger.info("redirected to home: " + reqUrl);
 				return;
 			}
+		}else {
+			if ("/index.jsp".equals(reqUrl) || "/".equals(reqUrl)) {
+				httpRequest.getRequestDispatcher("/wallet.do").forward(req, resp);
+			}
 		}
+
 
 		boolean loginSuccess = true;
 		if (loginSuccess ) {
