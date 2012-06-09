@@ -12,7 +12,7 @@
 			<span >
 				new user !
 			</span>
-			<a class="btn btn-primary btn-large" href="signUp.do">Sign-Up</a>
+			<a class="btn btn-primary btn-large" href="signup.do">Sign-Up</a>
 		</div>
 	</div>
 </div>
