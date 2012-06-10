@@ -31,12 +31,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="span5" >
-					<div id="actionsContainer">
-						<a class="btn btn-info btn-large" href="login.do">Login</a>
-						<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
-					</div>
-				</div>
 			</div>
 		</div>
 		
