@@ -12,10 +12,12 @@
 						<li>
 						</li>
 					</ul>
-					<div class="pull-right btn-group" id="userContainer" >
 					<%
 					Object userSessionObj = request.getSession().getAttribute("user_session_key");
 					if (userSessionObj!= null) {
+						%>
+						<div class="pull-right btn-group" id="userContainer" >
+						<%
 						User user = (User) userSessionObj;
 						%>
 						<a class="btn btn-inverse">
@@ -54,10 +56,17 @@
 							</a>
 							</li>
 						</ul>
-						<%
+					</div>
+					<%
+					 } else {
+					 %>
+					 	<div id="actionsContainer" class="pull-right">
+					 		<a class="btn btn-info btn-large" href="login.do">Login</a>
+							<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
+						</div>
+					 <%
 					 }
 					 %>
-					</div>
         		</div>
       		</div>
  		</div>
