@@ -24,6 +24,7 @@ public class ActionMappings {
 		add(new ActionMapping("setFbAdapter.do", FbLoginAction.class, "setFbAdapter"));
 		add(new ActionMapping("testFbAction.do", FbLoginAction.class, "testFbAction"));
 
+		//Coupon/Offer actions
 		add(new ActionMapping("home.do", CouponAction.class, "goToHome"));
 		add(new ActionMapping("wallet.do", CouponAction.class, "goToMyWallet"));
 		add(new ActionMapping("getMyCoupons.do", CouponAction.class, "getMyCoupons"));
@@ -31,18 +32,21 @@ public class ActionMappings {
 		add(new ActionMapping("saveCoupons.do", CouponAction.class, "saveCoupons"));
 		add(new ActionMapping("deleteCoupons.do", CouponAction.class, "deleteCoupons"));
 
+		//Alert actions
 		add(new ActionMapping("alerts.do", AlertAction.class, "goToMyAlerts"));
 		add(new ActionMapping("getMyAlerts.do", AlertAction.class, "getMyAlerts"));
 		add(new ActionMapping("deleteAlerts.do", AlertAction.class, "deleteAlerts"));
 		add(new ActionMapping("markAlertsRead.do", AlertAction.class, "markAlertRead"));
 
-		add(new ActionMapping("login.do", LoginAction.class, "doLoginDone"));
-		add(new ActionMapping("signup.do", LoginAction.class, "doSignUpDone"));
-		add(new ActionMapping("emailLogin.do", LoginAction.class, "doEmailLoginDone"));
-		add(new ActionMapping("emailSignup.do", LoginAction.class, "doEmailSignUpDone"));
+		//Login actions
+		add(new ActionMapping("login.do", LoginAction.class, "login"));
+		add(new ActionMapping("signup.do", LoginAction.class, "signup"));
+		add(new ActionMapping("logout.do", LoginAction.class, "logout"));
 
-		add(new ActionMapping("logout.do", LoginAction.class, "doLogout"));
-
+		add(new ActionMapping("loginDone.do", LoginAction.class, "loginDone"));
+		add(new ActionMapping("signupDone.do", LoginAction.class, "signUpDone"));
+		add(new ActionMapping("emailLogin.do", LoginAction.class, "emailLogin"));
+		add(new ActionMapping("emailSignup.do", LoginAction.class, "emailSignUp"));
 
 	}
 }

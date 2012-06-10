@@ -22,10 +22,6 @@
 				};
 			 
 				$('#loginToFb').click({onServerUp: onServerUpGotoWallet}, it.fb.checkAndLogin);
-				it.fb.checkLoginStatusAndUpdateServer(function(){
-					$('#actionsContainer').show();
-					$('#loginToFb').show();
-				}, onServerUpChange);
 			});
 		</script>
 		<style type="text/css">

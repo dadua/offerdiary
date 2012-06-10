@@ -17,7 +17,7 @@
 		<%@include file="navHeader.jsp" %>
 		<div class="container" >
 			<div class="row">
-				<div class="span9" >
+				<div class="span7" >
 					<div class="thumbnail">
 						<img src="images/CWallet.jpg"/>
 						<div class="caption" >
@@ -31,8 +31,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="span3" >
-					<%@include file="loginSignUp.jsp" %>
+				<div class="span5" >
+					<div id="actionsContainer">
+						<a class="btn btn-info btn-large" href="login.do">Login</a>
+						<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
+					</div>
 				</div>
 			</div>
 		</div>

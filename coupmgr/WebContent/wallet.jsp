@@ -289,7 +289,7 @@
 							<h2>Add a coupon to wallet </h2>
 						</div>
 						<div class="modal-body" >
-							<form class="well">
+							<form >
 								<label>Code: </label>
 								<input id="code" type="text" class="span3 couponDetail" placeholder="Coupon Code?" />
 								<label>Discount Description: </label>
