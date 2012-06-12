@@ -219,6 +219,13 @@
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
 				$('#addCouponModalBtn').click(it.wallet.clearCouponFormVals);
+				$('.checkBoxSelected').live('click', function() {
+					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
+				});
+				$('.checkBoxUnSelected').live('click', function(){
+					$(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
+				});
+				
 			});
 			
 		</script>
@@ -231,6 +238,22 @@
 				margin-left: 48%;
 				margin-right:10%;
 				padding: 5px;
+			}
+			
+			.checkBoxSelected {
+				color: green;
+			}
+			
+			.checkBoxSelected > .icon-ok {
+				background-color: green;
+			}
+			
+			.checkBoxUnSelected {
+				color: #333333;
+			}
+			
+			.checkBoxUnSelected > .icon-ok {
+				background-color: transparent;
 			}
 			
 		</style>
@@ -298,8 +321,14 @@
 								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
-									<a id="emailNotify" class="btn active"><i class="icon-envelope"></i>  Email</a>
-									<a id="fbNotify" class="btn">Fb</a>
+									<a id="emailNotify" class="btn active checkBoxSelected">
+										<i class="icon-envelope"></i>
+										 Email
+										<i class="icon-ok icon-white" ></i>
+									</a>
+									<a id="fbNotify" class="btn checkBoxUnSelected">
+										Fb <i class="icon-ok icon-white"></i>
+									</a>
 								</div>
 							</form>
 						</div>
