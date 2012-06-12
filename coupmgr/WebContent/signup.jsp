@@ -30,6 +30,10 @@
 				width: 42px;
 			}
 			
+			.input-center{
+				padding-left:10%;
+				padding-right:10%;
+			}
 			
 		</style>
 	</head>
@@ -75,10 +79,14 @@
 						
 						<div class="span4">
 							<form action="emailSignup.do" method="post" class="" >
-								<input type="text" class="input-xlarge" name="email" placeholder="Email"></input>
+								<input type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
 								<%-- TODO: We might not require password field in signup page --%>
-								<input type="password" class="input-xlarge" name="password" placeholder="Password"></input>
-								<button type="submit" class="btn btn-large btn-success">Sign Up</button>
+								<input type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
+								<div class="row">
+									<div class="span2">
+										<button type="submit" class="btn  btn-success ">Sign Up</button>	
+									</div>
+								</div>
 							</form>
 						</div>
 					

@@ -55,6 +55,11 @@
 			.span-point-5 {
 				width: 42px;
 			}
+			
+			.input-center{
+				padding-left:10%;
+				padding-right:10%;
+			}
 		</style>
 	</head>
 	<body>
@@ -99,9 +104,18 @@
 						
 						<div class="span3">
 							<form action="emailLogin.do" method="post">
-								<input id="email" type="text" class="input-xlarge" name="email" placeholder="Email"></input>
-								<input id="password" type="password" class="input-xlarge" name="password" placeholder="Password"></input>
-								<button id="logIn" type="submit" class="btn btn-info">Log in</button>
+								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
+								<input id="password" type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
+								<div class="row">
+									<div class="span1">
+										<button id="logIn" type="submit" class="btn btn-info">Log in</button>
+									</div>
+									<div class="span2">
+										<a href="resetPassword.do">
+											forgot your password ?
+										</a>
+									</div>
+								</div>
 							</form>
 						</div>
 					
