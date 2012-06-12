@@ -1,4 +1,5 @@
 
+
 <%@page import="com.itech.coupon.model.LoginType"%>
 <%@page import="com.itech.coupon.model.User"%>
 		
@@ -50,10 +51,16 @@
 						</a>
 						
 						<ul class="dropdown-menu">
+
 							<li>
-							<a href="logout.do">
-							Logout
-							</a>
+								<a href="wallet.do">
+								My Account
+								</a>
+							</li>
+							<li>
+								<a href="logout.do">
+								Logout
+								</a>
 							</li>
 						</ul>
 					</div>
