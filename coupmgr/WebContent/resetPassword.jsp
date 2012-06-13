@@ -4,7 +4,7 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login to Offer Diary</title>
+		<title>Get your password</title>
 		
 		<%@include file="commonHeader.jsp" %>
 		
@@ -70,49 +70,21 @@
 				<div class="span3" >
 				&nbsp;
 				</div>
-				
 				<div class="span6" >
-				
-					<div class="row">
-						<div class="span2" >
-						&nbsp;
-						</div>
-						
-						<div class="span2">
-							<form id="goToWallet" action="wallet.do" method="post">
-								<input id="loginToFb" class="btn btn-large btn-primary fb-btn-color"  type="button" value="Login with Facebook" />
-								<input type="hidden" name="login" value="success" />
-							</form>
-						</div>
-						
-						<div class="span2" >
-						&nbsp;
-						</div>
-					</div>
-					
-						
-					<hr class="span2" >
-					<div class="span1" >
-						<span class="inBetweenSmallText">or</span>
-					</div>
-					<hr class="span2" >
-					
-					<div class="row">
+					<div class="row" style="margin-top:20%;">
 						<div class="span1" >
 						&nbsp;
 						</div>	
-						
-						<div class="span3">
+						<div class="span4">
 							<form action="emailLogin.do" method="post">
 								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
-								<input id="password" type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
 								<div class="row">
-									<div class="span1">
-										<button id="logIn" type="submit" class="btn btn-info">Log in</button>
+									<div class="span2">
+										<button id="getPassword" type="submit" class="btn btn-info">Get Password</button>
 									</div>
 									<div class="span2">
-										<a href="getPassword.do">
-											forgot your password ?
+										<a href="login.do">
+											Back to Login ?
 										</a>
 									</div>
 								</div>

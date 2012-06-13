@@ -42,6 +42,8 @@ public class ActionMappings {
 		add(new ActionMapping("login.do", LoginAction.class, "login"));
 		add(new ActionMapping("signup.do", LoginAction.class, "signup"));
 		add(new ActionMapping("logout.do", LoginAction.class, "logout"));
+		add(new ActionMapping("getPassword.do", LoginAction.class, "getPassword"));
+
 
 		add(new ActionMapping("loginDone.do", LoginAction.class, "loginDone"));
 		add(new ActionMapping("signupDone.do", LoginAction.class, "signUpDone"));

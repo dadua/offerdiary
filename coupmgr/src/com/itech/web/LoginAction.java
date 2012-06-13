@@ -28,6 +28,10 @@ public class LoginAction extends CommonAction{
 		return new Forward("signup.jsp");
 	}
 
+	public Response getPassword(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward("resetPassword.jsp");
+	}
+
 	public Response loginDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
