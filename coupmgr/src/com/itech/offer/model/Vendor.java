@@ -10,36 +10,36 @@ import javax.persistence.Table;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name="VENDORS")
+@Table(name=VendorModelContants.TABLE_VENDOR)
 public class Vendor extends PersistableEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name=VendorModelContants.COL_ID)
 	private Long id;
 
-	@Column(name="NAME")
+	@Column(name=VendorModelContants.COL_NAME)
 	private String name;
 
-	@Column(name="ADDRESS")
+	@Column(name=VendorModelContants.COL_ADDRESS)
 	private String address;
 
-	@Column(name="SITE_URL")
+	@Column(name=VendorModelContants.COL_SITE_URL)
 	private String siteUrl;
 
-	@Column(name="LOGO_URL")
+	@Column(name=VendorModelContants.COL_LOGO_URL)
 	private String logoUrl;
 
-	@Column(name="DESCRIPTION")
+	@Column(name=VendorModelContants.COL_DESCRIPTION)
 	private String description;
 
-	@Column(name="CITY")
+	@Column(name=VendorModelContants.COL_CITY)
 	private String city;
 
-	@Column(name="PINCODE")
+	@Column(name=VendorModelContants.COL_PIN_CODE)
 	private String pinCode;
 
-	@Column(name="PHONE_NUMBER")
+	@Column(name=VendorModelContants.COL_PHONE_NUMBER)
 	private String phoneNumber;
 
 

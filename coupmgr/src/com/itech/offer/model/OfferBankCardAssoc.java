@@ -12,20 +12,20 @@ import javax.persistence.Table;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name="OFFER_CARD_ASSOC")
+@Table(name=OfferBankCardAssocModelConstants.TABLE_OFFER_CARD_ASSOC)
 public class OfferBankCardAssoc extends PersistableEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name=OfferBankCardAssocModelConstants.COL_ID)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="OFFER_ID")
+	@JoinColumn(name=OfferBankCardAssocModelConstants.COL_OFFER)
 	private Offer offer;
 
 	@ManyToOne
-	@JoinColumn(name="BANK_CARD_ID")
+	@JoinColumn(name=OfferBankCardAssocModelConstants.COL_BANK_CARD)
 	private BankCard bankCard;
 
 	public Offer getOffer() {

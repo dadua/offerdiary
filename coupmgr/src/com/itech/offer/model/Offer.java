@@ -18,59 +18,59 @@ import com.itech.offer.model.enums.DiscountType;
 import com.itech.offer.model.enums.OfferType;
 
 @Entity
-@Table(name="OFFERS")
+@Table(name=OfferModelConstants.TABLE_OFFER)
 public class Offer extends PersistableEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name=OfferModelConstants.COL_ID)
 	private Long id;
 
-	@Column(name="TITLE")
+	@Column(name=OfferModelConstants.COL_TITLE)
 	private String title;
 
-	@Column(name="DESCRIPTION")
+	@Column(name=OfferModelConstants.COL_DESCRPTION)
 	private String description;
 
-	@Column(name="TERMS_N_CONDITIONS")
+	@Column(name=OfferModelConstants.COL_TERMS_N_CONDITIONS)
 	private String termsAndConditions;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="DISCOUNT_TYPE")
+	@Column(name=OfferModelConstants.COL_DISCOUNT_TYPE)
 	private DiscountType discountType = DiscountType.NO_DISCOUNT;//FIXED_AMOUNT, PERCENTAGE
 
-	@Column(name="DISCOUNT_VALUE")
+	@Column(name=OfferModelConstants.COL_DISCOUNT_VALUE)
 	private int discountValue;
 
-	@Column(name="EXPIRY")
+	@Column(name=OfferModelConstants.COL_EXPIRY)
 	private Date expiry;
 
-	@Column(name="OFFER_CODE")
+	@Column(name=OfferModelConstants.COL_OFFER_CODE)
 	private String offerCode;
 
-	@Column(name="NAME")
+	@Column(name=OfferModelConstants.COL_OFFER_TYPE)
 	private OfferType offerType = OfferType.OFFER; //coupon, voucher, offer
 
 	@ManyToOne
-	@JoinColumn(name="TARGET_VENDOR")
+	@JoinColumn(name=OfferModelConstants.COL_TARGET_VENDOR)
 	private Vendor targetVendor;
 
-	@Column(name="IMAGE_SOURCE")
+	@Column(name=OfferModelConstants.COL_IMAGE_SOURCE)
 	private String imageSource;
 
 	@ManyToOne
-	@JoinColumn(name="SOURCE_VENDOR")
+	@JoinColumn(name=OfferModelConstants.COL_SOURCE_VENDOR)
 	private Vendor sourceVendor;
 
-	@Column(name="IS_ONLINE_OFFER")
+	@Column(name=OfferModelConstants.COL_IS_ONLINE_OFFER)
 	private boolean isOnlineOffer;
 
-	@Column(name="LOCATION")
+	@Column(name=OfferModelConstants.COL_LOCATION)
 	private String location;
 
-	@Column(name="IS_PROTOTYPE")
+	@Column(name=OfferModelConstants.COL_IS_PROTOTYPE)
 	private boolean isProtoType;
 
-	@Column(name="EXPIRY_DATE_UTC_IN_MILLIS")
+	@Column(name=OfferModelConstants.COL_EXPIRY_DATE_UTC_IN_MILLIS)
 	private long expiryDateInMillis;
 
 	public Long getDaysToExpire() {
