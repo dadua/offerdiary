@@ -28,8 +28,8 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + AlertModelConstant.TABLE_ALERT +
-			" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
-			" values (?, ?, ?, ?, ?, ?, ?, ?)";
+					" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
+					" values (?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (Alert alert : alerts)  {
 				ps.setString(1, alert.getDataType());
@@ -37,7 +37,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 				ps.setString(3, alert.getAlertType());
 				ps.setString(4, alert.getAlertStatus().toString());
 				ps.setDate(5, alert.getCreationTime());
-				ps.setLong(6, alert.getUserId());
+				ps.setLong(6, alert.getUser().getId());
 				ps.setString(7, alert.getMessage());
 				ps.setString(8, alert.getMessageHTML());
 				ps.addBatch();
@@ -57,7 +57,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertModelConstant.TABLE_ALERT + "" +
-			" where id=?";
+					" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, uniqueId);
 			ps.executeUpdate();
@@ -75,7 +75,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-			" where id=?";
+					" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			for (Alert alert :alerts) {
 				ps.setLong(1, alert.getId());
@@ -97,7 +97,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from  " + AlertModelConstant.TABLE_ALERT + "" +
-			" where id=?";
+					" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -125,7 +125,9 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 			alert.setAlertType(rs.getString(AlertModelConstant.COL_ALERT_TYPE));
 			alert.setAlertStatus(Alert.AlertStatus.valueOf(rs.getString(AlertModelConstant.COL_ALERT_STATUS)));
 			alert.setCreationTime(rs.getDate(AlertModelConstant.COL_CREATION_TIME));
-			alert.setUserId(rs.getLong(AlertModelConstant.COL_USER_ID));
+			User user = new User();
+			user.setId(rs.getLong(AlertModelConstant.COL_USER_ID));
+			alert.setUser(user);
 			alert.setMessage(rs.getString(AlertModelConstant.COL_MESSAGE));
 			alert.setMessageHTML(rs.getString(AlertModelConstant.COL_HTML_MESSAGE));
 			alerts.add(alert);
@@ -147,7 +149,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertModelConstant.TABLE_ALERT + "" +
-			" where data_type=? and data_id=?";
+					" where data_type=? and data_id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, dataType);
 			ps.setLong(2, dataId);
@@ -170,7 +172,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertModelConstant.TABLE_ALERT + "" +
-			" where user_id = ?";
+					" where user_id = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, userID);
 			rs = ps.executeQuery();
@@ -188,7 +190,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertModelConstant.TABLE_ALERT + "" +
-			" where data_type = ? and data_id=?";
+					" where data_type = ? and data_id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, dataType);
 			ps.setLong(2, dataId);
@@ -207,7 +209,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from " + AlertModelConstant.TABLE_ALERT +
-			" where id=?" ;
+					" where id=?" ;
 			ps = getConnection().prepareStatement(sql);
 			for (Long id : uniqueIds)  {
 				ps.setLong(1, id);
@@ -231,7 +233,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "update "+ AlertModelConstant.TABLE_ALERT+ " set alert_status = '"+ Alert.AlertStatus.READ.toString()+"'"+
-			" where user_id = ?";
+					" where user_id = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, user_id);
 			ps.executeUpdate();

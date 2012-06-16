@@ -52,7 +52,7 @@ public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 		List<Alert> expectedAlertList = new ArrayList<Alert>();
 		expectedAlertList.add(alert);
 		List<Alert> outListAlert = alertDAO.getAlertsForDataType(dataType, dataId);
-		assertEquals(expectedAlertList.get(0).getUserId(), outListAlert.get(0).getUserId());
+		assertEquals(expectedAlertList.get(0).getUser().getId(), outListAlert.get(0).getUser().getId());
 	}
 
 	public void testGetAlertsForuser() throws Exception{
@@ -64,7 +64,7 @@ public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 		Alert alert = getExpectedAlert(103);
 		List<Alert> expectedAlertList = new ArrayList<Alert>();
 		expectedAlertList.add(alert);
-		assertEquals(expectedAlertList.get(0).getUserId(), outListAlert.get(0).getUserId());
+		assertEquals(expectedAlertList.get(0).getUser().getId(), outListAlert.get(0).getUser().getId());
 	}
 
 	public void testDeleteAlertsFor() throws Exception{
@@ -106,7 +106,9 @@ public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 		alert.setId(id);
 		alert.setDataType("deal");
 		alert.setDataId(301);
-		alert.setUserId(649283);
+		User user = new User();
+		user.setId(649283L);
+		alert.setUser(user);
 		alert.setAlertStatus(Alert.AlertStatus.READ);
 		return alert;
 	}

@@ -35,7 +35,7 @@ public class EmailAlertHandler implements AlertHandler{
 	public void handle(Alert alert) {
 
 		// this userID is the auto-generated id (User.id)of User DAO not the User.user_id
-		long userId = alert.getUserId();
+		long userId = alert.getUser().getId();
 		User user = userManager.getById(userId);
 		String toEmailId= user.getEmailId();
 		String message = alert.getMessage();

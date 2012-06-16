@@ -21,8 +21,7 @@ public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc
 		String hql = "select oua from " + getEntityClassName() + " oua where oua.offer.id = :offerId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("offerId", offerId);
-		List list = query.list();
-		return list;
+		return query.list();
 	}
 
 }
