@@ -45,18 +45,7 @@ CREATE  TABLE IF NOT EXISTS `ALERT_CONFIG` (
   `status` VARCHAR(50) NULL ,
   PRIMARY KEY (`id`) );
 
-CREATE  TABLE IF NOT EXISTS `ALERT` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `data_type` VARCHAR(50) NULL ,
-  `data_id` INT NULL ,
-  `alert_type` VARCHAR(50) NULL,
-  `alert_status`  VARCHAR(50) NULL ,
-  `creation_time` DATETIME NULL ,
-  `user_id` INT NULL,
-  `message` TEXT NULL,
-  `html_message` TEXT NULL,
-  PRIMARY KEY (`id`) );
-  
+
   
   
 	

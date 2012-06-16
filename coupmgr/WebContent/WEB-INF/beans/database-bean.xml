@@ -9,13 +9,14 @@
 		<property name="url" value="jdbc:mysql://localhost/couponmgr"/>
 		<property name="username" value="couponmgr"/>
 		<property name="password" value="couponmgr"/>
-  </bean>
+ </bean>
 		 
   <bean id="itech.SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="itech.DataSource" />
 		<property name="annotatedClasses">
 		<list>
 			<value>com.itech.coupon.model.User</value>
+			<value>com.itech.alert.model.Alert</value>
 			<value>com.itech.offer.model.BankCard</value>
 			<value>com.itech.offer.model.Offer</value>
 			<value>com.itech.offer.model.Vendor</value>
