@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name="BANK_CARDS")
+@Table(name=BankCardModelConstants.TABLE_BANK_CARD)
 public class BankCard extends PersistableEntity{
 	public enum BankCardType{
 		CREDIT, DEBIT
@@ -22,26 +22,25 @@ public class BankCard extends PersistableEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name=BankCardModelConstants.COL_ID)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name="ISSUING_BANK")
+	@JoinColumn(name=BankCardModelConstants.COL_ISSUING_BANK)
 	private Vendor issuingBank;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="CARD_TYPE")
+	@Column(name=BankCardModelConstants.COL_CARD_TYPE)
 	private BankCardType cardType;//DEbit/Credit
 
-	@Column(name="PAYMENT_SYSTEM_TYPE")
+	@Column(name=BankCardModelConstants.COL_PAYMENT_SYSTEM_TYPE)
 	private String paymentSystemType;//VISA,MASTER etc
 
-	@Column(name="PRIVILEGE")
+	@Column(name=BankCardModelConstants.COL_PRIVILEGE)
 	private String privilege;//Platinum, Gold
 
-	@Column(name="DESCRUPTION")
+	@Column(name=BankCardModelConstants.COL_DESCRIPTION)
 	private String description;
-
 
 
 	public Vendor getIssuingBank() {

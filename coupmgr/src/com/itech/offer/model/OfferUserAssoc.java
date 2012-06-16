@@ -17,32 +17,32 @@ import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferSharingType;
 
 @Entity
-@Table(name="OFFER_USER_ASSOC")
+@Table(name=OfferUserAssocModelConstants.TABLE_OFFER_USER_ASSOC)
 public class OfferUserAssoc extends PersistableEntity{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ID")
+	@Column(name=OfferUserAssocModelConstants.COL_ID)
 	private Long id;
 
 
 	@ManyToOne
-	@JoinColumn(name="OFFER_ID")
+	@JoinColumn(name=OfferUserAssocModelConstants.COL_OFFER_ID)
 	private Offer offer;
 
 	@ManyToOne
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name=OfferUserAssocModelConstants.COL_USER_ID)
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name="ORIOGINAL_USER_ID")
+	@JoinColumn(name=OfferUserAssocModelConstants.COL_ORIGINAL_USER_ID)
 	private User originalUser;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="OWNERSHIP_TYPE")
+	@Column(name=OfferUserAssocModelConstants.COL_OWNERSHIP_TYPE)
 	private OfferOwnershipType ownershipType = OfferOwnershipType.CREATOR;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="OFFER_SHARING_TYPE")
+	@Column(name=OfferUserAssocModelConstants.COL_OFFER_SHARING_TYPE)
 	private OfferSharingType offerSharingType = OfferSharingType.PRIVATE;
 
 	public Offer getOffer() {
