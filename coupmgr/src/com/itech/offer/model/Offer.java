@@ -19,7 +19,7 @@ import com.itech.offer.model.enums.OfferType;
 
 @Entity
 @Table(name=OfferModelConstants.TABLE_OFFER)
-public class Offer extends PersistableEntity{
+public class Offer extends PersistableEntity implements Cloneable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name=OfferModelConstants.COL_ID)
@@ -274,6 +274,11 @@ public class Offer extends PersistableEntity{
 
 	public void setExpiryDateInMillis(long expiryDateInMillis) {
 		this.expiryDateInMillis = expiryDateInMillis;
+	}
+
+	@Override
+	public Offer clone() throws CloneNotSupportedException {
+		return (Offer) super.clone();
 	}
 
 }
