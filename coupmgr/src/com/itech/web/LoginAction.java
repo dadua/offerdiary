@@ -16,8 +16,11 @@ import com.itech.common.web.action.Result;
 import com.itech.coupon.model.User;
 import com.itech.fb.model.FbCreds;
 import com.itech.fb.services.FbService;
+import com.itech.user.vos.UserEmailCredsVO;
 
 public class LoginAction extends CommonAction{
+
+
 
 
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
@@ -51,21 +54,41 @@ public class LoginAction extends CommonAction{
 	public Response emailLogin(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
-			String email = req.getParameter("email");
-			String password = req.getParameter("password");
-			user = getUserManager().getByUserId(email);
+			String emailPasswordCredsVOJson = req.getParameter("credVoKey");
 
-			if(password.equals(user.getPassword())){
+			Gson gson = new Gson();
+			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
+			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
+
+			if (user == null) {
+				return emailDoesntExist();
+			}
+
+			if((userEmailCredsVO.getPassword() !=null) && userEmailCredsVO.getPassword().equals(user.getPassword())){
 				updateLoggedInUser(req, user);
+			} else {
+				return invalidPasswordResponse();
 			}
 		}
-		/*
 		Result<User> result = new Result<User>(true, user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
+
 		return new CommonBeanResponse(result, userResultType);
-		 */
-		return new Forward("wallet.do");
+	}
+
+	private Response emailDoesntExist() {
+		Result<String> result = new Result<String>(false, LoginConstants.INVALID_CREDS);;
+		Type stringResultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, stringResultType);
+	}
+
+	private Response invalidPasswordResponse() {
+		Result<String> result = new Result<String>(false, LoginConstants.INVALID_CREDS);;
+		Type stringResultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, stringResultType);
 	}
 
 	public Response signUpDone (HttpServletRequest req, HttpServletResponse resp) {
