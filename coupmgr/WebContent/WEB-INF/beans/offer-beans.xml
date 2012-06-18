@@ -4,7 +4,9 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
 
-	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl">
+
+	
+	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl" parent="itech.CommonBaseManager">
 		<property name="offerDAO"  ref="itech.offerDAO"/>
 		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
 	</bean>

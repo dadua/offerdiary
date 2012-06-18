@@ -4,19 +4,26 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.itech.common.CommonUtilities;
+import com.itech.common.services.CommonBaseManager;
 import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferDAO;
+import com.itech.offer.dao.OfferShareDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.vo.OfferNotifyVO;
 
 
-public class OfferManagerImpl implements OfferManager {
+public class OfferManagerImpl extends CommonBaseManager implements OfferManager {
 
-
+	private static final Logger logger = Logger.getLogger(OfferManagerImpl.class);
 	private OfferDAO offerDAO;
 	private OfferUserAssocDAO offerUserAssocDAO;
+	private OfferShareDAO offerShareDAO;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -66,6 +73,53 @@ public class OfferManagerImpl implements OfferManager {
 		return offerUserAssoc;
 	}
 
+
+	@Override
+	public List<Offer> addOffersEventsConfigForUser(
+			List<OfferNotifyVO> offerNotificationVOs, User loggedInUser) {
+		List<Offer> offers = new ArrayList<Offer>();
+		for (OfferNotifyVO offerNotifyVO : offerNotificationVOs) {
+			Offer offer = offerNotifyVO.getOffer();
+			addOfferForUser(offer, loggedInUser);
+			offers.add(offer);
+			//TODO: Have to handle offerNotifyVO.getNotifyConfig()
+			// and fire the notification engine..
+		}
+
+		return offers;
+	}
+
+	public OfferShare createOfferShare(Offer offer) {
+		OfferShare offerShare = new OfferShare();
+		offerShare.setOffer(offer);
+		offerShare.setCreationDate(new Date(System.currentTimeMillis()));
+		offerShare.setAccessToken(CommonUtilities.getGUID());
+		getOfferShareDAO().addOrUpdate(offerShare);
+		return offerShare;
+	}
+
+	@Override
+	public Offer copySharedOffer(String accessToken) {
+		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
+		Offer copiedOffer = null;
+		try {
+			copiedOffer = offerShare.getOffer().clone();
+			copiedOffer.setId(null);
+			addOfferForUser(copiedOffer, getLoggedInUser());
+			return copiedOffer;
+		} catch (CloneNotSupportedException e) {
+			logger.error("Error in cloning the offer", e);
+			throw new RuntimeException("Error in cloning the offer", e);
+		}
+	}
+
+	@Override
+	public OfferShare getOfferShareFor(String accessToken) {
+		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
+
+		return offerShare;
+	}
+
 	public OfferDAO getOfferDAO() {
 		return offerDAO;
 	}
@@ -82,18 +136,14 @@ public class OfferManagerImpl implements OfferManager {
 		this.offerUserAssocDAO = offerUserAssocDAO;
 	}
 
-	@Override
-	public List<Offer> addOffersEventsConfigForUser(
-			List<OfferNotifyVO> offerNotificationVOs, User loggedInUser) {
-		List<Offer> offers = new ArrayList<Offer>();
-		for (OfferNotifyVO offerNotifyVO : offerNotificationVOs) {
-			Offer offer = offerNotifyVO.getOffer();
-			addOfferForUser(offer, loggedInUser);
-			offers.add(offer);
-			//TODO: Have to handle offerNotifyVO.getNotifyConfig()
-			// and fire the notification engine..
-		}
 
-		return offers;
+	public void setOfferShareDAO(OfferShareDAO offerShareDAO) {
+		this.offerShareDAO = offerShareDAO;
 	}
+
+	public OfferShareDAO getOfferShareDAO() {
+		return offerShareDAO;
+	}
+
+
 }

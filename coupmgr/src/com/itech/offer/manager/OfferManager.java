@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.OfferNotifyVO;
 
 public interface OfferManager {
@@ -20,5 +21,11 @@ public interface OfferManager {
 
 	//Returns persisted list of offers
 	public List<Offer> addOffersEventsConfigForUser(List<OfferNotifyVO> offerNotificationVOs, User loggedInUser);
+
+	public OfferShare createOfferShare(Offer offer);
+
+	public OfferShare getOfferShareFor(String accessToken);
+
+	public Offer copySharedOffer(String accessToken);
 
 }
