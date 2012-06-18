@@ -35,15 +35,6 @@ CREATE  TABLE IF NOT EXISTS `COUPONS` (
   `AUTOGUID` VARCHAR(100) NULL ,
   PRIMARY KEY (`id`));
   
-CREATE  TABLE IF NOT EXISTS `ALERT_CONFIG` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `data_type` VARCHAR(50) NULL ,
-  `data_id` INT NULL ,
-  `alert_type` VARCHAR(50) NULL,
-  `trigger_time` DATETIME NULL ,
-  `creation_time` DATETIME NULL ,
-  `status` VARCHAR(50) NULL ,
-  PRIMARY KEY (`id`) );
 
 
   

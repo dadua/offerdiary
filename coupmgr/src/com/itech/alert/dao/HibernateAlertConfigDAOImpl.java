@@ -32,7 +32,7 @@ public class HibernateAlertConfigDAOImpl extends HibernateCommonBaseDAO<AlertCon
 	public List<AlertConfig> getAllAlertConfigExpiredWithStatus(
 			ActivationStatus activationStatus) {
 		Session sess = getSession();
-		Query query = sess.createQuery("from " + getEntityClassName() + " where status = :status and triggeTime < :now");
+		Query query = sess.createQuery("from " + getEntityClassName() + " where status = :status and triggerTime < :now");
 		query.setParameter("status", activationStatus);
 		query.setParameter("now", new Date(System.currentTimeMillis()));
 		return query.list();
