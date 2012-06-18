@@ -60,12 +60,11 @@
     
     <bean name="itech.AlertManager" class="com.itech.alert.services.AlertManagerImpl">
     	<property name="alertDAO" ref="itech.AlertDAO"/>
-    
     </bean>
     
-    <bean name="itech.AlertConfigDAO" class="com.itech.alert.dao.AlertConfigDAOImpl" parent="itech.CommonBaseDAO"/>
+    <bean name="itech.AlertConfigDAO" class="com.itech.alert.dao.HibernateAlertConfigDAOImpl" parent="itech.hibernateCommonDAO" />
     
-    <bean name="itech.AlertDAO" class="com.itech.alert.dao.AlertDAOImpl" parent="itech.CommonBaseDAO"/>
+    <bean name="itech.AlertDAO" class="com.itech.alert.dao.HibernateAlertDAOImpl" parent="itech.hibernateCommonDAO" />
    
    	<bean name="itech.handler.CouponEventHandler" class="com.itech.event.coupon.CouponEventHandler">
    		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
