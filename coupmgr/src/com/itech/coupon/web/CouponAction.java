@@ -17,11 +17,13 @@ import com.itech.common.web.action.Result;
 import com.itech.coupon.CouponConstants;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.OfferNotifyVO;
 
 public class CouponAction extends CommonAction{
 
-	private static final String MY_COUPONS_ATTR_KEY = "myCoupons";
+	private static final String MY_OFERS_ATTR_KEY = "myCoupons";
+
 
 	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward(CouponConstants.INDEX_PAGE);
@@ -34,7 +36,7 @@ public class CouponAction extends CommonAction{
 		if (loggedInUser != null) {
 			coupons = getOfferManager().getAllOffersForUser(loggedInUser);
 		}
-		req.setAttribute(MY_COUPONS_ATTR_KEY, coupons);
+		req.setAttribute(MY_OFERS_ATTR_KEY, coupons);
 		return new Forward(CouponConstants.WALLET_PAGE);
 	}
 
@@ -78,5 +80,32 @@ public class CouponAction extends CommonAction{
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
+
+	public Response getSharedOffer (HttpServletRequest req, HttpServletResponse resp) {
+		String accessToken = req.getParameter(CouponConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
+		OfferShare offerShare = null;
+		if (accessToken != null) {
+			offerShare = getOfferManager().getOfferShareFor(accessToken);
+		}
+		req.setAttribute(CouponConstants.SHARED_OFFER_ATTR_KEY, offerShare.getOffer());
+		return new Forward(CouponConstants.GET_SHARED_OFFER_PAGE);
+
+	}
+
+	public Response shareOffer(HttpServletRequest req, HttpServletResponse resp) {
+		String offerId = req.getParameter(CouponConstants.SHARED_OFFER_ID_ATTR_KEY);
+		OfferShare offerShare = null;
+		if (offerId != null) {
+			Offer offer = getOfferManager().getOfferFor(Long.parseLong(offerId));
+			offerShare = getOfferManager().createOfferShare(offer);
+		}
+		String shareOfferUrl = "/getSharedOffer.do?access-token=" + offerShare.getAccessToken();
+		Result<String> result = new Result<String>(shareOfferUrl);
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+
+	}
+
 
 }

@@ -31,6 +31,8 @@ public class ActionMappings {
 		add(new ActionMapping("coupons.do", CouponAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveCoupons.do", CouponAction.class, "saveCoupons"));
 		add(new ActionMapping("deleteCoupons.do", CouponAction.class, "deleteCoupons"));
+		add(new ActionMapping("getSharedCoupon.do", CouponAction.class, "getSharedOffer"));
+		add(new ActionMapping("shareOffer.do", CouponAction.class, "shareOffer"));
 
 		//Alert actions
 		add(new ActionMapping("alerts.do", AlertAction.class, "goToMyAlerts"));

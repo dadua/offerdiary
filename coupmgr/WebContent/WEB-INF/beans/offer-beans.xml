@@ -9,9 +9,13 @@
 	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl" parent="itech.CommonBaseManager">
 		<property name="offerDAO"  ref="itech.offerDAO"/>
 		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
+		<property name="offerShareDAO" ref="itech.offerShareDAO"/>
 	</bean>
 
 	<bean id="itech.offerDAO" class="com.itech.offer.dao.impl.OfferDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+	
+	<bean id="itech.offerShareDAO" class="com.itech.offer.dao.impl.OfferShareDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 
 	<bean id="itech.vendorDAO"  class="com.itech.offer.dao.impl.VendorDAOImpl" parent="itech.hibernateCommonDAO">
