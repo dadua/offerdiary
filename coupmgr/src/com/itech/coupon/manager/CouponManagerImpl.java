@@ -9,14 +9,14 @@ import com.itech.coupon.dao.CouponDAO;
 import com.itech.coupon.model.Coupon;
 import com.itech.coupon.model.Store;
 import com.itech.coupon.model.User;
-import com.itech.event.coupon.CouponEventGenerator;
+import com.itech.event.coupon.OfferEventGenerator;
 
 
 public class CouponManagerImpl implements CouponManager{
 	private UserManager userManager;
 	private CouponDAO couponDAO;
 	private StoreManager storeManager;
-	private CouponEventGenerator couponEventGenerator;
+	private OfferEventGenerator couponEventGenerator;
 
 	@Override
 	public Coupon getById(long id) {
@@ -39,7 +39,7 @@ public class CouponManagerImpl implements CouponManager{
 		Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
 		coupon.setId(couponFromDB.getId());
 		if (coupon.getExpiryDate() != null) {
-			getCouponEventGenerator().couponCreated(coupon);
+			getCouponEventGenerator().offerCreated(coupon);
 		}
 	}
 
@@ -59,7 +59,7 @@ public class CouponManagerImpl implements CouponManager{
 			Coupon couponFromDB = getCouponDAO().getByAutoGuid(coupon.getAutoGUID());
 			coupon.setId(couponFromDB.getId());
 			if (coupon.getExpiryDate() != null) {
-				getCouponEventGenerator().couponCreated(coupon);
+				getCouponEventGenerator().offerCreated(coupon);
 			}
 		}
 
@@ -142,11 +142,11 @@ public class CouponManagerImpl implements CouponManager{
 		return storeManager;
 	}
 
-	public void setCouponEventGenerator(CouponEventGenerator couponEventGenerator) {
+	public void setCouponEventGenerator(OfferEventGenerator couponEventGenerator) {
 		this.couponEventGenerator = couponEventGenerator;
 	}
 
-	public CouponEventGenerator getCouponEventGenerator() {
+	public OfferEventGenerator getCouponEventGenerator() {
 		return couponEventGenerator;
 	}
 

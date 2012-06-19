@@ -7,65 +7,63 @@ import com.itech.alert.model.AlertConfig;
 import com.itech.alert.model.AlertDataTypes;
 import com.itech.alert.services.AlertConfigManager;
 import com.itech.event.services.EventHandler;
-import com.itech.event.vo.CouponEvent;
 import com.itech.event.vo.Event;
-import com.itech.event.vo.CouponEvent.CouponEventType;
+import com.itech.event.vo.OfferEvent;
+import com.itech.event.vo.OfferEvent.OfferEventType;
 
-public class CouponEventHandler implements EventHandler {
+public class OfferEventHandler implements EventHandler {
+
 	private static final int DEFAULT_TRIGGER_TIME = 30000;
 	private AlertConfigManager alertConfigManager;
 
 	@Override
 	public void handle(Event event) {
-		CouponEvent couponEvent = (CouponEvent) event;
-		if (CouponEventType.COUPON_CREATED.equals(couponEvent.getCouponEventType())) {
-			handleCouponCreated(couponEvent);
-		} else if (CouponEventType.COUPON_MODIFIED.equals(couponEvent.getCouponEventType())) {
-			handleCouponModified(couponEvent);
-		} else if (CouponEventType.COUPON_DELETED.equals(couponEvent.getCouponEventType())) {
-			handleCouponDeleted(couponEvent);
+		OfferEvent offerEvent = (OfferEvent) event;
+		if (OfferEventType.OFFER_CREATED.equals(offerEvent.getOfferEventType())) {
+			handleOfferCreated(offerEvent);
+		} else if (OfferEventType.OFFER_MODIFIED.equals(offerEvent.getOfferEventType())) {
+			handleOfferModified(offerEvent);
+		} else if (OfferEventType.OFFER_DELETED.equals(offerEvent.getOfferEventType())) {
+			handleOfferDeleted(offerEvent);
 		}
-
 	}
 
-	private void handleCouponCreated(CouponEvent couponEvent) {
-		AlertConfig alertConfig = createAlertConfigFor(couponEvent);
+	private void handleOfferCreated(OfferEvent offerEvent) {
+		AlertConfig alertConfig = createAlertConfigFor(offerEvent);
 		if (alertConfig.getTriggerTime().before(new Date(System.currentTimeMillis()))) {
 			return;
 		}
 		alertConfigManager.save(alertConfig);
 	}
 
-	private void handleCouponDeleted(CouponEvent couponEvent) {
+	private void handleOfferDeleted(OfferEvent offerEvent) {
 		// TODO Auto-generated method stub
-
 	}
 
-	private void handleCouponModified(CouponEvent couponEvent) {
+	private void handleOfferModified(OfferEvent offerEvent) {
 		// TODO Auto-generated method stub
-
 	}
 
-	private AlertConfig createAlertConfigFor(CouponEvent couponEvent) {
+	private AlertConfig createAlertConfigFor(OfferEvent offerEvent) {
 		AlertConfig alertConfig = new AlertConfig();
 		alertConfig.setCreationTime(new Date(System.currentTimeMillis()));
-		alertConfig.setDataType(AlertDataTypes.COUPON.toString());
-		alertConfig.setDataId(couponEvent.getCoupon().getId());
-		Date triggerTime = calculateTriggerTime(couponEvent);
+		alertConfig.setDataType(AlertDataTypes.OFFER.toString());
+		alertConfig.setDataId(offerEvent.getOffer().getId());
+		Date triggerTime = calculateTriggerTime(offerEvent);
 		alertConfig.setTriggerTime(triggerTime);
 		alertConfig.setStatus(AlertConfig.ActivationStatus.ACTIVE);
 		return alertConfig;
 	}
 
-	private Date calculateTriggerTime(CouponEvent couponEvent) {
-		long triggerTimeInMillies = couponEvent.getCoupon().getExpiryDate().getTime() - DEFAULT_TRIGGER_TIME;
+	private Date calculateTriggerTime(OfferEvent offerEvent) {
+		long triggerTimeInMillies = offerEvent.getOffer().getExpiryDateInMillis()- DEFAULT_TRIGGER_TIME;
 		Date triggerTime = new Date(triggerTimeInMillies);
 		return triggerTime;
 	}
 
 	@Override
 	public boolean handles(Event event) {
-		if (CouponEvent.class.isAssignableFrom(event.getClass())) {
+		if (OfferEvent.class.isAssignableFrom(event.getClass())) {
 			return true;
 		}
 
