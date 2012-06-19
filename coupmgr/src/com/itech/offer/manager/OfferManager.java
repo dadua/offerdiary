@@ -32,4 +32,6 @@ public interface OfferManager {
 
 	public Offer copySharedOffer(String accessToken);
 
+	public Offer getOfferFor(Long offerId);
+
 }

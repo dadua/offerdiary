@@ -120,6 +120,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
+	public Offer getOfferFor(Long offerId) {
+		return getOfferDAO().getById(offerId);
+	}
+
+	@Override
 	public OfferShare getOfferShareFor(String accessToken) {
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
 
@@ -157,5 +162,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public OfferShareDAO getOfferShareDAO() {
 		return offerShareDAO;
 	}
+
+
 
 }
