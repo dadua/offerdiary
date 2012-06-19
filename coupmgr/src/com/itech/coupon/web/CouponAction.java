@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.CommonAction;
@@ -22,12 +24,10 @@ import com.itech.offer.vo.OfferNotifyVO;
 
 public class CouponAction extends CommonAction{
 
-	private static final String MY_OFERS_ATTR_KEY = "myCoupons";
-
+	private static final String MY_COUPONS_JSON_ATTR_KEY = "myCouponsJson";
 
 	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward(CouponConstants.INDEX_PAGE);
-
 	}
 
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
@@ -36,7 +36,11 @@ public class CouponAction extends CommonAction{
 		if (loggedInUser != null) {
 			coupons = getOfferManager().getAllOffersForUser(loggedInUser);
 		}
-		req.setAttribute(MY_OFERS_ATTR_KEY, coupons);
+		Gson gson = new Gson();
+		Type listOfCouponsType = new TypeToken<List<Offer>>() {
+		}.getType();
+		String couponsJson = gson.toJson(coupons, listOfCouponsType);
+		req.setAttribute(MY_COUPONS_JSON_ATTR_KEY, StringEscapeUtils.escapeJavaScript(couponsJson));
 		return new Forward(CouponConstants.WALLET_PAGE);
 	}
 

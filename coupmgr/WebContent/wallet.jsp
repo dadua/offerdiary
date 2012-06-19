@@ -20,9 +20,9 @@
 			var it = it || {};
 			it.wallet = it.wallet || {};
 			
-			it.wallet.appendCoupons = function(coupons) {
+			it.wallet.appendCoupons = function(coupons, isOldAddition) {
 				for (var i=0; i<coupons.length;i++) {
-					this.appendCoupon(coupons[i]);
+					this.appendCoupon(coupons[i], isOldAddition);
 				}
 			};
 			
@@ -93,7 +93,7 @@
 				}
 			}
 			
-			it.wallet.appendCoupon = function (coupon) {
+			it.wallet.appendCoupon = function (coupon, isOldAddition) {
 				
 				var daysToExpire = this.getDaysToExpire(coupon);
 				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
@@ -109,7 +109,9 @@
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" >';
-	    		couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
+	    		if (!isOldAddition) {
+	    			couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
+	    		}
 	    		couponHtml += daysToExpireHtml;
 	    		couponHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
@@ -216,6 +218,9 @@
 			
 			$(function() {
 				$('#addCouponToWallet').click(it.wallet.addCoupon);
+				var couponsJson = '${myCouponsJson}',
+				coupons = JSON.parse(couponsJson);
+				it.wallet.appendCoupons(coupons, true);
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
 				$('#addCouponModalBtn').click(it.wallet.clearCouponFormVals);
@@ -270,40 +275,7 @@
 					<%@include file="walletTabs.jsp" %>
 				</div>
 				<div class="span7" id="couponContainer" >
-				 <% 
-				 	List<Offer> myCoupons = (List<Offer>) request.getAttribute("myCoupons");
-				 %>	
 				 <ul class="thumbnails">
-				 <% 
-				    for (Offer coupon : myCoupons) {
-				    	%>
-				    	
-				    		<li class="span3" id="coupon_<%=coupon.getId()%>">
-				    			<div class="daysToExpire label <%=coupon.getExpiryDateBasedClass()%>" id="couponExpire_<%=coupon.getId() %>">
-				    			<%
-								String formattedTimeToExpire = coupon.getFormattedTimeToExpire();
-				    			if(coupon.getDaysToExpire() < 0) {
-				    			%>
-				    			Coupon Expired!!
-				    			<%
-				    			} else {
-				    			%>
-				    			<%=coupon.getCompactFormattedTimeToExpire(formattedTimeToExpire)%>
-				    			<%
-				    			}
-				    			%>
-				    			</div>
-				    			
-								<div class="thumbnail coupon"  >
-									<span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_<%=coupon.getId()%>"></span>
-									<h3>Details:  <%=coupon.getDescription()%> </h3>
-									<h5>Code: <%=coupon.getOfferCode()%> </h5>
-									<h5>Discount: <%=coupon.getDiscountValue()%> </h5>
-								</div>
-							</li>
-				    	<%
-					}
-				%>
 				</ul>
 				&nbsp;
 				</div>
