@@ -109,9 +109,7 @@
 	    		var couponHtml = '<li class="span3" id="coupon_';
 	    		couponHtml += coupon.id;
 	    		couponHtml += '" >';
-	    		if (!isOldAddition) {
-	    			couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
-	    		}
+	    		couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
 	    		couponHtml += daysToExpireHtml;
 	    		couponHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
 	    		couponHtml += coupon.id;
@@ -133,10 +131,14 @@
 				});
 	    		*/
 	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
-	    		$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
-	    			$(this).parent().find('span.hiddenTillAddSuccess').show();
-	    			$(this).remove();
-	    		});
+	    		if (isOldAddition) {
+	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide();
+	    		} else {
+	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
+		    			$(this).parent().find('span.hiddenTillAddSuccess').show();
+		    			$(this).remove();
+		    		});
+	    		}
 			};
 			
 			it.wallet.clearCouponFormVals = function () {
