@@ -51,13 +51,23 @@ public class LoginFilter implements Filter {
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
 			if (!isBypass(reqUrl)) {
-				httpResponse.sendRedirect("");
-				logger.info("redirected to home: " + reqUrl);
+				httpRequest.getSession().setAttribute("redirectURL", reqUrl);
+				httpResponse.sendRedirect("login.do");
+				logger.debug("redirected to home: " + reqUrl);
 				return;
 			}
-		}else {
+		} else {
+			String redirectURL = (String) httpRequest.getSession().getAttribute("redirectURL");
+			if (redirectURL != null && redirectURL.length() != 0) {
+				httpRequest.getSession().setAttribute("redirectURL", null);
+				httpResponse.sendRedirect(redirectURL.substring(1));
+				logger.debug("redirected to : " + redirectURL);
+				return;
+			}
+
 			if ("/index.jsp".equals(reqUrl) || "/".equals(reqUrl)) {
 				httpRequest.getRequestDispatcher("/wallet.do").forward(req, resp);
+				return;
 			}
 		}
 
@@ -70,7 +80,7 @@ public class LoginFilter implements Filter {
 
 	private boolean isBypass(String reqUrl) {
 		for (String bypassUrl : bypassUrls) {
-			if (reqUrl.startsWith(bypassUrl)) {
+			if (reqUrl.equals(bypassUrl)) {
 				return true;
 			}
 		}
