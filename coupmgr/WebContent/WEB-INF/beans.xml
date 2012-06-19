@@ -4,12 +4,24 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
     
-    
-	<bean name="itech.CouponManager" class="com.itech.coupon.manager.CouponManagerImpl" scope="singleton">
-		<property name="couponDAO" ref="itech.CouponDAO"/>
-		<property name="storeManager" ref="itech.StoreManager"/>
-		<property name="userManager" ref="itech.UserManager"/>
-		<property name="couponEventGenerator" ref="itech.CouponEventGenerator"/>
+     <bean id="itech.ServiceLocator" class="com.itech.common.services.SpringServiceLocator" scope="singleton">
+	</bean>
+
+   <!-- Beans to support Security APIs  -->
+    <bean id="itech.SecurityManager" class="com.itech.common.security.SecurityManagerImpl" scope="singleton">
+    	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>
+	</bean>
+	<bean id="itech.SecurityContextHolder" class="com.itech.common.security.ThreadLocalSecurityContextHolder" 
+		scope="singleton"/>
+ 	
+	<bean id="itech.ConnectionFactory" class="com.itech.common.db.ConnectionFactoryImpl" scope="singleton">
+		<property name="connectionUtil" ref="itech.ConnectionUtil" />
+	</bean>
+	<bean name="itech.ConnectionUtil" class="com.itech.common.db.ConnectionUtilImpl" scope="singleton">
+	</bean>
+   
+    <bean id="itech.CommonBaseDAO"  class="com.itech.common.db.CommonBaseDAOImpl" abstract="true">
+		<property name="connectionFactory" ref="itech.ConnectionFactory" />
 	</bean>
    
    	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
@@ -20,14 +32,10 @@
    		<property name="storeDAO" ref="itech.StoreDAO"/>
    		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
-   
-   	<bean name="itech.CouponDAO" class="com.itech.coupon.dao.CouponDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
-	</bean>
 	
 	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
 			parent="itech.hibernateCommonDAO" scope="singleton">
 	</bean>
-   
    
    	<bean name="itech.StoreDAO" class="com.itech.coupon.dao.StoreDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
 	</bean>
@@ -44,19 +52,19 @@
     
     <bean name="itech.AlertDAO" class="com.itech.alert.dao.HibernateAlertDAOImpl" parent="itech.hibernateCommonDAO" />
    
-   	<bean name="itech.handler.CouponEventHandler" class="com.itech.event.coupon.CouponEventHandler">
+   	<bean name="itech.handler.OfferEventHandler" class="com.itech.event.coupon.OfferEventHandler">
    		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
    	</bean>
    	
    	<bean name="itech.EventEngine" class="com.itech.event.services.EventEngineImpl">
    		<property name="eventHandlers">
    			<list>
-   				<ref bean="itech.handler.CouponEventHandler"/>
+   				<ref bean="itech.handler.OfferEventHandler"/>
    			</list>
    		</property>
    	</bean>
    	
-   	<bean name="itech.CouponEventGenerator" class="com.itech.event.coupon.CouponEventGeneratorImpl">
+   	<bean name="itech.OfferEventGenerator" class="com.itech.event.coupon.OfferEventGeneratorImpl">
    		<property name="eventEngine" ref="itech.EventEngine"/>
    	</bean>
 	
@@ -64,7 +72,7 @@
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
 		<property name="alertGenerators">
 			<list>
-				<ref bean="itech.CouponAlertGenerator"/>
+				<ref bean="itech.OfferAlertGenerator"/>
 			</list>
 		</property>
 		<property name="alertHandlers">
@@ -81,11 +89,22 @@
 		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
 	
-	<bean id="itech.CouponAlertGenerator" class="com.itech.alert.services.CouponAlertGenerator">
+	<bean id="itech.OfferAlertGenerator" class="com.itech.alert.services.OfferAlertGenerator">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
 		<property name="alertManager" ref="itech.AlertManager"/>
-		<property name="couponManager" ref="itech.CouponManager"/>
+		<property name="offerManager" ref="itech.offerManager"/>
 	</bean>  
+	
+	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl">
+		<property name="offerDAO" ref="itech.offerDAO"/>
+		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
+	</bean>
+	
+	<bean id="itech.offerDAO" class="com.itech.offer.dao.impl.OfferDAOImpl">
+	</bean>
+	
+	<bean id="itech.offerUserAssocDAO" class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl">
+	</bean>
 	
 	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />

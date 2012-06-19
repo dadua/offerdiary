@@ -36,6 +36,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
+	public Offer getById(long dataId) {
+		return offerDAO.getById(dataId);
+	}
+
+	@Override
 	public List<Offer> getAllOffersForUser(User user) {
 		return offerDAO.getAllOfferForUser(user);
 	}
@@ -89,6 +94,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		return offers;
 	}
 
+	@Override
 	public OfferShare createOfferShare(Offer offer) {
 		OfferShare offerShare = new OfferShare();
 		offerShare.setOffer(offer);
@@ -141,9 +147,15 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		this.offerShareDAO = offerShareDAO;
 	}
 
+
+	@Override
+	public User getOfferOwner(Offer offer) {
+		return getOfferUserAssocDAO().getOfferOwner(offer);
+	}
+
+
 	public OfferShareDAO getOfferShareDAO() {
 		return offerShareDAO;
 	}
-
 
 }

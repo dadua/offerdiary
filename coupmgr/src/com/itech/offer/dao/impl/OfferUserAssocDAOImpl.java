@@ -5,7 +5,9 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
+import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferUserAssocDAO;
+import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferUserAssoc;
 
 public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc> implements OfferUserAssocDAO{
@@ -24,4 +26,15 @@ public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc
 		return query.list();
 	}
 
+	@Override
+	public User getOfferOwner(Offer offer) {
+		String hql="from "+getEntityClassName()+" where offer =:offer ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offer", offer);
+		List<OfferUserAssoc> offerUserAssocList = query.list();
+		if(!offerUserAssocList.isEmpty()){
+			return offerUserAssocList.get(0).getUser();
+		}
+		return null;
+	}
 }

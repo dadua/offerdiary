@@ -6,17 +6,17 @@ import com.itech.alert.model.Alert;
 import com.itech.alert.model.Alert.AlertStatus;
 import com.itech.alert.model.AlertConfig;
 import com.itech.alert.model.AlertDataTypes;
-import com.itech.coupon.manager.CouponManager;
-import com.itech.coupon.model.Coupon;
+import com.itech.offer.manager.OfferManager;
+import com.itech.offer.model.Offer;
 
-public class CouponAlertGenerator implements AlertGenerator {
+public class OfferAlertGenerator implements AlertGenerator {
 	private AlertManager alertManager;
 	private AlertConfigManager alertConfigManager;
-	private CouponManager couponManager;
+	private OfferManager offerManager;
 
 	@Override
 	public boolean handles(AlertConfig alertConfig) {
-		if (AlertDataTypes.COUPON.toString().equalsIgnoreCase(alertConfig.getDataType())) {
+		if (AlertDataTypes.OFFER.toString().equalsIgnoreCase(alertConfig.getDataType())) {
 			return true;
 		}
 		return false;
@@ -32,11 +32,10 @@ public class CouponAlertGenerator implements AlertGenerator {
 	}
 
 	private Alert createAlertFor(AlertConfig alertConfig) {
-		Coupon coupon = getCouponManager().getById(alertConfig.getDataId());
-		String alertMessage = "Your coupon is expiring on: " + coupon.getExpiryDate()  + "\n" +
-				"Coupon Detail:\n " + coupon.getDetail();
-		Alert alert = new Alert(coupon.getOwner(), AlertDataTypes.COUPON.toString(),
-				coupon.getId(), AlertStatus.NEW, new Date(System.currentTimeMillis()), alertMessage, alertMessage);
+		Offer offer = getOfferManager().getById(alertConfig.getDataId());
+		String alertMessage = "Your offer is expiring on: " + offer.getExpiry()  + "\n" +
+				"offer Detail:\n " + offer.getDescription();
+		Alert alert = new Alert(getOfferManager().getOfferOwner(offer), AlertDataTypes.OFFER.toString(),offer.getId(), AlertStatus.NEW, new Date(System.currentTimeMillis()), alertMessage, alertMessage);
 		return alert;
 	}
 
@@ -53,13 +52,11 @@ public class CouponAlertGenerator implements AlertGenerator {
 		return alertConfigManager;
 	}
 
-
-	public void setCouponManager(CouponManager couponManager) {
-		this.couponManager = couponManager;
+	public OfferManager getOfferManager() {
+		return offerManager;
 	}
 
-
-	public CouponManager getCouponManager() {
-		return couponManager;
+	public void setOfferManager(OfferManager offerManager) {
+		this.offerManager = offerManager;
 	}
 }
