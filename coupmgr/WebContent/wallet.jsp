@@ -231,7 +231,9 @@
 		</script>
 		<style type="text/css">
 			.coupon {
-				background-color: #E6E7FF;
+				/*
+				background-color: #006DCC;
+				*/
 			}
 			
 			.daysToExpire {
