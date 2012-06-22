@@ -170,7 +170,7 @@
 				},
 				couponNotificationConfigs = [];
 				couponNotificationConfigs.push(offerNotificationConfig);
-				$.post('saveCoupons.do',
+				$.post('saveOffers.do',
 						{'offerNotificationConfigs': JSON.stringify(couponNotificationConfigs)},
 						function (data) {
 							var ret = $.parseJSON(data);
@@ -191,7 +191,7 @@
 				var couponId = couponIdExtractRegex.exec(targetId)[1];
 				var couponIds = [];
 				couponIds.push(couponId);
-				$.post('deleteCoupons.do', {'couponIds': JSON.stringify(couponIds)}, function(data) {
+				$.post('deleteOffers.do', {'couponIds': JSON.stringify(couponIds)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
 						$('#'+targetId).tooltip('hide');

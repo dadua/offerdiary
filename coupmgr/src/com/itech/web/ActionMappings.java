@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.itech.alert.web.AlertAction;
 import com.itech.common.web.action.ActionMapping;
-import com.itech.coupon.web.CouponAction;
+import com.itech.coupon.web.OfferAction;
 
 public class ActionMappings {
 	private static final Map<String, ActionMapping> actions = new HashMap<String, ActionMapping>();
@@ -25,12 +25,12 @@ public class ActionMappings {
 		add(new ActionMapping("testFbAction.do", FbLoginAction.class, "testFbAction"));
 
 		//Coupon/Offer actions
-		add(new ActionMapping("home.do", CouponAction.class, "goToHome"));
-		add(new ActionMapping("wallet.do", CouponAction.class, "goToMyWallet"));
-		add(new ActionMapping("getMyCoupons.do", CouponAction.class, "getMyCoupons"));
-		add(new ActionMapping("coupons.do", CouponAction.class, "goToMyWallet"));
-		add(new ActionMapping("saveCoupons.do", CouponAction.class, "saveCoupons"));
-		add(new ActionMapping("deleteCoupons.do", CouponAction.class, "deleteCoupons"));
+		add(new ActionMapping("home.do", OfferAction.class, "goToHome"));
+		add(new ActionMapping("wallet.do", OfferAction.class, "goToMyWallet"));
+		add(new ActionMapping("getMyCoupons.do", OfferAction.class, "getMyOffers"));
+		add(new ActionMapping("offers.do", OfferAction.class, "goToMyWallet"));
+		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
+		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
 		add(new ActionMapping("getSharedCoupon.do", CouponAction.class, "getSharedOffer"));
 		add(new ActionMapping("shareOffer.do", CouponAction.class, "shareOffer"));
 
