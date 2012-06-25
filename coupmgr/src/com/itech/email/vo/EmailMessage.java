@@ -2,12 +2,12 @@ package com.itech.email.vo;
 
 import java.util.List;
 
-public abstract class EmailVO {
+public abstract class EmailMessage {
 
 	String senderAddress;
 	String toAddress;
 	String subject;
-	String htmlContent;
+	String mailContent;
 	List<String> attachments;
 
 	public String getSenderAddress() {
@@ -28,10 +28,8 @@ public abstract class EmailVO {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	public String getHtmlContent() {
-		return htmlContent;
-	}
-	public abstract void setHtmlContent(String htmlContent) ;
+
+	public abstract String getMessageContent();
 
 	public List<String> getAttachments() {
 		return attachments;
