@@ -84,7 +84,7 @@
 	</bean>
 	
 	
-	<bean id="itech.handler.EmailAlerthandler" class="com.itech.alert.handler.EmailAlertHandler">
+	<bean id="itech.handler.EmailAlerthandler" class="com.itech.alert.handler.ExpiryEmailNotificationAlertHandler">
 		<property name="emailManager" ref="itech.emailManager"/>
 		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
