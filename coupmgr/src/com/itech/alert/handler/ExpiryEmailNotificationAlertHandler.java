@@ -1,26 +1,22 @@
 package com.itech.alert.handler;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.itech.alert.model.Alert;
-import com.itech.common.CommonFileUtilities;
 import com.itech.coupon.manager.UserManager;
 import com.itech.coupon.model.User;
 import com.itech.email.services.EmailManager;
+import com.itech.email.vo.EmailMessage;
+import com.itech.email.vo.OfferExpiryNotificationEmail;
 
-public class EmailAlertHandler implements AlertHandler{
+public class ExpiryEmailNotificationAlertHandler implements AlertHandler{
 
 	private EmailManager emailManager;
 	private UserManager userManager;
 
 	private static final String DEFAULT_NOTIFICATION_SUBJECT="Coupoxo Coupon Expiry Notification";
 	private static final String DEFAULT_TEST_COUPOXO_MAIL_ADDRESS= "test.coupoxo@gmail.com";
-	private final Logger logger = Logger.getLogger(EmailAlertHandler.class);
+	private final Logger logger = Logger.getLogger(ExpiryEmailNotificationAlertHandler.class);
 
 
 	public EmailManager getEmailManager() {
@@ -33,22 +29,16 @@ public class EmailAlertHandler implements AlertHandler{
 
 	@Override
 	public void handle(Alert alert) {
-
 		// this userID is the auto-generated id (User.id)of User DAO not the User.user_id
-		long userId = alert.getUser().getId();
-		User user = userManager.getById(userId);
+		User user = alert.getUser();
 		String toEmailId= user.getEmailId();
 		String message = alert.getMessage();
-		try {
-			Document doc = Jsoup.parse(CommonFileUtilities.getResourceFileAsString("index.html"));
-			Element para = doc.select("#mail-message").first();
-			para.html("<singleline label=\"Title\">"+message+"</singleline>");
-			message = doc.toString();
-		} catch (IOException e) {
-			logger.debug("Email HTML could not be generated ; toAdress" + toEmailId);
-			e.printStackTrace();
-		}
-		emailManager.sendMail(DEFAULT_TEST_COUPOXO_MAIL_ADDRESS, toEmailId, DEFAULT_NOTIFICATION_SUBJECT, message);
+		EmailMessage email = new OfferExpiryNotificationEmail();
+		email.setContentInMessageHTML(message);
+		email.setMailContent(message);
+		email.setToAddress(toEmailId);
+		email.setSubject(DEFAULT_NOTIFICATION_SUBJECT);
+		emailManager.sendEmail(email);
 	}
 
 	@Override
@@ -63,6 +53,4 @@ public class EmailAlertHandler implements AlertHandler{
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
-
-
 }

@@ -1,36 +1,9 @@
 package com.itech.email.services;
 
-import java.io.File;
-import java.util.List;
+import com.itech.email.vo.EmailMessage;
 
 public interface EmailManager {
-	/**
-	 * Send Email ; config taken from beans.xml for now
-	 * @param from from email address
-	 * @param to to email address
-	 * @param subject
-	 * @param msg
-	 * @return
-	 */
-	public boolean sendMail(String from, String to, String subject, String msg);
 
-	/**
-	 * from is taken default as test.coupoxo@gmail.com
-	 * @param to
-	 * @param subject
-	 * @param msg
-	 * @return
-	 */
-	public boolean sendMail( String to, String subject, String msg);
+	public boolean sendEmail(EmailMessage email);
 
-	/**
-	 * end Email with attachements; config taken from beans.xml for now
-	 * @param from from email address
-	 * @param to to email address
-	 * @param subject subject
-	 * @param htmlMsg
-	 * @param attachmentFiles list of Files() to be attached
-	 * @return
-	 */
-	public boolean sendMailWithAttachement(String from, String to, String subject, String htmlMsg, List<File> attachmentFiles);
 }

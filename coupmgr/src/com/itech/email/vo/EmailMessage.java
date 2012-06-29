@@ -10,6 +10,14 @@ public abstract class EmailMessage {
 	String mailContent;
 	List<String> attachments;
 
+	public EmailMessage(){
+		generateEmailHTMLTemplate();
+	}
+
+	public abstract String getMailContent() ;
+	protected abstract void generateEmailHTMLTemplate();
+	public abstract void setContentInMessageHTML(String message);
+
 	public String getSenderAddress() {
 		return senderAddress;
 	}
@@ -29,13 +37,17 @@ public abstract class EmailMessage {
 		this.subject = subject;
 	}
 
-	public abstract String getMessageContent();
-
 	public List<String> getAttachments() {
 		return attachments;
 	}
 	public void setAttachments(List<String> attachments) {
 		this.attachments = attachments;
+	}
+
+
+	public void setMailContent(String mailContent) {
+		this.mailContent = getMailContent();
+
 	}
 
 }
