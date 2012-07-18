@@ -1,5 +1,6 @@
 package com.itech.coupon.manager;
 
+import com.itech.common.services.CommonBaseManager;
 import com.itech.coupon.dao.UserDAO;
 import com.itech.coupon.model.Gender;
 import com.itech.coupon.model.LoginType;
@@ -7,7 +8,7 @@ import com.itech.coupon.model.User;
 import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
 
-public class UserManagerImpl implements UserManager {
+public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserDAO userDAO;
 
 
