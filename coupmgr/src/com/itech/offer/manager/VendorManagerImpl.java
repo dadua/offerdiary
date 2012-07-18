@@ -21,8 +21,9 @@ VendorManager {
 	}
 
 	@Override
-	public void saveOrUpdateVendor(Vendor vendor) {
+	public Vendor saveOrUpdateVendor(Vendor vendor) {
 		vendorDAO.addOrUpdate(vendor);
+		return vendor;
 
 	}
 

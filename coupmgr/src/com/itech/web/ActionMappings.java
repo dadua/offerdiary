@@ -6,6 +6,7 @@ import java.util.Map;
 import com.itech.alert.web.AlertAction;
 import com.itech.common.web.action.ActionMapping;
 import com.itech.coupon.web.OfferAction;
+import com.itech.offer.web.VendorAction;
 
 public class ActionMappings {
 	private static final Map<String, ActionMapping> actions = new HashMap<String, ActionMapping>();
@@ -52,6 +53,12 @@ public class ActionMappings {
 		add(new ActionMapping("signupDone.do", LoginAction.class, "signUpDone"));
 		add(new ActionMapping("emailLogin.do", LoginAction.class, "emailLogin"));
 		add(new ActionMapping("emailSignup.do", LoginAction.class, "emailSignUp"));
+
+
+		//vendor actions
+		add(new ActionMapping("addVendor.do", VendorAction.class, "addVendor"));
+		add(new ActionMapping("searchVendor.do", VendorAction.class, "searchVendors"));
+
 
 	}
 }

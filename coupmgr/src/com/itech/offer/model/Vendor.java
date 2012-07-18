@@ -51,7 +51,7 @@ public class Vendor extends PersistableEntity{
 	private Vendor parentVendor;
 
 	@Column(name=VendorModelContants.COL_VENDOR_TYPE)
-	private VendorType vendorType;
+	private VendorType vendorType = VendorType.GLOBAL;
 
 	@ManyToOne
 	@JoinColumn(name=VendorModelContants.COL_OWNER)
