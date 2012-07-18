@@ -40,6 +40,7 @@
 	
 	<bean id="itech.hibernateCommonDAO" class="com.itech.common.db.hibernate.HibernateCommonBaseDAO" abstract="true">
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="securityManager" ref="itech.SecurityManager" />
 	</bean>	
     
 </beans>

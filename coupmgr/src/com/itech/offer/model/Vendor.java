@@ -5,9 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
+import com.itech.coupon.model.User;
+import com.itech.offer.model.enums.VendorType;
 
 @Entity
 @Table(name=VendorModelContants.TABLE_VENDOR)
@@ -42,6 +46,16 @@ public class Vendor extends PersistableEntity{
 	@Column(name=VendorModelContants.COL_PHONE_NUMBER)
 	private String phoneNumber;
 
+	@ManyToOne
+	@JoinColumn(name=VendorModelContants.COL_PARENT_VENDOR)
+	private Vendor parentVendor;
+
+	@Column(name=VendorModelContants.COL_VENDOR_TYPE)
+	private VendorType vendorType;
+
+	@ManyToOne
+	@JoinColumn(name=VendorModelContants.COL_OWNER)
+	private User owner;
 
 	public String getName() {
 		return name;
@@ -118,6 +132,30 @@ public class Vendor extends PersistableEntity{
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public void setParentVendor(Vendor parentVendor) {
+		this.parentVendor = parentVendor;
+	}
+
+	public Vendor getParentVendor() {
+		return parentVendor;
+	}
+
+	public void setVendorType(VendorType vendorType) {
+		this.vendorType = vendorType;
+	}
+
+	public VendorType getVendorType() {
+		return vendorType;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public User getOwner() {
+		return owner;
 	}
 
 }

@@ -3,43 +3,15 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
-    
-     <bean id="itech.ServiceLocator" class="com.itech.common.services.SpringServiceLocator" scope="singleton">
-	</bean>
-
-   <!-- Beans to support Security APIs  -->
-    <bean id="itech.SecurityManager" class="com.itech.common.security.SecurityManagerImpl" scope="singleton">
-    	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>
-	</bean>
-	<bean id="itech.SecurityContextHolder" class="com.itech.common.security.ThreadLocalSecurityContextHolder" 
-		scope="singleton"/>
- 	
-	<bean id="itech.ConnectionFactory" class="com.itech.common.db.ConnectionFactoryImpl" scope="singleton">
-		<property name="connectionUtil" ref="itech.ConnectionUtil" />
-	</bean>
-	<bean name="itech.ConnectionUtil" class="com.itech.common.db.ConnectionUtilImpl" scope="singleton">
-	</bean>
-   
-    <bean id="itech.CommonBaseDAO"  class="com.itech.common.db.CommonBaseDAOImpl" abstract="true">
-		<property name="connectionFactory" ref="itech.ConnectionFactory" />
-	</bean>
-   
+     	   
    	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
    		<property name="userDAO" ref="itech.UserDAO"/>
 	</bean>
-   
-   	<bean name="itech.StoreManager" class="com.itech.coupon.manager.StoreManagerImpl" scope="singleton">
-   		<property name="storeDAO" ref="itech.StoreDAO"/>
-   		<property name="userManager" ref="itech.UserManager"/>
-	</bean>
-	
+   	
 	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
 			parent="itech.hibernateCommonDAO" scope="singleton">
 	</bean>
-   
-   	<bean name="itech.StoreDAO" class="com.itech.coupon.dao.StoreDAOImpl" parent="itech.CommonBaseDAO" scope="singleton">
-	</bean>
-   
+      
     <bean name="itech.AlertConfigManager" class="com.itech.alert.services.AlertConfigManagerImpl">
     	<property name="alertConfigDAO" ref="itech.AlertConfigDAO"/>
     </bean>

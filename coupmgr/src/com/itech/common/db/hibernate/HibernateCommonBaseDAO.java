@@ -6,10 +6,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.itech.common.db.CommonBaseDAO;
+import com.itech.common.security.SecurityManager;
+import com.itech.coupon.model.User;
 
 public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	private HibernateSessionFactory hibernateSessionFactory;
+	private SecurityManager securityManager;
+
 
 	@Override
 	public boolean addOrUpdate(T object) {
@@ -70,6 +74,18 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	public HibernateSessionFactory getHibernateSessionFactory() {
 		return hibernateSessionFactory;
+	}
+
+	public User getLoggedInUser() {
+		return getSecurityManager().getLoggedInUser();
+	}
+
+	public void setSecurityManager(SecurityManager securityManager) {
+		this.securityManager = securityManager;
+	}
+
+	public SecurityManager getSecurityManager() {
+		return securityManager;
 	}
 
 }
