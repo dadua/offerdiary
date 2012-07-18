@@ -294,7 +294,7 @@
 								<label>Discount Description: </label>
 								<textarea class="span3 couponDetail" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label> Expiry Date: </label>
-								<input id="expiryDate"  class="couponDetail" type="date" placeholder="Expiry Date(mm/dd/yyyy)"/>
+								<input id="expiryDate"  class="couponDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
 									<a id="emailNotify" class="btn active checkBoxSelected">
