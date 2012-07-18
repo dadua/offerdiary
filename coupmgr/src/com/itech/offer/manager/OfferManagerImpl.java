@@ -24,6 +24,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private OfferDAO offerDAO;
 	private OfferUserAssocDAO offerUserAssocDAO;
 	private OfferShareDAO offerShareDAO;
+	private VendorManager vendorManager;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -161,6 +162,14 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	public OfferShareDAO getOfferShareDAO() {
 		return offerShareDAO;
+	}
+
+	public void setVendorManager(VendorManager vendorManager) {
+		this.vendorManager = vendorManager;
+	}
+
+	public VendorManager getVendorManager() {
+		return vendorManager;
 	}
 
 
