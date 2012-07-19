@@ -14,9 +14,21 @@ public abstract class EmailMessage {
 		generateEmailHTMLTemplate();
 	}
 
+	public EmailMessage(String messageContent, String toEmailId){
+		generateEmailHTMLTemplate();
+		setContentInMessageHTML(messageContent);
+		setToAddress(toEmailId);
+	}
+
+	public EmailMessage(String messageContent, String toEmailId, List<String> fileAttachementList){
+		this(messageContent, toEmailId);
+		setAttachments(fileAttachementList);
+	}
+
 	public abstract String getMailContent() ;
 	protected abstract void generateEmailHTMLTemplate();
 	public abstract void setContentInMessageHTML(String message);
+	public abstract void setSubject();
 
 	public String getSenderAddress() {
 		return senderAddress;
@@ -33,9 +45,6 @@ public abstract class EmailMessage {
 	public String getSubject() {
 		return subject;
 	}
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
 
 	public List<String> getAttachments() {
 		return attachments;
@@ -43,7 +52,6 @@ public abstract class EmailMessage {
 	public void setAttachments(List<String> attachments) {
 		this.attachments = attachments;
 	}
-
 
 	public void setMailContent(String mailContent) {
 		this.mailContent = getMailContent();

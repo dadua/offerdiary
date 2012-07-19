@@ -13,11 +13,7 @@ public class ExpiryEmailNotificationAlertHandler implements AlertHandler{
 
 	private EmailManager emailManager;
 	private UserManager userManager;
-
-	private static final String DEFAULT_NOTIFICATION_SUBJECT="Coupoxo Coupon Expiry Notification";
-	private static final String DEFAULT_TEST_COUPOXO_MAIL_ADDRESS= "test.coupoxo@gmail.com";
 	private final Logger logger = Logger.getLogger(ExpiryEmailNotificationAlertHandler.class);
-
 
 	public EmailManager getEmailManager() {
 		return emailManager;
@@ -33,11 +29,7 @@ public class ExpiryEmailNotificationAlertHandler implements AlertHandler{
 		User user = alert.getUser();
 		String toEmailId= user.getEmailId();
 		String message = alert.getMessage();
-		EmailMessage email = new OfferExpiryNotificationEmail();
-		email.setContentInMessageHTML(message);
-		email.setMailContent(message);
-		email.setToAddress(toEmailId);
-		email.setSubject(DEFAULT_NOTIFICATION_SUBJECT);
+		EmailMessage email = new OfferExpiryNotificationEmail(message, toEmailId);
 		emailManager.sendEmail(email);
 	}
 

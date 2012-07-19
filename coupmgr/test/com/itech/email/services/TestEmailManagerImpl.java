@@ -28,11 +28,7 @@ public class TestEmailManagerImpl extends CommonTestBase{
 
 	public void testSendMail() throws IOException {
 		boolean mailResult = false;
-		EmailMessage email = new OfferExpiryNotificationEmail();
-		email.setToAddress(toAddress);
-		email.setSubject(subject);
-		email.setSenderAddress(fromAddress);
-		email.setContentInMessageHTML("your offer is expiring test");
+		EmailMessage email = new OfferExpiryNotificationEmail("your offer is expiring test", toAddress);
 		mailResult = eManager.sendEmail(email);
 		assertTrue(mailResult);
 	}
@@ -40,14 +36,9 @@ public class TestEmailManagerImpl extends CommonTestBase{
 	public void testSendMailWithAttachement() throws IOException, URISyntaxException {
 		boolean mailResult = false;
 		String htmlMsg = CommonFileUtilities.getResourceFileAsString(HTML);
-		EmailMessage email = new OfferExpiryNotificationEmail();
-		email.setToAddress(htmlMsg);
-		email.setSubject(htmlMsg);
-		email.setSenderAddress(fromAddress);
-		email.setMailContent("your offer is expiring test");
 		List<String> fileList = new ArrayList<String>();
 		fileList.add(attachement);
-		email.setAttachments(fileList);
+		EmailMessage email = new OfferExpiryNotificationEmail("your offer is expiring test", toAddress, fileList);
 		mailResult = eManager.sendEmail(email);
 		assertTrue(mailResult);
 	}
