@@ -2,13 +2,37 @@
 
 <%@page import="com.itech.coupon.model.LoginType"%>
 <%@page import="com.itech.coupon.model.User"%>
-		
-		<div class="navbar navbar-fixed-top">
-      		<div class="navbar-inner">
-        		<div class="container">
-	        		<ul class="nav">
-						<li>
-							<h1 class="mainHeading" ><a class="btn btn-inverse btn-large" href="home.do" >Coupon Wallet</a></h1>
+<style>
+div.navbar-inner-header{
+				background-color: #A4A2A2;
+				background-image: -webkit-linear-gradient(right, #333, #FFFFFF);
+				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
+			}
+a.logo-background{
+	background-image:url(images/logo_new.png);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	padding : 10px;
+	width: 80%;
+	height: 50%;
+	display:block;
+	overflow: visible;
+}
+.height-100{
+	height: 100%;
+}
+div.tile-div{
+	height: 100px;
+	padding: 10px;
+	text-align:center;
+}
+</style>
+		<div class="navbar navbar-fixed-top" style="height: 10%;" >
+      		<div class="navbar-inner navbar-inner-header height-100">
+        		<div class="container height-100">
+	        		<ul class="nav height-100" style="width: 70%">
+						<li style="width: 40%; height: 85%;">
+							<h1 class="mainHeading" style="width: 100%; height: 100%;"><a class="logo-background"  href="home.do" ></a></h1>
 						</li>
 						<li>
 						</li>
@@ -67,7 +91,7 @@
 					<%
 					 } else {
 					 %>
-					 	<div id="actionsContainer" class="pull-right">
+					 	<div id="actionsContainer" class="pull-right ">
 					 		<a class="btn btn-info btn-large" href="login.do">Login</a>
 							<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
 						</div>

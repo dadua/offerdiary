@@ -9,26 +9,114 @@
 				<!-- The HTML5 charset format -->
 				<meta charset="UTF-8">
 			 --%>
-		<title>Coupon Wallet</title>
+		<title>OfferDo : Do more with Offers</title>
 		<%@include file="commonHeader.jsp" %>
 	</head>
-	
 	<body >
 		<%@include file="navHeader.jsp" %>
-		<div class="container" >
+		<div class="container">
 			<div class="row">
-				<div class="span7" >
-					<div class="thumbnail">
-						<img src="images/CWallet.jpg"/>
-						<div class="caption" >
-							<h3>
-							Section Details:
-							</h3>
-							<p>
-								Jump In to the Coupon Manager.
-								This section will contain a video describing functionality.
-							</p>
-						</div>
+				<div class="span2 offset1" >
+					<div class="hero-unit tile-div">
+						<img src="images/tile_1.png" >
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div" >
+						<img src="images/tile_2_cart.png">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+						<img src="images/tile_gift_pack.png">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+						<img src="images/tile_piggy_bank.png">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+						<img src="images/tile_gift.png">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2 offset1">
+					<div class="hero-unit tile-div">
+						<img src="images/tile_arrow.png">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2 offset1">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span6 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+			</div>
+				<div class="row">
+				<div class="span2 offset1">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="row">
+				<div class="span3 offset3">
+				<img src="images/app_stores.png">
+				</div>
+				<div class="span4 ">
+					<img  src="images/launch.jpg">
+					<div class="form" style="padding-left: 2%;">
+								<div class="control-group">
+									<div style="float:left">
+										<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
+									</div>
+									<div style="float:left; padding-left: 5px;">	
+									<button class="btn btn-info" href="#">Go</button>
+									</div>
+								</div>
 					</div>
 				</div>
 			</div>
