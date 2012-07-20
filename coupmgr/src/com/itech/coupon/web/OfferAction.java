@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.CommonAction;
@@ -17,15 +19,15 @@ import com.itech.common.web.action.Result;
 import com.itech.coupon.OfferWalletConstants;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.OfferNotifyVO;
 
 public class OfferAction extends CommonAction{
 
-	private static final String MY_OFFERS_ATTR_KEY = "myCoupons";
+	private static final String MY_OFFERS_JSON_ATTR_KEY = "myOffersJson";
 
 	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward(OfferWalletConstants.INDEX_PAGE);
-
 	}
 
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
@@ -34,7 +36,11 @@ public class OfferAction extends CommonAction{
 		if (loggedInUser != null) {
 			offers = getOfferManager().getAllOffersForUser(loggedInUser);
 		}
-		req.setAttribute(MY_OFFERS_ATTR_KEY, offers);
+		Gson gson = new Gson();
+		Type listOfOffersType = new TypeToken<List<Offer>>() {
+		}.getType();
+		String offersJson = gson.toJson(offers, listOfOffersType);
+		req.setAttribute(MY_OFFERS_JSON_ATTR_KEY, StringEscapeUtils.escapeJavaScript(offersJson));
 		return new Forward(OfferWalletConstants.WALLET_PAGE);
 	}
 
@@ -51,13 +57,13 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
-	public Response saveCoupons (HttpServletRequest req, HttpServletResponse resp) {
+	public Response saveOffers (HttpServletRequest req, HttpServletResponse resp) {
 		String offerNotificationConfigsJson = req.getParameter(OfferWalletConstants.OFFER_NOTIFICATION_CONFIG_PARAM_KEY);
 		Gson gson = new Gson();
 		Type offerNotifyVOsType = new TypeToken<List<OfferNotifyVO>>() { }.getType();
 		List<OfferNotifyVO> offerNotificationVOs = gson.fromJson(offerNotificationConfigsJson, offerNotifyVOsType);
 		List<Offer> offersProcessed = getOfferManager().addOffersEventsConfigForUser(offerNotificationVOs, getLoggedInUser());
-		Result<List<Offer>> result = new Result<List<Offer>>(true, offersProcessed, "Successfully Added the coupons");
+		Result<List<Offer>> result = new Result<List<Offer>>(true, offersProcessed, "Successfully Added the offers");
 		Type resultOffersType = new TypeToken<Result<List<Offer>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
@@ -73,10 +79,36 @@ public class OfferAction extends CommonAction{
 			offerIds.add(Long.parseLong(offerIdString));
 		}
 		getOfferManager().deleteByIds(offerIds);
-		Result<String> result = new Result<String>("Successfully Deleted the coupons");
+		Result<String> result = new Result<String>("Successfully Deleted the offers");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	public Response getSharedOffer (HttpServletRequest req, HttpServletResponse resp) {
+		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
+		OfferShare offerShare = null;
+		if (accessToken != null) {
+			offerShare = getOfferManager().getOfferShareFor(accessToken);
+		}
+		req.setAttribute(OfferWalletConstants.SHARED_OFFER_ATTR_KEY, offerShare.getOffer());
+		return new Forward(OfferWalletConstants.GET_SHARED_OFFER_PAGE);
+
+	}
+
+	public Response shareOffer(HttpServletRequest req, HttpServletResponse resp) {
+		String offerId = req.getParameter(OfferWalletConstants.SHARED_OFFER_ID_ATTR_KEY);
+		OfferShare offerShare = null;
+		if (offerId != null) {
+			Offer offer = getOfferManager().getOfferFor(Long.parseLong(offerId));
+			offerShare = getOfferManager().createOfferShare(offer);
+		}
+		String shareOfferUrl = "/getSharedOffer.do?access-token=" + offerShare.getAccessToken();
+		Result<String> result = new Result<String>(shareOfferUrl);
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+
 	}
 
 }

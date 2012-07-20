@@ -220,7 +220,7 @@
 			
 			$(function() {
 				$('#addCouponToWallet').click(it.wallet.addCoupon);
-				var couponsJson = '${myCouponsJson}',
+				var couponsJson = '${myOffersJson}',
 				coupons = JSON.parse(couponsJson);
 				it.wallet.appendCoupons(coupons, true);
 				it.wallet.addHandlers();
@@ -231,15 +231,17 @@
 					source: function( request, response ) {
 						var term = request.term;
 						if ( term in cache ) {
-							response( cache[ term ] );
+							response( cache[term] );
 							return;
 						}
-
-						lastXhr = $.getJSON( "searchVendor.do", request, function( data, status, xhr ) {
-							debugger;
-							cache[ term ] = data;
+						lastXhr = $.getJSON( "searchVendor.do", {searchKey: term}, function( data, status, xhr ) {
+							var names = [];
+							for (var i=0;i<data.result.length;i++) {
+								names.push(data.result[i].name);
+							}
+							cache[term] = names;
 							if ( xhr === lastXhr ) {
-								response( data );
+								response(names);
 							}
 						});
 					}
@@ -252,7 +254,6 @@
 				$('.checkBoxUnSelected').live('click', function(){
 					$(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
 				});
-				
 			});
 			
 		</script>
