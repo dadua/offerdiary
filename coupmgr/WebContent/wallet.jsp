@@ -225,6 +225,26 @@
 				it.wallet.appendCoupons(coupons, true);
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
+				var cache = {}, lastXhr;
+				$('#vendor').autocomplete({
+					minLength: 2,
+					source: function( request, response ) {
+						var term = request.term;
+						if ( term in cache ) {
+							response( cache[ term ] );
+							return;
+						}
+
+						lastXhr = $.getJSON( "searchVendor.do", request, function( data, status, xhr ) {
+							debugger;
+							cache[ term ] = data;
+							if ( xhr === lastXhr ) {
+								response( data );
+							}
+						});
+					}
+				});
+					
 				$('#addCouponModalBtn').click(it.wallet.clearCouponFormVals);
 				$('.checkBoxSelected').live('click', function() {
 					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
@@ -295,6 +315,8 @@
 								<textarea class="span3 couponDetail" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label> Expiry Date: </label>
 								<input id="expiryDate"  class="couponDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
+								<label> Vendor: </label>
+								<input id="vendor" class="couponDetail" type="text" />
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
 									<a id="emailNotify" class="btn active checkBoxSelected">

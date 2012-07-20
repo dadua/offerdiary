@@ -22,7 +22,7 @@ public class VendorDAOImpl extends HibernateCommonBaseDAO<Vendor> implements Ven
 		Query query = getSession().createQuery(hql);
 		query.setParameter("vendorType", VendorType.GLOBAL);
 		query.setParameter("owner", getLoggedInUser());
-		query.setParameter("%vendorName%", vendorName);
+		query.setParameter("vendorName", "%"+vendorName+"%");
 		query.setMaxResults(maxResults);
 		List<Vendor> list = query.list();
 		return list;
