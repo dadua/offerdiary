@@ -9,16 +9,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.coupon.model.User;
 
 public class NewUserRegistrationEmail extends EmailMessage{
 
 	private final Logger logger = Logger.getLogger(NewUserRegistrationEmail.class);
-	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New USer Registration Confirmation";
+	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New User Registration Confirmation";
+	private static final String DEFAULT_NEW_USER_ADDED_REGISTRATION_MESSAGE="Welcome to OfferDo ! ";
 	private String REGISTRATIONN_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="index.html";
 	private Document docHTML = null;
 
-	public NewUserRegistrationEmail(String messageContent, String toEmailId, List<String> fileAttachementList){
+	public NewUserRegistrationEmail(String messageContent, String toEmailId,List<String> fileAttachementList){
 		this(messageContent, toEmailId);
 		setAttachments(fileAttachementList);
 	}
@@ -30,7 +32,7 @@ public class NewUserRegistrationEmail extends EmailMessage{
 	public NewUserRegistrationEmail(){
 		super();
 	}
-
+	
 	@Override
 	public String getMailContent() {
 		return REGISTRATIONN_EMAIL_HTML;
