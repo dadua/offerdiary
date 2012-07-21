@@ -5,7 +5,7 @@ import com.itech.coupon.model.User;
 public class UserEvent extends Event {
 	
 	public enum UserEventType {
-		NEW_USER_ADDED, FORGOT_PASSWORD
+		NEW_USER_ADDED, FORGOT_PASSWORD, NEW_USER_SUBSCRIBED
 	}
 
 	private UserEventType userEventType;

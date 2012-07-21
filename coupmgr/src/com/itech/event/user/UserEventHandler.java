@@ -3,6 +3,7 @@ package com.itech.event.user;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.EmailMessage;
 import com.itech.email.vo.NewUserRegistrationEmail;
+import com.itech.email.vo.NewUserSubscriptionEmail;
 import com.itech.event.services.EventHandler;
 import com.itech.event.vo.Event;
 import com.itech.event.vo.UserEvent;
@@ -27,7 +28,20 @@ public class UserEventHandler implements EventHandler {
 			handleUserAdded(userEvent);
 		} else if (UserEventType.FORGOT_PASSWORD.equals(userEvent.getUserEventType())) {
 			handleUserForgotPassword(userEvent);
+		} else if (UserEventType.NEW_USER_SUBSCRIBED.equals(userEvent.getUserEventType())){
+			handleNewUserSubscribed(userEvent);
 		}
+	}
+
+	private void handleNewUserSubscribed(UserEvent userEvent) {
+		sendNewUserSubscribedEmail(userEvent);
+	}
+
+	private void sendNewUserSubscribedEmail(UserEvent userEvent) {
+		String toEmailId = userEvent.getUser().getEmailId();
+		EmailMessage email = new NewUserSubscriptionEmail(null, toEmailId);
+		getEmailManager().sendEmail(email);
+		
 	}
 
 	private void handleUserForgotPassword(UserEvent userEvent) {
@@ -46,9 +60,8 @@ public class UserEventHandler implements EventHandler {
 	}
 
 	private void sendNewUserRegistrationEmail(UserEvent userEvent) {
-		String newUserRegistrationMessageContent =  "Hi New User";
 		String toEmailId = userEvent.getUser().getEmailId();
-		EmailMessage email = new NewUserRegistrationEmail(newUserRegistrationMessageContent, toEmailId);
+		EmailMessage email = new NewUserRegistrationEmail(null, toEmailId);
 		getEmailManager().sendEmail(email);
 	}
 

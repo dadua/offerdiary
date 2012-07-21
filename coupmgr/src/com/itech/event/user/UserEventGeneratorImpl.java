@@ -20,6 +20,12 @@ public class UserEventGeneratorImpl implements UserEventGenerator{
 		Event event = new UserEvent(UserEventType.FORGOT_PASSWORD, user);
 		eventEngine.handleEvent(event);
 	}
+	
+	@Override
+	public void newUserSubscribed(User user) {
+		Event event = new UserEvent(UserEventType.NEW_USER_SUBSCRIBED, user);
+		eventEngine.handleEvent(event);		
+	}
 
 	public EventEngine getEventEngine() {
 		return eventEngine;
@@ -28,4 +34,5 @@ public class UserEventGeneratorImpl implements UserEventGenerator{
 	public void setEventEngine(EventEngine eventEngine) {
 		this.eventEngine = eventEngine;
 	}
+
 }

@@ -9,33 +9,32 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
-import com.itech.coupon.model.User;
 
-public class NewUserRegistrationEmail extends EmailMessage{
+public class NewUserSubscriptionEmail extends EmailMessage{
 
 	private final Logger logger = Logger.getLogger(NewUserRegistrationEmail.class);
-	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New User Registration Confirmation";
-	private static final String DEFAULT_NEW_USER_ADDED_REGISTRATION_MESSAGE="Welcome to OfferDo ! ";
-	private String registrationEmailHTML;
+	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDo Subscription !";
+	private static final String DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE="Hear More about OfferDo pretty shortly ! ";
+	private String SUBSCRIPTION_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="index.html";
 	private Document docHTML = null;
-
-	public NewUserRegistrationEmail(String messageContent, String toEmailId,List<String> fileAttachementList){
+	
+	public NewUserSubscriptionEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
 		this(messageContent, toEmailId);
 		setAttachments(fileAttachementList);
 	}
 
-	public NewUserRegistrationEmail(String messageContent, String toEmailId){
+	public NewUserSubscriptionEmail(String messageContent, String toEmailId){
 		super(messageContent, toEmailId);
 	}
 
-	public NewUserRegistrationEmail(){
+	public NewUserSubscriptionEmail(){
 		super();
 	}
 	
 	@Override
 	public String getMailContent() {
-		return registrationEmailHTML;
+		return SUBSCRIPTION_EMAIL_HTML;
 	}
 
 	@Override
@@ -43,26 +42,27 @@ public class NewUserRegistrationEmail extends EmailMessage{
 		try {
 			docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
 		} catch (IOException e) {
-			logger.debug("NewUserRegistrationEmail HTML could not be generated");
+			logger.debug("NewUserSubscriptionEmail HTML could not be generated");
 			e.printStackTrace();
 		}
-		registrationEmailHTML = docHTML.toString();
+		SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
 	}
 
 	@Override
 	public void setContentInMessageHTML(String message) {
 		if(null == message || message.isEmpty())
-			message = DEFAULT_NEW_USER_ADDED_REGISTRATION_MESSAGE;
+			message = DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE;
 		if(null != docHTML){
 			Element para = docHTML.select("#mail-message").first();
 			para.html("<singleline label=\"Title\">"+message+"</singleline>");
-			registrationEmailHTML = docHTML.toString();
+			SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
 		}
+		
 	}
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_REGISTRATION_SUBJECT;
+		this.subject = DEFAULT_SUBSCRIPTION_SUBJECT;
 	}
 
 }
