@@ -14,7 +14,7 @@
 					 <a href="#" >Offers</a>
 				</li>
 				<li id="cardTab" >
-					<a href="#" >Cards</a>
+					<a href="cards.do" >Cards</a>
 				</li>
 				<li id="shareTab" >
 					<a href="#" >Friends</a>
