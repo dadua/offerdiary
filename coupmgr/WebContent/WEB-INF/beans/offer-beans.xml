@@ -11,6 +11,7 @@
 		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
 		<property name="offerShareDAO" ref="itech.offerShareDAO"/>
 		<property name="vendorManager" ref="itech.vendorManager"/>
+		<property name="offerEventGenerator" ref="itech.OfferEventGenerator"/>
 	</bean>
 
 	

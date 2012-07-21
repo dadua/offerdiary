@@ -20,7 +20,7 @@ public class HibernateAlertDAOImpl extends HibernateCommonBaseDAO<Alert> impleme
 	@Override
 	public boolean deleteAlertsFor(String dataType, long dataId) {
 		Session sess = getSession();
-		Query query = sess.createQuery("delete from "+getEntityClassName()+" where dataType = :dataType and dataId =: dataId");
+		Query query = sess.createQuery("delete from "+getEntityClassName()+" where dataType = :dataType and dataId =:dataId");
 		query.setParameter("dataType", dataType);
 		query.setParameter("dataId", dataId);
 		query.executeUpdate();
@@ -30,7 +30,7 @@ public class HibernateAlertDAOImpl extends HibernateCommonBaseDAO<Alert> impleme
 	@Override
 	public List<Alert> getAlertsForUser(User user) {
 		Session sess = getSession();
-		Query query = sess.createQuery(" from "+getEntityClassName()+" where user =: user");
+		Query query = sess.createQuery(" from "+getEntityClassName()+" where user =:user");
 		query.setParameter("user", user);
 		return query.list();
 	}
@@ -38,7 +38,7 @@ public class HibernateAlertDAOImpl extends HibernateCommonBaseDAO<Alert> impleme
 
 	@Override
 	public List<Alert> getAlertsForDataType(String dataType, long dataId) {
-		String hql = "from " + getEntityClassName() + " where dataType = :dataType and dataId =: dataId";
+		String hql = "from " + getEntityClassName() + " where dataType = :dataType and dataId =:dataId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("dataType", dataType);
 		query.setParameter("dataId", dataId);
@@ -58,7 +58,7 @@ public class HibernateAlertDAOImpl extends HibernateCommonBaseDAO<Alert> impleme
 	@Override
 	public void markAlertsRead(User loggedInUser) {
 		Session sess = getSession();
-		Query query=sess.createQuery("update "+ getEntityClassName() +" set alertStatus =: alertStatus where user =: user");
+		Query query=sess.createQuery("update "+ getEntityClassName() +" set alertStatus =:alertStatus where user =:user");
 		query.setParameter("alertStatus", Alert.AlertStatus.READ);
 		query.setParameter("user", loggedInUser);
 		query.executeUpdate();

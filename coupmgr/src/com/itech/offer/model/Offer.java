@@ -12,10 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.itech.common.db.PersistableEntity;
 import com.itech.offer.model.enums.DiscountType;
 import com.itech.offer.model.enums.OfferType;
+import com.itech.offer.vo.NotifyVO;
 
 @Entity
 @Table(name=OfferModelConstants.TABLE_OFFER)
@@ -72,6 +74,18 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	@Column(name=OfferModelConstants.COL_EXPIRY_DATE_UTC_IN_MILLIS)
 	private long expiryDateInMillis;
+
+
+	@Column(name=OfferModelConstants.COL_EMAIL_NOTIFICATION)
+	private boolean emailNotification;
+
+
+	@Column(name=OfferModelConstants.COL_FB_NOTIFICATION)
+	private boolean fbNotification;
+
+
+	@Transient
+	private NotifyVO notifyVO;
 
 	public Long getDaysToExpire() {
 		Long timeMillis = System.currentTimeMillis();
@@ -279,6 +293,46 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Override
 	public Offer clone() throws CloneNotSupportedException {
 		return (Offer) super.clone();
+	}
+
+
+	public void setNotifyVO(NotifyVO notifyVO) {
+		this.notifyVO = notifyVO;
+	}
+
+
+	public NotifyVO getNotifyVO() {
+		return notifyVO;
+	}
+
+
+	public void setEmailNotification(boolean emailNotification) {
+		this.emailNotification = emailNotification;
+	}
+
+
+	public boolean isEmailNotification() {
+		return emailNotification;
+	}
+
+
+	public void setPersistAlertInDB(boolean persistAlertInDB) {
+		this.persistAlertInDB = persistAlertInDB;
+	}
+
+
+	public boolean isPersistAlertInDB() {
+		return persistAlertInDB;
+	}
+
+
+	public void setFbNotification(boolean fbNotification) {
+		this.fbNotification = fbNotification;
+	}
+
+
+	public boolean isFbNotification() {
+		return fbNotification;
 	}
 
 }

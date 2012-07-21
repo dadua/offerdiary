@@ -3,17 +3,18 @@ package com.itech.alert.handler;
 import org.apache.log4j.Logger;
 
 import com.itech.alert.model.Alert;
+import com.itech.alert.model.AlertDataTypes;
 import com.itech.coupon.manager.UserManager;
 import com.itech.coupon.model.User;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.EmailMessage;
 import com.itech.email.vo.OfferExpiryNotificationEmail;
 
-public class ExpiryEmailNotificationAlertHandler implements AlertHandler{
+public class OfferAlertHandler implements AlertHandler{
 
 	private EmailManager emailManager;
 	private UserManager userManager;
-	private final Logger logger = Logger.getLogger(ExpiryEmailNotificationAlertHandler.class);
+	private final Logger logger = Logger.getLogger(OfferAlertHandler.class);
 
 	public EmailManager getEmailManager() {
 		return emailManager;
@@ -35,7 +36,10 @@ public class ExpiryEmailNotificationAlertHandler implements AlertHandler{
 
 	@Override
 	public boolean handles(Alert alert) {
-		return true;
+		if (AlertDataTypes.OFFER.toString().equalsIgnoreCase(alert.getDataType())) {
+			return true;
+		}
+		return false;
 	}
 
 	public UserManager getUserManager() {

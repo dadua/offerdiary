@@ -15,6 +15,7 @@ import com.itech.common.services.ServiceLocator;
 public class AlertEngine implements Initialize, Runnable{
 	private final Logger logger = Logger.getLogger(AlertEngine.class);
 	private AlertConfigManager alertConfigManager;
+	private AlertManager alertManager;
 	private List<AlertHandler> alertHandlers;
 	private List<AlertGenerator> alertGenerators;
 	private ConnectionUtil connectionUtil;
@@ -32,15 +33,19 @@ public class AlertEngine implements Initialize, Runnable{
 	public void run() {
 		while (true) {
 			try {
-				getConnectionUtil().createNewConnection();
 				getHibernateSessionFactory().openNewSession();
 				List<AlertConfig> alertConfigs = alertConfigManager.getAllActiveExpiredAlertConfigs();
 				for (AlertConfig alertConfig : alertConfigs) {
 					for (AlertGenerator alertGenerator : alertGenerators) {
 						if (alertGenerator.handles(alertConfig)) {
 							Alert alert = alertGenerator.createAlert(alertConfig);
+							if (alertConfig.isPersistAlertInDB()) {
+								getAlertManager().save(alert);
+							}
+							alertConfig.setStatus(AlertConfig.ActivationStatus.HANDLED);
+							getAlertConfigManager().delete(alertConfig);
+							getHibernateSessionFactory().commitCurrentTransaction();
 							handleAlert(alert);
-							getConnectionUtil().commitCurrentConnection();
 							break;
 						}
 					}
@@ -50,7 +55,6 @@ public class AlertEngine implements Initialize, Runnable{
 			} catch (Exception e) {
 				logger.error("Exception in alert engine", e);
 			}finally {
-				getConnectionUtil().releaseCurrentConnection();
 				getHibernateSessionFactory().closeCurrentSession();
 			}
 			try {
@@ -64,7 +68,11 @@ public class AlertEngine implements Initialize, Runnable{
 	private void handleAlert(Alert alert) {
 		for (AlertHandler alertHandler : getAlertHandlers()) {
 			if (alertHandler.handles(alert)) {
-				alertHandler.handle(alert);
+				try {
+					alertHandler.handle(alert);
+				} catch (Exception e) {
+					logger.error("Error in handling alert:  " + alert + " by handler: " + alertHandler, e);
+				}
 			}
 		}
 	}
@@ -118,6 +126,16 @@ public class AlertEngine implements Initialize, Runnable{
 
 	public void setHibernateSessionFactory(HibernateSessionFactory hibernateSessionFactory) {
 		this.hibernateSessionFactory = hibernateSessionFactory;
+	}
+
+
+	public void setAlertManager(AlertManager alertManager) {
+		this.alertManager = alertManager;
+	}
+
+
+	public AlertManager getAlertManager() {
+		return alertManager;
 	}
 
 

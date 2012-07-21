@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 
 <%@page import="java.util.List"%>
-<%@page import="com.itech.coupon.model.Coupon"%><html>
+<%@page import="com.itech.offer.model.Offer"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 			<%--
@@ -12,7 +12,7 @@
 				<!-- The HTML5 charset format -->
 				<meta charset="UTF-8">
 			 --%>
-		<title>Coupon Wallet</title>
+		<title>Offer Wallet</title>
 		
 		<%@include file="commonHeader.jsp" %>
 		
@@ -20,15 +20,15 @@
 			var it = it || {};
 			it.wallet = it.wallet || {};
 			
-			it.wallet.appendCoupons = function(coupons, isOldAddition) {
-				for (var i=0; i<coupons.length;i++) {
-					this.appendCoupon(coupons[i], isOldAddition);
+			it.wallet.appendOffers = function(offers, isOldAddition) {
+				for (var i=0; i<offers.length;i++) {
+					this.appendOffer(offers[i], isOldAddition);
 				}
 			};
 			
 			
-			it.wallet.getDaysToExpire = function(coupon) {
-				var expiryMillisUtc = coupon.expiryDateInMillis;
+			it.wallet.getDaysToExpire = function(offer) {
+				var expiryMillisUtc = offer.expiryDateInMillis;
 				var d = new Date();
 				var currentMillisUtc = d.getTime();
 				var millisToExpire = (expiryMillisUtc - currentMillisUtc);
@@ -93,110 +93,107 @@
 				}
 			}
 			
-			it.wallet.appendCoupon = function (coupon, isOldAddition) {
+			it.wallet.appendOffer = function (offer, isOldAddition) {
 				
-				var daysToExpire = this.getDaysToExpire(coupon);
+				var daysToExpire = this.getDaysToExpire(offer);
 				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
-				var daysToExpireHtml = '<div class="daysToExpire label '+ labelClass + '" id="couponExpire_'+ coupon.id + '">';
+				var daysToExpireHtml = '<div class="daysToExpire label '+ labelClass + '" id="offerExpire_'+ offer.id + '">';
 				var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
 				if (daysToExpire < 0) {
-					daysToExpireHtml += 'Coupon Expired!!';
+					daysToExpireHtml += 'Offer Expired!!';
 				} else {
 					var compactFormattedTime = this.getCompactFormattedTimeToExpire(formattedTimeToExpire);
 					daysToExpireHtml += compactFormattedTime;
 				}
 				daysToExpireHtml += '</div>';
-	    		var couponHtml = '<li class="span3" id="coupon_';
-	    		couponHtml += coupon.id;
-	    		couponHtml += '" >';
-	    		couponHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
-	    		couponHtml += daysToExpireHtml;
-	    		couponHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right coupon-trash" title="Trash Me" id="couponTrash_';
-	    		couponHtml += coupon.id;
-	    		couponHtml += '" ></span><h3>Details:';
-	    		couponHtml += coupon.description;
-	    		couponHtml += '</h3><h5>Code:';
-	    		couponHtml += coupon.offerCode;
-	    		couponHtml += '</h5><h5>Discount:';
-	    		couponHtml += coupon.discountValue;
-	    		couponHtml +=  '</h5></div></li>';
-	    		$(couponHtml).appendTo('.thumbnails');
+	    		var offerHtml = '<li class="span3" id="offer_';
+	    		offerHtml += offer.id;
+	    		offerHtml += '" >';
+	    		offerHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
+	    		offerHtml += daysToExpireHtml;
+	    		offerHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right offer-trash" title="Trash Me" id="offerTrash_';
+	    		offerHtml += offer.id;
+	    		offerHtml += '" ></span><h3>Details:';
+	    		offerHtml += offer.description;
+	    		offerHtml += '</h3><h5>Code:';
+	    		offerHtml += offer.offerCode;
+	    		offerHtml += '</h5><h5>Discount:';
+	    		offerHtml += offer.discountValue;
+	    		offerHtml +=  '</h5></div></li>';
+	    		$(offerHtml).appendTo('.thumbnails');
 	    		
 	    		/*
-	    		$('#couponExpire_'+coupon.id).position({
+	    		$('#offerExpire_'+offer.id).position({
 	    				my: 'center top',
 	    				at: 'center top',
-	    				of: '#coupon_' + coupon.id,
+	    				of: '#offer_' + offer.id,
 	    				offset: '0 0'
 				});
 	    		*/
-	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
+	    		$('#offer_'+offer.id + ' .thumbnail').addClass('offer', 9000);
 	    		if (isOldAddition) {
-	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide();
+	    			$('#offer_'+offer.id+ ' span.addingDoneLabel').hide();
 	    			$('.hiddenTillAddSuccess').show();
 	    		} else {
-	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
+	    			$('#offer_'+offer.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
 		    			$(this).parent().find('span.hiddenTillAddSuccess').show();
 		    			$(this).remove();
 		    		});
 	    		}
 			};
 			
-			it.wallet.clearCouponFormVals = function () {
-				$('.couponDetail').val('');
+			it.wallet.clearofferormVals = function () {
+				$('.offerDetail').val('');
 				$('#emailNotify').addClass('active');
 				$('#fbNotify').removeClass('active');
 			};
 			
 			
-			it.wallet.addCoupon = function () {
+			it.wallet.addOffer = function () {
 				var code = $('#code').val(),
 				expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime(),
 				detail = $('#discountDetails').val(),
 				emailNotify = $('#emailNotify').hasClass('active'),
 				fbNotify = $('#fbNotify').hasClass('active'),
-				notifyConfig = {
+				notifyVO = {
 					emailNotify: emailNotify,
 					fbNotify: fbNotify
 					//Will include time to notify etc. here
 				},
-				coupon = {
+				offer = {
 					offerCode: code,
 					description: detail,
 					expiryDateInMillis: expiryDateInMillis,
-				},
-				offerNotificationConfig = {
-					offer: coupon,
-					notifyConfig: notifyConfig
-				},
-				couponNotificationConfigs = [];
-				couponNotificationConfigs.push(offerNotificationConfig);
+					notifyVO: notifyVO
+				},		
+				offers = [];
+				offers.push(offer);
 				$.post('saveOffers.do',
-						{'offerNotificationConfigs': JSON.stringify(couponNotificationConfigs)},
+						{'offers': JSON.stringify(offers)},
 						function (data) {
 							var ret = $.parseJSON(data);
 							if (ret.success === true) {
-								it.wallet.appendCoupons(ret.result);
+								it.wallet.appendOffers(ret.result);
 								it.wallet.addHandlers();
 							} else {
 								//Handle error case
 							}
-							$('#addCouponModal').modal('hide');
+							$('#addOfferModal').modal('hide');
 						});
 			};
 			
-			it.wallet.trashCoupon = function(e) {
+			it.wallet.trashOffer = function(e) {
 				var target = e.target;
 				var targetId = target.id;
-				var couponIdExtractRegex = /^couponTrash_(.*)/;
-				var couponId = couponIdExtractRegex.exec(targetId)[1];
-				var couponIds = [];
-				couponIds.push(couponId);
-				$.post('deleteOffers.do', {'couponIds': JSON.stringify(couponIds)}, function(data) {
+				var offerIdExtractRegex = /^offerTrash_(.*)/;
+				var offerId = offerIdExtractRegex.exec(targetId)[1];
+				var offerIds = [];
+				offerIds.push(offerId);
+				$.post('deleteOffers.do', {'offerIds': JSON.stringify(offerIds)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
 						$('#'+targetId).tooltip('hide');
-						$('#coupon_'+couponId).remove();
+						$('#offer_'+offerId).remove();
 					} else {
 						//Handle error case
 					}
@@ -210,7 +207,7 @@
 				}, function(e){
 					$(this).addClass('icon-white');
 				});
-				$('.coupon-trash').click(it.wallet.trashCoupon).tooltip();
+				$('.offer-trash').click(it.wallet.trashOffer).tooltip();
 				$('.daysToExpireDetails').tooltip({
 					placement: 'right'
 				}).click(function(e){
@@ -220,10 +217,10 @@
 			};
 			
 			$(function() {
-				$('#addCouponToWallet').click(it.wallet.addCoupon);
-				var couponsJson = '${myOffersJson}',
-				coupons = JSON.parse(couponsJson);
-				it.wallet.appendCoupons(coupons, true);
+				$('#addOfferToWallet').click(it.wallet.addOffer);
+				var offersJson = '${myOffersJson}',
+				offers = JSON.parse(offersJson);
+				it.wallet.appendOffers(offers, true);
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
 				var cache = {}, lastXhr;
@@ -248,7 +245,7 @@
 					}
 				});
 					
-				$('#addCouponModalBtn').click(it.wallet.clearCouponFormVals);
+				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
 				$('.checkBoxSelected').live('click', function() {
 					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
 				});
@@ -259,7 +256,7 @@
 			
 		</script>
 		<style type="text/css">
-			.coupon {
+			.offer {
 				background-color: #F5F5F5;
 			}
 			
@@ -300,27 +297,27 @@
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span7" id="couponContainer" >
+				<div class="span7" id="offerContainer" >
 				 <ul class="thumbnails">
 				</ul>
 				&nbsp;
 				</div>
 				<div class="span3" >
-					<div class="modal hide fade" id="addCouponModal" style="display:none" >
+					<div class="modal hide fade" id="addOfferModal" style="display:none" >
 						<div class="modal-header" >
 							<a class="close" data-dismiss="modal">×</a>
-							<h2>Add a coupon to wallet </h2>
+							<h2>Add a offer to wallet </h2>
 						</div>
 						<div class="modal-body" >
 							<form >
 								<label>Code: </label>
-								<input id="code" type="text" class="span3 couponDetail" placeholder="Coupon Code?" />
+								<input id="code" type="text" class="span3 offerDetail" placeholder="Offer Code?" />
 								<label>Discount Description: </label>
-								<textarea class="span3 couponDetail" id="discountDetails" placeholder="Discount Details"></textarea>
+								<textarea class="span3 OfferDetail" id="discountDetails" placeholder="Discount Details"></textarea>
 								<label> Expiry Date: </label>
-								<input id="expiryDate"  class="couponDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
+								<input id="expiryDate"  class="offerDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label> Vendor: </label>
-								<input id="vendor" class="couponDetail" type="text" placeholder="Vendors" />
+								<input id="vendor" class="offerDetail" type="text" placeholder="Vendors" />
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
 									<a id="emailNotify" class="btn active checkBoxSelected">
@@ -336,10 +333,10 @@
 						</div>
 						<div class="modal-footer" >
 							<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-							<a id="addCouponToWallet" class="btn btn-primary">Add Coupon</a>
+							<a id="addOfferToWallet" class="btn btn-primary">Add Offer</a>
 						</div>
 					</div>
-					<a id="addCouponModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addCouponModal" >Add Coupon to Wallet</a>
+					<a id="addOfferModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addOfferModal" >Add Offer to Wallet</a>
 						
 				</div>
 			</div>

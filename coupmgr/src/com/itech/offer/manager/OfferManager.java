@@ -5,7 +5,6 @@ import java.util.List;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
-import com.itech.offer.vo.OfferNotifyVO;
 
 public interface OfferManager {
 
@@ -20,9 +19,6 @@ public interface OfferManager {
 	public void deleteByIds(List<Long> offerIds);
 
 	public User getOfferOwner(Offer offer);
-
-	//Returns persisted list of offers
-	public List<Offer> addOffersEventsConfigForUser(List<OfferNotifyVO> offerNotificationVOs, User loggedInUser);
 
 	public Offer getById(long dataId);
 

@@ -10,9 +10,11 @@ import com.itech.event.services.EventHandler;
 import com.itech.event.vo.Event;
 import com.itech.event.vo.OfferEvent;
 import com.itech.event.vo.OfferEvent.OfferEventType;
+import com.itech.offer.vo.NotifyVO;
 
 public class OfferEventHandler implements EventHandler {
 
+	private static final String OFFER_EXPIRY_ALERT = "OFFER_EXPIRY_ALERT";
 	private static final int DEFAULT_TRIGGER_TIME = 30000;
 	private AlertConfigManager alertConfigManager;
 
@@ -30,6 +32,8 @@ public class OfferEventHandler implements EventHandler {
 
 	private void handleOfferCreated(OfferEvent offerEvent) {
 		AlertConfig alertConfig = createAlertConfigFor(offerEvent);
+		alertConfig.setPersistAlertInDB(true);
+		alertConfig.setAlertType(OFFER_EXPIRY_ALERT);
 		if (alertConfig.getTriggerTime().before(new Date(System.currentTimeMillis()))) {
 			return;
 		}
@@ -52,6 +56,11 @@ public class OfferEventHandler implements EventHandler {
 		Date triggerTime = calculateTriggerTime(offerEvent);
 		alertConfig.setTriggerTime(triggerTime);
 		alertConfig.setStatus(AlertConfig.ActivationStatus.ACTIVE);
+		NotifyVO notifyVO = offerEvent.getOffer().getNotifyVO();
+		if (notifyVO != null) {
+			alertConfig.setFbNotification(notifyVO.getFbNotify());
+			alertConfig.setEmailNotification(notifyVO.getEmailNotify());
+		}
 		return alertConfig;
 	}
 

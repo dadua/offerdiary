@@ -20,4 +20,8 @@ public class OfferModelConstants {
 	public static final String COL_LOCATION="LOCATION";
 	public static final String COL_IS_PROTOTYPE="IS_PROTOTYPE";
 	public static final String COL_EXPIRY_DATE_UTC_IN_MILLIS="EXPIRY_DATE_UTC_IN_MILLIS";
+
+	public static final String COL_EMAIL_NOTIFICATION = "EMAIL_NOTIFICATION";
+
+	public static final String COL_FB_NOTIFICATION = "FB_NOTIFICATION";
 }
