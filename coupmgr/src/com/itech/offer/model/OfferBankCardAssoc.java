@@ -26,7 +26,7 @@ public class OfferBankCardAssoc extends PersistableEntity{
 
 	@ManyToOne
 	@JoinColumn(name=OfferBankCardAssocModelConstants.COL_BANK_CARD)
-	private BankCard bankCard;
+	private OfferCard bankCard;
 
 	public Offer getOffer() {
 		return offer;
@@ -34,10 +34,10 @@ public class OfferBankCardAssoc extends PersistableEntity{
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
-	public BankCard getBankCard() {
+	public OfferCard getBankCard() {
 		return bankCard;
 	}
-	public void setBankCard(BankCard bankCard) {
+	public void setBankCard(OfferCard bankCard) {
 		this.bankCard = bankCard;
 	}
 	@Override

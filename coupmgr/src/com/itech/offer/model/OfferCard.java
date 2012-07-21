@@ -14,48 +14,52 @@ import javax.persistence.Table;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name=BankCardModelConstants.TABLE_BANK_CARD)
-public class BankCard extends PersistableEntity{
-	public enum BankCardType{
-		CREDIT, DEBIT
+@Table(name=OfferCardModelConstants.TABLE_BANK_CARD)
+public class OfferCard extends PersistableEntity{
+	public enum CardType{
+		CREDIT, DEBIT,CHARGE,GIFT, LOYALTY, MEMBERSHIP, PREPAID
 	}
+
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name=BankCardModelConstants.COL_ID)
+	@Column(name=OfferCardModelConstants.COL_ID)
 	private Long id;
 
+	@Column(name=OfferCardModelConstants.COL_NAME)
+	private String name;//VISA,MASTER etc
+
 	@ManyToOne
-	@JoinColumn(name=BankCardModelConstants.COL_ISSUING_BANK)
-	private Vendor issuingBank;
+	@JoinColumn(name=OfferCardModelConstants.COL_ISSUING_VENDOR)
+	private Vendor issuingVendor;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name=BankCardModelConstants.COL_CARD_TYPE)
-	private BankCardType cardType;//DEbit/Credit
+	@Column(name=OfferCardModelConstants.COL_CARD_TYPE)
+	private CardType cardType;//DEbit/Credit
 
-	@Column(name=BankCardModelConstants.COL_PAYMENT_SYSTEM_TYPE)
+	@Column(name=OfferCardModelConstants.COL_PAYMENT_SYSTEM_TYPE)
 	private String paymentSystemType;//VISA,MASTER etc
 
-	@Column(name=BankCardModelConstants.COL_PRIVILEGE)
+	@Column(name=OfferCardModelConstants.COL_PRIVILEGE)
 	private String privilege;//Platinum, Gold
 
-	@Column(name=BankCardModelConstants.COL_DESCRIPTION)
+	@Column(name=OfferCardModelConstants.COL_DESCRIPTION)
 	private String description;
 
 
-	public Vendor getIssuingBank() {
-		return issuingBank;
+	public Vendor getIssuingVendor() {
+		return issuingVendor;
 	}
 
-	public void setIssuingBank(Vendor issuingBank) {
-		this.issuingBank = issuingBank;
+	public void setIssuingVendor(Vendor issuingBank) {
+		this.issuingVendor = issuingBank;
 	}
 
-	public BankCardType getCardType() {
+	public CardType getCardType() {
 		return cardType;
 	}
 
-	public void setCardType(BankCardType cardType) {
+	public void setCardType(CardType cardType) {
 		this.cardType = cardType;
 	}
 
@@ -94,6 +98,14 @@ public class BankCard extends PersistableEntity{
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 
