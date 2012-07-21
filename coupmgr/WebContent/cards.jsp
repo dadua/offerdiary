@@ -54,7 +54,7 @@
 		</script>
 		<style type="text/css">
 			.card {
-				background: none repeat scroll 0 0 #CCCCFF;
+				background-color: #F5F5F5;
 			};
 			
 		</style>
@@ -69,10 +69,10 @@
 				</div>
 				<div class="span10" id="cardContainer" >
 				 <ul class="thumbnails">
-				    		<li class="span3" id="alert_<%=alert.getId()%>">
+				    		<li class="span3" id="card_5">
 								<div class="thumbnail card"  >
-								<span class="icon-trash icon-white pull-right alert-dismiss" id="alertDismiss_5"></span>
-								<h3> alert.getMessage</h3>
+								<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_5"></span>
+								<h3> Card Name: Card Value</h3>
 								</div>
 							</li>
 				</ul>
