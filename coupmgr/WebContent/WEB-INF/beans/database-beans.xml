@@ -21,7 +21,8 @@
 			<value>com.itech.offer.model.OfferCard</value>
 			<value>com.itech.offer.model.Offer</value>
 			<value>com.itech.offer.model.Vendor</value>
-			<value>com.itech.offer.model.OfferBankCardAssoc</value>
+			<value>com.itech.offer.model.OfferOfferCardAssoc</value>
+			<value>com.itech.offer.model.OfferCardUserAssoc</value>
 			<value>com.itech.offer.model.OfferUserAssoc</value>
 		</list>
 		</property>
@@ -42,5 +43,12 @@
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
 		<property name="securityManager" ref="itech.SecurityManager" />
 	</bean>	
+	
+	<bean id="itech.hibernateCommonUtilDAO" class="com.itech.common.db.hibernate.HibernateCommonUtilDAO" parent="itech.hibernateCommonDAO" >
+
+	</bean>	
+	
+	
+	
     
 </beans>

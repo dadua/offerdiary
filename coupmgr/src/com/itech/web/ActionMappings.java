@@ -60,8 +60,10 @@ public class ActionMappings {
 		add(new ActionMapping("addVendor.do", VendorAction.class, "addVendor"));
 		add(new ActionMapping("searchVendor.do", VendorAction.class, "searchVendors"));
 
-		//Card Actions
-
-
+		//offer card actions
+		add(new ActionMapping("addNewCard.do", VendorAction.class, "addOfferCard"));
+		add(new ActionMapping("getMyCards.do", VendorAction.class, "getMyCards"));
+		add(new ActionMapping("addCardToWallet.do", VendorAction.class, "addCardToWallet"));
+		add(new ActionMapping("getCardByKey.do", VendorAction.class, "getCardByKey"));
 	}
 }

@@ -12,6 +12,7 @@ import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
+import com.itech.coupon.model.User;
 import com.itech.offer.model.OfferCard;
 
 public class OfferCardAction extends CommonAction{
@@ -40,6 +41,28 @@ public class OfferCardAction extends CommonAction{
 		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
+
+	public Response getMyCards(HttpServletRequest req, HttpServletResponse resp) {
+		User user = getLoggedInUser();
+		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(user);
+		Result<List<OfferCard>> result = new Result<List<OfferCard>>(true, offerCards);
+		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
+	public Response addCardToWallet(HttpServletRequest req, HttpServletResponse resp) {
+		User user = getLoggedInUser();
+		String offerCardJson = req.getParameter(OFFER_CARD_JSON_KEY);
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<OfferCard>() { }.getType();
+		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
+		getOfferCardManager().associateOfferCardToUser(offerCard, user);
+		Result<String> result = new Result<String>(true, null, "Successfully Added the Card");
+		Type resultOffersType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultOffersType);
+	}
+
 
 	public Response getCardByKey(HttpServletRequest req, HttpServletResponse resp) {
 		String cardName = req.getParameter(OFFER_CARD_NAME_KEY);

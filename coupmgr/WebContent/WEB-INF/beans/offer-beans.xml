@@ -28,6 +28,9 @@
 
 	<bean id="itech.offerUserAssocDAO"  class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
+	
+	<bean id="itech.offerCardUserAssocDAO" class="com.itech.offer.dao.impl.OfferCardUserAssocDAOImpl">
+	</bean>
 
 	<bean id="itech.vendorManager" class="com.itech.offer.manager.VendorManagerImpl" parent="itech.CommonBaseManager">
 		<property name="vendorDAO"  ref="itech.vendorDAO"/>
@@ -35,7 +38,7 @@
 
 	<bean id="itech.offerCardManager" class="com.itech.offer.manager.OfferCardManagerImpl" parent="itech.CommonBaseManager">
 		<property name="offerCardDAO"  ref="itech.offerCardDAO"/>
+		<property name="offerCardUserAssocDAO" ref="itech.offerCardUserAssocDAO"/>
 	</bean>
 		
-
 </beans>
