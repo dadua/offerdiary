@@ -2,7 +2,7 @@
 
 SETLOCAL
 
-set PORT_TO_BE_CHECKED=8080
+if "X%1" == "X" ( set PORT_TO_BE_CHECKED=8080) else (set PORT_TO_BE_CHECKED=8080)
 
 for /f "tokens=1,4,5" %%i in ('netstat -ano ^| findstr 8080') do if "X%%j" == "XLISTENING" ( set PID_WHICH_HAS_PORT_8080=%%k )
 
