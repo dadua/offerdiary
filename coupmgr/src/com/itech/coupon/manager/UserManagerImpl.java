@@ -1,8 +1,12 @@
 package com.itech.coupon.manager;
 
+import java.sql.Date;
+
 import com.itech.common.services.CommonBaseManager;
+import com.itech.coupon.dao.InterestedUserSubscriptionDAO;
 import com.itech.coupon.dao.UserDAO;
 import com.itech.coupon.model.Gender;
+import com.itech.coupon.model.InterestedUserSubscription;
 import com.itech.coupon.model.LoginType;
 import com.itech.coupon.model.User;
 import com.itech.event.user.UserEventGenerator;
@@ -11,6 +15,7 @@ import com.itech.fb.services.FbService;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserDAO userDAO;
+	private InterestedUserSubscriptionDAO intUserSubscriptionDAO;
 	private UserEventGenerator userEventGenerator;
 
 
@@ -31,6 +36,14 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		 */
 		save(user);
 		return user;
+	}
+	
+	@Override
+	public void saveInterestedUserForSubscription(String email) {
+		InterestedUserSubscription interestedUser = new InterestedUserSubscription();
+		interestedUser.setEmailId(email);
+		interestedUser.setSusbscriptionTime(new Date(System.currentTimeMillis()));
+		getIntUserSubscriptionDAO().addOrUpdate(interestedUser);
 	}
 
 	@Override
@@ -83,4 +96,14 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	public void setUserEventGenerator(UserEventGenerator userEventGenerator) {
 		this.userEventGenerator = userEventGenerator;
 	}
+
+	public InterestedUserSubscriptionDAO getIntUserSubscriptionDAO() {
+		return intUserSubscriptionDAO;
+	}
+
+	public void setIntUserSubscriptionDAO(InterestedUserSubscriptionDAO intUserSubscriptionDAO) {
+		this.intUserSubscriptionDAO = intUserSubscriptionDAO;
+	}
+
+	
 }

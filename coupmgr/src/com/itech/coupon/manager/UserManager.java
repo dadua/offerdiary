@@ -9,5 +9,6 @@ public interface UserManager {
 	public User getById(long id);
 	public User saveEmailUser(String email, String password);
 	public User saveFbUser(FbService fbService);
+	public void saveInterestedUserForSubscription(String email);
 
 }

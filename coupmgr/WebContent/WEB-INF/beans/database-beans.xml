@@ -16,6 +16,7 @@
 		<property name="annotatedClasses">
 		<list>
 			<value>com.itech.coupon.model.User</value>
+			<value>com.itech.coupon.model.InterestedUserSubscription</value>
 			<value>com.itech.alert.model.AlertConfig</value>
 			<value>com.itech.alert.model.Alert</value>
 			<value>com.itech.offer.model.OfferCard</value>
