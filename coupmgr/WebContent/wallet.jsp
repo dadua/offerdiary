@@ -260,9 +260,7 @@
 		</script>
 		<style type="text/css">
 			.coupon {
-				/*
-				background-color: #006DCC;
-				*/
+				background-color: #F5F5F5;
 			}
 			
 			.daysToExpire {
@@ -322,7 +320,7 @@
 								<label> Expiry Date: </label>
 								<input id="expiryDate"  class="couponDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
 								<label> Vendor: </label>
-								<input id="vendor" class="couponDetail" type="text" />
+								<input id="vendor" class="couponDetail" type="text" placeholder="Vendors" />
 								<label>Notifications Config: </label>
 								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
 									<a id="emailNotify" class="btn active checkBoxSelected">

@@ -45,7 +45,7 @@ div.tile-div{
 						<%
 						User user = (User) userSessionObj;
 						%>
-						<a class="btn btn-inverse">
+						<a class="btn btn-inverse" href="wallet.do">
 						<%
 						if(user.getName()!=null) {
 						%>
