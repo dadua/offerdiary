@@ -8,5 +8,7 @@ public interface UserEventGenerator {
 	
 	public void forgotPassword(User user);
 	
+	public void newUserSubscribed(User user);
+	
 	
 }

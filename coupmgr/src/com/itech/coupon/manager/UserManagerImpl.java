@@ -44,6 +44,9 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		interestedUser.setEmailId(email);
 		interestedUser.setSusbscriptionTime(new Date(System.currentTimeMillis()));
 		getIntUserSubscriptionDAO().addOrUpdate(interestedUser);
+		User subscribedUser = new User();
+		subscribedUser.setEmailId(email);
+		getUserEventGenerator().newUserSubscribed(subscribedUser);
 	}
 
 	@Override
