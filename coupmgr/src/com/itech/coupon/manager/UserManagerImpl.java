@@ -5,11 +5,13 @@ import com.itech.coupon.dao.UserDAO;
 import com.itech.coupon.model.Gender;
 import com.itech.coupon.model.LoginType;
 import com.itech.coupon.model.User;
+import com.itech.event.user.UserEventGenerator;
 import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserDAO userDAO;
+	private UserEventGenerator userEventGenerator;
 
 
 	@Override
@@ -39,6 +41,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		user.setEmailId(email);
 		user.setPassword(password);
 		save(user);
+		getUserEventGenerator().newUserAdded(user);
 		return user;
 	}
 
@@ -71,5 +74,13 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+
+	public UserEventGenerator getUserEventGenerator() {
+		return userEventGenerator;
+	}
+
+	public void setUserEventGenerator(UserEventGenerator userEventGenerator) {
+		this.userEventGenerator = userEventGenerator;
 	}
 }

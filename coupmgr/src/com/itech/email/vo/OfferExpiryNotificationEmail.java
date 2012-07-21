@@ -19,7 +19,7 @@ public class OfferExpiryNotificationEmail extends EmailMessage{
 	private Document docHTML = null;
 
 
-	public OfferExpiryNotificationEmail(String messageContent, String toEmailId, List<String> fileAttachementList){
+	public OfferExpiryNotificationEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
 		this(messageContent, toEmailId);
 		setAttachments(fileAttachementList);
 	}

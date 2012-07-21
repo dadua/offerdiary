@@ -24,6 +24,7 @@ public class LoginFilter implements Filter {
 	static {
 		bypassUrls.add("/");
 		bypassUrls.add("/logout.do");
+		bypassUrls.add("/home.do");
 		bypassUrls.add("/setFbAdapter.do");
 		bypassUrls.add("/login.do");
 		bypassUrls.add("/signup.do");

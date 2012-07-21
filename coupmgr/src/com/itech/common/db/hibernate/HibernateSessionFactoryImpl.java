@@ -26,11 +26,13 @@ public class HibernateSessionFactoryImpl  implements HibernateSessionFactory {
 		Session session = threadLocalSession.get();
 		if (session == null) {
 			logger.error("No session object present in thread local store.");
+			return;
 		}
 		threadLocalSession.set(null);
 		try {
-			session.clear();
+			
 			if (session.isOpen()) {
+				session.clear();
 				session.close();
 			}
 		} catch (HibernateException ex) {

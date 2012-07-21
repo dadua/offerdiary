@@ -2,6 +2,8 @@ package com.itech.email.vo;
 
 import java.util.List;
 
+import com.itech.coupon.model.User;
+
 public abstract class EmailMessage {
 
 	String senderAddress;
@@ -18,9 +20,11 @@ public abstract class EmailMessage {
 		generateEmailHTMLTemplate();
 		setContentInMessageHTML(messageContent);
 		setToAddress(toEmailId);
+		setSenderAddress("test.coupoxo@gmail.com");
+		setSubject();
 	}
 
-	public EmailMessage(String messageContent, String toEmailId, List<String> fileAttachementList){
+	public EmailMessage(String messageContent, String toEmailId,  List<String> fileAttachementList){
 		this(messageContent, toEmailId);
 		setAttachments(fileAttachementList);
 	}

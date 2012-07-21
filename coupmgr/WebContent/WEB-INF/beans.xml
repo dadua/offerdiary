@@ -6,6 +6,7 @@
      	   
    	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
    		<property name="userDAO" ref="itech.UserDAO"/>
+   		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
 	</bean>
    	
 	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
@@ -28,10 +29,15 @@
    		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
    	</bean>
    	
+   	<bean name="itech.handler.UserEventHandler" class="com.itech.event.user.UserEventHandler">
+   		<property name="emailManager" ref="itech.emailManager"/>
+   	</bean>
+   	
    	<bean name="itech.EventEngine" class="com.itech.event.services.EventEngineImpl">
    		<property name="eventHandlers">
    			<list>
    				<ref bean="itech.handler.OfferEventHandler"/>
+   				<ref bean="itech.handler.UserEventHandler"/>
    			</list>
    		</property>
    	</bean>
@@ -40,6 +46,10 @@
    		<property name="eventEngine" ref="itech.EventEngine"/>
    	</bean>
 	
+	<bean name="itech.UserEventGenerator" class="com.itech.event.user.UserEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
+   	
 	<bean name="itech.AlertEngine" class="com.itech.alert.services.AlertEngine">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
 		<property name="alertGenerators">

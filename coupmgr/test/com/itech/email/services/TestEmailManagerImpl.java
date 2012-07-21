@@ -16,7 +16,7 @@ public class TestEmailManagerImpl extends CommonTestBase{
 
 	private EmailManager eManager;
 	private final static String fromAddress= "test.coupoxo@gmail.com";
-	private final static String toAddress= "test.coupoxo@gmail.com";
+	private final static String toAddress= "pratap.vj@gmail.com";
 	private final static String subject = "Test Mail :"+System.currentTimeMillis();
 	private final static String HTML = "index.html";
 	private final String attachement = "screenshot.jpg";
@@ -38,7 +38,7 @@ public class TestEmailManagerImpl extends CommonTestBase{
 		String htmlMsg = CommonFileUtilities.getResourceFileAsString(HTML);
 		List<String> fileList = new ArrayList<String>();
 		fileList.add(attachement);
-		EmailMessage email = new OfferExpiryNotificationEmail("your offer is expiring test", toAddress, fileList);
+		EmailMessage email = new OfferExpiryNotificationEmail("your offer is expiring test",toAddress, fileList);
 		mailResult = eManager.sendEmail(email);
 		assertTrue(mailResult);
 	}
