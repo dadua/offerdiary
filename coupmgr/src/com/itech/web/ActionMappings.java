@@ -6,6 +6,7 @@ import java.util.Map;
 import com.itech.alert.web.AlertAction;
 import com.itech.common.web.action.ActionMapping;
 import com.itech.coupon.web.OfferAction;
+import com.itech.offer.web.OfferCardAction;
 import com.itech.offer.web.VendorAction;
 
 public class ActionMappings {
@@ -65,5 +66,6 @@ public class ActionMappings {
 		add(new ActionMapping("getMyCards.do", VendorAction.class, "getMyCards"));
 		add(new ActionMapping("addCardToWallet.do", VendorAction.class, "addCardToWallet"));
 		add(new ActionMapping("getCardByKey.do", VendorAction.class, "getCardByKey"));
+		add(new ActionMapping("removeCardFromWallet.do", OfferCardAction.class, "removeCardFromWallet"));
 	}
 }

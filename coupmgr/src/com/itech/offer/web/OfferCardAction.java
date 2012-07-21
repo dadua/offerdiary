@@ -63,6 +63,18 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	public Response removeCardFromWallet(HttpServletRequest req, HttpServletResponse resp) {
+		User user = getLoggedInUser();
+		String offerCardJson = req.getParameter(OFFER_CARD_JSON_KEY);
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<OfferCard>() { }.getType();
+		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
+		getOfferCardManager().deAssociateOfferCardFromUser(offerCard, user);
+		Result<String> result = new Result<String>(true, null, "Successfully removed the Card");
+		Type resultOffersType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultOffersType);
+	}
 
 	public Response getCardByKey(HttpServletRequest req, HttpServletResponse resp) {
 		String cardName = req.getParameter(OFFER_CARD_NAME_KEY);
