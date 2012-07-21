@@ -287,6 +287,10 @@
 				background-color: transparent;
 			}
 			
+			.ui-autocomplete-loading {
+				background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+			}
+			
 		</style>
 	</head>
 	<body>

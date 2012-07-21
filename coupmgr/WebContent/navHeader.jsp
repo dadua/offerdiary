@@ -69,8 +69,20 @@ div.tile-div{
 						 <%
 						} 
 						%>
+						
 						</a>
+						<%
+						if (user.getLoginType() == LoginType.FACEBOOK) {
+						 %>
 						<a class="btn btn-large btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						<%
+						} else {
+						%>
+						<a class="btn btn-small btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						<%
+						} 
+						%>
+						
 						<span class="caret"></span>
 						</a>
 						
