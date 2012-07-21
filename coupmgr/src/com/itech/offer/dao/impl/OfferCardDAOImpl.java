@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
+import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferCardDAO;
 import com.itech.offer.model.OfferCard;
 
@@ -37,6 +38,15 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 			return null;
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public List<OfferCard> getAllAssociatedCardsForUser(User user) {
+		String hql = "select oc from " + getEntityClassName() + " o, OfferCardUserAssoc ocua  where ocua.offer=oc and ocua.user=:user";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("user", user);
+		List list = query.list();
+		return list;
 	}
 
 

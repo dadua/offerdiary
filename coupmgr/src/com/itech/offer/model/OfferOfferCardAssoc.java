@@ -12,21 +12,21 @@ import javax.persistence.Table;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name=OfferBankCardAssocModelConstants.TABLE_OFFER_CARD_ASSOC)
-public class OfferBankCardAssoc extends PersistableEntity{
+@Table(name=OfferOfferCardAssocModelConstants.TABLE_OFFER_OFFER_CARD_ASSOC)
+public class OfferOfferCardAssoc extends PersistableEntity{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name=OfferBankCardAssocModelConstants.COL_ID)
+	@Column(name=OfferOfferCardAssocModelConstants.COL_ID)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name=OfferBankCardAssocModelConstants.COL_OFFER)
+	@JoinColumn(name=OfferOfferCardAssocModelConstants.COL_OFFER)
 	private Offer offer;
 
 	@ManyToOne
-	@JoinColumn(name=OfferBankCardAssocModelConstants.COL_BANK_CARD)
-	private OfferCard bankCard;
+	@JoinColumn(name=OfferOfferCardAssocModelConstants.COL_OFFER_CARD)
+	private OfferCard offerCard;
 
 	public Offer getOffer() {
 		return offer;
@@ -34,11 +34,11 @@ public class OfferBankCardAssoc extends PersistableEntity{
 	public void setOffer(Offer offer) {
 		this.offer = offer;
 	}
-	public OfferCard getBankCard() {
-		return bankCard;
+	public OfferCard getOfferCard() {
+		return offerCard;
 	}
-	public void setBankCard(OfferCard bankCard) {
-		this.bankCard = bankCard;
+	public void setOfferCard(OfferCard bankCard) {
+		this.offerCard = bankCard;
 	}
 	@Override
 	public boolean isTransient() {
