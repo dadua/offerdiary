@@ -58,6 +58,7 @@
    	
 	<bean name="itech.AlertEngine" class="com.itech.alert.services.AlertEngine">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
+		<property name="alertManager" ref="itech.AlertManager"/>
 		<property name="alertGenerators">
 			<list>
 				<ref bean="itech.OfferAlertGenerator"/>
@@ -65,21 +66,19 @@
 		</property>
 		<property name="alertHandlers">
 			<list>
-				<ref bean="itech.handler.EmailAlerthandler"/>
+				<ref bean="itech.handler.offerAlerthandler"/>
 			</list>
 		</property>
 		<property name="connectionUtil" ref="itech.ConnectionUtil"/>
 	</bean>
 	
 	
-	<bean id="itech.handler.EmailAlerthandler" class="com.itech.alert.handler.ExpiryEmailNotificationAlertHandler">
+	<bean id="itech.handler.offerAlerthandler" class="com.itech.alert.handler.OfferAlertHandler">
 		<property name="emailManager" ref="itech.emailManager"/>
 		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
 	
 	<bean id="itech.OfferAlertGenerator" class="com.itech.alert.services.OfferAlertGenerator">
-		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
-		<property name="alertManager" ref="itech.AlertManager"/>
 		<property name="offerManager" ref="itech.offerManager"/>
 	</bean>  
 	

@@ -21,7 +21,7 @@ public class HibernateAlertConfigDAOImpl extends HibernateCommonBaseDAO<AlertCon
 	@Override
 	public boolean deleteForDataType(String dataType, long dataId) {
 		Session sess = getSession();
-		Query query = sess.createQuery("delete from "+ getEntityClassName()+" where dataType =: dataType and dataId =: dataId");
+		Query query = sess.createQuery("delete from "+ getEntityClassName()+" where dataType =:dataType and dataId =:dataId");
 		query.setParameter("dataType", dataType);
 		query.setParameter("dataId", dataId);
 		query.executeUpdate();

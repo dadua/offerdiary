@@ -1,7 +1,6 @@
 package com.itech.offer.manager;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,13 +8,13 @@ import org.apache.log4j.Logger;
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.coupon.model.User;
+import com.itech.event.coupon.OfferEventGenerator;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.dao.OfferShareDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
-import com.itech.offer.vo.OfferNotifyVO;
 
 
 public class OfferManagerImpl extends CommonBaseManager implements OfferManager {
@@ -25,15 +24,23 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private OfferUserAssocDAO offerUserAssocDAO;
 	private OfferShareDAO offerShareDAO;
 	private VendorManager vendorManager;
+	private OfferEventGenerator offerEventGenerator;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
 		if ((offer.getExpiry() == null) && (offer.getExpiryDateInMillis() !=0)) {
 			offer.setExpiry(new Date(offer.getExpiryDateInMillis()));
 		}
+		if (offer.getNotifyVO() != null) {
+			offer.setFbNotification(offer.getNotifyVO().getFbNotify());
+			offer.setEmailNotification(offer.getNotifyVO().getEmailNotify());
+		}
 		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
+		if (offer.getExpiry() != null) {
+			getOfferEventGenerator().offerCreated(offer);
+		}
 	}
 
 	@Override
@@ -77,22 +84,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		offerUserAssoc.setUser(user);
 		offerUserAssoc.setOriginalUser(user);
 		return offerUserAssoc;
-	}
-
-
-	@Override
-	public List<Offer> addOffersEventsConfigForUser(
-			List<OfferNotifyVO> offerNotificationVOs, User loggedInUser) {
-		List<Offer> offers = new ArrayList<Offer>();
-		for (OfferNotifyVO offerNotifyVO : offerNotificationVOs) {
-			Offer offer = offerNotifyVO.getOffer();
-			addOfferForUser(offer, loggedInUser);
-			offers.add(offer);
-			//TODO: Have to handle offerNotifyVO.getNotifyConfig()
-			// and fire the notification engine..
-		}
-
-		return offers;
 	}
 
 	@Override
@@ -170,6 +161,14 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	public VendorManager getVendorManager() {
 		return vendorManager;
+	}
+
+	public void setOfferEventGenerator(OfferEventGenerator offerEventGenerator) {
+		this.offerEventGenerator = offerEventGenerator;
+	}
+
+	public OfferEventGenerator getOfferEventGenerator() {
+		return offerEventGenerator;
 	}
 
 

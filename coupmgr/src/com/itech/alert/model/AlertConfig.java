@@ -4,6 +4,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,8 +42,21 @@ public class AlertConfig extends PersistableEntity{
 	@Column(name=AlertConfigModelConstant.COL_CREATION_TIME)
 	private Date creationTime;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name=AlertConfigModelConstant.COL_STATUS)
 	private ActivationStatus status;
+
+	@Column(name=AlertConfigModelConstant.COL_FB_NOTIFICATION)
+	private boolean fbNotification;
+
+
+	@Column(name=AlertConfigModelConstant.COL_EMAIL_NOTIFICATION)
+	private boolean emailNotification;
+
+
+	@Column(name=AlertConfigModelConstant.COL_PERSIST_ALERT_IN_DB)
+	private boolean persistAlertInDB;
+
 
 	public AlertConfig() {
 
@@ -106,6 +121,30 @@ public class AlertConfig extends PersistableEntity{
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public void setFbNotification(boolean fbNotification) {
+		this.fbNotification = fbNotification;
+	}
+
+	public boolean isFbNotification() {
+		return fbNotification;
+	}
+
+	public void setEmailNotification(boolean emailNotification) {
+		this.emailNotification = emailNotification;
+	}
+
+	public boolean isEmailNotification() {
+		return emailNotification;
+	}
+
+	public void setPersistAlertInDB(boolean persistAlertInDB) {
+		this.persistAlertInDB = persistAlertInDB;
+	}
+
+	public boolean isPersistAlertInDB() {
+		return persistAlertInDB;
 	}
 
 }
