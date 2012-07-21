@@ -13,10 +13,6 @@
 		<property name="vendorManager" ref="itech.vendorManager"/>
 	</bean>
 
-
-	<bean id="itech.vendorManager" class="com.itech.offer.manager.VendorManagerImpl" parent="itech.CommonBaseManager">
-		<property name="vendorDAO"  ref="itech.vendorDAO"/>
-	</bean>
 	
 	<bean id="itech.offerDAO" class="com.itech.offer.dao.impl.OfferDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
@@ -27,10 +23,19 @@
 	<bean id="itech.vendorDAO"  class="com.itech.offer.dao.impl.VendorDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 
-	<bean id="itech.banckCardDAO"  class="com.itech.offer.dao.impl.BankCardDAOImpl" parent="itech.hibernateCommonDAO">
+	<bean id="itech.offerCardDAO"  class="com.itech.offer.dao.impl.OfferCardDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 
 	<bean id="itech.offerUserAssocDAO"  class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
+
+	<bean id="itech.vendorManager" class="com.itech.offer.manager.VendorManagerImpl" parent="itech.CommonBaseManager">
+		<property name="vendorDAO"  ref="itech.vendorDAO"/>
+	</bean>
+
+	<bean id="itech.offerCardManager" class="com.itech.offer.manager.OfferCardManagerImpl" parent="itech.CommonBaseManager">
+		<property name="offerCardDAO"  ref="itech.offerCardDAO"/>
+	</bean>
+		
 
 </beans>
