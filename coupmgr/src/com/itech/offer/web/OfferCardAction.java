@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
+import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.model.User;
@@ -81,14 +82,18 @@ public class OfferCardAction extends CommonAction{
 		String cardId = req.getParameter(OFFER_CARD_ID_KEY);
 		OfferCard offerCard = null;
 
-		if (cardId != null && !cardId.isEmpty()) {
+		if ((cardId != null) && !cardId.isEmpty()) {
 			offerCard = getOfferCardManager().getOfferCardFor(Long.parseLong(cardId));
-		} else if (cardName != null && !cardName.isEmpty()){
+		} else if ((cardName != null) && !cardName.isEmpty()){
 			offerCard = getOfferCardManager().getOfferCardFor(cardName);
 		}
 
 		Result<OfferCard> result = new Result<OfferCard>(true, offerCard);
 		Type type = new TypeToken<Result<OfferCard>>() { }.getType();
 		return new CommonBeanResponse(result, type);
+	}
+
+	public Response goToMyCards(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward("cards.jsp");
 	}
 }

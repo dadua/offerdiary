@@ -11,6 +11,7 @@
 			 --%>
 		<title>OfferDo : Do more with Offers</title>
 		<%@include file="commonHeader.jsp" %>
+	
 	</head>
 	<body >
 		<%@include file="navHeader.jsp" %>
@@ -103,27 +104,53 @@
 			</div>
 			<div class="row">
 				<div class="span3 offset3">
-				<img src="images/app_stores.png">
+					<img src="images/app_stores.png">
 				</div>
 				<div class="span4 ">
 					<img  src="images/launch.jpg">
-					<div class="form" style="padding-left: 2%;">
-								<div class="control-group">
-									<div style="float:left">
-										<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
-									</div>
-									<div style="float:left; padding-left: 5px;">	
-									<button class="btn btn-info" href="#">Go</button>
-									</div>
-								</div>
+					<div class="control-group">
+						<div style="float:left">
+							<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
+						</div>
+						<div>	
+							<div class="row">
+								<button id="newEmailSubscription" class="btn btn-info" href="#">Go</button>
+							</div>
+							<div class="row">
+								<div id="onEmailSuccess" class="hide alert alert-success span4" >
+									<button class="close" >×</button>
+									Thanks for your interest! We'll keep you posted.
+								</div> 
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 			
 		</div>
-		
 		<%@include file="footer.jsp" %>
+		
+			
+		<script type="text/javascript">
+			$(function(){
+				$('#newEmailSubscription').click(function(){
+					var email = $('#email').val();
+					if (email === '' || email.indexOf('@')===-1) {
+						return;
+					}
+					$.post('hearMore.do', {'email': email}, function(data){
+						var result = JSON.parse(data);
+						if (result.success == true) {
+							$('#onEmailSuccess').show();
+						}
+					});
+				});
+				$('#onEmailSuccess > .close').click(function(){
+					$('#onEmailSuccess').hide();
+				});
+			});
+		</script>
 
 	</body>
 </html>
