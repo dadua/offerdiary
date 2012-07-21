@@ -101,7 +101,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 			<div class="row">
 				<div class="span3 offset3">
 				<img src="images/app_stores.png">
@@ -120,6 +119,8 @@
 					</div>
 				</div>
 			</div>
+		</div>
+			
 		</div>
 		
 		<%@include file="footer.jsp" %>
