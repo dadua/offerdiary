@@ -49,6 +49,15 @@ OfferCardManager {
 		getOfferCardUserAssocDAO().addOrUpdate(offerCardUserAssoc);
 	}
 
+	@Override
+	public void deAssociateOfferCardFromUser(OfferCard offerCard, User user) {
+		OfferCardUserAssoc cardUserAssoc = getOfferCardUserAssocDAO().getAssocFor(offerCard, user);
+		if (cardUserAssoc == null) {
+			throw new RuntimeException("No associated card found for user");
+		}
+		getOfferCardUserAssocDAO().delete(cardUserAssoc.getId());
+	}
+
 	public void setOfferCardDAO(OfferCardDAO offerCardDAO) {
 		this.offerCardDAO = offerCardDAO;
 	}
@@ -64,6 +73,5 @@ OfferCardManager {
 	public OfferCardUserAssocDAO getOfferCardUserAssocDAO() {
 		return offerCardUserAssocDAO;
 	}
-
 
 }

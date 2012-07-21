@@ -12,4 +12,5 @@ public interface OfferCardManager {
 	public OfferCard getOfferCardFor(String cardName);
 	public List<OfferCard> getAssociatedOfferCardFor(User user);
 	public void associateOfferCardToUser(OfferCard offerCard, User user);
+	public void deAssociateOfferCardFromUser(OfferCard offerCard, User user);
 }
