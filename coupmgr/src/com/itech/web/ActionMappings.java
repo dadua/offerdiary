@@ -55,8 +55,8 @@ public class ActionMappings {
 		add(new ActionMapping("signupDone.do", LoginAction.class, "signUpDone"));
 		add(new ActionMapping("emailLogin.do", LoginAction.class, "emailLogin"));
 		add(new ActionMapping("emailSignup.do", LoginAction.class, "emailSignUp"));
-
-
+		add(new ActionMapping("hearMore.do", LoginAction.class, "newInterestedUserSuscription"));
+		
 		//vendor actions
 		add(new ActionMapping("addVendor.do", VendorAction.class, "addVendor"));
 		add(new ActionMapping("searchVendor.do", VendorAction.class, "searchVendors"));

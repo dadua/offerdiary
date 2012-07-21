@@ -125,7 +125,15 @@ public class LoginAction extends CommonAction{
 		return new Forward("wallet.do");
 	}
 
-
+	public Response newInterestedUserSuscription(HttpServletRequest req, HttpServletResponse resp){
+		String email = req.getParameter("email");
+		getUserManager().saveInterestedUserForSubscription(email);
+		Result<String> result = new Result<String>(true, "Success");
+		Type stringResultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, stringResultType);		
+	}
+	
 	public Response logout (HttpServletRequest req, HttpServletResponse resp) {
 		updateLoggedInUser(req, null);
 		return new Redirect("");

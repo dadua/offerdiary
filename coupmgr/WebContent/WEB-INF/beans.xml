@@ -6,13 +6,19 @@
      	   
    	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
    		<property name="userDAO" ref="itech.UserDAO"/>
+   		<property name="intUserSubscriptionDAO" ref="itech.InterestedUserSubscriptionDAO"/>
    		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
 	</bean>
+   	
    	
 	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
 			parent="itech.hibernateCommonDAO" scope="singleton">
 	</bean>
-      
+       
+	<bean name="itech.InterestedUserSubscriptionDAO" class="com.itech.coupon.dao.HibernateInterestedUserSubscriptionDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	 
     <bean name="itech.AlertConfigManager" class="com.itech.alert.services.AlertConfigManagerImpl">
     	<property name="alertConfigDAO" ref="itech.AlertConfigDAO"/>
     </bean>
