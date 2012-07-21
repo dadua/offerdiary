@@ -133,6 +133,7 @@
 	    		$('#coupon_'+coupon.id + ' .thumbnail').addClass('coupon', 9000);
 	    		if (isOldAddition) {
 	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide();
+	    			$('.hiddenTillAddSuccess').show();
 	    		} else {
 	    			$('#coupon_'+coupon.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
 		    			$(this).parent().find('span.hiddenTillAddSuccess').show();
