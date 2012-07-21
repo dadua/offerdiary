@@ -32,9 +32,10 @@ public class ActionMappings {
 		add(new ActionMapping("offers.do", OfferAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
 		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
-		//TODO These two methods are missing because of some commit issues
-		//add(new ActionMapping("getSharedCoupon.do", CouponAction.class, "getSharedOffer"));
-		//add(new ActionMapping("shareOffer.do", CouponAction.class, "shareOffer"));
+
+		//Share offer Actions
+		add(new ActionMapping("getSharedOffer.do", OfferAction.class, "getSharedOffer"));
+		add(new ActionMapping("shareOffer.do", OfferAction.class, "shareOffer"));
 
 		//Alert actions
 		add(new ActionMapping("alerts.do", AlertAction.class, "goToMyAlerts"));
