@@ -1,17 +1,28 @@
 package com.itech.redwine.parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jsoup.nodes.Element;
 public class RedWineCard {
 	
 	private String cardName;
-	private List<RedWineOffer> offers;
+	private List<RedWineOffer> offers= new ArrayList<RedWineOffer>();
 	private int offersCount;
 	private String imageUrl;
 	private String cardUrl;
 	private Element cardElement;
 	private String cardType;
+	
+	public String toString(){
+		StringBuilder toString = new StringBuilder();
+		toString.append("CardName : "+cardName+"; CardType : "+cardType +"; OfferCount : "+ offersCount+"; ImageURL : "+ imageUrl +"[ ");
+		for(RedWineOffer offer : offers){
+			toString.append(offer.toString());
+		}
+		toString.append(" ]");
+		return toString.toString();			
+	}
 	
 	public String getCardName() {
 		return cardName;

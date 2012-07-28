@@ -315,17 +315,6 @@ public class Offer extends PersistableEntity implements Cloneable{
 		return emailNotification;
 	}
 
-
-	public void setPersistAlertInDB(boolean persistAlertInDB) {
-		this.persistAlertInDB = persistAlertInDB;
-	}
-
-
-	public boolean isPersistAlertInDB() {
-		return persistAlertInDB;
-	}
-
-
 	public void setFbNotification(boolean fbNotification) {
 		this.fbNotification = fbNotification;
 	}

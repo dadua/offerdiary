@@ -3,20 +3,26 @@ package com.itech.redwine.parser;
 public class RedWineOffer {
  
  private String merchantName;
- private String discriptionn;
+ private String description;
  private String expiryDate;
 
+ @Override
+ public String toString(){
+	 String toString ="[Merchant Name : "+merchantName+"; Description : "+description+"; Expiry Date: "+expiryDate+"]";
+	 return toString;
+ }
+ 
  public String getMerchantName() {
 	return merchantName;
 }
 public void setMerchantName(String merchantName) {
 	this.merchantName = merchantName;
 }
-public String getDiscriptionn() {
-	return discriptionn;
+public String getDescription() {
+	return description;
 }
-public void setDiscriptionn(String discriptionn) {
-	this.discriptionn = discriptionn;
+public void setDescription(String discriptionn) {
+	this.description = discriptionn;
 }
 public String getExpiryDate() {
 	return expiryDate;
