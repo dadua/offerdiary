@@ -56,7 +56,7 @@ public class ActionMappings {
 		add(new ActionMapping("emailLogin.do", LoginAction.class, "emailLogin"));
 		add(new ActionMapping("emailSignup.do", LoginAction.class, "emailSignUp"));
 		add(new ActionMapping("hearMore.do", LoginAction.class, "newInterestedUserSuscription"));
-		
+
 		//vendor actions
 		add(new ActionMapping("addVendor.do", VendorAction.class, "addVendor"));
 		add(new ActionMapping("searchVendor.do", VendorAction.class, "searchVendors"));
@@ -66,6 +66,7 @@ public class ActionMappings {
 		add(new ActionMapping("getMyCards.do", OfferCardAction.class, "getMyCards"));
 		add(new ActionMapping("addCardToWallet.do", OfferCardAction.class, "addCardToWallet"));
 		add(new ActionMapping("getCardByKey.do", OfferCardAction.class, "getCardByKey"));
+		add(new ActionMapping("searchOfferCards.do", OfferCardAction.class, "searchOfferCards"));
 		add(new ActionMapping("cards.do", OfferCardAction.class, "goToMyCards"));
 		add(new ActionMapping("removeCardFromWallet.do", OfferCardAction.class, "removeCardFromWallet"));
 	}

@@ -16,9 +16,9 @@
 		
 		<script type="text/javascript">
 			var it = it || {};
-			it.wallet = it.wallet || {};
+			it.card = it.card || {};
 						
-			it.wallet.dismissCard = function(e) {
+			it.card.dismiss = function(e) {
 				var target = e.target;
 				var targetId = target.id;
 				var cardIdExtractRegex = /^cardDismiss_(.*)/;
@@ -35,17 +35,45 @@
 				});
 			};
 			
-			it.wallet.addHandlers = function () {
+			it.card.autoCompleteInit = function() {
+				var cache = {}, lastXhr;
+				$('#cardFullName').autocomplete({
+					minLength: 2,
+					source: function( request, response ) {
+						var term = request.term;
+						if ( term in cache ) {
+							response(cache[term]);
+							return;
+						}
+						lastXhr = $.getJSON("searchOfferCards.do", {searchKey: term}, function( data, status, xhr ) {
+							var names = [];
+							for (var i=0;i<data.result.length;i++) {
+								names.push(data.result[i].name);
+							}
+							cache[term] = names;
+							if ( xhr === lastXhr ) {
+								response(names);
+							}
+						});
+					}
+				});
+			};
+			
+			it.card.addHandlers = function () {
 				$('.icon-trash').hover(function(e) {
 					$(this).removeClass('icon-white');
 				}, function(e){
 					$(this).addClass('icon-white');
 				});
-				$('.card-dismiss').click(it.wallet.dismissCard);
+				$('.card-dismiss').click(it.card.dismiss);
+				$('#addSomeDiv').click(function(){
+					$('#cardsContainer ul').append('<li> <div> Some content</div></li>');
+				});
 			};
 
 			$(function(){
-				it.wallet.addHandlers();
+				it.card.addHandlers();
+				it.card.autoCompleteInit();
 				$('div.tabbable ul.nav li').removeClass('active');
 				$('#cardTab').addClass('active');
 			});
@@ -67,16 +95,42 @@
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span10" id="cardContainer" >
-				 <ul class="thumbnails">
-				    		<li class="span3" id="card_5">
-								<div class="thumbnail card"  >
-								<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_5"></span>
-								<h3> Card Name: Card Value</h3>
-								</div>
-							</li>
-				</ul>
-				&nbsp;
+				<div class="span7" id="cardContainer" >
+					 <ul class="thumbnails">
+			    		<li class="span3" id="card_5">
+							<div class="thumbnail card"  >
+							<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_5"></span>
+							<h3> Card Name: Card Value</h3>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="span3" >
+					<div class="modal hide fade" id="addCardModal" style="display:none" >
+						<div class="modal-header" >
+							<a class="close" data-dismiss="modal">×</a>
+							<h2>Add New Card</h2>
+						</div>
+						<div class="modal-body" >
+							<form >
+								<label>Card type you own: </label>
+								<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
+							</form>
+							<button id="addSomeDiv" ></button>
+							
+							<div id="cardsContainer" >
+								<ul>
+								</ul>
+							</div>
+						</div>
+						<div class="modal-footer" >
+							<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+							<%--
+							<a id="addCardToWallet" class="btn btn-primary">Add Card</a>
+							 --%>
+						</div>
+					</div>
+					<a id="addCardModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addCardModal" >Add New Card for offers</a>
 				</div>
 			</div>
 		</div>
