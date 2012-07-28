@@ -18,6 +18,7 @@ import com.itech.offer.model.OfferCard;
 
 public class OfferCardAction extends CommonAction{
 	private static final String OFFER_CARD_JSON_KEY = "offerCardJson";
+	private static final String OFFER_CARD_JSON_ATTR_KEY = "myOfferCardsJsonAttrKey";
 	private static final int MAX_RESULT_COUNT = 10;
 	private static final String OFFER_CARD_NAME_SEARCH_KEY = "searchKey";
 	private static final String OFFER_CARD_NAME_KEY = "cardNameKey";
@@ -94,6 +95,13 @@ public class OfferCardAction extends CommonAction{
 	}
 
 	public Response goToMyCards(HttpServletRequest req, HttpServletResponse resp) {
+
+		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(getLoggedInUser());
+		Type offerCardsType = new TypeToken<List<OfferCard>>() {
+		}.getType();
+		Gson gson = new Gson();
+		String myOfferCardsJson = gson.toJson(offerCards, offerCardsType);
+		req.setAttribute(OFFER_CARD_JSON_ATTR_KEY, myOfferCardsJson);
 		return new Forward("cards.jsp");
 	}
 }

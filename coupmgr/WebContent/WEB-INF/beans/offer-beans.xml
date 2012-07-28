@@ -30,7 +30,7 @@
 	<bean id="itech.offerUserAssocDAO"  class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
-	<bean id="itech.offerCardUserAssocDAO" class="com.itech.offer.dao.impl.OfferCardUserAssocDAOImpl">
+	<bean id="itech.offerCardUserAssocDAO" class="com.itech.offer.dao.impl.OfferCardUserAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 
 	<bean id="itech.vendorManager" class="com.itech.offer.manager.VendorManagerImpl" parent="itech.CommonBaseManager">
