@@ -19,7 +19,7 @@ public class RedWineCardsParser {
 	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
 	private String redWinedomainName ="http://redanar.com";
 	private String redWineBasePageUrl= redWinedomainName+"/mobile/badge/list?search=&page=";
-	private String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPagenumber";
+	private String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPageNumber";
 		
 	private List<RedWineCard> redWineCards = new ArrayList<RedWineCard>();
 	
@@ -53,6 +53,7 @@ public class RedWineCardsParser {
 			rWCard.setCardElement(cardElement);
 			setOtherCardDetails(rWCard);
 			getAllOffersForCurrentCard(rWCard);
+			System.out.println(rWCard);
 			redWineCards.add(rWCard);
 		}
 		return redWineCards;
@@ -68,12 +69,11 @@ public class RedWineCardsParser {
 		rWCard.setCardType(cardType);
 		String imageSrc =  doc.getElementsContainingOwnText("Card Image").first().nextElementSibling().child(0).attr("src");
 		rWCard.setImageUrl(imageSrc);
-		getAllOffersForCurrentCard(rWCard);
 	}
 
 	private void getAllOffersForCurrentCard(RedWineCard rWCard) {
 		int cardNumber = getCardNumberFromCarUrl(rWCard);
-		for(int pageNumber =0; pageNumber < 10; pageNumber++){
+		for(int pageNumber =1; pageNumber < 10; pageNumber++){
 			rWCard.getOffers().addAll(getCardPageOffers(cardNumber, pageNumber));
 		}
 	}
@@ -90,7 +90,7 @@ public class RedWineCardsParser {
 			for(Element offerElement: offerElements){
 				RedWineOffer rOffer = new RedWineOffer();
 				rOffer.setMerchantName(offerElement.child(0).text());
-				rOffer.setDiscriptionn(offerElement.child(1).text());
+				rOffer.setDescription(offerElement.child(1).text());
 				redWineOffers.add(rOffer);
 			}
 		}
