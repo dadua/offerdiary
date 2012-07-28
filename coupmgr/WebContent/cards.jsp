@@ -22,10 +22,11 @@
 				var target = e.target;
 				var targetId = target.id;
 				var cardIdExtractRegex = /^cardDismiss_(.*)/;
-				var cardId = cardIdExtractRegex.exec(targetId)[1];
+				var cardId = cardIdExtractRegex.exec(targetId)[1],
+				card = {id:cardId};
 				var cardIds = [];
 				cardIds.push(cardId);
-				$.post('deleteCardsAssoc.do', {'cardIds': JSON.stringify(cardIds)}, function(data) {
+				$.post('removeCardFromWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
 						$('#card_'+cardId).remove();
@@ -35,29 +36,16 @@
 				});
 			};
 			
-			it.card.autoCompleteInit = function() {
-				var cache = {}, lastXhr;
-				$('#cardFullName').autocomplete({
-					minLength: 2,
-					source: function( request, response ) {
-						var term = request.term;
-						if ( term in cache ) {
-							response(cache[term]);
-							return;
-						}
-						lastXhr = $.getJSON("searchOfferCards.do", {searchKey: term}, function( data, status, xhr ) {
-							var names = [];
-							for (var i=0;i<data.result.length;i++) {
-								names.push(data.result[i].name);
-							}
-							cache[term] = names;
-							if ( xhr === lastXhr ) {
-								response(names);
-							}
-						});
-					}
-				});
-			};
+			it.card.discoverRefreshHandler = function() {
+				
+				var refreshAddableCards = function(e) {
+					var query = $(this).val();
+					it.card.plotAddableCards(query);
+				}
+				
+				$('#cardFullName').keyup(refreshAddableCards);
+				
+			}
 			
 			it.card.addHandlers = function () {
 				$('.icon-trash').hover(function(e) {
@@ -66,24 +54,58 @@
 					$(this).addClass('icon-white');
 				});
 				$('.card-dismiss').click(it.card.dismiss);
-				$('#addSomeDiv').click(function(){
-					$('#cardsContainer ul').append('<li> <div> Some content</div></li>');
-				});
+				this.discoverRefreshHandler();
 			};
+			
+			it.card.appendCardTo = function(containerElemSelector, card) {
+				
+				var cardDisplayHtml = '<li class="span3" id="card_'+ card.id + '">';
+				cardDisplayHtml += '<div class="thumbnail card">';
+				cardDisplayHtml += '<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_'+card.id + '"></span>';
+				cardDisplayHtml += '<h4> Card Name: </h4>'+card.name+'</div></li>';
+				$(cardDisplayHtml).appendTo(containerElemSelector);
+			}
+			
+			it.card.appendCardsTo = function(containerElemSelector, cards) {
+				for (var i=0; i < cards.length; i++) {
+					this.appendCardTo(containerElemSelector, cards[i]);
+				}
+			}
+			
+			it.card.plotMyCards = function(cards) {
+				this.appendCardsTo('#myCardsContainer', cards);
+			}
+			
+			it.card.plotAddableCards = function(query) {
+				$.getJSON('searchOfferCards.do', {searchKey:query}, function(data){
+					var cards = data.result;
+					$('#cardsContainer').html('');
+					it.card.appendCardsTo('#cardsContainer', cards);
+				});
+			}
+			
+			it.card.plotAll = function() {
+				var myCards = JSON.parse('${myOfferCardsJsonAttrKey}');
+				this.plotMyCards(myCards);
+				this.plotAddableCards('');<%-- Empty String for default set of cards.. --%>
+			}
 
 			$(function(){
+				it.card.plotAll();
 				it.card.addHandlers();
-				it.card.autoCompleteInit();
 				$('div.tabbable ul.nav li').removeClass('active');
 				$('#cardTab').addClass('active');
 			});
-			
-			
 		</script>
+		
 		<style type="text/css">
 			.card {
 				background-color: #F5F5F5;
-			};
+			}
+			
+			.bluishText {
+				color: #0088CC;
+			}
 			
 		</style>
 	</head>
@@ -91,46 +113,31 @@
 	
 		<%@include file="navHeader.jsp" %>
 		<div class="container" >
-			<div class="row-fluid">
-				<div class="span2" >
+			<div class="row">
+				<div class="span2 " >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span7" id="cardContainer" >
-					 <ul class="thumbnails">
-			    		<li class="span3" id="card_5">
-							<div class="thumbnail card"  >
-							<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_5"></span>
-							<h3> Card Name: Card Value</h3>
-							</div>
-						</li>
+				<a id="discoverCardBtn" class="btn btn-primary btn-large pull-right" >Discover cards</a>
+				<div class="span10" >
+					 <ul id="myCardsContainer" class="thumbnails">
 					</ul>
 				</div>
-				<div class="span3" >
-					<div class="modal hide fade" id="addCardModal" style="display:none" >
-						<div class="modal-header" >
-							<a class="close" data-dismiss="modal">×</a>
-							<h2>Add New Card</h2>
-						</div>
-						<div class="modal-body" >
-							<form >
-								<label>Card type you own: </label>
-								<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
-							</form>
-							<button id="addSomeDiv" ></button>
-							
-							<div id="cardsContainer" >
-								<ul>
-								</ul>
-							</div>
-						</div>
-						<div class="modal-footer" >
-							<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-							<%--
-							<a id="addCardToWallet" class="btn btn-primary">Add Card</a>
-							 --%>
-						</div>
+			</div>
+			<hr class="span10 offset1" >
+			<div class="row">
+				<div class="span10 offset2" >
+					<div class="row" >
+						<form class="pull-right" >
+							<label class="bluishText">Card type you own: </label>
+							<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
+						</form>
+						<h4 class="bluishText">Discover your Cards</h4>
 					</div>
-					<a id="addCardModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addCardModal" >Add New Card for offers</a>
+					
+					<div class="row">
+						<ul id="cardsContainer" class="thumbnails">
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

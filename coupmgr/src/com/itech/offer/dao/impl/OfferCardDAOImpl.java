@@ -42,7 +42,7 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 
 	@Override
 	public List<OfferCard> getAllAssociatedCardsForUser(User user) {
-		String hql = "select oc from " + getEntityClassName() + " o, OfferCardUserAssoc ocua  where ocua.offer=oc and ocua.user=:user";
+		String hql = "select oc from " + getEntityClassName() + " oc, OfferCardUserAssoc ocua  where ocua.offerCard=oc and ocua.user=:user";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("user", user);
 		List list = query.list();

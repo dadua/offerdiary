@@ -17,7 +17,7 @@ import com.itech.common.db.PersistableEntity;
 @Table(name=OfferCardModelConstants.TABLE_BANK_CARD)
 public class OfferCard extends PersistableEntity{
 	public enum CardType{
-		CREDIT, DEBIT,CHARGE,GIFT, LOYALTY, MEMBERSHIP, PREPAID
+		CREDIT, DEBIT,CHARGE,GIFT, LOYALTY, MEMBERSHIP, PREPAID, UNKNOWN
 	}
 
 
@@ -27,7 +27,7 @@ public class OfferCard extends PersistableEntity{
 	private Long id;
 
 	@Column(name=OfferCardModelConstants.COL_NAME)
-	private String name;//VISA,MASTER etc
+	private String name;
 
 	@ManyToOne
 	@JoinColumn(name=OfferCardModelConstants.COL_ISSUING_VENDOR)
@@ -35,7 +35,7 @@ public class OfferCard extends PersistableEntity{
 
 	@Enumerated(EnumType.STRING)
 	@Column(name=OfferCardModelConstants.COL_CARD_TYPE)
-	private CardType cardType;//DEbit/Credit
+	private CardType cardType = CardType.UNKNOWN;//DEbit/Credit
 
 	@Column(name=OfferCardModelConstants.COL_PAYMENT_SYSTEM_TYPE)
 	private String paymentSystemType;//VISA,MASTER etc
@@ -52,7 +52,7 @@ public class OfferCard extends PersistableEntity{
 	}
 
 	public void setIssuingVendor(Vendor issuingBank) {
-		this.issuingVendor = issuingBank;
+		issuingVendor = issuingBank;
 	}
 
 	public CardType getCardType() {

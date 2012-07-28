@@ -19,7 +19,7 @@ public class OfferCardUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferCardU
 
 	@Override
 	public OfferCardUserAssoc getAssocFor(OfferCard offerCard, User user) {
-		String hql="from "+getEntityClassName()+" where offerCard =:offerCard and user:user ";
+		String hql="from "+getEntityClassName()+" where offerCard =:offerCard and user =:user ";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("offerCard", offerCard);
 		query.setParameter("user", user);

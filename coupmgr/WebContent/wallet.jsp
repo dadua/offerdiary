@@ -216,13 +216,7 @@
 				});
 			};
 			
-			$(function() {
-				$('#addOfferToWallet').click(it.wallet.addOffer);
-				var offersJson = '${myOffersJson}',
-				offers = JSON.parse(offersJson);
-				it.wallet.appendOffers(offers, true);
-				it.wallet.addHandlers();
-				$('#expiryDate').datepicker();
+			it.wallet.vendorAutoCompleteInit = function() {
 				var cache = {}, lastXhr;
 				$('#vendor').autocomplete({
 					minLength: 2,
@@ -244,6 +238,16 @@
 						});
 					}
 				});
+			}
+			
+			$(function() {
+				$('#addOfferToWallet').click(it.wallet.addOffer);
+				var offersJson = '${myOffersJson}',
+				offers = JSON.parse(offersJson);
+				it.wallet.appendOffers(offers, true);
+				it.wallet.addHandlers();
+				$('#expiryDate').datepicker();
+				it.wallet.vendorAutoCompleteInit();
 					
 				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
 				$('.checkBoxSelected').live('click', function() {
