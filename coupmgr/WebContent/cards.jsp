@@ -17,70 +17,83 @@
 		<script type="text/javascript">
 			var it = it || {};
 			it.card = it.card || {};
+			
+			
+			it.card.getParentCardId = function(actionElem) {
+				var cardIdExtractRegex = /^card_(.*)/,
+				parentCardElem$ = $(actionElem).parent().parent(),
+				cardId = cardIdExtractRegex.exec($(parentCardElem$).attr('id'))[1];
+				return cardId;
+			}
 						
 			it.card.dismiss = function(e) {
-				var target = e.target;
-				var targetId = target.id;
-				var cardIdExtractRegex = /^cardDismiss_(.*)/;
-				var cardId = cardIdExtractRegex.exec(targetId)[1],
+				var target = e.target,
+				cardId = it.card.getParentCardId(target),
 				card = {id:cardId};
-				var cardIds = [];
-				cardIds.push(cardId);
 				$.post('removeCardFromWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
-						$('#card_'+cardId).remove();
+						$('#myCardsContainer > #card_'+cardId).remove();
 					} else {
 						//Handle error case
 					}
 				});
 			};
 			
+			it.card.associateWithUser = function(e) {
+				var target = e.target,
+				cardId = it.card.getParentCardId(target),
+				card = {id:cardId};
+				$.post('addCardToWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
+					var ret = $.parseJSON(data);
+					if (ret.success === true) {
+						$('#cardsContainer > #card_'+cardId).remove();
+					} else {
+						//Handle error case
+					}
+				});
+			}
+			
 			it.card.discoverRefreshHandler = function() {
-				
 				var refreshAddableCards = function(e) {
 					var query = $(this).val();
 					it.card.plotAddableCards(query);
 				}
-				
 				$('#cardFullName').keyup(refreshAddableCards);
-				
 			}
 			
 			it.card.addHandlers = function () {
-				$('.icon-trash').hover(function(e) {
-					$(this).removeClass('icon-white');
-				}, function(e){
-					$(this).addClass('icon-white');
-				});
 				$('.card-dismiss').click(it.card.dismiss);
-				this.discoverRefreshHandler();
+				$('.card-associate').click(it.card.associateWithUser);
 			};
 			
-			it.card.appendCardTo = function(containerElemSelector, card) {
+			it.card.appendCardTo = function(containerElemSelector, card, actionsHtml) {
 				
 				var cardDisplayHtml = '<li class="span3" id="card_'+ card.id + '">';
 				cardDisplayHtml += '<div class="thumbnail card">';
-				cardDisplayHtml += '<span class="icon-trash icon-white pull-right card-dismiss" id="cardDismiss_'+card.id + '"></span>';
+				cardDisplayHtml += actionsHtml;
 				cardDisplayHtml += '<h4> Card Name: </h4>'+card.name+'</div></li>';
 				$(cardDisplayHtml).appendTo(containerElemSelector);
 			}
 			
-			it.card.appendCardsTo = function(containerElemSelector, cards) {
+			it.card.appendCardsTo = function(containerElemSelector, cards, actionsHtml) {
 				for (var i=0; i < cards.length; i++) {
-					this.appendCardTo(containerElemSelector, cards[i]);
+					this.appendCardTo(containerElemSelector, cards[i], actionsHtml);
 				}
+				this.addHandlers();
 			}
 			
 			it.card.plotMyCards = function(cards) {
-				this.appendCardsTo('#myCardsContainer', cards);
+				var actionsHtml = '<a class="pull-right card-dismiss btn btn-mini">remove</a>';
+				this.appendCardsTo('#myCardsContainer', cards, actionsHtml);
 			}
 			
 			it.card.plotAddableCards = function(query) {
+				var actionsHtml = '<a class="pull-right card-associate btn btn-mini">add</a>';
 				$.getJSON('searchOfferCards.do', {searchKey:query}, function(data){
 					var cards = data.result;
 					$('#cardsContainer').html('');
-					it.card.appendCardsTo('#cardsContainer', cards);
+					it.card.appendCardsTo('#cardsContainer', cards, actionsHtml);
 				});
 			}
 			
@@ -92,6 +105,7 @@
 
 			$(function(){
 				it.card.plotAll();
+				it.card.discoverRefreshHandler();
 				it.card.addHandlers();
 				$('div.tabbable ul.nav li').removeClass('active');
 				$('#cardTab').addClass('active');

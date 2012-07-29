@@ -64,24 +64,24 @@ public class Offer extends PersistableEntity implements Cloneable{
 	private Vendor sourceVendor;
 
 	@Column(name=OfferModelConstants.COL_IS_ONLINE_OFFER)
-	private boolean isOnlineOffer;
+	private Boolean isOnlineOffer;
 
 	@Column(name=OfferModelConstants.COL_LOCATION)
 	private String location;
 
 	@Column(name=OfferModelConstants.COL_IS_PROTOTYPE)
-	private boolean isProtoType;
+	private Boolean isProtoType;
 
 	@Column(name=OfferModelConstants.COL_EXPIRY_DATE_UTC_IN_MILLIS)
 	private long expiryDateInMillis;
 
 
 	@Column(name=OfferModelConstants.COL_EMAIL_NOTIFICATION)
-	private boolean emailNotification;
+	private Boolean emailNotification;
 
 
 	@Column(name=OfferModelConstants.COL_FB_NOTIFICATION)
-	private boolean fbNotification;
+	private Boolean fbNotification;
 
 
 	@Transient
