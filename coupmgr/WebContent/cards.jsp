@@ -43,11 +43,14 @@
 			it.card.associateWithUser = function(e) {
 				var target = e.target,
 				cardId = it.card.getParentCardId(target),
-				card = {id:cardId};
+				card = {id:cardId},
+				cards = [];
+				cards.push(card);
 				$.post('addCardToWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
 						$('#cardsContainer > #card_'+cardId).remove();
+						it.card.plotMyCards(cards);
 					} else {
 						//Handle error case
 					}
