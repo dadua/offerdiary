@@ -46,6 +46,11 @@ public class OfferCard extends PersistableEntity{
 	@Column(name=OfferCardModelConstants.COL_DESCRIPTION)
 	private String description;
 
+	@Column(name=OfferCardModelConstants.COL_IMAGE_URL)
+	private String imageURL;
+
+
+
 
 	public Vendor getIssuingVendor() {
 		return issuingVendor;
@@ -106,6 +111,14 @@ public class OfferCard extends PersistableEntity{
 
 	public String getName() {
 		return name;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
+	public String getImageURL() {
+		return imageURL;
 	}
 
 

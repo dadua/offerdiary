@@ -1,42 +1,43 @@
 package com.itech.redwine.parser;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
+import com.google.gson.Gson;
+import com.itech.common.util.FileUtil;
 import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.CitiOfferParser;
-import com.itech.offer.fetchers.parser.CommonHttpParser;
 
 public class RedWineCardsParser {
 
 	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
-	private String redWinedomainName ="http://redanar.com";
+	private final String redWinedomainName ="http://redanar.com";
 	private String redWineBasePageUrl= redWinedomainName+"/mobile/badge/list?search=&page=";
-	private String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPageNumber";
-		
+	private final String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPageNumber";
+
 	private List<RedWineCard> redWineCards = new ArrayList<RedWineCard>();
-	
+
 	public void printGetRedWineOffers(){
 		parseRedWine();
 		writeRedWineToRecords();
 	}
-	
+
 	private void writeRedWineToRecords() {
-		// TODO Auto-generated method stub
-		
+		Gson gson = new Gson();
+		String json = gson.toJson(redWineCards);
+		FileUtil.appendDataToFile("c:\\data\\redanarcards.txt", json);
+
 	}
 
 	public void parseRedWine(){
 		for(int currentPageNumber =0; currentPageNumber <= 165; currentPageNumber++){
 			redWineCards.addAll(getRedWineCardsForPage(currentPageNumber));
-		}	
+		}
 	}
 
 	private List<RedWineCard> getRedWineCardsForPage(int currentPageNumber) {
@@ -98,12 +99,13 @@ public class RedWineCardsParser {
 	}
 
 	public static void main(String[] args){
-		new RedWineCardsParser().parseRedWine();
+		RedWineCardsParser redWineCardsParser = new RedWineCardsParser();
+		redWineCardsParser.printGetRedWineOffers();
 	}
-	
+
 	private int getCardNumberFromCarUrl(RedWineCard rWCard) {
-		 int length = rWCard.getCardUrl().length();
-		 return Integer.parseInt(rWCard.getCardUrl().substring(length-2, length));
+		int length = rWCard.getCardUrl().length();
+		return Integer.parseInt(rWCard.getCardUrl().substring(length-2, length));
 	}
 
 	private int getCountOfOffers(RedWineCard rWCard) {
@@ -128,5 +130,5 @@ public class RedWineCardsParser {
 	public void setBasePageUrl(String basePageUrl) {
 		this.redWineBasePageUrl = basePageUrl;
 	}
-	
+
 }

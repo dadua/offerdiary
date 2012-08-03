@@ -11,4 +11,6 @@ public class OfferCardModelConstants {
 	public static final String COL_PRIVILEGE="PRIVILIGE";
 	public static final String COL_DESCRIPTION="DESCRIPTION";
 	public static final String COL_NAME = "NAME";
+
+	public static final String COL_IMAGE_URL = "IMAGE_URL";
 }
