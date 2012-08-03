@@ -61,7 +61,7 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	@Override
 	public T getById(Long id) {
-		return (T) getSession().load(getEntityClass(), id);
+		return (T) getSession().get(getEntityClass(), id);
 	}
 
 	protected Session getSession() {
