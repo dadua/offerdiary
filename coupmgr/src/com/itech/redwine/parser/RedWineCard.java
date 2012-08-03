@@ -5,15 +5,16 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 public class RedWineCard {
-	
+
 	private String cardName;
 	private List<RedWineOffer> offers= new ArrayList<RedWineOffer>();
 	private int offersCount;
 	private String imageUrl;
 	private String cardUrl;
-	private Element cardElement;
+	transient private Element cardElement;
 	private String cardType;
-	
+
+	@Override
 	public String toString(){
 		StringBuilder toString = new StringBuilder();
 		toString.append("CardName : "+cardName+"; CardType : "+cardType +"; OfferCount : "+ offersCount+"; ImageURL : "+ imageUrl +"[ ");
@@ -21,9 +22,9 @@ public class RedWineCard {
 			toString.append(offer.toString());
 		}
 		toString.append(" ]");
-		return toString.toString();			
+		return toString.toString();
 	}
-	
+
 	public String getCardName() {
 		return cardName;
 	}
