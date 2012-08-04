@@ -29,6 +29,27 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 	}
 
 	@Override
+	public List<OfferCard> getOfferCardsFor(String searchString,
+			int maxResults, boolean excludeAssociatedCard) {
+		String hql = "select oc from " + getEntityClassName() + " oc " +
+		" where  oc.name like :cardName ";
+		if (excludeAssociatedCard) {
+			hql += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
+		}
+		hql += " order by name";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("cardName", "%" + searchString + "%");
+		if (excludeAssociatedCard) {
+			query.setParameter("user", getLoggedInUser());
+		}
+		if (maxResults != 0) {
+			query.setMaxResults(maxResults);
+		}
+		List<OfferCard> list = query.list();
+		return list;
+	}
+
+	@Override
 	public OfferCard getByName(String cardName) {
 		String hql = "from " + getEntityClassName() + " where  name=:cardName ";
 		Query query = getSession().createQuery(hql);
@@ -48,6 +69,8 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		List list = query.list();
 		return list;
 	}
+
+
 
 
 }

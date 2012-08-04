@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.itech.common.db.PersistableEntity;
 
@@ -48,6 +49,9 @@ public class OfferCard extends PersistableEntity{
 
 	@Column(name=OfferCardModelConstants.COL_IMAGE_URL)
 	private String imageURL;
+
+	@Transient
+	private boolean associatedWithCurrentUser;
 
 
 
@@ -119,6 +123,14 @@ public class OfferCard extends PersistableEntity{
 
 	public String getImageURL() {
 		return imageURL;
+	}
+
+	public void setAssociatedWithCurrentUser(boolean associatedWithCurrentUser) {
+		this.associatedWithCurrentUser = associatedWithCurrentUser;
+	}
+
+	public boolean isAssociatedWithCurrentUser() {
+		return associatedWithCurrentUser;
 	}
 
 

@@ -10,6 +10,9 @@ public interface OfferCardDAO extends CommonBaseDAO<OfferCard>{
 
 	List<OfferCard> getOfferCardsFor(String searchString, int maxResults);
 
+	List<OfferCard> getOfferCardsFor(String searchString, int maxResults,
+			boolean excludeAssociatedCard);
+
 	OfferCard getByName(String cardName);
 
 	List<OfferCard> getAllAssociatedCardsForUser(User user);
