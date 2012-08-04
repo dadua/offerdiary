@@ -1,6 +1,5 @@
 package com.itech.email.vo;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,7 +17,7 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 	private String SUBSCRIPTION_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="index.html";
 	private Document docHTML = null;
-	
+
 	public NewUserSubscriptionEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
 		this(messageContent, toEmailId);
 		setAttachments(fileAttachementList);
@@ -31,7 +30,7 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 	public NewUserSubscriptionEmail(){
 		super();
 	}
-	
+
 	@Override
 	public String getMailContent() {
 		return SUBSCRIPTION_EMAIL_HTML;
@@ -39,25 +38,21 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		try {
-			docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-		} catch (IOException e) {
-			logger.debug("NewUserSubscriptionEmail HTML could not be generated");
-			e.printStackTrace();
-		}
+		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
 		SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
 	}
 
 	@Override
 	public void setContentInMessageHTML(String message) {
-		if(null == message || message.isEmpty())
+		if(null == message || message.isEmpty()) {
 			message = DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE;
+		}
 		if(null != docHTML){
 			Element para = docHTML.select("#mail-message").first();
 			para.html("<singleline label=\"Title\">"+message+"</singleline>");
 			SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
 		}
-		
+
 	}
 
 	@Override
