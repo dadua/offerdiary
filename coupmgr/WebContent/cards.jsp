@@ -34,6 +34,7 @@
 					var ret = $.parseJSON(data);
 					if (ret.success === true) {
 						$('#myCardsContainer > #card_'+cardId).remove();
+						it.card.refreshAddableCards();
 					} else {
 						//Handle error case
 					}
@@ -51,18 +52,21 @@
 						var cards = [];
 						cards.push(ret.result);
 						it.card.plotMyCards(cards);
+						it.card.refreshAddableCards();
 					} else {
 						//Handle error case
 					}
 				});
 			}
 			
+			
+			it.card.refreshAddableCards = function(e) {
+				var query = $('#cardFullName').val();
+				it.card.plotAddableCards(query);
+			}
+			
 			it.card.discoverRefreshHandler = function() {
-				var refreshAddableCards = function(e) {
-					var query = $(this).val();
-					it.card.plotAddableCards(query);
-				}
-				$('#cardFullName').keyup(refreshAddableCards);
+				$('#cardFullName').keyup(it.card.refreshAddableCards);
 			}
 			
 			it.card.addHandlers = function () {
@@ -134,9 +138,10 @@
 				<div class="span2 " >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<a id="discoverCardBtn" class="btn btn-primary btn-large pull-right" >Discover cards</a>
 				<div class="span10" >
-					 <ul id="myCardsContainer" class="thumbnails">
+					<h3 class="bluishText">My Cards</h3>
+					<br/>
+					<ul id="myCardsContainer" class="thumbnails">
 					</ul>
 				</div>
 			</div>
@@ -144,14 +149,12 @@
 			<div class="row">
 				<div class="span10 offset2" >
 					<div class="row" >
-						<form class="pull-right" >
-							<label class="bluishText">Card type you own: </label>
-							<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
-						</form>
-						<h4 class="bluishText">Discover your Cards</h4>
+						<h3 class="bluishText">Discover your Cards</h3>
+						<br/>
 					</div>
 					
-					<div class="row">
+					<div class="row span10">
+						<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
 						<ul id="cardsContainer" class="thumbnails">
 						</ul>
 					</div>
