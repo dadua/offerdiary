@@ -38,7 +38,7 @@ public class OfferCardAction extends CommonAction{
 
 	public Response searchOfferCards(HttpServletRequest req, HttpServletResponse resp) {
 		String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
-		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(cardSearchString, MAX_RESULT_COUNT);
+		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(cardSearchString, MAX_RESULT_COUNT, true);
 		Result<List<OfferCard>> result = new Result<List<OfferCard>>(true, offerCards);
 		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
