@@ -9,7 +9,7 @@ div.navbar-inner-header{
 				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
 			}
 a.logo-background{
-	background-image:url(images/logo_new.png);
+	background-image:url(images/logo_diary.png);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	padding : 10px;
@@ -27,11 +27,11 @@ div.tile-div{
 	text-align:center;
 }
 </style>
-		<div class="navbar navbar-fixed-top" style="height: 10%;" >
+		<div class="navbar navbar-fixed-top" style="height: 12%;" >
       		<div class="navbar-inner navbar-inner-header height-100">
         		<div class="container height-100">
-	        		<ul class="nav height-100" style="width: 70%">
-						<li style="width: 40%; height: 85%;">
+	        		<ul class="nav height-100" style="width: 60%">
+						<li style="width: 40%; height: 100%; margin-left: 10%;">
 							<h1 class="mainHeading" style="width: 100%; height: 100%;"><a class="logo-background"  href="home.do" ></a></h1>
 						</li>
 						<li>

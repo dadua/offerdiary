@@ -34,6 +34,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/index.jsp");
 		bypassUrls.add("/loginSignUp.jsp");
 		bypassUrls.add("/commonHeader.jsp");
+		bypassUrls.add("/comingSoon.jsp");
 	}
 
 	@Override

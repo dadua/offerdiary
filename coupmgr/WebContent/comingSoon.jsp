@@ -13,62 +13,83 @@
 		<%@include file="commonHeader.jsp" %>
 	
 	</head>
-	<body >
-		<%@include file="navHeader.jsp" %>
+	<body onload="onLoadPutRandomTiles();" >
+		<%@include file="comingSoonHeader.jsp" %>
 		<div class="container">
 			<div class="row">
 				<div class="span2 offset2" >
 					<div class="hero-unit tile-div">
-						<img src="images/tile_1.png" >
+						<img id="tile_image_id_1" src="images/tile_1.png" >
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div" >
-						<img src="images/tile_2_cart.png">
+						<img id="tile_image_id_2" src="images/tile_2.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_gift_pack.png">
+						<img id="tile_image_id_3" src="images/tile_3.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_piggy_bank.png">
+						<img id="tile_image_id_4" src="images/tile_4.png">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2 offset2">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_arrow.png">
+						<img id="tile_image_id_5" src="images/tile_5.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_gift.png">
+						<img id="tile_image_id_6" src="images/tile_6.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
+						<img id="tile_image_id_7" src="images/tile_7.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
+						<img id="tile_image_id_8" src="images/tile_8.png">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2 offset2">
 					<div class="hero-unit tile-div">
+						<img id="tile_image_id_9" src="images/tile_9.png">
 					</div>
 				</div>
 				<div class="span4 ">
 					<div class="hero-unit tile-div">
+						<img  src="images/comingsoon_2.png">
+						<div class="control-group">
+							<div style="float:left">
+								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email : Sign up for closed Beta"></input>
+							</div>
+							<div>	
+								<div class="row">
+									<button id="newEmailSubscription" class="btn btn-info" href="#">Follow</button>
+								</div>
+								<div class="row">
+									<div id="onEmailSuccess" class="hide alert alert-success span4" >
+										<button class="close" >×</button>
+										Thanks for your interest! We'll keep you posted.
+									</div> 
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
+						<img id="tile_image_id_10" src="images/tile_10.png">
 					</div>
 				</div>
 			</div>
@@ -77,30 +98,10 @@
 					<img src="images/app_stores.png">
 				</div>
 				<div class="span4 ">
-					<img  src="images/launch.jpg">
-					<div class="control-group">
-						<div style="float:left">
-							<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
-						</div>
-						<div>	
-							<div class="row">
-								<button id="newEmailSubscription" class="btn btn-info" href="#">Go</button>
-							</div>
-							<div class="row">
-								<div id="onEmailSuccess" class="hide alert alert-success span4" >
-									<button class="close" >×</button>
-									Thanks for your interest! We'll keep you posted.
-								</div> 
-							</div>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
-			
-		<%@include file="footer.jsp" %>
-		
-			
 		<script type="text/javascript">
 			$(function(){
 				$('#newEmailSubscription').click(function(){
