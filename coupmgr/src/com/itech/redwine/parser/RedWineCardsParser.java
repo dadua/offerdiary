@@ -9,12 +9,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.google.gson.Gson;
-import com.itech.common.util.FileUtil;
+import com.itech.common.CommonFileUtilities;
 import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.CitiOfferParser;
 
 public class RedWineCardsParser {
 
+	private static final String REDANAR_CARDDATA_JSON_FILE_OUT = "c:\\data\\cards-minimal.json";
 	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
 	private final String redWinedomainName ="http://redanar.com";
 	private String redWineBasePageUrl= redWinedomainName+"/mobile/badge/list?search=&page=";
@@ -24,15 +25,21 @@ public class RedWineCardsParser {
 
 	public void printGetRedWineOffers(){
 		parseRedWine();
-		writeRedWineToRecords();
+		writeRedWineRecordsToFile();
 	}
 
-	private void writeRedWineToRecords() {
+	private void writeRedWineRecordsToFile() {
 		Gson gson = new Gson();
 		String json = gson.toJson(redWineCards);
-		FileUtil.appendDataToFile("c:\\data\\redanarcards.txt", json);
-
+		System.out.println(CommonFileUtilities.appendDataToFile(REDANAR_CARDDATA_JSON_FILE_OUT, json, true));
 	}
+
+	private List<RedWineCard> readRedWineRecordsFromFile() {
+		//CommonFileUtilities.readDataFromFile(REDANAR_CARDDATA_JSON_FILE);
+		return null;
+	}
+
+
 
 	public void parseRedWine(){
 		for(int currentPageNumber =0; currentPageNumber <= 165; currentPageNumber++){
@@ -52,8 +59,8 @@ public class RedWineCardsParser {
 			rWCard.setCardName(cardLinkElement.text());
 			rWCard.setCardUrl(cardLinkElement.attr("href"));
 			rWCard.setCardElement(cardElement);
-			setOtherCardDetails(rWCard);
-			getAllOffersForCurrentCard(rWCard);
+			//setOtherCardDetails(rWCard);
+			//getAllOffersForCurrentCard(rWCard);
 			System.out.println(rWCard);
 			redWineCards.add(rWCard);
 		}
@@ -101,6 +108,8 @@ public class RedWineCardsParser {
 	public static void main(String[] args){
 		RedWineCardsParser redWineCardsParser = new RedWineCardsParser();
 		redWineCardsParser.printGetRedWineOffers();
+		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
+		//System.out.println(readDataFromFile);
 	}
 
 	private int getCardNumberFromCarUrl(RedWineCard rWCard) {

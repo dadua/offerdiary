@@ -41,6 +41,12 @@ OfferCardManager {
 
 	@Override
 	public OfferCard saveOrUpdateOfferCard(OfferCard offerCard) {
+		if (offerCard.getId() != null) {
+			OfferCard existingCardInDb = getOfferCardDAO().getByName(offerCard.getName());
+			if (existingCardInDb == null) {
+				return null;
+			}
+		}
 		getOfferCardDAO().addOrUpdate(offerCard);
 		return offerCard;
 	}
