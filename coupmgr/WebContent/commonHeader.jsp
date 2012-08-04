@@ -24,6 +24,34 @@
 				$('#loginToFb').click({onServerUp: onServerUpGotoWallet}, it.fb.checkAndLogin);
 			});
 		</script>
+		<script type="text/javascript">
+			function onLoadPutRandomTiles(){
+				changeOverImages(1);	
+			}
+			function changeOverImages(imageCounter){
+				 setTimeout(function () {    
+					 for(var j =1; j <= 10 ; j++){
+							var imgId="tile_image_id_"+j;
+							var imageSrc="images/tile_"+imageCounter+".png";
+							$('img#'+imgId).attr("src", imageSrc);
+						}if(imageCounter == 10){
+							putRandomImages();
+						}        
+				    	imageCounter++;                    
+				     	if (imageCounter < 11) {            
+				    	  changeOverImages(imageCounter);              
+				      	}                        
+				   }, 200);
+			}
+			function putRandomImages(){
+				for(var i =1 ; i <= 10; i++ ){
+					var randomTileNumber =  Math.floor((Math.random()*10)+1);
+					var imgId="tile_image_id_"+i;
+					var imageSrc="images/tile_"+randomTileNumber+".png";
+					$('img#'+imgId).attr("src", imageSrc);
+				}
+			}
+		</script>
 		<style type="text/css">
 			.mainHeading {
 				color: #999;
