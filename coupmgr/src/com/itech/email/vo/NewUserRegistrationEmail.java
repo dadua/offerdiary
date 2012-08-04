@@ -1,6 +1,5 @@
 package com.itech.email.vo;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,7 +8,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
-import com.itech.coupon.model.User;
 
 public class NewUserRegistrationEmail extends EmailMessage{
 
@@ -32,7 +30,7 @@ public class NewUserRegistrationEmail extends EmailMessage{
 	public NewUserRegistrationEmail(){
 		super();
 	}
-	
+
 	@Override
 	public String getMailContent() {
 		return registrationEmailHTML;
@@ -40,19 +38,15 @@ public class NewUserRegistrationEmail extends EmailMessage{
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		try {
-			docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-		} catch (IOException e) {
-			logger.debug("NewUserRegistrationEmail HTML could not be generated");
-			e.printStackTrace();
-		}
+		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
 		registrationEmailHTML = docHTML.toString();
 	}
 
 	@Override
 	public void setContentInMessageHTML(String message) {
-		if(null == message || message.isEmpty())
+		if(null == message || message.isEmpty()) {
 			message = DEFAULT_NEW_USER_ADDED_REGISTRATION_MESSAGE;
+		}
 		if(null != docHTML){
 			Element para = docHTML.select("#mail-message").first();
 			para.html("<singleline label=\"Title\">"+message+"</singleline>");

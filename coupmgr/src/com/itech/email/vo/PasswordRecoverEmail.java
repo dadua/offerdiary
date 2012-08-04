@@ -1,6 +1,5 @@
 package com.itech.email.vo;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -38,12 +37,8 @@ public class PasswordRecoverEmail extends EmailMessage{
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		try {
-			docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-		} catch (IOException e) {
-			logger.debug("PasswordRecoverEmail HTML could not be generated");
-			e.printStackTrace();
-		}
+		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
+
 		PASSWORD_RECOVERY_EMAIL_HTML = docHTML.toString();
 	}
 

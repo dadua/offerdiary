@@ -1,6 +1,5 @@
 package com.itech.email.vo;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -37,12 +36,8 @@ public class OffersSummaryNotificationEmail extends EmailMessage{
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		try {
-			docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-		} catch (IOException e) {
-			logger.debug("OffersSummaryNotificationEmail HTML could not be generated");
-			e.printStackTrace();
-		}
+		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
+
 		OFFER_SUMMARY_EMAIL_HTML = docHTML.toString();
 	}
 
