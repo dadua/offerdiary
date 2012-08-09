@@ -26,8 +26,8 @@
     <bean id="itech.CommonBaseDAO"  class="com.itech.common.db.CommonBaseDAOImpl" abstract="true">
 		<property name="connectionFactory" ref="itech.ConnectionFactory" />
 	</bean>
-	
     <bean id="itech.CommonBaseManager"  class="com.itech.common.services.CommonBaseManager" abstract="true">
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
 		<property name="securityManager" ref="itech.SecurityManager" />
 	</bean>	
 </beans>
