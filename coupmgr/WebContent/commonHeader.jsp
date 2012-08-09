@@ -1,7 +1,7 @@
 		<%@include file="jqueryAllInclude.html" %>
 		<%@include file="bootstrapHeadInclude.html" %>
 		<%@include file="fbLoginAboveHeadJs.jsp" %>
-		<link rel="icon" type="image/png" href="favicon.png" />
+		<link rel="shortcut icon" href="favicon.ico" />
 		<script type="text/javascript">
 			var it = it || {};
 			$(function() {
