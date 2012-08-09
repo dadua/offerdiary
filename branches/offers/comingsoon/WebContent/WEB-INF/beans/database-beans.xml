@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+ <bean id="itech.DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost/couponmgr"/>
+		<property name="username" value="couponmgr"/>
+		<property name="password" value="couponmgr"/>
+ </bean>
+		 
+  <bean id="itech.SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="itech.DataSource" />
+		<property name="annotatedClasses">
+		<list>
+			<value>com.itech.coupon.model.User</value>
+			<value>com.itech.coupon.model.InterestedUserSubscription</value>
+			<value>com.itech.alert.model.AlertConfig</value>
+			<value>com.itech.alert.model.Alert</value>
+			<value>com.itech.offer.model.OfferCard</value>
+			<value>com.itech.offer.model.Offer</value>
+			<value>com.itech.offer.model.Vendor</value>
+			<value>com.itech.offer.model.OfferOfferCardAssoc</value>
+			<value>com.itech.offer.model.OfferCardUserAssoc</value>
+			<value>com.itech.offer.model.OfferUserAssoc</value>
+		</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+        </property>
+	</bean>  
+
+	<bean id="itech.HibernateSessionFactory" class="com.itech.common.db.hibernate.HibernateSessionFactoryImpl">
+		<constructor-arg index="0" ref="itech.SessionFactory"/>
+	</bean>
+	
+	<bean id="itech.hibernateCommonDAO" class="com.itech.common.db.hibernate.HibernateCommonBaseDAO" abstract="true">
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="securityManager" ref="itech.SecurityManager" />
+	</bean>	
+	
+	<bean id="itech.hibernateCommonUtilDAO" class="com.itech.common.db.hibernate.HibernateCommonUtilDAO" parent="itech.hibernateCommonDAO" >
+
+	</bean>	
+	
+	
+	
+    
+</beans>
