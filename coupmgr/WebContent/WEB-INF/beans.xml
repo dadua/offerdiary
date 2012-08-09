@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
      	   
-   	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" scope="singleton">
+   	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" parent="itech.CommonBaseManager" scope="singleton">
    		<property name="userDAO" ref="itech.UserDAO"/>
    		<property name="intUserSubscriptionDAO" ref="itech.InterestedUserSubscriptionDAO"/>
    		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
