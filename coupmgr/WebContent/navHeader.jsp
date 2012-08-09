@@ -9,7 +9,7 @@ div.navbar-inner-header{
 				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
 			}
 a.logo-background{
-	background-image:url(images/logo_diary.png);
+	background-image:url(images/logo_tag.png);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	padding : 10px;
