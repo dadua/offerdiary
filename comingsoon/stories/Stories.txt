@@ -1,0 +1,108 @@
+-------------------------------------------------------------------
+User Story: Home Page user story 
+
+As a new user 
+When I open the home page
+I should be able to know what Coupon Wallet is from the home page
+
+Description : Home page must contain
+a) Header (Name | tagline) 
+b) Video (How it works video)
+c) facebook connect
+d) What is it ? (bulleted points)
+d) footer (about| contact | feedback) 
+
+
+Task :
+
+1) Creatring the Basic Layout
+2) Creating a video and a UI for it 
+3) Placing the components (Video | bulleted Points)
+4) Facebook Connect link + UI
+
+---------------------------------------------------------------------
+
+User Story: User connects to Coupon Wallet
+
+As a new user
+I should be able to connect with coupon wallet 
+
+Description : As a user I should be able to connect to coupon  wallet
+with all my user information persisted to my account through facebook
+such as : Name, profile image, location , current working information
+----------------------------------------------------------------------
+
+User Story : User acesses his Account Page/Wallet
+
+As a new user 
+Description: I should be able to see all my existing coupons 
+
+
+Task
+
+1) Basic layout/Theme
+2) Pagination for coupon view  frontend
+3) Pagination for coupon view backend
+
+---------------------------------------------------------------------
+User Story : 
+I shoud be able perform a search on coupons
+
+
+Task:
+
+1) Contains Search 
+---------------------------------------------------------------------
+As a user
+I should be able to add coupons to my wallet
+Description: A facility to add coupons with its details to
+my wallet
+
+----------------------------------------------------------------------
+Story: View/Edit/Delete Coupon Story
+As a user 
+I should be able to edit/delete my existing coupons
+
+
+Task:
+
+1) Add a coupon overlay
+2) View a couopon
+3) Add link layout on the page
+4) Facility to Delete coupon
+
+----------------------------------------------------------------------
+Story: Sharing my coupon 
+I should be able to share my coupon through email
+
+1) Email Infrastructure
+2) Email infra through iMap/SMTP 
+3) GUI for Email
+----------------------------------------------------------------------
+
+
+Tech Story
+
+1) Have Spring/Hibernate Infrastructure
+2) Test Strategy (DBUnit Infrastructure) 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
