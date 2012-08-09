@@ -109,10 +109,10 @@
 					if (email === '' || email.indexOf('@')===-1) {
 						return;
 					}
+					$('#onEmailSuccess').show('slow');
 					$.post('hearMore.do', {'email': email}, function(data){
 						var result = JSON.parse(data);
 						if (result.success == true) {
-							$('#onEmailSuccess').show();
 						}
 					});
 				});
