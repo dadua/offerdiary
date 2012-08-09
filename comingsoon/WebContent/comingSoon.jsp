@@ -19,51 +19,51 @@
 			<div class="row">
 				<div class="span2 offset2" >
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_1" src="images/tile_1.png" >
+						<img id="tile_image_id_1" src="images/icons/tile_1.png" >
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div" >
-						<img id="tile_image_id_2" src="images/tile_2.png">
+						<img id="tile_image_id_2" src="images/icons/tile_2.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_3" src="images/tile_3.png">
+						<img id="tile_image_id_3" src="images/icons/tile_3.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_4" src="images/tile_4.png">
+						<img id="tile_image_id_4" src="images/icons/tile_4.png">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2 offset2">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_5" src="images/tile_5.png">
+						<img id="tile_image_id_5" src="images/icons/tile_5.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_6" src="images/tile_6.png">
+						<img id="tile_image_id_6" src="images/icons/tile_6.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_7" src="images/tile_7.png">
+						<img id="tile_image_id_7" src="images/icons/tile_7.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_8" src="images/tile_8.png">
+						<img id="tile_image_id_8" src="images/icons/tile_8.png">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2 offset2">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_9" src="images/tile_9.png">
+						<img id="tile_image_id_9" src="images/icons/tile_9.png">
 					</div>
 				</div>
 				<div class="span4 ">
@@ -89,7 +89,7 @@
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_10" src="images/tile_10.png">
+						<img id="tile_image_id_10" src="images/icons/tile_10.png">
 					</div>
 				</div>
 			</div>

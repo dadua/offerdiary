@@ -33,7 +33,8 @@
 				 setTimeout(function () {    
 					 for(var j =1; j <= 10 ; j++){
 							var imgId="tile_image_id_"+j;
-							var imageSrc="images/tile_"+imageCounter+".png";
+							var randomTileNumber =  Math.floor((Math.random()*10)+1) + 10*(Math.floor(Math.random()/0.5));
+							var imageSrc="images/icons/tile_"+randomTileNumber+".png";
 							$('img#'+imgId).attr("src", imageSrc);
 						}if(imageCounter == 10){
 							putRandomImages();
@@ -42,13 +43,13 @@
 				     	if (imageCounter < 11) {            
 				    	  changeOverImages(imageCounter);              
 				      	}                        
-				   }, 200);
+				   }, 180);
 			}
 			function putRandomImages(){
 				for(var i =1 ; i <= 10; i++ ){
-					var randomTileNumber =  Math.floor((Math.random()*10)+1);
+					var randomTileNumber =  Math.floor((Math.random()*10)+1) + 10*(Math.floor(Math.random()/0.5));
 					var imgId="tile_image_id_"+i;
-					var imageSrc="images/tile_"+randomTileNumber+".png";
+					var imageSrc="images/icons/tile_"+randomTileNumber+".png";
 					$('img#'+imgId).attr("src", imageSrc);
 				}
 			}

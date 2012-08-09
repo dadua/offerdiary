@@ -19,34 +19,34 @@
 			<div class="row">
 				<div class="span2 offset2" >
 					<div class="hero-unit tile-div">
-						<img src="images/tile_1.png" >
+						<img src="images/icons/tile_1.png" >
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div" >
-						<img src="images/tile_2_cart.png">
+						<img src="images/icons/tile_2_cart.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_gift_pack.png">
+						<img src="images/icons/tile_gift_pack.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_piggy_bank.png">
+						<img src="images/icons/tile_piggy_bank.png">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2 offset2">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_arrow.png">
+						<img src="images/icons/tile_arrow.png">
 					</div>
 				</div>
 				<div class="span2 ">
 					<div class="hero-unit tile-div">
-						<img src="images/tile_gift.png">
+						<img src="images/icons/tile_gift.png">
 					</div>
 				</div>
 				<div class="span2 ">
