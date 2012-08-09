@@ -1,0 +1,208 @@
+body {
+	background: repeat scroll left top #F1F0E9;
+	color: #3F3F3F;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Sans-serif;
+	font-size: 87.5%;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+#page {
+	background: none repeat scroll 0 0 white;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	margin: 0 auto;
+	width: 1052px;
+	height: 100%;
+}
+
+#albumContainer  {
+	width : 90%;
+	height : 600px;
+    margin : 10px 10px 10px 50px;
+    padding:4px;
+    overflow-y:scroll;
+    white-space: nowrap;
+}
+.album {
+	background: none repeat scroll 0 0 #F1F0E9;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px;
+	padding: 5px;
+	width: 200px;
+	height: 200px;
+    float : left;
+}
+
+.albumInProgress {
+	background: none repeat scroll 0 0 #F2F2F2;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 10px 100px;
+	width: 70%;
+	height: 100%;
+}
+
+.albumCheckbox {
+	font-size: 16px;
+	text-align: top;
+}
+
+.albumThumbnail, #page .album img, .albumInProgress img {
+	width: 100px;
+	height: 100px;
+	padding: 3px;
+	margin: 15px;
+	border: 1px solid;
+	align: right;
+	
+}
+
+.inprogress {
+	width: 48px;
+	height: 48px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+#actionPanel, .actionPanel {
+	background: none repeat scroll 0 0 #F1F0E9;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 10px 60px;
+	padding:10px;
+	width: 80%;
+	height: 100px;
+	color:#4B088A;
+	font-size:15px;
+	
+}
+
+#actionPanel input{
+	align:right;
+	font-size: 30px;
+	margin-top: 15px;
+}
+
+.actionPanel input{
+	align:right;
+	font-size: 30px;
+	margin-top: 15px;
+}
+
+.cancelActionPanel {
+	background: none repeat scroll 0 0 #F1F0E9;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 30px 60px;
+	padding:10px;
+	padding-bottom:20px;
+	width: 40%;
+	height: 50px;
+	color:#4B088A;
+	font-size:15px;
+	
+}
+
+#exportStatus {
+	background: none repeat scroll 0 0 ;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 10px 60px;
+	padding:10px;
+	width: 80%;
+	color:#610B0B;
+	font-size:15px;
+		
+}
+
+.likePanel {
+	width: 500px;
+	height: 170px;
+	position:absolute;
+	top:0px;
+	right:70px;
+}
+
+.likePanel p {
+	font-size: 11px;	
+}
+
+
+
+#logoHeaderImage1 {
+  margin: 15px 0px 0px 15px;
+  height:74px;
+  width:285px;
+}
+
+#logoHeaderImage {
+  margin: 15px 0px 0px 15px;
+  height:100px;
+  width:385px;
+}
+
+
+#workflow {	
+	background: none repeat scroll 0 0 #F1F0E9;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 10px 60px;
+	padding:10px;
+	width: 80%;
+	color:#4B088A;
+	font-size:15px;
+}
+
+#feedback {
+	 margin: 0px 0px 0px 200px;
+}
+
+#adBottom {
+	background: none repeat scroll 0 0 white;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	margin: 20px auto;
+	width: 1052px;
+	height: 150px;	
+}
+
+#donate {
+	position: fixed;
+	right: 0px;
+	top: 300px;
+}
+	
+#message {
+	background: none repeat scroll 0 0 ;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;
+	-moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3), 0 2px 20px
+		rgba(0, 0, 0, 0.094) inset;		
+	margin: 10px 10px 10px 60px;
+	padding:10px;
+	width: 80%;
+	color:#610B0B;
+	font-size:50px;	
+}
