@@ -7,7 +7,7 @@ div.navbar-inner-header{
 				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
 			}
 a.logo-background{
-	background-image:url(images/logo_diary.png);
+	background-image:url(images/logo_tag.png);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 	padding : 10px;
@@ -26,6 +26,17 @@ div.tile-div{
 	height: 100px;
 	padding: 10px;
 	text-align:center;
+}
+div.div-small-message{
+	height: 10px;
+	font-size: 10px;
+}
+button.close-small{
+	font-size: 10px;
+	line-height: 10px;
+}
+img.coming-soon-small{
+	height: 40%;
 }
 </style>
 		<div class="navbar navbar-fixed-top" style="height: 12%;" >
