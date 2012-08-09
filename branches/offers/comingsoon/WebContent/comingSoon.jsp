@@ -68,18 +68,18 @@
 				</div>
 				<div class="span4 ">
 					<div class="hero-unit tile-div">
-						<img  src="images/comingsoon_2.png">
+						<img  class="coming-soon-small" src="images/comingsoon_2.png">
 						<div class="control-group">
 							<div style="float:left">
-								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email : Sign up for closed Beta"></input>
+								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email : Sign up for exculsive closed Beta"></input>
 							</div>
 							<div>	
 								<div class="row">
 									<button id="newEmailSubscription" class="btn btn-info" href="#">Follow</button>
 								</div>
 								<div class="row">
-									<div id="onEmailSuccess" class="hide alert alert-success span4" >
-										<button class="close" >×</button>
+									<div id="onEmailSuccess" class="hide alert alert-success span3 div-small-message" >
+										<button class="close close-small" >×</button>
 										Thanks for your interest! We'll keep you posted.
 									</div> 
 								</div>
