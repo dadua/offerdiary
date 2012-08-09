@@ -30,7 +30,6 @@ public class CommonFileUtilities {
 				read =  br.readLine();
 				asString = asString + read;
 			}
-			System.out.println(read);
 			return asString;
 		}catch (Exception e) {
 			throw new RuntimeException("error inreading data from file", e);

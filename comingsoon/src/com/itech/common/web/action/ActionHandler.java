@@ -34,19 +34,15 @@ public class ActionHandler {
 		try {
 			User user = (User) request.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 			getSecurityContextHolder().setContext(new SecurityContext(user));
-			getConnectionUtil().createNewConnection();
 			getHibernateSessionFactory().openNewSession();
 			ActionMapping actionMapping = ActionMappings.getAction(actionName);
 			Object actionBean = actionMapping.getBeanClass().newInstance();
-
 			Method executeMethod = actionMapping.getBeanClass().getMethod(actionMapping.getMethodName(),
 					HttpServletRequest.class, HttpServletResponse.class );
 			Response responseAction = (Response) executeMethod.invoke(actionBean, request, response);
-			getConnectionUtil().commitCurrentConnection();
 			getHibernateSessionFactory().getCurrentSession().flush();
 			return responseAction;
 		} finally {
-			getConnectionUtil().releaseCurrentConnection();
 			getHibernateSessionFactory().closeCurrentSession();
 		}
 	}

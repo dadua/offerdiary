@@ -15,7 +15,7 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDo Subscription !";
 	private static final String DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE="Hear More about OfferDo pretty shortly ! ";
 	private String SUBSCRIPTION_EMAIL_HTML;
-	private static final String EMAIL_CONTENT_FILE ="index.html";
+	private static final String EMAIL_CONTENT_FILE ="resources\\index.html";
 	private Document docHTML = null;
 
 	public NewUserSubscriptionEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
