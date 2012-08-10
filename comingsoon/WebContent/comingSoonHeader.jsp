@@ -2,9 +2,12 @@
 <%@page import="com.itech.coupon.model.User"%>
 <style>
 div.navbar-inner-header{
-				background-color: #A4A2A2;
+				background-color: #EEEEEE;
 				background-image: -webkit-linear-gradient(right, #333, #FFFFFF);
 				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
+				background-image: linear-gradient(right , #333, #FFFFFF);
+				background-image: -o-linear-gradient(right , #333, #FFFFFF);
+				background-image: -ms-linear-gradient(right , #333, #FFFFFF);
 			}
 a.logo-background{
 	background-image:url(images/logo_tag.png);
@@ -35,7 +38,7 @@ div.div-small-message{
 	height: 10px;
 	font-size: 10px;
 }
-button.close-small{
+#email_close{
 	font-size: 10px;
 	line-height: 10px;
 }

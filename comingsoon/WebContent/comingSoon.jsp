@@ -78,7 +78,7 @@
 								</div>
 								<div class="row">
 									<div id="onEmailSuccess" class="hide alert alert-success span3 div-small-message" >
-										<button class="close close-small" >×</button>
+										<button id="email_close" class="close close-small" >×</button>
 										Thanks for your interest! We'll keep you posted.
 									</div> 
 								</div>
@@ -100,15 +100,15 @@
 					<div class="tile-des-div ">
 					
 						<strong>OfferDiary</strong> is a one stop solution for:
-						<ul class="listNoStyle">
+						<ul >
 							<li>
 								<span>
-							 	✔ Managing all your offers and loyalty credits effectively!
+							 	 Managing all your offers and loyalty credits effectively!
 							 	</span>
 							</li>
 							<li>
 								<span>
-							 	✔ Tracking and sharing your offers!
+							 	 Tracking and sharing your offers!
 							 	</span>
 							</li>
 						</ul>
