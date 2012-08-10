@@ -20,7 +20,7 @@ public abstract class EmailMessage {
 		generateEmailHTMLTemplate();
 		setContentInMessageHTML(messageContent);
 		setToAddress(toEmailId);
-		setSenderAddress("test.coupoxo@gmail.com");
+		setSenderAddress("support@offerdiary.com");
 		setSubject();
 	}
 
