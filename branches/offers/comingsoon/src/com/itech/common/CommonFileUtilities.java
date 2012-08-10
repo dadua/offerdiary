@@ -24,13 +24,15 @@ public class CommonFileUtilities {
 			InputStream in = CommonFileUtilities.class.getClassLoader().getResourceAsStream(resourceFilename);
 			InputStreamReader is = new InputStreamReader(in);
 			BufferedReader br = new BufferedReader(is);
-			String read = br.readLine();
-			String asString = read;
-			while(read != null) {
-				read =  br.readLine();
-				asString = asString + read;
+			StringBuilder asString = new StringBuilder("");
+			while(true) {
+				String read =  br.readLine();
+				if (read ==null) {
+					break;
+				}
+				asString.append(read);
 			}
-			return asString;
+			return asString.toString();
 		}catch (Exception e) {
 			throw new RuntimeException("error inreading data from file", e);
 		}
