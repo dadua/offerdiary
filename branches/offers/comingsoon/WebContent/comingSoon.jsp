@@ -68,7 +68,7 @@
 				<div class="span4 ">
 					<div class="hero-unit tile-div">
 						<img  class="coming-soon-small" src="images/comingsoon_2.png">
-						<div class="control-group">
+						<div id="emailFormHolder" class="control-group">
 							<div style="float:left">
 								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email : Sign up for exculsive closed Beta"></input>
 							</div>
@@ -122,7 +122,8 @@
 				
 				var sendEmail = function(){
 					var email = $('#email').val();
-					if (email === '' || email.indexOf('@')===-1) {
+					if (email === '' || email.indexOf('@')===-1 || email.indexOf('.')===-1) {
+						$('#emailFormHolder').addClass('error');
 						return;
 					}
 					$('#onEmailSuccess').show('slow');
@@ -133,6 +134,7 @@
 					});
 				};
 				$('#email').keypress(function(e) {
+					$('#emailFormHolder').removeClass('error');
 					var code = e.keyCode ? e.keyCode : e.which;
 					if(code.toString() === '13') {
 						sendEmail();
