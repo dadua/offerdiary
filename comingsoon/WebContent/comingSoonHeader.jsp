@@ -59,9 +59,19 @@ img.coming-soon-small{
 						<li style="width: 40%; height: 100%; margin-left: 10%;">
 							<h1 class="mainHeading" style="width: 100%; height: 100%;"><a class="logo-background"  href="#" ></a></h1>
 						</li>
-						<li>
-						</li>
+						
+						
+						
 					</ul>
+					<div style="margin-top:20px;">
+						<iframe 
+						src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FOffer-Diary%2F130234047120531&amp;send=false&amp;layout=standard&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198495040202063" 
+						scrolling="no" frameborder="0" 
+						style="border:none; overflow:hidden; 
+						width:450px; height:55px;" 
+						allowTransparency="true">
+						</iframe>
+					</div>
         		</div>
       		</div>
  		</div>
