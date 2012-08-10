@@ -27,6 +27,10 @@ div.tile-div{
 	padding: 10px;
 	text-align:center;
 }
+div.tile-des-div{
+
+	
+}
 div.div-small-message{
 	height: 10px;
 	font-size: 10px;
@@ -38,13 +42,19 @@ button.close-small{
 img.coming-soon-small{
 	height: 40%;
 }
+.bluishText {
+	color: #0088CC;
+}
+.listNoStyle {
+	list-style: none;
+}
 </style>
 		<div class="navbar navbar-fixed-top" style="height: 12%;" >
       		<div class="navbar-inner navbar-inner-header height-100">
         		<div class="container height-100">
 	        		<ul class="nav height-100" style="width: 60%">
 						<li style="width: 40%; height: 100%; margin-left: 10%;">
-							<h1 class="mainHeading" style="width: 100%; height: 100%;"><a class="logo-background"  href="home.do" ></a></h1>
+							<h1 class="mainHeading" style="width: 100%; height: 100%;"><a class="logo-background"  href="#" ></a></h1>
 						</li>
 						<li>
 						</li>

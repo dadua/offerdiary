@@ -12,10 +12,10 @@ import com.itech.common.CommonFileUtilities;
 public class NewUserSubscriptionEmail extends EmailMessage{
 
 	private final Logger logger = Logger.getLogger(NewUserRegistrationEmail.class);
-	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDo Subscription !";
+	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDiary Subscription !";
 	private static final String DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE="Hear More about OfferDo pretty shortly ! ";
 	private String SUBSCRIPTION_EMAIL_HTML;
-	private static final String EMAIL_CONTENT_FILE ="resources\\index.html";
+	private static final String EMAIL_CONTENT_FILE ="resources\\new_user_email.html";
 	private Document docHTML = null;
 
 	public NewUserSubscriptionEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
@@ -44,14 +44,14 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 
 	@Override
 	public void setContentInMessageHTML(String message) {
-		if(null == message || message.isEmpty()) {
-			message = DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE;
-		}
-		if(null != docHTML){
-			Element para = docHTML.select("#mail-message").first();
-			para.html("<singleline label=\"Title\">"+message+"</singleline>");
-			SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
-		}
+//		if(null == message || message.isEmpty()) {
+//			message = DEFAULT_NEW_USER_ADDED_SUBSCRIPTION_MESSAGE;
+//		}
+//		if(null != docHTML){
+//			Element para = docHTML.select("#mail-message").first();
+//			para.html("<singleline label=\"Title\">"+message+"</singleline>");
+//			SUBSCRIPTION_EMAIL_HTML = docHTML.toString();
+//		}
 
 	}
 
