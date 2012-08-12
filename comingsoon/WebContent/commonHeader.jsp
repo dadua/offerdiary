@@ -24,8 +24,6 @@
 			 
 				$('#loginToFb').click({onServerUp: onServerUpGotoWallet}, it.fb.checkAndLogin);
 			});
-		</script>
-		<script type="text/javascript">
 			function onLoadPutRandomTiles(){
 				changeOverImages(1);	
 			}

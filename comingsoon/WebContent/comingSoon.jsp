@@ -18,7 +18,7 @@
 			<div class="row">
 				<div class="span2 offset2" >
 					<div class="hero-unit tile-div">
-						<img id="tile_image_id_1" title="xyz" src="images/icons/tile_1.png" >
+						<img id="tile_image_id_1" src="images/icons/tile_1.png" >
 					</div>
 				</div>
 				<div class="span2 ">
@@ -43,61 +43,9 @@
 						<img id="tile_image_id_5" src="images/icons/tile_5.png">
 					</div>
 				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img id="tile_image_id_6" src="images/icons/tile_6.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img id="tile_image_id_7" src="images/icons/tile_7.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img id="tile_image_id_8" src="images/icons/tile_8.png">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2 offset2">
-					<div class="hero-unit tile-div">
-						<img id="tile_image_id_9" src="images/icons/tile_9.png">
-					</div>
-				</div>
+				
 				<div class="span4 ">
-					<div class="hero-unit tile-div">
-						<img  class="coming-soon-small" src="images/comingsoon_2.png">
-						<div id="emailFormHolder" class="control-group">
-							<div style="float:left">
-								<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email : Sign up for exculsive closed Beta"></input>
-							</div>
-							<div>	
-								<div class="row">
-									<button id="newEmailSubscription" class="btn btn-info" href="#">Follow</button>
-								</div>
-								<div class="row">
-									<div id="onEmailSuccess" class="hide alert alert-success span3 div-small-message" >
-										<button id="email_close" class="close close-small" >×</button>
-										Thanks for your interest! We'll keep you posted.
-									</div> 
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img id="tile_image_id_10" src="images/icons/tile_10.png">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span3 offset2">
-					<img src="images/app_stores.png">
-				</div>
-				<div class="span4 alert alert-info">
-					<div class="tile-des-div ">
+					<div class="hero-unit bluishText tile-des-div">
 					
 						<strong>OfferDiary</strong> is a one stop solution for:
 						<ul >
@@ -115,6 +63,60 @@
 						<em>Very soon you would never have to deal with unused offers and expired credits.</em>
 					</div>
 				</div>
+				<div class="span2">
+					<div class="hero-unit tile-div">
+						<img id="tile_image_id_6" src="images/icons/tile_6.png">
+					</div>
+				</div>
+		
+			</div>
+			<div class="row">
+				<div class="span2 offset2">
+					<div class="hero-unit tile-div">
+						<img id="tile_image_id_7" src="images/icons/tile_7.png">
+					</div>
+				</div>
+				
+				<div class="span4 ">
+					<div class="hero-unit tile-div">
+						<img  class="coming-soon-small" src="images/comingsoon_2.png">
+						<div id="emailFormHolder" class="control-group">
+							<div style="float:left" class="input-prepend">
+								<span class="add-on emailIcon"><i class="icon-envelope"></i></span>
+								<input id="email" type="text" class="input-large input-center" name="email" placeholder="Email : Sign up for exculsive closed Beta"></input>
+							</div>
+							<div>	
+								<div class="row">
+									<button id="newEmailSubscription" class="btn btn-info" href="#">Follow</button>
+								</div>
+								<div class="row">
+									<div id="onEmailSuccess" class="hide alert alert-success span3 div-small-message" >
+										<button id="email_close" class="close close-small" >×</button>
+										Thanks for your interest! We'll keep you posted.
+									</div> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="span2 ">
+					<div class="hero-unit tile-div">
+						<img id="tile_image_id_8" src="images/icons/tile_10.png">
+					</div>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="thumbnail span3 offset3">
+					<img src="images/app_stores.png">
+				</div>
+				
+				<div class="thumbnail span2 feedbackFb" >
+					<div class="someMargin">
+					Drop in your thoughts at: <a href="https://www.facebook.com/offerdiary" target="_blank">facebook.com/offerdiary</a>
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<script type="text/javascript">
