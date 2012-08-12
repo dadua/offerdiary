@@ -1,13 +1,13 @@
-<%@page import="com.itech.coupon.model.LoginType"%>
-<%@page import="com.itech.coupon.model.User"%>
 <style>
 div.navbar-inner-header{
 				background-color: #EEEEEE;
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#333333', GradientType=1);
+				background-image: -moz-linear-gradient(right, #333333, #FFFFFF);
 				background-image: -webkit-linear-gradient(right, #333, #FFFFFF);
-				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
 				background-image: linear-gradient(right , #333, #FFFFFF);
 				background-image: -o-linear-gradient(right , #333, #FFFFFF);
 				background-image: -ms-linear-gradient(right , #333, #FFFFFF);
+				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#333333', GradientType=1)";
 			}
 a.logo-background{
 	background-image:url(images/logo_tag.png);
@@ -32,6 +32,8 @@ div.tile-div{
 }
 div.tile-des-div{
 
+	padding: 10px;
+
 	
 }
 div.div-small-message{
@@ -51,6 +53,18 @@ img.coming-soon-small{
 .listNoStyle {
 	list-style: none;
 }
+
+.feedbackFb {
+	padding: 20px;
+}
+
+.someMargin {
+}
+
+.emailIcon {
+	background-color: white;
+}
+
 </style>
 		<div class="navbar navbar-fixed-top" style="height: 12%;" >
       		<div class="navbar-inner navbar-inner-header height-100">
@@ -65,7 +79,7 @@ img.coming-soon-small{
 					</ul>
 					<div style="margin-top:20px;">
 						<iframe 
-						src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FOffer-Diary%2F130234047120531&amp;send=false&amp;layout=standard&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198495040202063" 
+						src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fofferdiary&amp;send=false&amp;layout=standard&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198495040202063" 
 						scrolling="no" frameborder="0" 
 						style="border:none; overflow:hidden; 
 						width:450px; height:55px;" 
