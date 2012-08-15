@@ -47,20 +47,11 @@
 				<div class="span4 ">
 					<div class="hero-unit bluishText tile-des-div">
 					
-						<strong>OfferDiary</strong> is a one stop solution for:
-						<ul >
-							<li>
-								<span>
-							 	 Managing all your offers and loyalty credits effectively!
-							 	</span>
-							</li>
-							<li>
-								<span>
-							 	 Tracking and sharing your offers!
-							 	</span>
-							</li>
-						</ul>
-						<em>Very soon you would never have to deal with unused offers and expired credits.</em>
+						<strong>OfferDiary</strong> is a one stop solution for
+						managing all your offers and loyalty credits effectively.
+					    It helps you track your offers and share them with your 
+					    friends. Very soon you would never have to deal with unused
+					    offers and expired credits.
 					</div>
 				</div>
 				<div class="span2">
@@ -80,14 +71,14 @@
 				<div class="span4 ">
 					<div class="hero-unit tile-div">
 						<img  class="coming-soon-small" src="images/comingsoon_2.png">
-						<div id="emailFormHolder" class="control-group">
-							<div style="float:left" class="input-prepend">
+						<div id="emailFormHolder" class="control-group row">
+							<div style="float:left" class="input-prepend span3">
 								<span class="add-on emailIcon"><i class="icon-envelope"></i></span>
-								<input id="email" type="text" class="input-large input-center" name="email" placeholder="Email : Sign up for exculsive closed Beta"></input>
+								<input id="email" type="text" style="float:left" class="input-large input-center" name="email" placeholder="Email: Get exclusive invitation"></input>
 							</div>
 							<div>	
 								<div class="row">
-									<button id="newEmailSubscription" class="btn btn-info" href="#">Follow</button>
+									<button id="newEmailSubscription" class="btn btn-info" href="#">Get Invite</button>
 								</div>
 								<div class="row">
 									<div id="onEmailSuccess" class="hide alert alert-success span3 div-small-message" >
