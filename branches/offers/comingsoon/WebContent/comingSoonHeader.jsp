@@ -49,7 +49,7 @@ div.div-small-message{
 img.coming-soon-small{
 	height: 40%;
 }
-.bluishText {
+.greyishText {
 	color: #312D2D;
 }
 .listNoStyle {
