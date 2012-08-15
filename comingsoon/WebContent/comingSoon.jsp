@@ -45,7 +45,7 @@
 				</div>
 				
 				<div class="span4 ">
-					<div class="hero-unit bluishText tile-des-div">
+					<div class="hero-unit greyishText tile-des-div">
 					
 						<strong>OfferDiary</strong> is a one stop solution for
 						managing all your offers and loyalty credits effectively.

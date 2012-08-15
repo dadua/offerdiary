@@ -4,6 +4,33 @@
 		<link rel="shortcut icon" href="favicon.ico" />
 		<script type="text/javascript">
 			var it = it || {};
+			it.tile =  function(){
+				var tileTitleMap = {
+						tile_1: "it's pouring offers ! track them " ,
+						tile_2: "make shopping more meaningful !" ,
+						tile_3: "don't miss out offers on your next drink !" ,
+						tile_4: "we are going live pretty soon :) " ,
+						tile_5: "life is a box of offers !" ,
+						tile_6: "share your offers with friends",
+						tile_7: "save your offers with us ! peace" ,
+						tile_8: "don't miss out on your pie of opportunity" ,
+						tile_9: "you shop - you build your loyalty credits with OfferDiary" ,
+						tile_10: "its your suitcase of offers, deal & loyalty credits" ,
+						tile_11: "no more lossing out on expired offers",
+						tile_12: "more reasons to buy that new dress !" ,
+						tile_13: "not just the drink share your offers with friends too !" ,
+						tile_14: "an offer in hand would have made this easy on your pocket !" ,
+						tile_15: "what's in the box ? " ,
+						tile_16: "pay less for your next pizza fiesta !" ,
+						tile_17: "it takes time to build great things ! we'll be live soon " ,
+						tile_18: "you are watching Offer Diary" ,
+						tile_19: "dining offers !" ,
+						tile_20: "write to us: support@offerdiary.com" ,
+				};
+				return{
+					tileTitleMap: tileTitleMap
+				};
+			}();
 			$(function() {
 					
 				var onServerUpChange =function(data) {
@@ -33,7 +60,9 @@
 							var imgId="tile_image_id_"+j;
 							var randomTileNumber =  Math.floor((Math.random()*10)+1) + 10*(Math.floor(Math.random()/0.5));
 							var imageSrc="images/icons/tile_"+randomTileNumber+".png";
+							var title = it.tile.tileTitleMap['tile_'+randomTileNumber];
 							$('img#'+imgId).attr("src", imageSrc);
+							$('img#'+imgId).attr("title", title);
 						}if(imageCounter == 10){
 							putRandomImages();
 						}        
@@ -48,7 +77,9 @@
 					var randomTileNumber =  Math.floor((Math.random()*10)+1) + 10*(Math.floor(Math.random()/0.5));
 					var imgId="tile_image_id_"+i;
 					var imageSrc="images/icons/tile_"+randomTileNumber+".png";
+					var title = it.tile.tileTitleMap['tile_'+randomTileNumber];
 					$('img#'+imgId).attr("src", imageSrc);
+					$('img#'+imgId).attr("title", title);
 				}
 			}
 		</script>
