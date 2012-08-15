@@ -88,14 +88,14 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 		
 		restHtml.append("<div style='font-family: calibri, Arial, Helvetica, sans-serif;font-size:16px;line-height:1.3em;padding-top:0;margin-top:0; padding-right:10px'>"
 				+ "Thank you for signing up for OfferDiary closed beta. You have taken the first step to manage your offers and loyalty credits effectively."
-				+ "We are working out to bring the best offer management solution to you with OfferDiary and will send you a sign up invitation soon!"
-				+ "<div style='clear:both; line-height:14px'>&nbsp;</div>Wait for it... We are sure, that you are going to love it!<br />"
+				+ " We are working out to bring the best offer management solution to you with OfferDiary and will send you a sign up invitation soon!"
+				+ "<div style='clear:both; line-height:14px'>&nbsp;</div>Wait for it... We are sure, you are going to love it!<br />"
 				+ "<div style='clear:both; line-height:14px'>&nbsp;</div><br />Thank you,<br />The OfferDiary Team<br /><a href='http://www.offerdiary.com' target='_blank' style='color:#0088CC;'>"
 				+ "www.offerdiary.com</a></div>");
 		
 		restHtml.append("<div style='clear:both; line-height:10px;'></div></div><div style='clear:both; height:10px;'></div>"
 				+ "<div align='center' style='font-family: calibri, Arial, Helvetica, sans-serif;font-size:12px; margin:10px 0; padding:0 40px'>"
-				+ "<a href='http://www.facebook.com/pages/Offer-Diary/130234047120531' target='_blank' style='color:#0088CC;'>"
+				+ "<a href='https://www.facebook.com/offerdiary' target='_blank' style='color:#0088CC;'>"
 				+ "Like us on Facebook</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='http://twitter.com/offerdiary' target='_blank' style='color:#0088CC;'>"
 				+ "Follow us on Twitter</a></div></div></div></td></tr></tbody></table></body></html>");
 		
