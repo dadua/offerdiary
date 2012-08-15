@@ -31,10 +31,12 @@ div.tile-div{
 	text-align:center;
 }
 div.tile-des-div{
-
+	font-family: Trebuchet MS;
+	text-align: justify;
+	font-size: medium;
 	padding: 10px;
-
-	
+	height: 100px;
+	background-color: #D5D3D3;
 }
 div.div-small-message{
 	height: 10px;
@@ -48,7 +50,7 @@ img.coming-soon-small{
 	height: 40%;
 }
 .bluishText {
-	color: #0088CC;
+	color: #312D2D;
 }
 .listNoStyle {
 	list-style: none;
