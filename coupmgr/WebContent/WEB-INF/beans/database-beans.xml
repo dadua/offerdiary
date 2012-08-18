@@ -25,6 +25,7 @@
 			<value>com.itech.offer.model.OfferOfferCardAssoc</value>
 			<value>com.itech.offer.model.OfferCardUserAssoc</value>
 			<value>com.itech.offer.model.OfferUserAssoc</value>
+			<value>com.itech.email.model.EmailMessages</value>
 		</list>
 		</property>
 		<property name="hibernateProperties">
