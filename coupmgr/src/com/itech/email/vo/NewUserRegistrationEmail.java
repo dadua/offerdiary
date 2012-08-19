@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
 
-public class NewUserRegistrationEmail extends EmailMessage{
+public class NewUserRegistrationEmail extends Email{
 
 	private final Logger logger = Logger.getLogger(NewUserRegistrationEmail.class);
 	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New User Registration Confirmation";
@@ -57,6 +57,11 @@ public class NewUserRegistrationEmail extends EmailMessage{
 	@Override
 	public void setSubject() {
 		this.subject = DEFAULT_REGISTRATION_SUBJECT;
+	}
+
+	@Override
+	public EmailType getEmailType() {
+		return EmailType.NEW_USER_REGISTRATION_EMAIL;
 	}
 
 }

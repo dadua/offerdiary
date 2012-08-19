@@ -10,11 +10,21 @@ import javax.persistence.Id;
 
 
 import com.itech.common.db.PersistableEntity;
+import com.itech.email.vo.Email.EmailType;
 
 public class EmailMessages extends PersistableEntity {
 
+	public EmailMessages(String fromAddress, String toAddress, String subject, String messageContent, EmailType type, EmailStatus status){
+		this.fromAddress = fromAddress;
+		this.toAddress = toAddress;
+		this.subject = subject;
+		this.messageContent = messageContent;
+		this.emailType = type;
+		this.status = status;
+	}
+	
 	public enum EmailStatus {
-		SEND, NOTSEND, EXPIRED;
+		INPROGRESS, PENDING, EXPIRED;
 	}
 	
 	public enum EmailPriority{
@@ -38,13 +48,13 @@ public class EmailMessages extends PersistableEntity {
 	@Column(name=EmailMessagesModelConstants.COL_MESSAGE_CONTENT)
 	private String messageContent;
 	
-	@Column(name=EmailMessagesModelConstants.COL_CREATION_TIME)
+	@Column(name=EmailMessagesModelConstants.COL_CREATION_TIME, nullable = false, columnDefinition = "date default sysdate")
 	private Date creationTime;
 	
 	@Column(name=EmailMessagesModelConstants.COL_LAST_TRY_TIME)
 	private Date lastTryTime;
 	
-	@Column(name=EmailMessagesModelConstants.COL_TRY_COUNT)
+	@Column(name=EmailMessagesModelConstants.COL_TRY_COUNT, nullable = false, columnDefinition = "int default 0")
 	private Integer tryCount;
 	
 	@Enumerated(EnumType.STRING)
@@ -54,6 +64,10 @@ public class EmailMessages extends PersistableEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name=EmailMessagesModelConstants.COL_PRIORITY)
 	private EmailPriority priority;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name=EmailMessagesModelConstants.COL_EMAIL_TYPE)
+	private EmailType emailType;
 	
 	@Override
 	public boolean isTransient() {
@@ -138,5 +152,13 @@ public class EmailMessages extends PersistableEntity {
 
 	public void setTryCount(Integer tryCount) {
 		this.tryCount = tryCount;
+	}
+
+	public EmailType getEmailType() {
+		return emailType;
+	}
+
+	public void setEmailType(EmailType emailType) {
+		this.emailType = emailType;
 	}
 }

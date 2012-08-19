@@ -8,8 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.email.vo.Email.EmailType;
 
-public class PasswordRecoverEmail extends EmailMessage{
+public class PasswordRecoverEmail extends Email{
 
 	private final Logger logger = Logger.getLogger(PasswordRecoverEmail.class);
 	private static final String DEFAULT_PASSWORD_RECOVERY_SUBJECT="OfferDo Offer Summary Notification";
@@ -55,4 +56,10 @@ public class PasswordRecoverEmail extends EmailMessage{
 	public void setSubject() {
 		this.subject = DEFAULT_PASSWORD_RECOVERY_SUBJECT;
 	}
+	
+	@Override
+	public EmailType getEmailType() {
+		return EmailType.PASSWORD_RECOVERY_EMAIL;
+	}
+
 }

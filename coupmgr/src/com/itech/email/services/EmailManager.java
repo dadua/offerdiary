@@ -1,9 +1,10 @@
 package com.itech.email.services;
 
-import com.itech.email.vo.EmailMessage;
+import com.itech.email.vo.Email;
 
 public interface EmailManager {
 
-	public boolean sendEmail(EmailMessage email);
+	public boolean sendEmailSync(Email email);
+	public boolean sendEmailAsync(Email email);
 
 }

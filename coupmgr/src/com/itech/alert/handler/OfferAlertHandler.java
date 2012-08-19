@@ -7,6 +7,7 @@ import com.itech.alert.model.AlertDataTypes;
 import com.itech.coupon.manager.UserManager;
 import com.itech.coupon.model.User;
 import com.itech.email.services.EmailManager;
+import com.itech.email.vo.Email;
 import com.itech.email.vo.EmailMessage;
 import com.itech.email.vo.OfferExpiryNotificationEmail;
 
@@ -30,8 +31,8 @@ public class OfferAlertHandler implements AlertHandler{
 		User user = alert.getUser();
 		String toEmailId= user.getEmailId();
 		String message = alert.getMessage();
-		EmailMessage email = new OfferExpiryNotificationEmail(message, toEmailId);
-		emailManager.sendEmail(email);
+		Email email = new OfferExpiryNotificationEmail(message, toEmailId);
+		emailManager.sendEmailAsync(email);
 	}
 
 	@Override

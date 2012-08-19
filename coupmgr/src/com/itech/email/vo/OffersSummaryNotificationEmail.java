@@ -8,8 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.email.vo.Email.EmailType;
 
-public class OffersSummaryNotificationEmail extends EmailMessage{
+public class OffersSummaryNotificationEmail extends Email{
 
 	private final Logger logger = Logger.getLogger(OffersSummaryNotificationEmail.class);
 	private static final String DEFAULT_SUMMARY_NOTIFICATION_SUBJECT="OfferDo Offer Summary Notification";
@@ -54,5 +55,11 @@ public class OffersSummaryNotificationEmail extends EmailMessage{
 	public void setSubject() {
 		this.subject = DEFAULT_SUMMARY_NOTIFICATION_SUBJECT;
 	}
+	
+	@Override
+	public EmailType getEmailType() {
+		return EmailType.OFFER_SUMMARY_NOTIFICATION_EMAIL;
+	}
+
 
 }
