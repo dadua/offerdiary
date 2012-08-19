@@ -50,6 +50,11 @@
 				};
 			 
 				$('#loginToFb').click({onServerUp: onServerUpGotoWallet}, it.fb.checkAndLogin);
+				
+				$('.tile-div').hover(function() {
+					var title = $(this).find('img').attr('title');
+					$(this).tooltip({title: title, placement: 'right'}).tooltip('show');
+				});
 			});
 			function onLoadPutRandomTiles(){
 				changeOverImages(1);	
@@ -61,8 +66,8 @@
 							var randomTileNumber =  Math.floor((Math.random()*10)+1) + 10*(Math.floor(Math.random()/0.5));
 							var imageSrc="images/icons/tile_"+randomTileNumber+".png";
 							var title = it.tile.tileTitleMap['tile_'+randomTileNumber];
-							$('img#'+imgId).attr("src", imageSrc);
-							$('img#'+imgId).attr("title", title);
+							$('img#'+imgId).attr("src", imageSrc).attr("title", title);
+							//.tooltip({title: title});
 						}if(imageCounter == 10){
 							putRandomImages();
 						}        
@@ -78,8 +83,9 @@
 					var imgId="tile_image_id_"+i;
 					var imageSrc="images/icons/tile_"+randomTileNumber+".png";
 					var title = it.tile.tileTitleMap['tile_'+randomTileNumber];
-					$('img#'+imgId).attr("src", imageSrc);
-					$('img#'+imgId).attr("title", title);
+					$('img#'+imgId).attr("src", imageSrc).attr("title", title);
+					//.tooltip({title: title});
+					
 				}
 			}
 		</script>
