@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
@@ -30,7 +31,7 @@ public class OfferCardAction extends CommonAction{
 		Type offerCardJsonType = new TypeToken<OfferCard>() { }.getType();
 		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
 		OfferCard processedCard = getOfferCardManager().saveOrUpdateOfferCard(offerCard);
-		Result<OfferCard> result = new Result<OfferCard>(true, processedCard, "Successfully Added the Card");
+		Result<OfferCard> result = new Result<OfferCard>(processedCard);
 		Type resultOffersType = new TypeToken<Result<OfferCard>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
@@ -39,7 +40,7 @@ public class OfferCardAction extends CommonAction{
 	public Response searchOfferCards(HttpServletRequest req, HttpServletResponse resp) {
 		String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
 		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(cardSearchString, MAX_RESULT_COUNT, true);
-		Result<List<OfferCard>> result = new Result<List<OfferCard>>(true, offerCards);
+		Result<List<OfferCard>> result = new Result<List<OfferCard>>(offerCards);
 		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
@@ -47,7 +48,7 @@ public class OfferCardAction extends CommonAction{
 	public Response getMyCards(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(user);
-		Result<List<OfferCard>> result = new Result<List<OfferCard>>(true, offerCards);
+		Result<List<OfferCard>> result = new Result<List<OfferCard>>(offerCards);
 		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
@@ -60,12 +61,12 @@ public class OfferCardAction extends CommonAction{
 		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
 		OfferCard offerCardFilled = getOfferCardManager().associateOfferCardToUser(offerCard, user);
 		if (offerCardFilled == null) {
-			Result<String> result = new Result<String>(false, "", "Failed to Added the Card");
+			Result<String> result = new Result<String>(ReturnCodes.VALIDATION_FAILURE, "Failed to Added the Card");
 			Type resultOffersType = new TypeToken<Result<String>>() {
 			}.getType();
 			return new CommonBeanResponse(result, resultOffersType);
 		}
-		Result<OfferCard> result = new Result<OfferCard>(true, offerCardFilled, "Successfully Added the Card");
+		Result<OfferCard> result = new Result<OfferCard>(offerCardFilled);
 		Type resultOffersType = new TypeToken<Result<OfferCard>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
@@ -78,7 +79,7 @@ public class OfferCardAction extends CommonAction{
 		Type offerCardJsonType = new TypeToken<OfferCard>() { }.getType();
 		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
 		getOfferCardManager().deAssociateOfferCardFromUser(offerCard, user);
-		Result<String> result = new Result<String>(true, null, "Successfully removed the Card");
+		Result<String> result = new Result<String>(null, "Successfully removed the Card");
 		Type resultOffersType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
@@ -95,7 +96,7 @@ public class OfferCardAction extends CommonAction{
 			offerCard = getOfferCardManager().getOfferCardFor(cardName);
 		}
 
-		Result<OfferCard> result = new Result<OfferCard>(true, offerCard);
+		Result<OfferCard> result = new Result<OfferCard>(offerCard);
 		Type type = new TypeToken<Result<OfferCard>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}

@@ -26,7 +26,7 @@ public class VendorAction extends CommonAction{
 		Type vendorJsonType = new TypeToken<Vendor>() { }.getType();
 		Vendor vendor = gson.fromJson(vendorJson, vendorJsonType);
 		Vendor processedVendor = getVendorManager().saveOrUpdateVendor(vendor);
-		Result<Vendor> result = new Result<Vendor>(true, processedVendor, "Successfully Added the vendor");
+		Result<Vendor> result = new Result<Vendor>(processedVendor);
 		Type resultOffersType = new TypeToken<Result<Vendor>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
@@ -35,7 +35,7 @@ public class VendorAction extends CommonAction{
 	public Response searchVendors (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorSearchString = req.getParameter(VENDOR_NAME_SEARCH_KEY);
 		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);
-		Result<List<Vendor>> result = new Result<List<Vendor>>(true, vendors);
+		Result<List<Vendor>> result = new Result<List<Vendor>>(vendors);
 		Type type = new TypeToken<Result<List<Vendor>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}

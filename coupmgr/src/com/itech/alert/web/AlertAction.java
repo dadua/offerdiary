@@ -49,7 +49,7 @@ public class AlertAction extends CommonAction{
 			alerts = getAlertManager().getAlertsFor(loggedInUser);
 		}
 
-		Result<List<Alert>> result = new Result<List<Alert>>(true, alerts);
+		Result<List<Alert>> result = new Result<List<Alert>>(alerts);
 		Type type = new TypeToken<Result<List<Coupon>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}

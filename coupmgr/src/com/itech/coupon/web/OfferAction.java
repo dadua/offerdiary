@@ -51,7 +51,7 @@ public class OfferAction extends CommonAction{
 		} else {
 			offers = new ArrayList<Offer>();
 		}
-		Result<List<Offer>> result = new Result<List<Offer>>(true, offers);
+		Result<List<Offer>> result = new Result<List<Offer>>(offers);
 		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
@@ -62,7 +62,7 @@ public class OfferAction extends CommonAction{
 		Type offersType = new TypeToken<List<Offer>>() { }.getType();
 		List<Offer> offers = gson.fromJson(offersJson, offersType);
 		getOfferManager().addOffersForUser(offers, getLoggedInUser());
-		Result<List<Offer>> result = new Result<List<Offer>>(true, offers, "Successfully Added the offers");
+		Result<List<Offer>> result = new Result<List<Offer>>(offers);
 		Type resultOffersType = new TypeToken<Result<List<Offer>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
