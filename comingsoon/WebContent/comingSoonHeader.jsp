@@ -36,7 +36,6 @@ div.tile-des-div{
 	font-size: medium;
 	padding: 10px;
 	height: 100px;
-	background-color: #D5D3D3;
 }
 div.div-small-message{
 	height: 10px;
