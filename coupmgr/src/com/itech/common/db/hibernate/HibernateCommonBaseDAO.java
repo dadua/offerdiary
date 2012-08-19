@@ -59,6 +59,13 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 		return query.list();
 	}
 
+	public List<Object> getPaginatedResultFor(Query query, int pageNumber, int numberOfRecordsPerPage) {
+		int startIndex = (pageNumber -1 ) * numberOfRecordsPerPage;
+		query.setFirstResult(startIndex);
+		query.setMaxResults(numberOfRecordsPerPage);
+		return query.list();
+	}
+
 	protected abstract Class getEntityClass();
 
 	protected String getEntityClassName(){
