@@ -8,7 +8,6 @@ import com.itech.coupon.manager.UserManager;
 import com.itech.coupon.model.User;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
-import com.itech.email.vo.EmailMessage;
 import com.itech.email.vo.OfferExpiryNotificationEmail;
 
 public class OfferAlertHandler implements AlertHandler{
