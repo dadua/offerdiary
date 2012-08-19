@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.itech.common.CommonFileUtilities;
 import com.itech.common.db.hibernate.HibernateSessionFactory;
 import com.itech.common.services.Initialize;
+import com.itech.config.ProjectConfigs;
 import com.itech.offer.manager.OfferCardManager;
 import com.itech.offer.model.OfferCard;
 
@@ -20,27 +21,24 @@ public class RedWineOfferEngine implements Initialize{
 
 	@Override
 	public void init() {
-
-		try {
-			getHibernateSessionFactory().openNewSession();
-			String cardDataJson = CommonFileUtilities.getResourceFileAsString("resources\\redanar\\cards-minimal.json");
-			Gson gson = new Gson();
-			Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
-			List<RedWineCard> redWineCards = gson.fromJson(cardDataJson, offerCardJsonType);
-			for (RedWineCard redWineCard : redWineCards) {
-				OfferCard offerCard = getOfferCardFrom(redWineCard);
-				OfferCard existingCardInDb = getOfferCardManager().getOfferCardFor(offerCard.getName());
-				if (existingCardInDb != null) {
-					logger.warn("Offer card already exists for name - " + offerCard.getName());
-					continue;
-				}
-				getOfferCardManager().saveOrUpdateOfferCard(offerCard);
-			}
-		} finally {
-			getHibernateSessionFactory().commitCurrentTransaction();
-			getHibernateSessionFactory().closeCurrentSession();
+		if (!ProjectConfigs.initializeRedWineData.get()) {
+			logger.info("skipping redwine data initialization.");
+			return;
 		}
-
+		logger.info("initializing redwine data");
+		String cardDataJson = CommonFileUtilities.getResourceFileAsString("resources\\redanar\\cards-minimal.json");
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
+		List<RedWineCard> redWineCards = gson.fromJson(cardDataJson, offerCardJsonType);
+		for (RedWineCard redWineCard : redWineCards) {
+			OfferCard offerCard = getOfferCardFrom(redWineCard);
+			OfferCard existingCardInDb = getOfferCardManager().getOfferCardFor(offerCard.getName());
+			if (existingCardInDb != null) {
+				logger.warn("Offer card already exists for name - " + offerCard.getName());
+				continue;
+			}
+			getOfferCardManager().saveOrUpdateOfferCard(offerCard);
+		}
 
 	}
 

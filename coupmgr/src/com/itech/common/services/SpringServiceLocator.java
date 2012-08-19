@@ -10,12 +10,13 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.itech.common.db.ConnectionUtil;
+import com.itech.common.db.hibernate.HibernateSessionFactory;
+import com.itech.config.ConfigLoader;
 
 public class SpringServiceLocator extends ServiceLocator implements  ApplicationContextAware, InitializingBean{
 	private static final Logger logger = Logger.getLogger(SpringServiceLocator.class);
 	private ApplicationContext applicationContext;
-	private ConnectionUtil connectionUtil;
+	private HibernateSessionFactory hibernateSessionFactory;
 	public SpringServiceLocator() {
 
 	}
@@ -25,20 +26,26 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 		setInstance(this);
 
 		try {
-			//getConnectionUtil().createNewConnection();
+			logger.info("Initializing Config loader.");
+			ConfigLoader configLoader = getBean(ConfigLoader.class);
+			getHibernateSessionFactory().openNewSession();
+			configLoader.init();
+			getHibernateSessionFactory().commitCurrentTransaction();
+
+
 			logger.info("Initializing beans");
 			Map<String, Initialize> beansToBeInitialized =  applicationContext.getBeansOfType(Initialize.class);
 			for (Entry<String, Initialize> initializeEntry : beansToBeInitialized.entrySet()) {
 				logger.info("Initializing bean : " + initializeEntry.getKey());
 				initializeEntry.getValue().init();
-				//getConnectionUtil().commitCurrentConnection();
+				getHibernateSessionFactory().commitCurrentTransaction();
 			}
 			logger.info("All beans initialized successfully");
 		} catch (Exception e) {
 			logger.error("Failed to initialize beans.", e);
 			throw e;
 		} finally {
-			//getConnectionUtil().releaseCurrentConnection();
+			getHibernateSessionFactory().closeCurrentSession();
 		}
 	}
 
@@ -85,18 +92,19 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 		}
 	}
 
-	public void setConnectionUtil(ConnectionUtil connectionUtil) {
-		this.connectionUtil = connectionUtil;
-	}
-
-	public ConnectionUtil getConnectionUtil() {
-		return connectionUtil;
-	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
 	throws BeansException {
 		this.applicationContext = applicationContext;
 
+	}
+
+	public void setHibernateSessionFactory(HibernateSessionFactory hibernateSessionFactory) {
+		this.hibernateSessionFactory = hibernateSessionFactory;
+	}
+
+	public HibernateSessionFactory getHibernateSessionFactory() {
+		return hibernateSessionFactory;
 	}
 }

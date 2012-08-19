@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
@@ -45,7 +46,7 @@ public class LoginAction extends CommonAction{
 			user = getUserManager().saveFbUser(fbService);
 			updateLoggedInUser(req, user);
 		}
-		Result<User> result = new Result<User>(true, user);
+		Result<User> result = new Result<User>( user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);
@@ -70,7 +71,7 @@ public class LoginAction extends CommonAction{
 				return invalidPasswordResponse();
 			}
 		}
-		Result<User> result = new Result<User>(true, user);
+		Result<User> result = new Result<User>( user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 
@@ -78,14 +79,14 @@ public class LoginAction extends CommonAction{
 	}
 
 	private Response emailDoesntExist() {
-		Result<String> result = new Result<String>(false, LoginConstants.INVALID_CREDS);;
+		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
 		Type stringResultType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, stringResultType);
 	}
 
 	private Response invalidPasswordResponse() {
-		Result<String> result = new Result<String>(false, LoginConstants.INVALID_CREDS);;
+		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
 		Type stringResultType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, stringResultType);
@@ -101,7 +102,7 @@ public class LoginAction extends CommonAction{
 			user = getUserManager().saveFbUser(fbService);
 			updateLoggedInUser(req, user);
 		}
-		Result<User> result = new Result<User>(true, user);
+		Result<User> result = new Result<User>( user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);
@@ -117,7 +118,7 @@ public class LoginAction extends CommonAction{
 			updateLoggedInUser(req, user);
 		}
 		/*
-		Result<User> result = new Result<User>(true, user);
+		Result<User> result = new Result<User>( user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);
@@ -128,12 +129,12 @@ public class LoginAction extends CommonAction{
 	public Response newInterestedUserSuscription(HttpServletRequest req, HttpServletResponse resp){
 		String email = req.getParameter("email");
 		getUserManager().saveInterestedUserForSubscription(email);
-		Result<String> result = new Result<String>(true, "Success");
+		Result<String> result = new Result<String>();
 		Type stringResultType = new TypeToken<Result<String>>() {
 		}.getType();
-		return new CommonBeanResponse(result, stringResultType);		
+		return new CommonBeanResponse(result, stringResultType);
 	}
-	
+
 	public Response logout (HttpServletRequest req, HttpServletResponse resp) {
 		updateLoggedInUser(req, null);
 		return new Redirect("");

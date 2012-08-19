@@ -53,7 +53,7 @@ public class FbLoginAction extends CommonAction{
 			user = getUserManager().saveFbUser(fbService);
 			updateLoggedInUser(req, user);
 		}
-		Result<User> result = new Result<User>(true, user);
+		Result<User> result = new Result<User>( user);
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);

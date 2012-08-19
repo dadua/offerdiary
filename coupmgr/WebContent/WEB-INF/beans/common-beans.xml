@@ -7,9 +7,37 @@
     
     
      <bean id="itech.ServiceLocator" class="com.itech.common.services.SpringServiceLocator" scope="singleton">
+     	<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"></property>
+	</bean>
+	
+	<bean id="itech.resource" class="com.itech.common.resource.SpringResource">
+	  <constructor-arg index="0" value="ResourceBundle"/>
+	</bean>
+	<bean id="itech.projectProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	    <property name="locations">
+	        <list>
+	            <value>classpath:config.properties</value>
+	        </list>
+	    </property>
 	</bean>
 
+	
+	<bean id="itech.config.ConfigLoader"
+          class="com.itech.config.PropertiesConfigLoader" scope="singleton">
+        <constructor-arg index="0" value="com.itech.config.ProjectConfigs"/>
+        <constructor-arg index="1" ref="itech.projectProperties"/>
+    </bean>
+	<!--
+	<bean id="itech.config.ConfigLoader"
+          class="com.itech.config.DBConfigLoader" scope="singleton">
+        <constructor-arg index="0" value="com.itech.web.ServerConfigs"/>
+        <property name="configDAO" ref="itech.config.configDAO"/>
+        <property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+    </bean>
+	<bean id="itech.config.configDAO" class="com.itech.config.dao.ConfigDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
 
+   -->
    <!-- Beans to support Security APIs  -->
     <bean id="itech.SecurityManager" class="com.itech.common.security.SecurityManagerImpl" scope="singleton">
     	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>

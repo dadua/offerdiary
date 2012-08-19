@@ -30,7 +30,7 @@ public class HibernateSessionFactoryImpl  implements HibernateSessionFactory {
 		}
 		threadLocalSession.set(null);
 		try {
-			
+
 			if (session.isOpen()) {
 				session.clear();
 				session.close();

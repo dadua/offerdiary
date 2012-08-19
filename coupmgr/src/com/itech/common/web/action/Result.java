@@ -1,14 +1,21 @@
 package com.itech.common.web.action;
 
 
+import java.util.Locale;
+
+import com.itech.common.exeption.ReturnCode;
+import com.itech.common.exeption.ReturnCodes;
+import com.itech.common.resource.Resource;
+
 public class Result <T> {
 
+	private ReturnCode returnCode = ReturnCodes.SUCCESS;
 	private T result = null;
 	private String msg = null;
-	private boolean success;
-	public Result(boolean success, T result, String msg) {
+
+	public Result(ReturnCode returnCode, T result, String msg) {
 		super();
-		this.setSuccess(success);
+		this.returnCode = returnCode;
 		this.result = result;
 		this.msg = msg;
 	}
@@ -17,15 +24,22 @@ public class Result <T> {
 		super();
 	}
 
-	public Result(boolean success, final T result) {
-		this.setSuccess(success);
+	public Result(final ReturnCode returnCode, final T result) {
+		this.returnCode = returnCode;
 		this.result = result;
 	}
 
 	public Result(final T result) {
-		this(true, result);
+		this(ReturnCodes.SUCCESS, result);
 	}
 
+	public ReturnCode getReturnCode() {
+		return returnCode;
+	}
+
+	public void setReturnCode(final ReturnCode returnCode) {
+		this.returnCode = returnCode;
+	}
 
 	public T getResult() {
 		return result;
@@ -33,6 +47,10 @@ public class Result <T> {
 
 	public void setResult(final T result) {
 		this.result = result;
+	}
+
+	public boolean isSuccess() {
+		return this.returnCode.equals(ReturnCodes.SUCCESS);
 	}
 
 	public String getMsg() {
@@ -43,12 +61,9 @@ public class Result <T> {
 		this.msg = msg;
 	}
 
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
-
-	public boolean isSuccess() {
-		return success;
+	public void setError(Resource resource, Locale locale,ReturnCode code, Object... objects){
+		setReturnCode(code);
+		setMsg(resource.formatString(code.getDisplayKey(), locale, objects));
 	}
 
 }
