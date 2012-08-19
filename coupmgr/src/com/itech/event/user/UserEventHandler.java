@@ -2,7 +2,6 @@ package com.itech.event.user;
 
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
-import com.itech.email.vo.EmailMessage;
 import com.itech.email.vo.NewUserRegistrationEmail;
 import com.itech.email.vo.NewUserSubscriptionEmail;
 import com.itech.event.services.EventHandler;
@@ -15,9 +14,8 @@ public class UserEventHandler implements EventHandler {
 	private EmailManager emailManager;
 	@Override
 	public boolean handles(Event event) {
-		if (UserEvent.class.isAssignableFrom(event.getClass())) {
+		if (UserEvent.class.isAssignableFrom(event.getClass()))
 			return true;
-		}
 
 		return false;
 	}
@@ -41,8 +39,8 @@ public class UserEventHandler implements EventHandler {
 	private void sendNewUserSubscribedEmail(UserEvent userEvent) {
 		String toEmailId = userEvent.getUser().getEmailId();
 		Email email = new NewUserSubscriptionEmail(null, toEmailId);
-		getEmailManager().sendEmailSync(email);
-		
+		getEmailManager().sendEmailAsync(email);
+
 	}
 
 	private void handleUserForgotPassword(UserEvent userEvent) {
@@ -53,7 +51,7 @@ public class UserEventHandler implements EventHandler {
 		String newUserRegistrationMessageContent =  "Hi Your current password is";
 		String toEmailId = userEvent.getUser().getEmailId();
 		Email email = new NewUserRegistrationEmail(newUserRegistrationMessageContent, toEmailId);
-		getEmailManager().sendEmailSync(email);
+		getEmailManager().sendEmailAsync(email);
 	}
 
 	private void handleUserAdded(UserEvent userEvent) {
@@ -63,7 +61,7 @@ public class UserEventHandler implements EventHandler {
 	private void sendNewUserRegistrationEmail(UserEvent userEvent) {
 		String toEmailId = userEvent.getUser().getEmailId();
 		Email email = new NewUserRegistrationEmail(null, toEmailId);
-		getEmailManager().sendEmailSync(email);
+		getEmailManager().sendEmailAsync(email);
 	}
 
 	public EmailManager getEmailManager() {

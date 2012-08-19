@@ -94,9 +94,8 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 
 	@Override
 	public List<Coupon> getByTags(List<String> tags) {
-		if (tags.size() == 0) {
+		if (tags.size() == 0)
 			return new ArrayList<Coupon>();
-		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -250,9 +249,8 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 
 	@Override
 	public List<Coupon> getBy(User owner, List<String> tags) {
-		if (tags.size() == 0) {
+		if (tags.size() == 0)
 			return new ArrayList<Coupon>();
-		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -308,6 +306,12 @@ public class CouponDAOImpl extends CommonBaseDAOImpl<Coupon> implements CouponDA
 			coupons.add(coupon);
 		}
 		return coupons;
+	}
+
+	@Override
+	public boolean delete(Object object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

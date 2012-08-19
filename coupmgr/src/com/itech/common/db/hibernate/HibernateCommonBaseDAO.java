@@ -39,6 +39,12 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 	}
 
 	@Override
+	public boolean delete(Object object) {
+		getSession().delete(object);
+		return true;
+	}
+
+	@Override
 	public boolean delete(List<T> objects) {
 		for (Object object : objects) {
 			getSession().delete(object);

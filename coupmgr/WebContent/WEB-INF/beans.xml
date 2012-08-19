@@ -44,6 +44,7 @@
    			<list>
    				<ref bean="itech.handler.OfferEventHandler"/>
    				<ref bean="itech.handler.UserEventHandler"/>
+   				<ref bean="itech.handler.EmailDispatcher"/>
    			</list>
    		</property>
    	</bean>
@@ -55,6 +56,11 @@
 	<bean name="itech.UserEventGenerator" class="com.itech.event.user.UserEventGeneratorImpl">
    		<property name="eventEngine" ref="itech.EventEngine"/>
    	</bean>
+   	
+   	<bean name="itech.EmailEventGenerator" class="com.itech.event.email.EmailEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
+   	
    	
 	<bean name="itech.AlertEngine" class="com.itech.alert.services.AlertEngine">
 		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
@@ -106,6 +112,13 @@
 <!-- 		</property> -->
 <!-- 	</bean> -->
 	
+	
+   	<bean id="itech.handler.EmailDispatcher" class=" com.itech.email.services.EmailDispatcher">
+   		<property name="emailManager" ref="itech.emailManager"/>
+   		<property name="emailSender" ref="itech.emailSender"/>
+   		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+   	</bean>
+   	
 	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
@@ -123,12 +136,13 @@
 		<property name="mailSender" ref="itech.mailSender" />
 	</bean> 
 	
-	<bean id="itech.emailMessagesDAO" class="com.itech.email.dao.EmailMessagesDAOImpl">
+	<bean id="itech.emailMessagesDAO" class="com.itech.email.dao.EmailMessagesDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
 	<bean id="itech.emailManager" class="com.itech.email.services.EmailManagerImpl">
 		<property name="emailSender" ref="itech.emailSender"/>
 		<property name="emailMessagesDAO" ref="itech.emailMessagesDAO"/>
+		<property name="emailEventGenerator" ref="itech.EmailEventGenerator"/>
 	</bean>
 	
 </beans>

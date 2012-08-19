@@ -2,7 +2,7 @@ package com.itech.email.model;
 
 public class EmailMessagesModelConstants {
 
-	public static final String TABLE_EMAIL_MESSAGEs="EMAIL_MESSAGES";
+	public static final String TABLE_EMAIL_MESSAGES="EMAIL_MESSAGES";
 	public static final String COL_ID="ID";
 	public static final String COL_TO_ADDRESS="TO_ADDRESS";
 	public static final String COL_FROM_ADDRESS="FROM_ADDRESS";

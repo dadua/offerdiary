@@ -202,4 +202,10 @@ AlertConfigDAO {
 		return null;
 	}
 
+	@Override
+	public boolean delete(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

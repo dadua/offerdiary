@@ -159,4 +159,10 @@ public class UserDAOImpl extends CommonBaseDAOImpl<User> implements UserDAO {
 		return users;
 	}
 
+	@Override
+	public boolean delete(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

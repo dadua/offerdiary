@@ -15,7 +15,7 @@ public class NewUserRegistrationEmail extends Email{
 	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New User Registration Confirmation";
 	private static final String DEFAULT_NEW_USER_ADDED_REGISTRATION_MESSAGE="Welcome to OfferDo ! ";
 	private String registrationEmailHTML;
-	private static final String EMAIL_CONTENT_FILE ="index.html";
+	private static final String EMAIL_CONTENT_FILE ="resources\\index.html";
 	private Document docHTML = null;
 
 	public NewUserRegistrationEmail(String messageContent, String toEmailId,List<String> fileAttachementList){
@@ -56,7 +56,7 @@ public class NewUserRegistrationEmail extends Email{
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_REGISTRATION_SUBJECT;
+		subject = DEFAULT_REGISTRATION_SUBJECT;
 	}
 
 	@Override
