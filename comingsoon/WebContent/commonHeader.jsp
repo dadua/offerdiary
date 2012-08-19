@@ -1,7 +1,7 @@
 		<%@include file="jqueryAllInclude.html" %>
 		<%@include file="bootstrapHeadInclude.html" %>
 		<%@include file="fbLoginAboveHeadJs.jsp" %>
-		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="shortcut icon" href="http://www.offerdiary.com/favicon.ico" />
 		<script type="text/javascript">
 			var it = it || {};
 			it.tile =  function(){
