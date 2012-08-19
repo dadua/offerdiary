@@ -9,7 +9,7 @@
 				<!-- The HTML5 charset format -->
 				<meta charset="UTF-8">
 			 --%>
-		<title>OfferDiary : Your Official Offer Journal</title>
+		<title>OfferDiary: Never Miss an Offer Again - Coming Soon</title>
 		<%@include file="commonHeader.jsp" %>
 	</head>
 	<body onload="onLoadPutRandomTiles();" >
@@ -45,7 +45,7 @@
 				</div>
 				
 				<div class="span4 ">
-					<div class="hero-unit greyishText tile-des-div">
+					<div class="thumbnail tile-des-div">
 					
 						<strong>OfferDiary</strong> is a one stop solution for
 						managing all your offers and loyalty credits effectively.
