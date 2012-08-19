@@ -93,11 +93,24 @@
 	<bean id="itech.offerUserAssocDAO" class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl">
 	</bean>
 	
+<!-- 	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> -->
+<!-- 		<property name="host" value="smtp.gmail.com" /> -->
+<!-- 		<property name="port" value="587" /> -->
+<!-- 		<property name="username" value="test.coupoxo@gmail.com" /> -->
+<!-- 		<property name="password" value="7cygod2012" /> -->
+<!-- 		<property name="javaMailProperties"> -->
+<!-- 	   		<props> -->
+<!--        	      	<prop key="mail.smtp.auth">true</prop> -->
+<!--        	      	<prop key="mail.smtp.starttls.enable">true</prop> -->
+<!--        	   </props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
 	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="test.coupoxo@gmail.com" />
-		<property name="password" value="7cygod2012" />
+		<property name="username" value="support@offerdiary.com" />
+		<property name="password" value="solidcore@123" />
 		<property name="javaMailProperties">
 	   		<props>
        	      	<prop key="mail.smtp.auth">true</prop>
@@ -106,7 +119,16 @@
 		</property>
 	</bean>
  
-	<bean id="itech.emailManager" class="com.itech.email.services.EmailManagerImpl">
+	<bean id="itech.emailSender" class="com.itech.email.services.EmailSenderImpl">
 		<property name="mailSender" ref="itech.mailSender" />
+	</bean> 
+	
+	<bean id="itech.emailMessagesDAO" class="com.itech.email.dao.EmailMessagesDAOImpl">
 	</bean>
+	
+	<bean id="itech.emailManager" class="com.itech.email.services.EmailManagerImpl">
+		<property name="emailSender" ref="itech.emailSender"/>
+		<property name="emailMessagesDAO" ref="itech.emailMessagesDAO"/>
+	</bean>
+	
 </beans>

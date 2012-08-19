@@ -13,4 +13,5 @@ public class EmailMessagesModelConstants {
 	public static final String COL_TRY_COUNT="TRY_COUNT";
 	public static final String COL_STATUS="STATUS";
 	public static final String COL_PRIORITY="PRIORITY";
+	public static final String COL_EMAIL_TYPE = "EMAIL_TYPE";
 }

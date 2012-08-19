@@ -8,8 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.email.vo.Email.EmailType;
 
-public class OfferExpiryNotificationEmail extends EmailMessage{
+public class OfferExpiryNotificationEmail extends Email{
 
 	private final Logger logger = Logger.getLogger(OfferExpiryNotificationEmail.class);
 	private static final String DEFAULT_NOTIFICATION_SUBJECT="OfferDo Offer Expiry Notification";
@@ -56,5 +57,11 @@ public class OfferExpiryNotificationEmail extends EmailMessage{
 	public void setSubject() {
 		this.subject = DEFAULT_NOTIFICATION_SUBJECT;
 	}
+	
+	@Override
+	public EmailType getEmailType() {
+		return EmailType.OFFER_EXPIRY_NOTIFICATION_EMAIL;
+	}
+
 
 }

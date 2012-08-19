@@ -8,8 +8,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.email.vo.Email.EmailType;
 
-public class NewUserSubscriptionEmail extends EmailMessage{
+public class NewUserSubscriptionEmail extends Email{
 
 	private final Logger logger = Logger.getLogger(NewUserRegistrationEmail.class);
 	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDo Subscription !";
@@ -59,5 +60,11 @@ public class NewUserSubscriptionEmail extends EmailMessage{
 	public void setSubject() {
 		this.subject = DEFAULT_SUBSCRIPTION_SUBJECT;
 	}
+	
+	@Override
+	public EmailType getEmailType() {
+		return EmailType.NEW_USER_SUBSCRIPTION_EMAIL;
+	}
+
 
 }
