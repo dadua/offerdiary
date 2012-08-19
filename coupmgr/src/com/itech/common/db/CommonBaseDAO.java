@@ -15,4 +15,6 @@ public interface CommonBaseDAO <T>{
 
 	List<T> getAll();
 
+	boolean delete(Object object);
+
 }

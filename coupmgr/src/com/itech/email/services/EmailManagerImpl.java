@@ -7,12 +7,13 @@ import com.itech.email.model.EmailMessages;
 import com.itech.email.model.EmailMessages.EmailStatus;
 import com.itech.email.vo.Email;
 import com.itech.email.vo.Email.EmailType;
+import com.itech.event.email.EmailEventGenerator;
 
 public class EmailManagerImpl implements EmailManager {
 
 	private EmailSender emailSender;
 	private EmailMessagesDAO emailMessagesDAO;
-	
+	private EmailEventGenerator emailEventGenerator;
 	@Override
 	public boolean sendEmailSync(Email email) {
 		String fromAddress = email.getSenderAddress();
@@ -32,6 +33,7 @@ public class EmailManagerImpl implements EmailManager {
 		EmailType type = email.getEmailType();
 		EmailMessages emailMessage = new EmailMessages(fromAddress, toAddress, subject, messageContent, type, EmailStatus.PENDING);
 		getEmailMessagesDAO().addOrUpdate(emailMessage);
+		getEmailEventGenerator().asyncMailSent();
 		return true;
 	}
 
@@ -49,6 +51,39 @@ public class EmailManagerImpl implements EmailManager {
 
 	public void setEmailMessagesDAO(EmailMessagesDAO emailMessagesDAO) {
 		this.emailMessagesDAO = emailMessagesDAO;
+	}
+
+	@Override
+	public List<EmailMessages> getAllPendingEmailMessages() {
+		return getEmailMessagesDAO().getAllPendingEmailMessages();
+	}
+
+	@Override
+	public List<EmailMessages> getPendingEmailMessagesByType(EmailType type) {
+		return getEmailMessagesDAO().getPendingEmailMessagesByType(type);
+	}
+
+	@Override
+	public boolean addOrUpdateEmailMessages(List<EmailMessages> emailMessages) {
+		return getEmailMessagesDAO().addOrUpdate(emailMessages);
+	}
+
+	@Override
+	public boolean deleteEmailMessages(List<EmailMessages> emailMessages) {
+		return getEmailMessagesDAO().delete(emailMessages);
+	}
+
+	@Override
+	public boolean deleteEmailMessages(EmailMessages emailMessages) {
+		return getEmailMessagesDAO().delete(emailMessages);
+	}
+
+	public EmailEventGenerator getEmailEventGenerator() {
+		return emailEventGenerator;
+	}
+
+	public void setEmailEventGenerator(EmailEventGenerator emailEventGenerator) {
+		this.emailEventGenerator = emailEventGenerator;
 	}
 
 }

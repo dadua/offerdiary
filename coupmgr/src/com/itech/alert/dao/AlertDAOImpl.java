@@ -164,9 +164,8 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 
 	@Override
 	public List<Alert> getAlertsForUser(User user) {
-		if(null == user){
+		if(null == user)
 			return null;
-		}
 		long userID = user.getId();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -225,9 +224,8 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 
 	@Override
 	public void markAlertsRead(User user) {
-		if(null == user){
+		if(null == user)
 			return;
-		}
 		long user_id = user.getId();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -248,6 +246,12 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 	public List<Alert> getAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean delete(Object object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

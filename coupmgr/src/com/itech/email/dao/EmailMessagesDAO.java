@@ -8,5 +8,5 @@ import com.itech.email.vo.Email.EmailType;
 
 public interface EmailMessagesDAO extends CommonBaseDAO<EmailMessages>{
 	public List<EmailMessages> getAllPendingEmailMessages();
-	public List<EmailMessages> getPendingEmailMessagesByType(EmailType type);	
+	public List<EmailMessages> getPendingEmailMessagesByType(EmailType type);
 }
