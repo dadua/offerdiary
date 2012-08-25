@@ -3,6 +3,7 @@ package com.itech.offer.manager;
 import java.util.List;
 import java.util.Map;
 
+import com.itech.common.db.SearchCriteria;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCardUserAssoc;
@@ -20,4 +21,7 @@ public interface OfferCardManager {
 	public List<OfferCard> getAssociatedOfferCardFor(User user);
 	public OfferCard associateOfferCardToUser(OfferCard offerCard, User user);
 	public void deAssociateOfferCardFromUser(OfferCard offerCard, User user);
+
+	List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria,
+			boolean excludeAssociatedCard);
 }

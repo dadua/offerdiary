@@ -97,7 +97,12 @@
 			
 			it.card.plotAddableCards = function(query) {
 				var actionsHtml = '<a class="pull-right card-associate btn btn-mini">add</a>';
-				$.getJSON('searchOfferCards.do', {searchKey:query}, function(data){
+				var seachCriteriaData = {
+					pageNumber : 1,
+					resultsPerPage : 10,
+					searchString : query
+				};
+				$.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(seachCriteriaData)}, function(data){
 					var cards = data.result;
 					$('#cardsContainer').html('');
 					it.card.appendCardsTo('#cardsContainer', cards, actionsHtml);
