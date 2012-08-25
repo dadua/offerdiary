@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.itech.common.db.CommonBaseDAO;
+import com.itech.common.db.SearchCriteria;
 import com.itech.common.security.SecurityManager;
 import com.itech.coupon.model.User;
 
@@ -59,11 +60,15 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 		return query.list();
 	}
 
-	public List<Object> getPaginatedResultFor(Query query, int pageNumber, int numberOfRecordsPerPage) {
+	protected List getPaginatedResultFor(Query query, int pageNumber, int numberOfRecordsPerPage) {
 		int startIndex = (pageNumber -1 ) * numberOfRecordsPerPage;
 		query.setFirstResult(startIndex);
 		query.setMaxResults(numberOfRecordsPerPage);
 		return query.list();
+	}
+
+	protected List getPaginatedResultFor(Query query, SearchCriteria searchCriteria) {
+		return getPaginatedResultFor(query, searchCriteria.getPageNumber(), searchCriteria.getResultsPerPage());
 	}
 
 	protected abstract Class getEntityClass();

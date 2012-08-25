@@ -1,8 +1,13 @@
 package com.itech.common.web.action;
 
+import java.lang.reflect.Type;
+
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.itech.alert.services.AlertManager;
+import com.itech.common.db.SearchCriteria;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.security.SecurityManager;
@@ -17,6 +22,7 @@ import com.itech.offer.manager.OfferManager;
 import com.itech.offer.manager.VendorManager;
 
 public class CommonAction {
+	private static final String SEARCH_CRITERIA_PARAM_KEY = "searchCriteria";
 	private SecurityManager securityManager;
 	private SecurityContextHolder securityContextHolder;
 	private CouponManager couponManager;
@@ -36,6 +42,13 @@ public class CommonAction {
 		getSecurityContextHolder().setContext(new SecurityContext(user));
 	}
 
+	protected SearchCriteria getSearchCriteria(HttpServletRequest req){
+		String searchCriteriaJSON = req.getParameter(SEARCH_CRITERIA_PARAM_KEY);
+		Gson gson = new Gson();
+		Type searchCriteriaJsonType = new TypeToken<SearchCriteria>() { }.getType();
+		SearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
+		return searchCriteria;
+	}
 
 	public void setSecurityContextHolder(SecurityContextHolder securityContextHolder) {
 		this.securityContextHolder = securityContextHolder;

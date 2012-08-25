@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.db.SearchCriteria;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
@@ -38,8 +39,9 @@ public class OfferCardAction extends CommonAction{
 	}
 
 	public Response searchOfferCards(HttpServletRequest req, HttpServletResponse resp) {
-		String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
-		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(cardSearchString, MAX_RESULT_COUNT, true);
+		//String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
+		SearchCriteria searchCriteria = getSearchCriteria(req);
+		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(searchCriteria, true);
 		Result<List<OfferCard>> result = new Result<List<OfferCard>>(offerCards);
 		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
