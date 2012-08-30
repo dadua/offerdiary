@@ -1,9 +1,10 @@
 package com.itech.scotchworld.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,16 +12,10 @@ import org.jsoup.nodes.Element;
 import com.google.gson.Gson;
 import com.itech.common.CommonFileUtilities;
 import com.itech.common.util.UtilHttp;
-import com.itech.offer.fetchers.parser.CitiOfferParser;
-import com.itech.redwine.parser.RedWineCardsParser;
 
 public class ScotchWorldParser {
 
 	private static final String SCOTCH_WORLD_STOREDATA_JSON_FILE_OUT = "c:\\data\\stores-minimal.json";
-	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
-	private final String scotchWOrlddomainName ="http://www.coupondunia.in";
-
-
 	private List<ScotchWorldStore> scotchStores = new ArrayList<ScotchWorldStore>();
 	private final String currentPageUrl= "http://www.coupondunia.in/stores";
 
@@ -33,35 +28,53 @@ public class ScotchWorldParser {
 		Gson gson = new Gson();
 		String json = gson.toJson(getScotchStores());
 		System.out.println(CommonFileUtilities.appendDataToFile(SCOTCH_WORLD_STOREDATA_JSON_FILE_OUT, json, true));
+		Map<String, String> storeImagenameURLMap = new HashMap<String, String>();
+		for(ScotchWorldStore scotchWorldStore: getScotchStores()){
+			storeImagenameURLMap.put(scotchWorldStore.getStoreName(), scotchWorldStore.getImageSrc());
+		}
+		CommonFileUtilities.writeImageToImageRepoFolder(storeImagenameURLMap);
 	}
 
 	public void parseScotchWorld(){
-		List<ScotchWorldStore> scotchStores = new ArrayList<ScotchWorldStore>();
 		String respHtml = UtilHttp.fetchHttpResponse(currentPageUrl);
 		Document doc = Jsoup.parse(respHtml);
 		Element storeCollection = doc.select("ul#storeCollection").first();
 		List<Element> storeElements = storeCollection.select("li");
+		int counter=0;
 		for(Element element : storeElements){
 			ScotchWorldStore  scotchWorldStore = getScotchWorldStore(element);
-			scotchStores.add(scotchWorldStore);
+			getScotchStores().add(scotchWorldStore);
+			counter++;
+			//			if(counter > 1){
+			//				break;
+			//			}
 		}
-		getScotchStores().addAll(scotchStores);
 	}
 
 	private ScotchWorldStore getScotchWorldStore(Element element) {
-		String storeName =  element.select("img").first().attr("alt");
+		ScotchWorldStore scotchWorldStore = new ScotchWorldStore();
+		Element nameEl =  element.select("img").first();
+		if(null == nameEl){
+			return scotchWorldStore;
+		}
+		String storeName = nameEl.attr("alt");
 		String imageSrc = element.select("img").first().attr("src");
 		String linkToStoreDetails = element.select("a").first().attr("href");
 		String respHtml = UtilHttp.fetchHttpResponse(linkToStoreDetails);
 		Document doc = Jsoup.parse(respHtml);
-
+		String storeDesc = doc.select("span#web_desc").first().text();
+		String storeURL  =  UtilHttp.getRedirectedURLLocation(doc.select("span#web_desc").first().parent().select("a").first().attr("href"));
+		scotchWorldStore.setDescription(storeDesc);
+		scotchWorldStore.setImageSrc(imageSrc);
+		scotchWorldStore.setStoreName(storeName);
+		scotchWorldStore.setStoreURL(storeURL);
+		System.out.println(scotchWorldStore);
+		return scotchWorldStore;
 	}
 
 	public static void main(String[] args){
-		RedWineCardsParser redWineCardsParser = new RedWineCardsParser();
-		redWineCardsParser.printGetRedWineOffers();
-		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
-		//System.out.println(readDataFromFile);
+		ScotchWorldParser scotchWorldParser  = new ScotchWorldParser();
+		scotchWorldParser.printScotchWorldStores();
 	}
 
 	public List<ScotchWorldStore> getScotchStores() {

@@ -13,8 +13,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 public class UtilHttp {
 	public static final int CONN_TIME_OUT = (1000 * 10);//10 second timeout
@@ -45,6 +52,21 @@ public class UtilHttp {
 		return nameValues;
 	}
 
+	public static String getRedirectedURLLocation(String currentURL){
+		try{
+			HttpParams httpParams = new BasicHttpParams();
+			httpParams.setParameter("http.protocol.handle-redirects",false);
+			HttpGet httpGetter = new HttpGet(currentURL);
+			httpGetter.setParams(httpParams);
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response = httpClient.execute(httpGetter);
+			Header httpHeader = response.getFirstHeader("location");
+			return httpHeader.toString();
+		}catch(Exception e){
+			e.printStackTrace();
+			return "";
+		}
+	}
 
 	public String getHttpResponse(String urlString) {
 		StringBuffer sb = new StringBuffer(10000);
