@@ -1,5 +1,6 @@
 package com.itech.common;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +10,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
@@ -37,6 +41,25 @@ public class CommonFileUtilities {
 		}
 	}
 
+
+	public static void writeImageToImageRepoFolder(Map<String, String> imageNameSrcMap){
+		for (Map.Entry<String, String> entry : imageNameSrcMap.entrySet()) {
+			String nameOfImage =  entry.getKey();
+			String imageSrc=  entry.getValue();
+			if(null == imageSrc || null == nameOfImage || imageSrc.isEmpty() || nameOfImage.isEmpty()){
+				continue;
+			}
+			try{
+				URL url = new URL(imageSrc);
+				BufferedImage image = null;
+				image = ImageIO.read(url);
+				File file = new File("c:\\data\\storeImages" + "\\" + nameOfImage+".jpg");
+				ImageIO.write(image, "jpg", file);
+			}catch(Exception e){
+				logger.error(nameOfImage+ " image could not be written ", e);
+			}
+		}
+	}
 
 	public static File getResourceFileAsFile(String resourceFilename) throws URISyntaxException{
 		URL url = CommonFileUtilities.class.getClassLoader().getResource(resourceFilename);
