@@ -72,7 +72,8 @@
 
 	<target name="deploy" depends="dist" description="creates war and deployes to tomcat">
 	    <delete dir="${tomcat.home}/webapps/${product.war.name}"/>
-	    <copy file="${dist.home}/${product.war.name}.war" todir="${tomcat.home}/webapps/${product.war.name}" overwrite="true"/>
+	    <echo message="${tomcat.home}/webapps/${product.war.name}"/>
+	    <copy file="${dist.home}/${product.war.name}.war" todir="${tomcat.home}/webapps" overwrite="true"/>
 	</target>
 
 </project>
