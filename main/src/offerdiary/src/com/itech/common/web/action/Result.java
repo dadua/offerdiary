@@ -12,12 +12,14 @@ public class Result <T> {
 	private ReturnCode returnCode = ReturnCodes.SUCCESS;
 	private T result = null;
 	private String msg = null;
+	private boolean success;
 
 	public Result(ReturnCode returnCode, T result, String msg) {
 		super();
 		this.returnCode = returnCode;
 		this.result = result;
 		this.msg = msg;
+		this.success = this.returnCode.equals(ReturnCodes.SUCCESS);
 	}
 
 	public Result() {
@@ -27,6 +29,7 @@ public class Result <T> {
 	public Result(final ReturnCode returnCode, final T result) {
 		this.returnCode = returnCode;
 		this.result = result;
+		this.success = this.returnCode.equals(ReturnCodes.SUCCESS);
 	}
 
 	public Result(final T result) {
@@ -50,7 +53,7 @@ public class Result <T> {
 	}
 
 	public boolean isSuccess() {
-		return this.returnCode.equals(ReturnCodes.SUCCESS);
+		return success;
 	}
 
 	public String getMsg() {
@@ -65,5 +68,6 @@ public class Result <T> {
 		setReturnCode(code);
 		setMsg(resource.formatString(code.getDisplayKey(), locale, objects));
 	}
+
 
 }
