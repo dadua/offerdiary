@@ -46,8 +46,9 @@ OfferCardManager {
 	public OfferCard saveOrUpdateOfferCard(OfferCard offerCard) {
 		if (offerCard.getId() != null) {
 			OfferCard existingCardInDb = getOfferCardDAO().getByName(offerCard.getName());
-			if (existingCardInDb == null)
+			if (existingCardInDb == null) {
 				return null;
+			}
 		}
 		getOfferCardDAO().addOrUpdate(offerCard);
 		return offerCard;
@@ -63,8 +64,9 @@ OfferCardManager {
 	public OfferCard associateOfferCardToUser(OfferCard offerCard, User user) {
 		OfferCard cardFromDb = getOfferCardFor(offerCard.getId());
 		OfferCardUserAssoc cardUserAssoc = getOfferCardUserAssocDAO().getAssocFor(cardFromDb, user);
-		if (cardUserAssoc != null)
+		if (cardUserAssoc != null) {
 			return null;
+		}
 		OfferCardUserAssoc offerCardUserAssoc = new OfferCardUserAssoc();
 		offerCardUserAssoc.setOfferCard(cardFromDb);
 		offerCardUserAssoc.setUser(user);
@@ -75,9 +77,10 @@ OfferCardManager {
 	@Override
 	public void deAssociateOfferCardFromUser(OfferCard offerCard, User user) {
 		OfferCardUserAssoc cardUserAssoc = getOfferCardUserAssocDAO().getAssocFor(offerCard, user);
-		if (cardUserAssoc == null)
+		if (cardUserAssoc == null) {
 			throw new RuntimeException("No associated card found for user");
-		getOfferCardUserAssocDAO().delete(cardUserAssoc.getId());
+		}
+		getOfferCardUserAssocDAO().delete(cardUserAssoc);
 	}
 
 

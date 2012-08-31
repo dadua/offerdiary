@@ -81,7 +81,7 @@ public class OfferCardAction extends CommonAction{
 		Type offerCardJsonType = new TypeToken<OfferCard>() { }.getType();
 		OfferCard offerCard = gson.fromJson(offerCardJson, offerCardJsonType);
 		getOfferCardManager().deAssociateOfferCardFromUser(offerCard, user);
-		Result<String> result = new Result<String>(null, "Successfully removed the Card");
+		Result<String> result = new Result<String>(ReturnCodes.SUCCESS, "Successfully removed the Card");
 		Type resultOffersType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultOffersType);
