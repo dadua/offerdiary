@@ -12,6 +12,8 @@
 	<property name="src" location="${product.src.path}"/>
 
 	<path id="classpath">
+	    <fileset dir="${contrib.home}" includes="*.jar"/>
+	    <fileset dir="${devtools.home}/tomcat" includes="*.jar"/>
 	    <fileset dir="${lib}" includes="*.jar"/>
 	    <pathelement path="${compile.home}/classes"/>
 	</path>
@@ -32,7 +34,7 @@
 
 	</target>
 
-	<target name="cleanupsetup" >
+	<target name="cleanupsetup">
 		<delete file=".classpath" />
 	</target>
 
