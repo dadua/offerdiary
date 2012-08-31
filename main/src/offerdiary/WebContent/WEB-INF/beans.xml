@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+     	   
+   	<bean name="itech.UserManager" class="com.itech.coupon.manager.UserManagerImpl" parent="itech.CommonBaseManager" scope="singleton">
+   		<property name="userDAO" ref="itech.UserDAO"/>
+   		<property name="intUserSubscriptionDAO" ref="itech.InterestedUserSubscriptionDAO"/>
+   		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
+	</bean>
+   	
+   	
+	<bean name="itech.UserDAO" class="com.itech.coupon.dao.HibernateUserDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+       
+	<bean name="itech.InterestedUserSubscriptionDAO" class="com.itech.coupon.dao.HibernateInterestedUserSubscriptionDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	 
+    <bean name="itech.AlertConfigManager" class="com.itech.alert.services.AlertConfigManagerImpl">
+    	<property name="alertConfigDAO" ref="itech.AlertConfigDAO"/>
+    </bean>
+    
+    <bean name="itech.AlertManager" class="com.itech.alert.services.AlertManagerImpl">
+    	<property name="alertDAO" ref="itech.AlertDAO"/>
+    </bean>
+    
+    <bean name="itech.AlertConfigDAO" class="com.itech.alert.dao.HibernateAlertConfigDAOImpl" parent="itech.hibernateCommonDAO" />
+    
+    <bean name="itech.AlertDAO" class="com.itech.alert.dao.HibernateAlertDAOImpl" parent="itech.hibernateCommonDAO" />
+   
+   	<bean name="itech.handler.OfferEventHandler" class="com.itech.event.coupon.OfferEventHandler">
+   		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
+   	</bean>
+   	
+   	<bean name="itech.handler.UserEventHandler" class="com.itech.event.user.UserEventHandler">
+   		<property name="emailManager" ref="itech.emailManager"/>
+   	</bean>
+   	
+   	<bean name="itech.EventEngine" class="com.itech.event.services.EventEngineImpl">
+   		<property name="eventHandlers">
+   			<list>
+   				<ref bean="itech.handler.OfferEventHandler"/>
+   				<ref bean="itech.handler.UserEventHandler"/>
+   				<ref bean="itech.handler.EmailDispatcher"/>
+   			</list>
+   		</property>
+   	</bean>
+   	
+   	<bean name="itech.OfferEventGenerator" class="com.itech.event.coupon.OfferEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
+	
+	<bean name="itech.UserEventGenerator" class="com.itech.event.user.UserEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
+   	
+   	<bean name="itech.EmailEventGenerator" class="com.itech.event.email.EmailEventGeneratorImpl">
+   		<property name="eventEngine" ref="itech.EventEngine"/>
+   	</bean>
+   	
+   	
+	<bean name="itech.AlertEngine" class="com.itech.alert.services.AlertEngine">
+		<property name="alertConfigManager" ref="itech.AlertConfigManager"/>
+		<property name="alertManager" ref="itech.AlertManager"/>
+		<property name="alertGenerators">
+			<list>
+				<ref bean="itech.OfferAlertGenerator"/>
+			</list>
+		</property>
+		<property name="alertHandlers">
+			<list>
+				<ref bean="itech.handler.offerAlerthandler"/>
+			</list>
+		</property>
+		<property name="connectionUtil" ref="itech.ConnectionUtil"/>
+	</bean>
+	
+	
+	<bean id="itech.handler.offerAlerthandler" class="com.itech.alert.handler.OfferAlertHandler">
+		<property name="emailManager" ref="itech.emailManager"/>
+		<property name="userManager" ref="itech.UserManager"/>
+	</bean>
+	
+	<bean id="itech.OfferAlertGenerator" class="com.itech.alert.services.OfferAlertGenerator">
+		<property name="offerManager" ref="itech.offerManager"/>
+	</bean>  
+	
+	<bean id="itech.offerManager" class="com.itech.offer.manager.OfferManagerImpl">
+		<property name="offerDAO" ref="itech.offerDAO"/>
+		<property name="offerUserAssocDAO" ref="itech.offerUserAssocDAO"/>
+	</bean>
+	
+	<bean id="itech.offerDAO" class="com.itech.offer.dao.impl.OfferDAOImpl">
+	</bean>
+	
+	<bean id="itech.offerUserAssocDAO" class="com.itech.offer.dao.impl.OfferUserAssocDAOImpl">
+	</bean>
+	
+<!-- 	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> -->
+<!-- 		<property name="host" value="smtp.gmail.com" /> -->
+<!-- 		<property name="port" value="587" /> -->
+<!-- 		<property name="username" value="test.coupoxo@gmail.com" /> -->
+<!-- 		<property name="password" value="7cygod2012" /> -->
+<!-- 		<property name="javaMailProperties"> -->
+<!-- 	   		<props> -->
+<!--        	      	<prop key="mail.smtp.auth">true</prop> -->
+<!--        	      	<prop key="mail.smtp.starttls.enable">true</prop> -->
+<!--        	   </props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	
+   	<bean id="itech.handler.EmailDispatcher" class=" com.itech.email.services.EmailDispatcher">
+   		<property name="emailManager" ref="itech.emailManager"/>
+   		<property name="emailSender" ref="itech.emailSender"/>
+   		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+   	</bean>
+   	
+	<bean id="itech.mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="support@offerdiary.com" />
+		<property name="password" value="solidcore@123" />
+		<property name="javaMailProperties">
+	   		<props>
+       	      	<prop key="mail.smtp.auth">true</prop>
+       	      	<prop key="mail.smtp.starttls.enable">true</prop>
+       	   </props>
+		</property>
+	</bean>
+ 
+	<bean id="itech.emailSender" class="com.itech.email.services.EmailSenderImpl">
+		<property name="mailSender" ref="itech.mailSender" />
+	</bean> 
+	
+	<bean id="itech.emailMessagesDAO" class="com.itech.email.dao.EmailMessagesDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+	
+	<bean id="itech.emailManager" class="com.itech.email.services.EmailManagerImpl">
+		<property name="emailSender" ref="itech.emailSender"/>
+		<property name="emailMessagesDAO" ref="itech.emailMessagesDAO"/>
+		<property name="emailEventGenerator" ref="itech.EmailEventGenerator"/>
+	</bean>
+	
+</beans>
