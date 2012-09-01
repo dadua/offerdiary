@@ -109,30 +109,26 @@
 			<div class="row-fluid">
 				<div class="span6 offset3">
 					<div class="row">
-						<div class="span4 offset1">
+						<div class="span4 offset4">
 							<form id="goToWallet" action="wallet.do" method="post">
 								<input id="loginToFb" class="btn btn-large btn-primary fb-btn-color"  type="button" value="Login with Facebook" />
 								<input type="hidden" name="login" value="success" />
 							</form>
 						</div>
 					</div>
-					<hr class="span2">
-					<div class="span1" >
-						<span class="inBetweenSmallText">or</span>
-					</div>
-					<hr class="span2" >
-					
 					<div class="row">
-						<div class="span1" >
-						&nbsp;
-						</div>	
-						
-						<div id="emailCredsForm" class="span3">
+						<hr class="span3 offset2">
+						<div class="span2">
+							<span class="inBetweenSmallText">or</span>
+						</div>
+						<hr class="span3">
+					</div>
+					<div class="row">
+						<div id="emailCredsForm" class="span6 offset3">
 							<div id="invalidUserNamePassword" class="hide alert alert-error">
 								<button class="close" type="button">×</button>
 								Invalid email/password
 							</div>
-							
 							<div class="form">
 								<div class="control-group">
 									<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
@@ -143,32 +139,30 @@
 									<input id="password" type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
 									<span class="help-inline hide">*</span>
 								</div>
-								<div class="row">
-									<div class="span1">
-										<button id="logIn" type="submit" class="btn btn-info">Log in</button>
-									</div>
-									<div class="span2">
-										<a href="getPassword.do">
-											forgot your password ?
-										</a>
-									</div>
-								</div>
 							</div>
 						</div>
-					
-						<div class="span1" >
-						&nbsp;
-						</div>	
+					</div>
+					<div class="row">
+						<div class="span6 offset3">
+							<div class="span4">
+								<button id="logIn" type="submit"
+									class="btn btn-info">
+									Log in
+								</button>
+							</div>
+							<div class="span7">
+								<a href="getPassword.do">
+									forgot your password ?
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
-				
-				<div class="span3">
-				&nbsp;
-				</div>
 			</div>
+		<%@include file="common/footer.jsp" %>
 		</div>
 		
-		<%@include file="common/footer.jsp" %>
+<%-- 		<%@include file="common/footer.jsp" %> --%>
 		
 	</body>
 </html>
