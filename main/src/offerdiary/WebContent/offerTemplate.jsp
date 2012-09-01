@@ -5,8 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Offer Template</title>
-<%@include file="jqueryAllInclude.html" %>
-		<%@include file="bootstrapHeadInclude.html" %>
+<%@include file="common/jqueryAllInclude.html" %>
+<%@include file="common/bs/bootstrapHeadInclude.html" %>
 </head>
 <style type="text/css">
 div.offerBlock{

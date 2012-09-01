@@ -10,7 +10,7 @@
 				<meta charset="UTF-8">
 			 --%>
 		<title>OfferDiary : Your Official Offer Journal</title>
-		<%@include file="commonHeader.jsp" %>
+		<%@include file="common/header.jsp" %>
 	
 	</head>
 	<body onload="onLoadPutRandomTiles();" >
