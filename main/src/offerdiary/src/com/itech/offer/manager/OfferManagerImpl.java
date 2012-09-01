@@ -15,6 +15,7 @@ import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.model.Vendor;
 
 
 public class OfferManagerImpl extends CommonBaseManager implements OfferManager {
@@ -35,6 +36,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			offer.setFbNotification(offer.getNotifyVO().getFbNotify());
 			offer.setEmailNotification(offer.getNotifyVO().getEmailNotify());
 		}
+		Long vendorId = offer.getSourceVendor().getId();
+		Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
+		offer.setSourceVendor(vendorFromDB);
 		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
