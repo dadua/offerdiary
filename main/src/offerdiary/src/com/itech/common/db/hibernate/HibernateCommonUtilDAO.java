@@ -38,7 +38,7 @@ CommonUtilDAO {
 	}
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		throw new RuntimeException("Method not supported");
 	}
 
