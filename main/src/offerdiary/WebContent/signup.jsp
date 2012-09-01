@@ -42,67 +42,44 @@
 		<%@include file="common/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
-				<div class="span3" >
-				&nbsp;
-				</div>
-				
-				<div class="span6" >
-				
+				<div class="span6 offset3">
 					<div class="row">
-						<div class="span2" >
-						&nbsp;
-						</div>
-						
-						<div class="span2">
+						<div class="span4 offset4">
 							<form id="goToWallet" action="wallet.do" method="post">
-								<input id="loginToFb" class="btn btn-large btn-primary"  type="button" value="Signup with Facebook" />
+								<input id="loginToFb" class="btn btn-large btn-primary"  type="button" value="Sign up with Facebook" />
 								<input type="hidden" name="login" value="success" />
 							</form>
 						</div>
-						
-						<div class="span2" >
-						&nbsp;
-						</div>
 					</div>
-					
-					<hr class="span2" >
-					<div class="span1" >
-						<span class="inBetweenSmallText"> or </span>
-					</div>
-					<hr class="span2" >
-					
-					
 					<div class="row">
-						<div class="span1" >
-						&nbsp;
-						</div>	
-						
-						<div class="span4">
+						<hr class="span3 offset2">
+						<div class="span2">
+							<span class="inBetweenSmallText">or</span>
+						</div>
+						<hr class="span3">
+					</div>
+					<div class="row">
+						<div class="span6 offset3">
 							<form action="emailSignup.do" method="post" class="" >
 								<input type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
 								<%-- TODO: We might not require password field in signup page --%>
 								<input type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
-								<div class="row">
-									<div class="span2">
-										<button type="submit" class="btn  btn-success ">Sign Up</button>	
-									</div>
-								</div>
 							</form>
 						</div>
-					
-						<div class="span1" >
-						&nbsp;
-						</div>	
+					</div>
+					<div class="row">
+						<div class="span6 offset3">
+							<div class="span4">
+								<button type="submit"
+									class="btn  btn-success ">
+									Sign up
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
-				
-				<div class="span3">
-				&nbsp;
-				</div>
 			</div>
+			<%@include file="common/footer.jsp" %>
 		</div>
-		
-		<%@include file="common/footer.jsp" %>
-		
 	</body>
 </html>
