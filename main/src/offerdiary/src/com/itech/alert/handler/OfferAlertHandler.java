@@ -4,11 +4,11 @@ import org.apache.log4j.Logger;
 
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertDataTypes;
-import com.itech.coupon.manager.UserManager;
-import com.itech.coupon.model.User;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
 import com.itech.email.vo.OfferExpiryNotificationEmail;
+import com.itech.user.manager.UserManager;
+import com.itech.user.model.User;
 
 public class OfferAlertHandler implements AlertHandler{
 

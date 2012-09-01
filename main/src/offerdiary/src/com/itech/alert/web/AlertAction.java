@@ -19,7 +19,7 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.model.Coupon;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class AlertAction extends CommonAction{
 

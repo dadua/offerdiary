@@ -1,4 +1,4 @@
-package com.itech.coupon.model.constants;
+package com.itech.user.constants;
 
 public class InterestedUserSubscriptionModelConstants {
 	public static final String TABLE_INTERESTED_USER_SUBSCRIPTION = "ALERT_CONFIG";

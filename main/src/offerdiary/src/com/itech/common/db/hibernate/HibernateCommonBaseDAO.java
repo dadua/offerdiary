@@ -10,7 +10,7 @@ import com.itech.common.db.SearchCriteria;
 import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.security.SecurityManager;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 

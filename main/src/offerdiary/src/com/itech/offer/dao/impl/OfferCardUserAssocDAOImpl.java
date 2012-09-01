@@ -7,10 +7,10 @@ import java.util.Map;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferCardUserAssocDAO;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCardUserAssoc;
+import com.itech.user.model.User;
 
 public class OfferCardUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferCardUserAssoc> implements OfferCardUserAssocDAO {
 

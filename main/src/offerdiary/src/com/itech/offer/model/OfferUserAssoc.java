@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.User;
 import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferSharingType;
+import com.itech.user.model.User;
 
 @Entity
 @Table(name=OfferUserAssocModelConstants.TABLE_OFFER_USER_ASSOC)

@@ -6,10 +6,10 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.enums.OfferType;
+import com.itech.user.model.User;
 
 public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements OfferDAO{
 

@@ -1,4 +1,4 @@
-package com.itech.coupon.model;
+package com.itech.user.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.constants.UserModelConstants;
+import com.itech.user.constants.UserModelConstants;
 
 @Entity
 @Table(name="USERS")

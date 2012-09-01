@@ -9,7 +9,7 @@ import org.dbunit.dataset.IDataSet;
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertModelConstant;
 import com.itech.common.test.CommonTestDao;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class TestAlertDAOImpl extends CommonTestDao<Alert> {
 

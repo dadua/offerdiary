@@ -1,4 +1,4 @@
-package com.itech.coupon.model;
+package com.itech.user.model;
 
 public enum UserRole {
 	ADMIN, CONSUMER

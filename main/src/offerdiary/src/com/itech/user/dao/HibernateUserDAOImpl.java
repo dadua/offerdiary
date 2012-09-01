@@ -1,11 +1,11 @@
-package com.itech.coupon.dao;
+package com.itech.user.dao;
 
 import java.util.List;
 
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implements UserDAO {
 

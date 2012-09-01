@@ -2,9 +2,9 @@ package com.itech.offer.manager;
 
 import java.util.List;
 
-import com.itech.coupon.model.User;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
+import com.itech.user.model.User;
 
 public interface OfferManager {
 

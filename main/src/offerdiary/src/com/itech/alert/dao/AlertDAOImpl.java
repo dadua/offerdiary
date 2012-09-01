@@ -11,7 +11,7 @@ import com.itech.alert.model.AlertConfigModelConstant;
 import com.itech.alert.model.AlertModelConstant;
 import com.itech.common.db.CommonBaseDAOImpl;
 import com.itech.common.db.DBConnectionManager;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 

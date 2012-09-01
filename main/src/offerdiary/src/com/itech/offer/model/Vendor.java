@@ -14,8 +14,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.User;
 import com.itech.offer.model.enums.VendorType;
+import com.itech.user.model.User;
 
 @Entity
 @Table(name=VendorModelContants.TABLE_VENDOR)

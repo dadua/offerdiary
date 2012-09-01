@@ -1,7 +1,7 @@
-package com.itech.coupon.manager;
+package com.itech.user.manager;
 
-import com.itech.coupon.model.User;
 import com.itech.fb.services.FbService;
+import com.itech.user.model.User;
 
 public interface UserManager {
 	public void save(User user);

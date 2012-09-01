@@ -7,8 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
-import com.itech.coupon.model.User;
-import com.itech.event.coupon.OfferEventGenerator;
+import com.itech.event.offer.OfferEventGenerator;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.dao.OfferShareDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
@@ -16,6 +15,7 @@ import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
+import com.itech.user.model.User;
 
 
 public class OfferManagerImpl extends CommonBaseManager implements OfferManager {

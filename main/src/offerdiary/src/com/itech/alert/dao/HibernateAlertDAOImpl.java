@@ -7,7 +7,7 @@ import org.hibernate.Session;
 
 import com.itech.alert.model.Alert;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class HibernateAlertDAOImpl extends HibernateCommonBaseDAO<Alert> implements AlertDAO{
 

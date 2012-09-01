@@ -1,5 +1,5 @@
 <%@page import="com.itech.coupon.model.LoginType"%>
-<%@page import="com.itech.coupon.model.User"%>
+<%@page import="com.itech.user.model.User"%>
 <style>
 div.navbar-inner-header{
 				background-color: #A4A2A2;

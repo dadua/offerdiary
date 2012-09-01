@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.itech.common.security.SecurityContext;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class LoginFilter implements Filter {
 	private static final Logger logger = Logger.getLogger(LoginFilter.class);

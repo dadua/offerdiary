@@ -18,11 +18,11 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.coupon.model.User;
 import com.itech.fb.client.FbAdapter;
 import com.itech.fb.model.FbCreds;
 import com.itech.fb.services.FbAdapterFactory;
 import com.itech.fb.services.FbService;
+import com.itech.user.model.User;
 
 public class FbLoginAction extends CommonAction{
 

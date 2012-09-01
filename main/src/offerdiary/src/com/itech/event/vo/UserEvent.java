@@ -1,6 +1,6 @@
 package com.itech.event.vo;
 
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class UserEvent extends Event {
 	

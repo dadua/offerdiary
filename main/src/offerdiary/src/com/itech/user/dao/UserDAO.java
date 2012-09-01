@@ -1,7 +1,7 @@
-package com.itech.coupon.dao;
+package com.itech.user.dao;
 
 import com.itech.common.db.CommonBaseDAO;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public interface UserDAO extends CommonBaseDAO<User>{
 

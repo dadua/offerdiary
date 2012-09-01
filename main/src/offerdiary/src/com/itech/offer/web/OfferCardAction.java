@@ -16,8 +16,8 @@ import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.coupon.model.User;
 import com.itech.offer.model.OfferCard;
+import com.itech.user.model.User;
 
 public class OfferCardAction extends CommonAction{
 	private static final String OFFER_CARD_JSON_KEY = "offerCardJson";

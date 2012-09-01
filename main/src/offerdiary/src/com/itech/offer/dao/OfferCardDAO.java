@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.common.db.SearchCriteria;
-import com.itech.coupon.model.User;
 import com.itech.offer.model.OfferCard;
+import com.itech.user.model.User;
 
 public interface OfferCardDAO extends CommonBaseDAO<OfferCard>{
 
