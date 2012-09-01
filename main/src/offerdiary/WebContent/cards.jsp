@@ -27,6 +27,7 @@
 			}
 						
 			it.card.dismiss = function(e) {
+				$(this).addClass('disable');
 				var target = e.target,
 				cardId = it.card.getParentCardId(target),
 				card = {id:cardId};

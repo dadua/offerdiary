@@ -36,6 +36,8 @@ public class Vendor extends PersistableEntity{
 	@Type(type="text")
 	private String siteUrl;
 
+
+	//Image URL on our our server
 	@Column(name=VendorModelContants.COL_LOGO_URL)
 	private String logoUrl;
 
