@@ -28,8 +28,8 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + AlertModelConstant.TABLE_ALERT +
-					" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
-					" values (?, ?, ?, ?, ?, ?, ?, ?)";
+			" (DATA_TYPE, DATA_ID, ALERT_TYPE, ALERT_STATUS, CREATION_TIME, USER_ID, MESSAGE, HTML_MESSAGE) " +
+			" values (?, ?, ?, ?, ?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (Alert alert : alerts)  {
 				ps.setString(1, alert.getDataType());
@@ -52,12 +52,12 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 	}
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertModelConstant.TABLE_ALERT + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, uniqueId);
 			ps.executeUpdate();
@@ -75,7 +75,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			for (Alert alert :alerts) {
 				ps.setLong(1, alert.getId());
@@ -97,7 +97,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from  " + AlertModelConstant.TABLE_ALERT + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -149,7 +149,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertModelConstant.TABLE_ALERT + "" +
-					" where data_type=? and data_id=?";
+			" where data_type=? and data_id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, dataType);
 			ps.setLong(2, dataId);
@@ -164,14 +164,15 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 
 	@Override
 	public List<Alert> getAlertsForUser(User user) {
-		if(null == user)
+		if(null == user) {
 			return null;
+		}
 		long userID = user.getId();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertModelConstant.TABLE_ALERT + "" +
-					" where user_id = ?";
+			" where user_id = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, userID);
 			rs = ps.executeQuery();
@@ -189,7 +190,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertModelConstant.TABLE_ALERT + "" +
-					" where data_type = ? and data_id=?";
+			" where data_type = ? and data_id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, dataType);
 			ps.setLong(2, dataId);
@@ -208,7 +209,7 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from " + AlertModelConstant.TABLE_ALERT +
-					" where id=?" ;
+			" where id=?" ;
 			ps = getConnection().prepareStatement(sql);
 			for (Long id : uniqueIds)  {
 				ps.setLong(1, id);
@@ -224,14 +225,15 @@ public class AlertDAOImpl extends CommonBaseDAOImpl<Alert> implements AlertDAO {
 
 	@Override
 	public void markAlertsRead(User user) {
-		if(null == user)
+		if(null == user) {
 			return;
+		}
 		long user_id = user.getId();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "update "+ AlertModelConstant.TABLE_ALERT+ " set alert_status = '"+ Alert.AlertStatus.READ.toString()+"'"+
-					" where user_id = ?";
+			" where user_id = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, user_id);
 			ps.executeUpdate();

@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.itech.common.db.PersistableEntity;
 import com.itech.coupon.model.User;
 import com.itech.offer.model.enums.VendorType;
@@ -29,12 +31,14 @@ public class Vendor extends PersistableEntity{
 	private String address;
 
 	@Column(name=VendorModelContants.COL_SITE_URL)
+	@Type(type="text")
 	private String siteUrl;
 
 	@Column(name=VendorModelContants.COL_LOGO_URL)
 	private String logoUrl;
 
 	@Column(name=VendorModelContants.COL_DESCRIPTION)
+	@Type(type="text")
 	private String description;
 
 	@Column(name=VendorModelContants.COL_CITY)

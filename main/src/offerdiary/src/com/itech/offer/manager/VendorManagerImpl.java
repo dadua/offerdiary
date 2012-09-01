@@ -26,6 +26,10 @@ VendorManager {
 		return vendor;
 
 	}
+	@Override
+	public Vendor getVendorByName(String name) {
+		return getVendorDAO().getVendorByName(name);
+	}
 
 	public void setVendorDAO(VendorDAO vendorDAO) {
 		this.vendorDAO = vendorDAO;
@@ -34,5 +38,6 @@ VendorManager {
 	public VendorDAO getVendorDAO() {
 		return vendorDAO;
 	}
+
 
 }

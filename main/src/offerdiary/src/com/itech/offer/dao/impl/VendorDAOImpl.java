@@ -28,4 +28,15 @@ public class VendorDAOImpl extends HibernateCommonBaseDAO<Vendor> implements Ven
 		return list;
 	}
 
+	@Override
+	public Vendor getVendorByName(String name) {
+		String hql = "from " + getEntityClassName() + " where (vendorType=:vendorType) and name  =:vendorName order by name";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("vendorType", VendorType.GLOBAL);
+		query.setParameter("vendorName", name);
+		return (Vendor) getSingleResult(query, true);
+	}
+
+
+
 }

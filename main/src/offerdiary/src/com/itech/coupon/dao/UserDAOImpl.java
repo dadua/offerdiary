@@ -72,7 +72,7 @@ public class UserDAOImpl extends CommonBaseDAOImpl<User> implements UserDAO {
 	}
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
