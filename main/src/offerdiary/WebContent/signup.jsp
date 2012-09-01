@@ -64,19 +64,15 @@
 								<input type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
 								<%-- TODO: We might not require password field in signup page --%>
 								<input type="password" class="input-xlarge input-center" name="password" placeholder="Password"></input>
+								<div class="span6">
+									<button type="submit" class="btn  btn-success ">
+											Sign up
+									</button>
+								</div>
 							</form>
 						</div>
 					</div>
-					<div class="row">
-						<div class="span6 offset3">
-							<div class="span4">
-								<button type="submit"
-									class="btn  btn-success ">
-									Sign up
-								</button>
-							</div>
-						</div>
-					</div>
+
 				</div>
 			</div>
 			<%@include file="common/footer.jsp" %>
