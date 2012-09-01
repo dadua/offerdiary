@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.ActionResponse;
+import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
+import com.itech.common.web.action.Forward;
+import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.coupon.model.User;
@@ -32,6 +35,7 @@ public class FbLoginAction extends CommonAction{
 	 *  2. PERMISSIONS_REQD
 	 *  3. CALLBACKURL
 	 */
+	@ActionResponseAnnotation(responseType=Redirect.class)
 	public Response doFbUserLoginToApp (HttpServletRequest req, HttpServletResponse resp) {
 
 		String serverPath = ActionResponse.getServerPath(req, resp);
@@ -42,7 +46,7 @@ public class FbLoginAction extends CommonAction{
 		return ActionResponse.redirect(fbAdapter.getAuthUrlString());
 	}
 
-
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response setFbAdapter (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -59,7 +63,7 @@ public class FbLoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
-
+	@ActionResponseAnnotation(responseType=Redirect.class)
 	public Response doHandleFbUserCode (HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException {
 
 		FbAdapter fbAdapter = (FbAdapter)request.getSession().getAttribute(FbConstants.FB_ADAPTER_KEY);
@@ -86,14 +90,14 @@ public class FbLoginAction extends CommonAction{
 		}
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response testExportToFacebook(HttpServletRequest request, HttpServletResponse response) {
 		return ActionResponse.forward("testAjax.jsp");
-
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response testFbAction(HttpServletRequest request, HttpServletResponse response) {
 		return ActionResponse.forward("testResult.jsp");
-
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.exeption.ReturnCodes;
+import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
@@ -23,19 +24,22 @@ public class LoginAction extends CommonAction{
 
 
 
-
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward("login.jsp");
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response signup(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward("signup.jsp");
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response getPassword(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward("resetPassword.jsp");
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response loginDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -52,6 +56,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response emailLogin(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -78,6 +83,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	private Response emailDoesntExist() {
 		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
 		Type stringResultType = new TypeToken<Result<String>>() {
@@ -85,6 +91,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, stringResultType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	private Response invalidPasswordResponse() {
 		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
 		Type stringResultType = new TypeToken<Result<String>>() {
@@ -92,6 +99,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, stringResultType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response signUpDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -106,9 +114,9 @@ public class LoginAction extends CommonAction{
 		Type userResultType = new TypeToken<Result<User>>() {
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);
-
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response emailSignUp (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -126,6 +134,7 @@ public class LoginAction extends CommonAction{
 		return new Forward("wallet.do");
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response newInterestedUserSuscription(HttpServletRequest req, HttpServletResponse resp){
 		String email = req.getParameter("email");
 		getUserManager().saveInterestedUserForSubscription(email);
@@ -135,9 +144,9 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, stringResultType);
 	}
 
+	@ActionResponseAnnotation(responseType=Redirect.class)
 	public Response logout (HttpServletRequest req, HttpServletResponse resp) {
 		updateLoggedInUser(req, null);
 		return new Redirect("");
 	}
-
 }

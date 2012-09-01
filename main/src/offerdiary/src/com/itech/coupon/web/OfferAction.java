@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
@@ -29,6 +30,7 @@ public class OfferAction extends CommonAction{
 		return new Forward(OfferWalletConstants.INDEX_PAGE);
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Offer> offers = new ArrayList<Offer>();
@@ -43,6 +45,7 @@ public class OfferAction extends CommonAction{
 		return new Forward(OfferWalletConstants.WALLET_PAGE);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response getMyOffers (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Offer> offers = new ArrayList<Offer>();
@@ -56,6 +59,7 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response saveOffers (HttpServletRequest req, HttpServletResponse resp) {
 		String offersJson = req.getParameter(OfferWalletConstants.OFFER_LIST_PARAM_KEY);
 		Gson gson = new Gson();
@@ -68,6 +72,7 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response deleteOffers (HttpServletRequest req, HttpServletResponse resp) {
 		String offersJson = req.getParameter(OfferWalletConstants.OFFER_IDS_PARAM_KEY);
 		Gson gson = new Gson();
@@ -84,6 +89,7 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response getSharedOffer (HttpServletRequest req, HttpServletResponse resp) {
 		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
 		OfferShare offerShare = null;
@@ -92,9 +98,9 @@ public class OfferAction extends CommonAction{
 		}
 		req.setAttribute(OfferWalletConstants.SHARED_OFFER_ATTR_KEY, offerShare.getOffer());
 		return new Forward(OfferWalletConstants.GET_SHARED_OFFER_PAGE);
-
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response shareOffer(HttpServletRequest req, HttpServletResponse resp) {
 		String offerId = req.getParameter(OfferWalletConstants.SHARED_OFFER_ID_ATTR_KEY);
 		OfferShare offerShare = null;
@@ -107,7 +113,5 @@ public class OfferAction extends CommonAction{
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
-
 	}
-
 }
