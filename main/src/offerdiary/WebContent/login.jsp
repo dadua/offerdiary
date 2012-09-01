@@ -107,31 +107,16 @@
 		<%@include file="common/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
-				<div class="span3" >
-				&nbsp;
-				</div>
-				
-				<div class="span6" >
-				
+				<div class="span6 offset3">
 					<div class="row">
-						<div class="span2" >
-						&nbsp;
-						</div>
-						
-						<div class="span2">
+						<div class="span4 offset1">
 							<form id="goToWallet" action="wallet.do" method="post">
 								<input id="loginToFb" class="btn btn-large btn-primary fb-btn-color"  type="button" value="Login with Facebook" />
 								<input type="hidden" name="login" value="success" />
 							</form>
 						</div>
-						
-						<div class="span2" >
-						&nbsp;
-						</div>
 					</div>
-					
-						
-					<hr class="span2" >
+					<hr class="span2">
 					<div class="span1" >
 						<span class="inBetweenSmallText">or</span>
 					</div>

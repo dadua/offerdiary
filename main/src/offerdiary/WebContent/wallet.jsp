@@ -423,57 +423,58 @@
 		
 		<%-- Offer Template Code Begins Here | Use it under a div, implemeting a span class of span4 or more --%>
 				
-				
-		<li class="offer_ui_template thumbnail offerBlock box-shadow span4 hide">
-			<div class="row">
-				<div class="span2 pull-left">
-					<img class="sourceVendor-logoUrl" alt="99labels" src="images/stores/99labels.jpg">
-					<span class="offerCode margin-left-10 sans-serif-extra-small">Code: <span class="offerCodeVal">5455X34</span></span>
-				</div>
-				<div class="space15">
-					<div class="row margin-zero">
-						<span class="offerNum">
-							Buy 2 & get 5 Free
-						</span>
+		<ul class="hide">		
+			<li class="offer_ui_template thumbnail offerBlock box-shadow span4 hide">
+				<div class="row">
+					<div class="span2 pull-left">
+						<img class="sourceVendor-logoUrl" alt="99labels" src="images/stores/99labels.jpg">
+						<span class="offerCode margin-left-10 sans-serif-extra-small">Code: <span class="offerCodeVal">5455X34</span></span>
 					</div>
-					<div class="row margin-zero">
-						<span class="vendorName sans-serif-normal">
-							99Lables
-						</span>
-					</div>
-					<div class="row margin-zero">
-						<span class="sans-serif-small">
-							<a class="vendorUrl" href="http://www.99labels.com"
-								target="_blank">
-								www.99labels.com
-							</a>
-						</span>
-					</div >
-					<div class="row margin-zero">
-						<span class="sans-serif-small">
-							Expire
-						</span>
-						<i class="icon-calendar"></i>
-						<span class="offerExpiryDate sans-serif-extra-small">
-							: 28-Sept, 2012
-						</span>
+					<div class="space15">
+						<div class="row margin-zero">
+							<span class="offerNum">
+								Buy 2 & get 5 Free
+							</span>
+						</div>
+						<div class="row margin-zero">
+							<span class="vendorName sans-serif-normal">
+								99Lables
+							</span>
+						</div>
+						<div class="row margin-zero">
+							<span class="sans-serif-small">
+								<a class="vendorUrl" href="http://www.99labels.com"
+									target="_blank">
+									www.99labels.com
+								</a>
+							</span>
+						</div >
+						<div class="row margin-zero">
+							<span class="sans-serif-small">
+								Expire
+							</span>
+							<i class="icon-calendar"></i>
+							<span class="offerExpiryDate sans-serif-extra-small">
+								: 28-Sept, 2012
+							</span>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row offer-icon" >
-				<div class="span2" style="margin-left:15px;">
-					<a href="#" onClick="" >
-						<i class="icon-trash"></i>
-					</a>
-					<a href="#" onClick="" >
-						<i class="icon-wrench"></i>
-					</a>
-					<a href="#" onClick="" >
-						<i class="icon-envelope"></i>
-					</a>
+				<div class="row offer-icon" >
+					<div class="span2" style="margin-left:15px;">
+						<a href="#" onClick="" >
+							<i class="icon-trash"></i>
+						</a>
+						<a href="#" onClick="" >
+							<i class="icon-wrench"></i>
+						</a>
+						<a href="#" onClick="" >
+							<i class="icon-envelope"></i>
+						</a>
+					</div>
 				</div>
-			</div>
-		</li>
+			</li>
+		</ul>
 		<%-- End of Offer Template UI --%>
 
 		<%@include file="common/footer.jsp" %>
