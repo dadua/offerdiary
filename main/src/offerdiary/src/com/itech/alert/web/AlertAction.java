@@ -18,7 +18,6 @@ import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.coupon.model.Coupon;
 import com.itech.user.model.User;
 
 public class AlertAction extends CommonAction{
@@ -53,7 +52,7 @@ public class AlertAction extends CommonAction{
 		}
 
 		Result<List<Alert>> result = new Result<List<Alert>>(alerts);
-		Type type = new TypeToken<Result<List<Coupon>>>() { }.getType();
+		Type type = new TypeToken<Result<List<Alert>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
@@ -64,7 +63,7 @@ public class AlertAction extends CommonAction{
 		Type type = new TypeToken<List<Long>>() { }.getType();
 		List<Long> alertIds = gson.fromJson(alertIdsJson, type);
 		getAlertManager().deleteByIds(alertIds);
-		Result<String> result = new Result<String>("Successfully Deleted the coupons");
+		Result<String> result = new Result<String>("Successfully Deleted the Offers");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
