@@ -10,11 +10,11 @@
 				<meta charset="UTF-8">
 			 --%>
 		<title>OfferDiary : Your Official Offer Journal</title>
-		<%@include file="commonHeader.jsp" %>
+		<%@include file="common/header.jsp" %>
 	
 	</head>
 	<body >
-		<%@include file="navHeader.jsp" %>
+		<%@include file="common/navHeader.jsp" %>
 		<div class="container">
 			<div class="row">
 				<div class="span2 offset2" >
@@ -98,7 +98,7 @@
 			</div>
 		</div>
 			
-		<%@include file="footer.jsp" %>
+		<%@include file="common/footer.jsp" %>
 		
 			
 		<script type="text/javascript">

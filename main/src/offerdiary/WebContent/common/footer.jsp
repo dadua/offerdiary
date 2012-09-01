@@ -29,4 +29,4 @@
 		</div>
 		</footer>
 		
-		<%@include file="fbInitAboveBodyEnd.jsp" %>
+		<%@include file="fb/fbInitAboveBodyEnd.jsp" %>

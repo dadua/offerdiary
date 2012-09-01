@@ -1,6 +1,6 @@
 		<%@include file="jqueryAllInclude.html" %>
-		<%@include file="bootstrapHeadInclude.html" %>
-		<%@include file="fbLoginAboveHeadJs.jsp" %>
+		<%@include file="bs/bootstrapHeadInclude.html" %>
+		<%@include file="fb/fbLoginAboveHeadJs.jsp" %>
 		<link rel="shortcut icon" href="favicon.ico" />
 		<script type="text/javascript">
 			var it = it || {};

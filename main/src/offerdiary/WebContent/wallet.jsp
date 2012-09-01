@@ -14,7 +14,7 @@
 			 --%>
 		<title>Offer Wallet</title>
 		
-		<%@include file="commonHeader.jsp" %>
+		<%@include file="common/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -294,7 +294,7 @@
 	</head>
 	<body>
 	
-		<%@include file="navHeader.jsp" %>
+		<%@include file="common/navHeader.jsp" %>
 		
 		<div class="container" >
 			<div class="row-fluid">
@@ -346,7 +346,7 @@
 			</div>
 		</div>
 		
-		<%@include file="footer.jsp" %>
+		<%@include file="common/footer.jsp" %>
 	
 	</body>
 </html>
