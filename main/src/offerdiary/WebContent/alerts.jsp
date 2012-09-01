@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 
 <%@page import="java.util.List"%>
-<%@page import="com.itech.coupon.model.Coupon"%>
 <%@page import="com.itech.alert.model.Alert"%><html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

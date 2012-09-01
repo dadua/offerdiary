@@ -1,6 +1,6 @@
 
 
-<%@page import="com.itech.coupon.model.LoginType"%>
+<%@page import="com.itech.user.model.LoginType"%>
 <%@page import="com.itech.user.model.User"%>
 <style>
 div.navbar-inner-header{
