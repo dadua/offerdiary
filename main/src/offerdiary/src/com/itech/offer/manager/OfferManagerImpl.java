@@ -36,9 +36,12 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			offer.setFbNotification(offer.getNotifyVO().getFbNotify());
 			offer.setEmailNotification(offer.getNotifyVO().getEmailNotify());
 		}
-		Long vendorId = offer.getSourceVendor().getId();
-		Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
-		offer.setSourceVendor(vendorFromDB);
+		Vendor sourceVendor = offer.getSourceVendor();
+		if (sourceVendor != null) {
+			Long vendorId = sourceVendor.getId();
+			Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
+			offer.setSourceVendor(vendorFromDB);
+		}
 		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
