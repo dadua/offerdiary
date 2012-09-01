@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 import com.itech.common.db.PersistableEntity;
 
 @Entity
@@ -45,6 +47,7 @@ public class OfferCard extends PersistableEntity{
 	private String privilege;//Platinum, Gold
 
 	@Column(name=OfferCardModelConstants.COL_DESCRIPTION)
+	@Type(type="text")
 	private String description;
 
 	@Column(name=OfferCardModelConstants.COL_IMAGE_URL)

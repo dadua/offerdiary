@@ -35,8 +35,9 @@ public class StoreDAOImpl extends CommonBaseDAOImpl<Store> implements StoreDAO {
 
 	@Override
 	public List<Store> getByTags(List<String> tags) {
-		if (tags.size() == 0)
+		if (tags.size() == 0) {
 			return new ArrayList<Store>();
+		}
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -113,7 +114,7 @@ public class StoreDAOImpl extends CommonBaseDAOImpl<Store> implements StoreDAO {
 	}
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {

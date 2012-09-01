@@ -7,6 +7,8 @@ import org.hibernate.Session;
 
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.common.db.SearchCriteria;
+import com.itech.common.exeption.CommonException;
+import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.security.SecurityManager;
 import com.itech.coupon.model.User;
 
@@ -31,7 +33,7 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 	}
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		String hql = "delete from "+getEntityClassName()+" where id = :id";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("id", uniqueId);
@@ -69,6 +71,23 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	protected List getPaginatedResultFor(Query query, SearchCriteria searchCriteria) {
 		return getPaginatedResultFor(query, searchCriteria.getPageNumber(), searchCriteria.getResultsPerPage());
+	}
+
+	protected Object getSingleResult(Query query) {
+		return getSingleResult(query, false);
+	}
+
+	protected Object getSingleResult(Query query, boolean failIfResultsMoreThanOne) {
+		List result = query.list();
+		if (result.size() == 0) {
+			return null;
+		}
+
+		if (result.size() > 1 && failIfResultsMoreThanOne) {
+			throw new CommonException(ReturnCodes.UNEXPECTED_RESULT_COUNT_FROM_DB);
+		}
+
+		return result.get(0);
 	}
 
 	protected abstract Class getEntityClass();

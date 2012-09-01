@@ -9,5 +9,6 @@ public class ReturnCodes {
 	public static final ReturnCode UNCLASSIFIED_DB_ERROR = new ReturnCode(3);
 	public static final ReturnCode FEATURE_NOT_SUPPORTED_ERROR = new ReturnCode(6);
 	public static final ReturnCode NO_ROWS_RETURNED = new ReturnCode(7);
+	public static final ReturnCode UNEXPECTED_RESULT_COUNT_FROM_DB = new ReturnCode(8);
 
 }

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.itech.alert.model.AlertConfig;
-import com.itech.alert.model.AlertConfig.ActivationStatus;
 import com.itech.alert.model.AlertConfigModelConstant;
+import com.itech.alert.model.AlertConfig.ActivationStatus;
 import com.itech.common.db.CommonBaseDAOImpl;
 import com.itech.common.db.DBConnectionManager;
 
@@ -30,8 +30,8 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "insert into " + AlertConfigModelConstant.TABLE_ALERT_CONFIG  +
-					" (DATA_TYPE, DATA_ID, ALERT_TYPE,TRIGGER_TIME,CREATION_TIME, STATUS) " +
-					" values (?, ?, ?, ?, ?, ?)";
+			" (DATA_TYPE, DATA_ID, ALERT_TYPE,TRIGGER_TIME,CREATION_TIME, STATUS) " +
+			" values (?, ?, ?, ?, ?, ?)";
 			ps = getConnection().prepareStatement(sql);
 			for (AlertConfig config : configs)  {
 				ps.setString(1, config.getDataType());
@@ -53,12 +53,12 @@ AlertConfigDAO {
 
 
 	@Override
-	public boolean delete(long uniqueId) {
+	public boolean delete(Long uniqueId) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, uniqueId);
 			ps.executeUpdate();
@@ -77,7 +77,7 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			for (AlertConfig config :configs) {
 				ps.setLong(1, config.getId());
@@ -98,7 +98,7 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where id=?";
+			" where id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
@@ -146,7 +146,7 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "delete from  " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where data_type=? and data_id=?";
+			" where data_type=? and data_id=?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, dataType);
 			ps.setLong(2, dataId);
@@ -166,7 +166,7 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where status = ? and trigger_time < NOW()";
+			" where status = ? and trigger_time < NOW()";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, status.toString());
 			rs = ps.executeQuery();
@@ -184,7 +184,7 @@ AlertConfigDAO {
 		ResultSet rs = null;
 		try {
 			String sql = "select * from " + AlertConfigModelConstant.TABLE_ALERT_CONFIG + "" +
-					" where status = ?";
+			" where status = ?";
 			ps = getConnection().prepareStatement(sql);
 			ps.setString(1, status.toString());
 			rs = ps.executeQuery();

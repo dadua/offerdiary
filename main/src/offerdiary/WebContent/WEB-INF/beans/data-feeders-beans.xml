@@ -8,6 +8,12 @@
 		<property name="offerCardManager" ref="itech.offerCardManager"/>
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
 	</bean>
+	
+	<bean id="itech.scotchWorldEngine" class="com.itech.scotchworld.parser.ScotchWorldEngine">
+		<property name="vendorManager" ref="itech.vendorManager"/>
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+	</bean>
+	
 
 		
 </beans>
