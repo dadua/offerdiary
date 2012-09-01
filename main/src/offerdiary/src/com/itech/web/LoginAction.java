@@ -15,9 +15,9 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.coupon.model.User;
 import com.itech.fb.model.FbCreds;
 import com.itech.fb.services.FbService;
+import com.itech.user.model.User;
 import com.itech.user.vos.UserEmailCredsVO;
 
 public class LoginAction extends CommonAction{

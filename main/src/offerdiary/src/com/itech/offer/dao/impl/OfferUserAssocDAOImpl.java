@@ -5,10 +5,10 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.user.model.User;
 
 public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc> implements OfferUserAssocDAO{
 

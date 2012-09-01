@@ -1,4 +1,4 @@
-package com.itech.coupon.dao;
+package com.itech.user.dao;
 
 
 import java.util.List;
@@ -8,7 +8,7 @@ import org.hibernate.Session;
 
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.InterestedUserSubscription;
+import com.itech.user.model.InterestedUserSubscription;
 
 public class HibernateInterestedUserSubscriptionDAOImpl extends HibernateCommonBaseDAO<InterestedUserSubscription> implements InterestedUserSubscriptionDAO{
 

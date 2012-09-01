@@ -4,10 +4,11 @@ import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.IDataSet;
 
 import com.itech.common.test.CommonTestDao;
-import com.itech.coupon.model.Gender;
-import com.itech.coupon.model.LoginType;
-import com.itech.coupon.model.User;
-import com.itech.coupon.model.constants.UserModelConstants;
+import com.itech.user.constants.UserModelConstants;
+import com.itech.user.dao.UserDAO;
+import com.itech.user.model.Gender;
+import com.itech.user.model.LoginType;
+import com.itech.user.model.User;
 
 public class TestUserDAOImpl extends CommonTestDao<User>{
 	private UserDAO userDAO;

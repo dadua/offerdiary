@@ -19,7 +19,7 @@ import com.itech.common.resource.Resource;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 import com.itech.web.ActionMappings;
 
 

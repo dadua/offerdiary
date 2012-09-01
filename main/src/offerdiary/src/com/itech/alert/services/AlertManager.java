@@ -3,7 +3,7 @@ package com.itech.alert.services;
 import java.util.List;
 
 import com.itech.alert.model.Alert;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public interface AlertManager {
 	void save(Alert alert);

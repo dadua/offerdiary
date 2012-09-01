@@ -2,7 +2,7 @@ package com.itech.common.services;
 
 import com.itech.common.db.hibernate.HibernateSessionFactory;
 import com.itech.common.security.SecurityManager;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public class CommonBaseManager {
 	private HibernateSessionFactory hibernateSessionFactory;

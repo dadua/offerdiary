@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.itech.alert.web.AlertAction;
 import com.itech.common.web.action.ActionMapping;
-import com.itech.coupon.web.OfferAction;
+import com.itech.offer.web.OfferAction;
 import com.itech.offer.web.OfferCardAction;
 import com.itech.offer.web.VendorAction;
 

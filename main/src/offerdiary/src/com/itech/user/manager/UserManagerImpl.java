@@ -1,17 +1,17 @@
-package com.itech.coupon.manager;
+package com.itech.user.manager;
 
 import java.sql.Date;
 
 import com.itech.common.services.CommonBaseManager;
-import com.itech.coupon.dao.InterestedUserSubscriptionDAO;
-import com.itech.coupon.dao.UserDAO;
-import com.itech.coupon.model.Gender;
-import com.itech.coupon.model.InterestedUserSubscription;
-import com.itech.coupon.model.LoginType;
-import com.itech.coupon.model.User;
 import com.itech.event.user.UserEventGenerator;
 import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
+import com.itech.user.dao.InterestedUserSubscriptionDAO;
+import com.itech.user.dao.UserDAO;
+import com.itech.user.model.Gender;
+import com.itech.user.model.InterestedUserSubscription;
+import com.itech.user.model.LoginType;
+import com.itech.user.model.User;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserDAO userDAO;

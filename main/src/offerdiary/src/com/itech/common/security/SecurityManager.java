@@ -1,6 +1,6 @@
 package com.itech.common.security;
 
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public interface SecurityManager {
 	public User getLoggedInUser();

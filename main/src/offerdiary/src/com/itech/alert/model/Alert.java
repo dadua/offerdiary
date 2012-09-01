@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 @Entity
 @Table(name="ALERT")

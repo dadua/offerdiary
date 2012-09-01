@@ -1,4 +1,4 @@
-package com.itech.coupon.model;
+package com.itech.user.model;
 
 import java.sql.Date;
 
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.constants.InterestedUserSubscriptionModelConstants;
+import com.itech.user.constants.InterestedUserSubscriptionModelConstants;
 
 
 @Entity

@@ -6,9 +6,9 @@ import org.hibernate.Query;
 
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.coupon.model.User;
 import com.itech.offer.dao.OfferCardDAO;
 import com.itech.offer.model.OfferCard;
+import com.itech.user.model.User;
 
 public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implements OfferCardDAO{
 

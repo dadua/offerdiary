@@ -1,7 +1,7 @@
 
 
 <%@page import="com.itech.coupon.model.LoginType"%>
-<%@page import="com.itech.coupon.model.User"%>
+<%@page import="com.itech.user.model.User"%>
 <style>
 div.navbar-inner-header{
 				background-color: #A4A2A2;
@@ -38,12 +38,12 @@ div.tile-div{
 						</li>
 					</ul>
 					<%
-					Object userSessionObj = request.getSession().getAttribute("user_session_key");
-					if (userSessionObj!= null) {
-						%>
+						Object userSessionObj = request.getSession().getAttribute("user_session_key");
+								if (userSessionObj!= null) {
+					%>
 						<div class="pull-right btn-group" id="userContainer" >
 						<%
-						User user = (User) userSessionObj;
+							User user = (User) userSessionObj;
 						%>
 						<a class="btn btn-inverse" href="wallet.do">
 						<%

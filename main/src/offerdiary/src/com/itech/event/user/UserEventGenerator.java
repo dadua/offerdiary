@@ -1,6 +1,6 @@
 package com.itech.event.user;
 
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public interface UserEventGenerator {
 	

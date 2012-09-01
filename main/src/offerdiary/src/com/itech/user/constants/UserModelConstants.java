@@ -1,4 +1,4 @@
-package com.itech.coupon.model.constants;
+package com.itech.user.constants;
 
 public class UserModelConstants {
 	public static final String TABLE_USER = "USERS";

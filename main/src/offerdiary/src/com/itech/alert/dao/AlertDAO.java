@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.itech.alert.model.Alert;
 import com.itech.common.db.CommonBaseDAO;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 public interface AlertDAO extends CommonBaseDAO<Alert>{
 

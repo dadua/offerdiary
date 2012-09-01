@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.itech.common.db.SearchCriteria;
-import com.itech.coupon.model.User;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCardUserAssoc;
+import com.itech.user.model.User;
 
 public interface OfferCardManager {
 	public List<OfferCard> getOfferCardsFor(String searchString, int maxResults);

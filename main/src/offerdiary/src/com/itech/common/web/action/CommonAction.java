@@ -15,11 +15,11 @@ import com.itech.common.security.ThreadLocalSecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
 import com.itech.coupon.manager.CouponManager;
 import com.itech.coupon.manager.StoreManager;
-import com.itech.coupon.manager.UserManager;
-import com.itech.coupon.model.User;
 import com.itech.offer.manager.OfferCardManager;
 import com.itech.offer.manager.OfferManager;
 import com.itech.offer.manager.VendorManager;
+import com.itech.user.manager.UserManager;
+import com.itech.user.model.User;
 
 public class CommonAction {
 	private static final String SEARCH_CRITERIA_PARAM_KEY = "searchCriteria";

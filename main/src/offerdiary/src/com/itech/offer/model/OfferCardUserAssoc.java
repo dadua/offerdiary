@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.coupon.model.User;
+import com.itech.user.model.User;
 
 @Entity
 @Table(name=OfferCardUserAssocModelConstants.TABLE_OFFER_CARD_USER_ASSOC)

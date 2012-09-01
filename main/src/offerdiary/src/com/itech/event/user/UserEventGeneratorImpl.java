@@ -1,10 +1,10 @@
 package com.itech.event.user;
 
-import com.itech.coupon.model.User;
 import com.itech.event.services.EventEngine;
 import com.itech.event.vo.Event;
 import com.itech.event.vo.UserEvent;
 import com.itech.event.vo.UserEvent.UserEventType;
+import com.itech.user.model.User;
 
 public class UserEventGeneratorImpl implements UserEventGenerator{
 	private EventEngine eventEngine;
