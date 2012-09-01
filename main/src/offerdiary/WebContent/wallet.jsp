@@ -93,6 +93,25 @@
 				}
 			}
 			
+			
+			it.wallet.getOfferHtml = function(offer) {
+				
+				var offerTemplate$ = $('.offer_ui_template').clone().removeClass('offer_ui_template hide').attr('id', 'offer_' + offer.id);
+				//Setting values from offer vo to the template..
+				if (offer.sourceVendor) {
+					offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ offer.sourceVendor.logoUrl || 'defaultVendor.jpg');
+					offerTemplate$.find('.vendorName').html(offer.sourceVendor.name);
+					offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
+					//offerTemplate$.find('.offerExpiryDate').html(offer.sourceVendor.siteUrl);
+					offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
+				} else {
+					offerTemplate$.find('.sourceVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
+				}
+				offerTemplate$.find('.offerCodeVal').html(offer.offerCode)
+				offerTemplate$.find('.offerNum').html(offer.title);
+				return offerTemplate$;
+			}
+			
 			it.wallet.appendOffer = function (offer, isOldAddition) {
 				
 				var daysToExpire = this.getDaysToExpire(offer);
@@ -106,6 +125,7 @@
 					daysToExpireHtml += compactFormattedTime;
 				}
 				daysToExpireHtml += '</div>';
+				/*
 	    		var offerHtml = '<li class="span3" id="offer_';
 	    		offerHtml += offer.id;
 	    		offerHtml += '" >';
@@ -120,7 +140,11 @@
 	    		offerHtml += '</h5><h5>Discount:';
 	    		offerHtml += offer.discountValue;
 	    		offerHtml +=  '</h5></div></li>';
-	    		$(offerHtml).appendTo('.thumbnails');
+	    		*/
+	    		
+	    		var offer$ = this.getOfferHtml(offer);
+	    		$(offer$).appendTo('.thumbnails');
+	    		
 	    		
 	    		/*
 	    		$('#offerExpire_'+offer.id).position({
@@ -129,7 +153,6 @@
 	    				of: '#offer_' + offer.id,
 	    				offset: '0 0'
 				});
-	    		*/
 	    		$('#offer_'+offer.id + ' .thumbnail').addClass('offer', 9000);
 	    		if (isOldAddition) {
 	    			$('#offer_'+offer.id+ ' span.addingDoneLabel').hide();
@@ -140,6 +163,7 @@
 		    			$(this).remove();
 		    		});
 	    		}
+	    		*/
 			};
 			
 			it.wallet.clearofferormVals = function () {
@@ -147,7 +171,6 @@
 				$('#emailNotify').addClass('active');
 				$('#fbNotify').removeClass('active');
 			};
-			
 			
 			it.wallet.addOffer = function () {
 				var code = $('#code').val(),
@@ -166,7 +189,8 @@
 					expiryDateInMillis: expiryDateInMillis,
 					notifyVO: notifyVO
 				},		
-				offers = [];
+				offers = [],
+				vendorId;
 				offers.push(offer);
 				$.post('saveOffers.do',
 						{'offers': JSON.stringify(offers)},
@@ -290,6 +314,58 @@
 				background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
 			}
 			
+			.offerBlock{
+				width: 325px;
+				height: 125px; 
+				position:relative;
+			}
+			
+			.space15{
+				width: 140px;
+				float: left;
+			}
+			
+			.offerNum{
+				font-family:  sans-serif;
+				font-size: 20px;
+				font-style: normal;
+				font-weight: normal;
+				text-transform: normal;
+				line-height: 1.2em;
+			}
+			
+			.sans-serif-normal{
+				font-family:  sans-serif;
+				font-size: 14px;
+			}
+			
+			.sans-serif-small{
+				font-family:  sans-serif;
+				font-size: 12px;
+			}
+			
+			.sans-serif-extra-small{
+				font-family:  sans-serif;
+				font-size: 10px;
+			}
+			
+			.shadow {
+			  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+			  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+			  box-shadow:         3px 3px 5px 6px #ccc;
+			}
+			
+			.margin-left-10{
+				margin-left: 10px;
+			}
+			.offer-icon{
+				margin-left:-5px;
+				
+			}
+			.margin-zero{
+				margin-left: 0px;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -297,14 +373,13 @@
 		<%@include file="common/navHeader.jsp" %>
 		
 		<div class="container" >
-			<div class="row-fluid">
+			<div class="row">
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
 				<div class="span7" id="offerContainer" >
-				 <ul class="thumbnails">
-				</ul>
-				&nbsp;
+					<ul class="thumbnails row">
+					</ul>
 				</div>
 				<div class="span3" >
 					<div class="modal hide fade" id="addOfferModal" style="display:none" >
@@ -346,6 +421,61 @@
 			</div>
 		</div>
 		
+		<%-- Offer Template Code Begins Here | Use it under a div, implemeting a span class of span4 or more --%>
+				
+				
+		<li class="offer_ui_template thumbnail offerBlock box-shadow span4 hide">
+			<div class="row">
+				<div class="span2 pull-left">
+					<img class="sourceVendor-logoUrl" alt="99labels" src="images/stores/99labels.jpg">
+					<span class="offerCode margin-left-10 sans-serif-extra-small">Code: <span class="offerCodeVal">5455X34</span></span>
+				</div>
+				<div class="space15">
+					<div class="row margin-zero">
+						<span class="offerNum">
+							Buy 2 & get 5 Free
+						</span>
+					</div>
+					<div class="row margin-zero">
+						<span class="vendorName sans-serif-normal">
+							99Lables
+						</span>
+					</div>
+					<div class="row margin-zero">
+						<span class="sans-serif-small">
+							<a class="vendorUrl" href="http://www.99labels.com"
+								target="_blank">
+								www.99labels.com
+							</a>
+						</span>
+					</div >
+					<div class="row margin-zero">
+						<span class="sans-serif-small">
+							Expire
+						</span>
+						<i class="icon-calendar"></i>
+						<span class="offerExpiryDate sans-serif-extra-small">
+							: 28-Sept, 2012
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="row offer-icon" >
+				<div class="span2" style="margin-left:15px;">
+					<a href="#" onClick="" >
+						<i class="icon-trash"></i>
+					</a>
+					<a href="#" onClick="" >
+						<i class="icon-wrench"></i>
+					</a>
+					<a href="#" onClick="" >
+						<i class="icon-envelope"></i>
+					</a>
+				</div>
+			</div>
+		</li>
+		<%-- End of Offer Template UI --%>
+
 		<%@include file="common/footer.jsp" %>
 	
 	</body>
