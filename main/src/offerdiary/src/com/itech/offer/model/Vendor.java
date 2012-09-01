@@ -2,6 +2,8 @@ package com.itech.offer.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,6 +57,7 @@ public class Vendor extends PersistableEntity{
 	private Vendor parentVendor;
 
 	@Column(name=VendorModelContants.COL_VENDOR_TYPE)
+	@Enumerated(EnumType.STRING)
 	private VendorType vendorType = VendorType.USER_DEFINED;
 
 	@ManyToOne
