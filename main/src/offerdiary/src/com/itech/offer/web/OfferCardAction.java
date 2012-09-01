@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.exeption.ReturnCodes;
+import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
@@ -26,6 +27,7 @@ public class OfferCardAction extends CommonAction{
 	private static final String OFFER_CARD_NAME_KEY = "cardNameKey";
 	private static final String OFFER_CARD_ID_KEY = "cardIdKey";
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response addOfferCard (HttpServletRequest req, HttpServletResponse resp) {
 		String offerCardJson = req.getParameter(OFFER_CARD_JSON_KEY);
 		Gson gson = new Gson();
@@ -38,6 +40,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response searchOfferCards(HttpServletRequest req, HttpServletResponse resp) {
 		//String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
 		SearchCriteria searchCriteria = getSearchCriteria(req);
@@ -47,6 +50,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response getMyCards(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(user);
@@ -55,6 +59,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response addCardToWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		String offerCardJson = req.getParameter(OFFER_CARD_JSON_KEY);
@@ -74,6 +79,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response removeCardFromWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		String offerCardJson = req.getParameter(OFFER_CARD_JSON_KEY);
@@ -87,6 +93,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response getCardByKey(HttpServletRequest req, HttpServletResponse resp) {
 		String cardName = req.getParameter(OFFER_CARD_NAME_KEY);
 		String cardId = req.getParameter(OFFER_CARD_ID_KEY);
@@ -103,6 +110,7 @@ public class OfferCardAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response goToMyCards(HttpServletRequest req, HttpServletResponse resp) {
 
 		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(getLoggedInUser());

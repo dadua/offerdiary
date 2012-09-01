@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Documented
 @Inherited
-public @interface ScorActionResponse {
+public @interface ActionResponseAnnotation {
 	/**
 	 * Valid responseTypes
 	 * {@link Forward}

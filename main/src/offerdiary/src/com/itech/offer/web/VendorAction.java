@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Response;
@@ -20,6 +21,7 @@ public class VendorAction extends CommonAction{
 	private static final int MAX_RESULT_COUNT = 10;
 	private static final String VENDOR_NAME_SEARCH_KEY = "searchKey";
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response addVendor (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorJson = req.getParameter(VENDOR_JSON_KEY);
 		Gson gson = new Gson();
@@ -32,6 +34,7 @@ public class VendorAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response searchVendors (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorSearchString = req.getParameter(VENDOR_NAME_SEARCH_KEY);
 		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);

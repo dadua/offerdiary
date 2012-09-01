@@ -60,24 +60,24 @@ public class ActionHandler {
 				throw ex;
 			}
 
-			ScorActionResponse scorActionResponse = executeMethod.getAnnotation(ScorActionResponse.class);
+			ActionResponseAnnotation actionResponseAnnotation = executeMethod.getAnnotation(ActionResponseAnnotation.class);
 			ReturnCode returnCode = ReturnCodes.INTERNAL_ERROR;
 			if (CommonException.class.isAssignableFrom(ex.getClass())) {
 				returnCode = ((CommonException) ex).getRetCode();
 			}
 
-			if (scorActionResponse == null) {
+			if (actionResponseAnnotation == null) {
 				throw ex;
 			}
 
-			Class<?> responseType = scorActionResponse.responseType();
+			Class<?> responseType = actionResponseAnnotation.responseType();
 			if (CommonBeanResponse.class.isAssignableFrom(responseType)) {
 				return prepareScorBeanResponse(returnCode);
 
 			}
 
 			if (Forward.class.isAssignableFrom(responseType) || Redirect.class.isAssignableFrom(responseType)) {
-				return prepareErrorPageResponse(executeMethod, scorActionResponse, returnCode, request);
+				return prepareErrorPageResponse(executeMethod, actionResponseAnnotation, returnCode, request);
 			}
 
 			throw ex;
@@ -105,10 +105,10 @@ public class ActionHandler {
 
 	}
 
-	private static ActionResponse prepareErrorPageResponse(Method method, ScorActionResponse scorActionResponse, ReturnCode returnCode, HttpServletRequest request) {
+	private static ActionResponse prepareErrorPageResponse(Method method, ActionResponseAnnotation actionResponseAnnotation, ReturnCode returnCode, HttpServletRequest request) {
 		String message = getMsg(getResource(), SERVER_LOCAL, returnCode.getDisplayKey());
 		request.setAttribute(URLConstants.COMMON_ERROR_MESSAGE_ATTR_NAME, message);
-		if (ScorActionResponse.FULL_PAGE == scorActionResponse.errorPageType()) {
+		if (ActionResponseAnnotation.FULL_PAGE == actionResponseAnnotation.errorPageType()) {
 			return ActionResponse.forward( URLConstants.COMMON_ERROR_PAGE);
 		} else {
 			return ActionResponse.forward( URLConstants.COMMON_ERROR_INCLUDE_PAGE);
