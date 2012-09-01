@@ -13,6 +13,7 @@ import com.itech.common.services.Initialize;
 import com.itech.config.ProjectConfigs;
 import com.itech.offer.manager.VendorManager;
 import com.itech.offer.model.Vendor;
+import com.itech.offer.model.enums.VendorType;
 
 public class ScotchWorldEngine implements Initialize{
 	private VendorManager vendorManager;
@@ -50,7 +51,8 @@ public class ScotchWorldEngine implements Initialize{
 		vendor.setName(scotchWorldStore.getStoreName());
 		vendor.setDescription(scotchWorldStore.getDescription());
 		vendor.setSiteUrl(ScotchWorldUtil.formatSiteURL(scotchWorldStore.getStoreURL()));
-		vendor.setLogoUrl(scotchWorldStore.getStoreName() + ".jpeg");
+		vendor.setLogoUrl(scotchWorldStore.getStoreName() + ".jpg");
+		vendor.setVendorType(VendorType.GLOBAL);
 		return vendor;
 	}
 
