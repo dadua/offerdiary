@@ -14,7 +14,7 @@
 	
 	</head>
 	<body >
-		<%@include file="..\common\navHeader.jsp" %>
+		<%@include file="../common/navHeader.jsp" %>
 		${errorMessage}
 
 	</body>
