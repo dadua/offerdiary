@@ -377,11 +377,11 @@
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span7" id="offerContainer" >
+				<div class="span8" id="offerContainer" >
 					<ul class="thumbnails row">
 					</ul>
 				</div>
-				<div class="span3" >
+				<div class="span2" >
 					<div class="modal hide fade" id="addOfferModal" style="display:none" >
 						<div class="modal-header" >
 							<a class="close" data-dismiss="modal">×</a>
