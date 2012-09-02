@@ -61,24 +61,58 @@ it.wizard.step.newInstance = function() {
 		}
 	};
 
+	var _fetchDataFromHtmlCb = function () {
+		return {};
+	};
+
+
+	var _setFetchDataFromHtmlCb = function (cbFunction) {
+		if (typeof cbFunction !== 'function') {
+			throw {
+				message: 'expected a function which returns the form data object for this step'
+			};
+		}
+		_fetchDataFromHtmlCb = cbFunction;
+	};
+
+	var _plotCb = function () {
+
+	};
+
+	var _setPlotCb = function (cbFunction) {
+		if (typeof cbFunction == 'function') {
+			throw {
+				message: 'expected a function which sets values into html from the form data object'
+			};
+		}
+		_plotCb = cbFunction;
+	};
+
 	//public methods and variables
 	return {
+		init: _init,
 		setTitle: _setTitle,
+		getTitle: function() {
+			return _title;
+		},
 		setHtmlTemplateSelector: _setHtmlTemplateSelector,
 		getHtmlTemplateSelector: function () {
 			return _htmlTemplateSelector;
-		},
-		getTitle: function() {
-			return _title;
 		},
 		setStepValidator: _setStepValidator,
 		getStepValidator: function() {
 			return _stepValidator;
 		},
-		init: _init
+		setPlotHtmlFromDataCb: _setPlotCb,
+		setFetchDataFromHtmlCb: _setFetchDataFromHtmlCb,
+		getFetchDataFromHtmlCb: function () {
+			return _fetchDataFromHtmlCb;
+		},
+		getPlotMethod: function () {
+			return _plotCb;
+		}
 	};
 };
-
 
 it.wizard.newInstance = function () {
 
@@ -87,13 +121,97 @@ it.wizard.newInstance = function () {
 		_wizardSteps = steps;
 	};
 
+	var _formData = {};
+
+	var _onWizardFinish = function (formData) {
+
+	};
+
 	//default value of the index of wizard step
-	var _currentStepIndex = 0;
+	var _currentStepIndex = -1;
+
+	var _validateStepWithIndex = function (index) {
+		//TODO: Have to call the validators of steps with index 0 to index -1
+		var stepBeingIterated = null;
+		for (var i =0; i < index; i++) {
+			stepBeingIterated = _getStepWithIndex(i);
+			stepBeingIterated.getStepValidator();
+		}
+	};
+
+	var _validateCurrentStep = function () {
+		_validateStepWithIndex(_currentStepIndex);
+	};
+
+	var _getStepWithIndex = function (index) {
+		return _wizardSteps[index];
+	};
+
+	var _getCurrentStep = function () {
+		return _getStepWithIndex(_currentStepIndex);
+	};
+
+	var _getLastStep = function () {
+		return _wizardSteps[_getLastStepIndex()];
+	};
+
+	var _getLastStepIndex = function () {
+		return _wizardSteps.length - 1;
+	};
+
+	var _navigateToNext = function () {
+		_validateStepWithIndex(_currentStepIndex);
+		_currentStepIndex +=1;
+	};
+
+	var _navigateToPrev = function () {
+
+
+		_currentStepIndex -= 1;
+
+	};
+
+	var _navigateToStepWith = function(index) {
+		_validateStepWithIndex(index);
+
+	};
+
+	var _setNextButtonEnabled = function () {
+
+	};
+
+	var _setPrevButtonEnabled = function () {
+
+	};
+
+
+	var _setNextButtonDisabled = function () {
+
+	};
+
+	var _setPrevButtonDiabled = function () {
+
+	};
+
+
+	var _setOnFinish = function (onWizardFinish) {
+		if (typeof onWizardFinish !== 'function') {
+			throw {
+				message: 'Expected a function onWizardFinish incorrect type of onWizardFinish' + typeof onWizardFinish
+			};
+		}
+		_onWizardFinish = onWizardFinish;
+	};
+
 
 	return {
 		setWizardSteps: _setWizardSteps,
 		getWizardSteps: function () {
 			return _wizardSteps;
-		}
+		},
+		navigateToNext: _navigateToNext,
+		navigateToPrev: _navigateToPrev,
+		setOnFinish: _setOnFinish
+
 	};
 };
