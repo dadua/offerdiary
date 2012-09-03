@@ -29,3 +29,8 @@ assert.doesNotThrow(function() {
 //console.log(step.init());
 
 console.log(step);
+
+
+var wizard = it.wizard.newInstance();
+
+console.log(wizard);
