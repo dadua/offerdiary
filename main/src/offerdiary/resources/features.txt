@@ -1,0 +1,10 @@
+User:
+login, sign up, facebook , profile
+Offer :
+basic offer UI, Actions {delete, edt, mail to friend, facebook share} , expiry days {UI, notofication} , Add{wizard, UI for 3 steps, wizard offer look UI, all go back and next steps in wizard UI, Search an offer {on vendor name, industry type and title} , Pagination of results}
+Cards:
+UI improvement {card UI template & alignment } Search a card, Pafination, redanar : check whats relevant and remove loyalty cards }
+Offers on cards:
+get data, UI design , workflow edit | filter 
+Parse Offers from mail inbox :
+imap strategy, workflow, UI placement 
