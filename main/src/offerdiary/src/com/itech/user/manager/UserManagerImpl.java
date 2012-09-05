@@ -19,6 +19,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserEventGenerator userEventGenerator;
 
 
+	
 	@Override
 	public User saveFbUser(FbService fbService) {
 		FbProfile fbProfile = fbService.getUserProfile();
@@ -29,7 +30,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		user.setName(fbProfile.getFullName());
 		user.setEmailId(fbProfile.getEmailId());
 		user.setLanguage(fbProfile.getLocale());
-
+		user.setRegistrationTime((new Date(System.currentTimeMillis())));
 		/*
 		user.setAge(age);
 		user.setLocation(location);
@@ -37,6 +38,11 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		save(user);
 		return user;
 	}
+	
+	@Override
+	public User getByEmail(String email) {
+		return getUserDAO().getByEmail(email);
+	}	
 	
 	@Override
 	public void saveInterestedUserForSubscription(String email) {
@@ -50,6 +56,14 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		getUserEventGenerator().newUserSubscribed(subscribedUser);
 	}
 
+
+	@Override
+	public void notifyPassword(User user) {
+		user.setNotifyPasswordTime((new Date(System.currentTimeMillis())));
+		getUserDAO().addOrUpdate(user);
+		getUserEventGenerator().forgotPassword(user);
+	}
+	
 	@Override
 	public User saveEmailUser(String email, String password) {
 		User user = new User();
@@ -57,6 +71,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		user.setUserId(email);
 		user.setEmailId(email);
 		user.setPassword(password);
+		user.setRegistrationTime((new Date(System.currentTimeMillis())));
 		save(user);
 		getUserEventGenerator().newUserAdded(user);
 		return user;
@@ -108,6 +123,4 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	public void setIntUserSubscriptionDAO(InterestedUserSubscriptionDAO intUserSubscriptionDAO) {
 		this.intUserSubscriptionDAO = intUserSubscriptionDAO;
 	}
-
-	
 }

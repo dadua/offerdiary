@@ -12,56 +12,77 @@ import com.itech.email.vo.Email.EmailType;
 
 public class OfferExpiryNotificationEmail extends Email{
 
-	private final Logger logger = Logger.getLogger(OfferExpiryNotificationEmail.class);
 	private static final String DEFAULT_NOTIFICATION_SUBJECT="OfferDo Offer Expiry Notification";
 	private String NOTIFICATION_EMAIL_HTML;
-	private static final String EMAIL_CONTENT_FILE ="index.html";
+	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
 	private Document docHTML = null;
 
-
-	public OfferExpiryNotificationEmail(String messageContent, String toEmailId,  List<String> fileAttachementList){
-		this(messageContent, toEmailId);
-		setAttachments(fileAttachementList);
-	}
-
-	public OfferExpiryNotificationEmail(String messageContent, String toEmailId){
-		super(messageContent, toEmailId);
-	}
 
 	public OfferExpiryNotificationEmail(){
 		super();
 	}
 
+	public OfferExpiryNotificationEmail(EmailContentParam contentParam, String toEmailId){
+		super(contentParam, toEmailId);
+	}
+	
+	public OfferExpiryNotificationEmail(EmailContentParam contentParam, String toEmailId,  List<String> fileAttachementList){
+		this(contentParam, toEmailId);
+		setAttachments(fileAttachementList);
+	}
+
 	@Override
 	public String getMailContent() {
-		return NOTIFICATION_EMAIL_HTML;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-
-		NOTIFICATION_EMAIL_HTML = docHTML.toString();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void setContentInMessageHTML(String message) {
-		if(null != docHTML){
-			Element para = docHTML.select("#mail-message").first();
-			para.html("<singleline label=\"Title\">"+message+"</singleline>");
-			NOTIFICATION_EMAIL_HTML = docHTML.toString();
-		}
+	public void setContentInMessageHTML(EmailContentParam content) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_NOTIFICATION_SUBJECT;
-	}
-	
-	@Override
-	public EmailType getEmailType() {
-		return EmailType.OFFER_EXPIRY_NOTIFICATION_EMAIL;
+		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
+	public EmailType getEmailType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static String getDefaultNotificationSubject() {
+		return DEFAULT_NOTIFICATION_SUBJECT;
+	}
+
+	public String getNOTIFICATION_EMAIL_HTML() {
+		return NOTIFICATION_EMAIL_HTML;
+	}
+
+	public void setNOTIFICATION_EMAIL_HTML(String nOTIFICATION_EMAIL_HTML) {
+		NOTIFICATION_EMAIL_HTML = nOTIFICATION_EMAIL_HTML;
+	}
+
+	public static String getEmailContentFile() {
+		return EMAIL_CONTENT_FILE;
+	}
+
+	public Document getDocHTML() {
+		return docHTML;
+	}
+
+	public void setDocHTML(Document docHTML) {
+		this.docHTML = docHTML;
+	}
 
 }

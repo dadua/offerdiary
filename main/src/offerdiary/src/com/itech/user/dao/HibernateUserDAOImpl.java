@@ -26,6 +26,15 @@ public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implement
 		return null;
 	}
 
-
-
+	@Override
+	public User getByEmail(String email) {
+		String hql = "from " + getEntityClassName() + " where emailId = :emailId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("emailId", email);
+		List list = query.list();
+		if (!list.isEmpty()) {
+			return (User) list.get(0);
+		}
+		return null;
+	}
 }
