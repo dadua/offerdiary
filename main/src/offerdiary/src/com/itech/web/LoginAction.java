@@ -18,6 +18,7 @@ import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.fb.model.FbCreds;
 import com.itech.fb.services.FbService;
+import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 import com.itech.user.vos.UserEmailCredsVO;
 
@@ -66,7 +67,7 @@ public class LoginAction extends CommonAction{
 			Gson gson = new Gson();
 			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
 			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
-			if (user == null) {
+			if (user == null || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())) {
 				return emailDoesntExist();
 			}
 		}
@@ -99,12 +100,11 @@ public class LoginAction extends CommonAction{
 		User user = getLoggedInUser();
 		if (user == null) {
 			String emailPasswordCredsVOJson = req.getParameter("credVoKey");
-
 			Gson gson = new Gson();
 			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
 			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
 
-			if (user == null) {
+			if (user == null ) {
 				return emailDoesntExist();
 			}
 

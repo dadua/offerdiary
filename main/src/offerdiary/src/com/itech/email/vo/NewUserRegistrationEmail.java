@@ -15,7 +15,7 @@ public class NewUserRegistrationEmail extends Email{
 	private static final String DEFAULT_REGISTRATION_SUBJECT="OfferDo New User Registration Confirmation";
 	private String registrationEmailHTML;
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
-	private final EmailContent defaultEmailContent = new EmailContent();
+	private EmailContent defaultEmailContent;
 	private Document docHTML = null;
 
 	public NewUserRegistrationEmail(){
@@ -43,7 +43,7 @@ public class NewUserRegistrationEmail extends Email{
 	}
 
 	private void createDefaultEmailContent() {
-		EmailContent content = getDefaultEmailContent();
+		EmailContent content = new EmailContent();
 		content.setSubHeading("Welcome to OfferDiary !");
 		content.setSalutation("Dear");
 		content.setName("User");
@@ -51,6 +51,7 @@ public class NewUserRegistrationEmail extends Email{
 				"timely notifications. You can share your offers with your friends and spread the word. You can import you facebook offers+" +
 				"to OfferDiary for easy management");
 		content.setPara2("With OfferDiary you'd be able to do so much more with your offers. keep exploring !");
+		setDefaultEmailContent(content);
 	}
 
 	@Override
@@ -62,11 +63,11 @@ public class NewUserRegistrationEmail extends Email{
 
 	private void setParamsInHtml() {
 		Document doc = getDocHTML();
-		doc.select(EmailContent.SELECT_SUBHEADING).first().text(getDefaultEmailContent().getSubHeading());
-		doc.select(EmailContent.SELECT_NAME).first().text(getDefaultEmailContent().getName());
-		doc.select(EmailContent.SELECT_SALUTATION).first().text(getDefaultEmailContent().getSalutation());
-		doc.select(EmailContent.SELECT_PARA1).first().text(getDefaultEmailContent().getPara1());
-		doc.select(EmailContent.SELECT_PARA2).first().text(getDefaultEmailContent().getPara2());
+		doc.select(EmailContent.SELECT_SUBHEADING).first().append(getDefaultEmailContent().getSubHeading());
+		doc.select(EmailContent.SELECT_NAME).first().append(getDefaultEmailContent().getName());
+		doc.select(EmailContent.SELECT_SALUTATION).first().append(getDefaultEmailContent().getSalutation());
+		doc.select(EmailContent.SELECT_PARA1).first().append(getDefaultEmailContent().getPara1());
+		doc.select(EmailContent.SELECT_PARA2).first().append(getDefaultEmailContent().getPara2());
 	}
 
 	private void setContentParams(EmailContentParam content) {
@@ -115,6 +116,10 @@ public class NewUserRegistrationEmail extends Email{
 
 	public EmailContent getDefaultEmailContent() {
 		return defaultEmailContent;
+	}
+
+	public void setDefaultEmailContent(EmailContent defaultEmailContent) {
+		this.defaultEmailContent = defaultEmailContent;
 	}
 
 }
