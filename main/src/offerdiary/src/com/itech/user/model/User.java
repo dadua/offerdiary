@@ -1,5 +1,7 @@
 package com.itech.user.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
+import com.itech.user.constants.InterestedUserSubscriptionModelConstants;
 import com.itech.user.constants.UserModelConstants;
 
 @Entity
@@ -60,7 +63,12 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_USER_ROLE)
 	private final UserRole userRole = UserRole.CONSUMER;
 
+	@Column(name=UserModelConstants.COL_REGISTRATION_TIME)
+	private Date registrationTime;
 
+	@Column(name=UserModelConstants.COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME)
+	private Date notifyPasswordTime;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -127,6 +135,18 @@ public class User extends PersistableEntity{
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+	public Date getRegistrationTime() {
+		return registrationTime;
+	}
+	public void setRegistrationTime(Date registrationTime) {
+		this.registrationTime = registrationTime;
+	}
+	public Date getNotifyPasswordTime() {
+		return notifyPasswordTime;
+	}
+	public void setNotifyPasswordTime(Date notifyPasswordTime) {
+		this.notifyPasswordTime = notifyPasswordTime;
 	}
 
 

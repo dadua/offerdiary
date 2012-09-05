@@ -10,5 +10,7 @@ public interface UserManager {
 	public User saveEmailUser(String email, String password);
 	public User saveFbUser(FbService fbService);
 	public void saveInterestedUserForSubscription(String email);
+	public User getByEmail(String email);
+	public void notifyPassword(User user);
 
 }

@@ -1,9 +1,15 @@
 package com.itech.event.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
+import com.itech.email.vo.EmailContent;
+import com.itech.email.vo.EmailContentParam;
 import com.itech.email.vo.NewUserRegistrationEmail;
 import com.itech.email.vo.NewUserSubscriptionEmail;
+import com.itech.email.vo.PasswordRecoverEmail;
 import com.itech.event.services.EventHandler;
 import com.itech.event.vo.Event;
 import com.itech.event.vo.UserEvent;
@@ -38,9 +44,9 @@ public class UserEventHandler implements EventHandler {
 
 	private void sendNewUserSubscribedEmail(UserEvent userEvent) {
 		String toEmailId = userEvent.getUser().getEmailId();
-		Email email = new NewUserSubscriptionEmail(null, toEmailId);
+		EmailContentParam contentParam = new EmailContentParam(new HashMap<String, String>());
+		Email email = new NewUserSubscriptionEmail(contentParam, toEmailId);
 		getEmailManager().sendEmailAsync(email);
-
 	}
 
 	private void handleUserForgotPassword(UserEvent userEvent) {
@@ -48,9 +54,13 @@ public class UserEventHandler implements EventHandler {
 	}
 
 	private void sendForgotPasswordEmail(UserEvent userEvent) {
-		String newUserRegistrationMessageContent =  "Hi Your current password is";
 		String toEmailId = userEvent.getUser().getEmailId();
-		Email email = new NewUserRegistrationEmail(newUserRegistrationMessageContent, toEmailId);
+		EmailContentParam contentParam = new EmailContentParam();
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put(EmailContentParam.FORGOT_PASSWORD_PARAM_NAME, userEvent.getUser().getName());
+		paramMap.put(EmailContentParam.FORGOT_PASSWORD_PARAM_PASSWORD, userEvent.getUser().getPassword());
+		contentParam.setPARAM_MAP(paramMap);
+		Email email = new PasswordRecoverEmail(contentParam, toEmailId);
 		getEmailManager().sendEmailAsync(email);
 	}
 
@@ -60,7 +70,11 @@ public class UserEventHandler implements EventHandler {
 
 	private void sendNewUserRegistrationEmail(UserEvent userEvent) {
 		String toEmailId = userEvent.getUser().getEmailId();
-		Email email = new NewUserRegistrationEmail(null, toEmailId);
+		EmailContentParam contentParam = new EmailContentParam();
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put(EmailContentParam.NEW_USER_REG_PARAM_NAME, userEvent.getUser().getName());
+		contentParam.setPARAM_MAP(paramMap);
+		Email email = new NewUserRegistrationEmail(contentParam, toEmailId);
 		getEmailManager().sendEmailAsync(email);
 	}
 

@@ -1,11 +1,14 @@
 package com.itech.alert.handler;
 
+import java.util.HashMap;
+
 import org.apache.log4j.Logger;
 
 import com.itech.alert.model.Alert;
 import com.itech.alert.model.AlertDataTypes;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
+import com.itech.email.vo.EmailContentParam;
 import com.itech.email.vo.OfferExpiryNotificationEmail;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
@@ -29,8 +32,11 @@ public class OfferAlertHandler implements AlertHandler{
 		// this userID is the auto-generated id (User.id)of User DAO not the User.user_id
 		User user = alert.getUser();
 		String toEmailId= user.getEmailId();
-		String message = alert.getMessage();
-		Email email = new OfferExpiryNotificationEmail(message, toEmailId);
+		EmailContentParam contentParam = new EmailContentParam(new HashMap<String, String>());
+		// TODO: Generate Email Content for Offer Expiry Email
+		//String userName = user.getName();
+		//String message = alert.getMessage();
+		Email email = new OfferExpiryNotificationEmail(contentParam, toEmailId);
 		emailManager.sendEmailAsync(email);
 	}
 

@@ -14,4 +14,6 @@ public class UserModelConstants {
 	public static final String COL_LANGUAGE = "LANGUAGE";
 	public static final String COL_EMAIL_ID = "EMAIL_ID";
 	public static final String COL_USER_ROLE = "USER_ROLE";
+	public static final String COL_REGISTRATION_TIME = "REGISTRATION_TIME";
+	public static final String COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME= "PASSWORD_NOTIFY_TIME";
 }

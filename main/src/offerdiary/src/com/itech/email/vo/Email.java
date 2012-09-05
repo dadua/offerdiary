@@ -4,13 +4,14 @@ import java.util.List;
 
 public abstract class Email {
 
-	String senderAddress;
-	String toAddress;
-	String subject;
-	String mailContent;
-	List<String> attachments;
-	private EmailType emailType;
-	private static final String defaultSenderEmailAddress="support@offerdiary.com";
+	protected String senderAddress;
+	protected String toAddress;
+	protected String subject;
+	protected EmailContent emailContent;
+	protected String mailContent;
+	protected List<String> attachments;
+	protected EmailType emailType;
+	protected static final String defaultSenderEmailAddress="support@offerdiary.com";
 	
 	public enum EmailType{
 		NEW_USER_REGISTRATION_EMAIL, NEW_USER_SUBSCRIPTION_EMAIL,  OFFER_EXPIRY_NOTIFICATION_EMAIL, OFFER_SUMMARY_NOTIFICATION_EMAIL, PASSWORD_RECOVERY_EMAIL
@@ -20,24 +21,27 @@ public abstract class Email {
 		generateEmailHTMLTemplate();
 	}
 
-	public Email(String messageContent, String toEmailId){
+	public Email(EmailContentParam emailContent, String toEmailId){
 		generateEmailHTMLTemplate();
-		setContentInMessageHTML(messageContent);
+		setContentInMessageHTML(emailContent);
 		setToAddress(toEmailId);
 		setSenderAddress(defaultSenderEmailAddress);
 		setSubject();
 	}
 
-	public Email(String messageContent, String toEmailId,  List<String> fileAttachementList){
-		this(messageContent, toEmailId);
+	public Email(EmailContentParam emailContent, String toEmailId, List<String> fileAttachementList){
+		this(emailContent, toEmailId);
 		setAttachments(fileAttachementList);
 	}
 
+	// to be performed by the sub classes 
 	public abstract String getMailContent() ;
 	protected abstract void generateEmailHTMLTemplate();
-	public abstract void setContentInMessageHTML(String message);
+	public abstract void setContentInMessageHTML(EmailContentParam content);
 	public abstract void setSubject();
 	public abstract EmailType getEmailType();
+	
+	
 	
 	public String getSenderAddress() {
 		return senderAddress;
@@ -64,10 +68,17 @@ public abstract class Email {
 
 	public void setMailContent(String mailContent) {
 		this.mailContent = getMailContent();
-
 	}
 
 	public void setEmailType(EmailType emailType) {
 		this.emailType = emailType;
+	}
+
+	public EmailContent getEmailContent() {
+		return emailContent;
+	}
+
+	public void setEmailContent(EmailContent emailContent) {
+		this.emailContent = emailContent;
 	}
 }

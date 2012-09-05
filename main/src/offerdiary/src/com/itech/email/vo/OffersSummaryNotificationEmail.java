@@ -12,54 +12,77 @@ import com.itech.email.vo.Email.EmailType;
 
 public class OffersSummaryNotificationEmail extends Email{
 
-	private final Logger logger = Logger.getLogger(OffersSummaryNotificationEmail.class);
+	
 	private static final String DEFAULT_SUMMARY_NOTIFICATION_SUBJECT="OfferDo Offer Summary Notification";
 	private String OFFER_SUMMARY_EMAIL_HTML;
-	private static final String EMAIL_CONTENT_FILE ="index.html";
+	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
 	private Document docHTML = null;
-
-	public OffersSummaryNotificationEmail(String messageContent, String toEmailId, List<String> fileAttachementList){
-		this(messageContent, toEmailId);
-		setAttachments(fileAttachementList);
-	}
-	public OffersSummaryNotificationEmail(String messageContent, String toEmailId){
-		super(messageContent, toEmailId);
-	}
 
 	public OffersSummaryNotificationEmail(){
 		super();
 	}
 
+	public OffersSummaryNotificationEmail(EmailContentParam contentParam, String toEmailId){
+		super(contentParam, toEmailId);
+	}
+
+	public OffersSummaryNotificationEmail(EmailContentParam contentParam, String toEmailId, List<String> fileAttachementList){
+		this(contentParam, toEmailId);
+		setAttachments(fileAttachementList);
+	}
+
+	public static String getDefaultSummaryNotificationSubject() {
+		return DEFAULT_SUMMARY_NOTIFICATION_SUBJECT;
+	}
+
+	public String getOFFER_SUMMARY_EMAIL_HTML() {
+		return OFFER_SUMMARY_EMAIL_HTML;
+	}
+
+	public void setOFFER_SUMMARY_EMAIL_HTML(String oFFER_SUMMARY_EMAIL_HTML) {
+		OFFER_SUMMARY_EMAIL_HTML = oFFER_SUMMARY_EMAIL_HTML;
+	}
+
+	public static String getEmailContentFile() {
+		return EMAIL_CONTENT_FILE;
+	}
+
+	public Document getDocHTML() {
+		return docHTML;
+	}
+
+	public void setDocHTML(Document docHTML) {
+		this.docHTML = docHTML;
+	}
+
 	@Override
 	public String getMailContent() {
-		return OFFER_SUMMARY_EMAIL_HTML;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	protected void generateEmailHTMLTemplate() {
-		docHTML = Jsoup.parse(CommonFileUtilities.getResourceFileAsString(EMAIL_CONTENT_FILE));
-
-		OFFER_SUMMARY_EMAIL_HTML = docHTML.toString();
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void setContentInMessageHTML(String message) {
-		if(null != docHTML){
-			Element para = docHTML.select("#mail-message").first();
-			para.html("<singleline label=\"Title\">"+message+"</singleline>");
-			OFFER_SUMMARY_EMAIL_HTML = docHTML.toString();
-		}
+	public void setContentInMessageHTML(EmailContentParam content) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_SUMMARY_NOTIFICATION_SUBJECT;
-	}
-	
-	@Override
-	public EmailType getEmailType() {
-		return EmailType.OFFER_SUMMARY_NOTIFICATION_EMAIL;
+		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
+	public EmailType getEmailType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

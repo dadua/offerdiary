@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
@@ -22,7 +23,7 @@ import com.itech.user.vos.UserEmailCredsVO;
 
 public class LoginAction extends CommonAction{
 
-
+	public static final String FORGOT_PASSWORD_EXECUTION_STATUS = "forgotPasswordStatus";
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
@@ -36,9 +37,46 @@ public class LoginAction extends CommonAction{
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response getPassword(HttpServletRequest req, HttpServletResponse resp) {
-		return new Forward("resetPassword.jsp");
+		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.FALSE.toString());
+		return new Forward("forgotPassword.jsp");
+	}
+	
+	@ActionResponseAnnotation(responseType=Forward.class)
+	public Response gotPassword(HttpServletRequest req, HttpServletResponse resp){
+		User user = getLoggedInUser();
+		if (user == null) {
+			String email = req.getParameter("email");
+			user = getUserManager().getByEmail(email);
+			if(null != user){
+				getUserManager().notifyPassword(user);
+			}else{
+				throw new CommonException(ReturnCodes.OBJECT_DOES_NOT_EXIST_ANYMORE);
+			}
+		}
+		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.TRUE.toString());
+		return new Forward("forgotPassword.jsp");
 	}
 
+	
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response verifyEmail(HttpServletRequest req, HttpServletResponse resp){
+		User user = getLoggedInUser();
+		if (user == null) {
+			String emailPasswordCredsVOJson = req.getParameter("credVoKey");
+			Gson gson = new Gson();
+			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
+			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
+			if (user == null) {
+				return emailDoesntExist();
+			}
+		}
+		Result<User> result = new Result<User>( user);
+		Type userResultType = new TypeToken<Result<User>>() {
+		}.getType();
+		return new CommonBeanResponse(result, userResultType);
+	}
+	
+	
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response loginDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
