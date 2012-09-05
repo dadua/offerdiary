@@ -16,20 +16,20 @@ public class PasswordRecoverEmail extends Email{
 	private static final String DEFAULT_PASSWORD_RECOVERY_SUBJECT="Your OfferDiary Credentials";
 	private String PASSWORD_RECOVERY_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
-	private final EmailContent defaultEmailContent = new EmailContent(); 
-	private Document docHTML = null;
+	private EmailContent defaultEmailContent ; 
+	private Document docHTML ;
 
 	
 	public PasswordRecoverEmail(){
 		super();
 	}
 
-	public PasswordRecoverEmail(EmailContentParam emailContent, String toEmailId){
-		super(emailContent, toEmailId);
+	public PasswordRecoverEmail(EmailContentParam emailContentParam, String toEmailId){
+		super(emailContentParam, toEmailId);
 	}
 
-	public PasswordRecoverEmail(EmailContentParam emailContent, String toEmailId, List<String> fileAttachementList){
-		this(emailContent, toEmailId);
+	public PasswordRecoverEmail(EmailContentParam emailContentParam, String toEmailId, List<String> fileAttachementList){
+		this(emailContentParam, toEmailId);
 		setAttachments(fileAttachementList);
 	}
 
@@ -45,12 +45,13 @@ public class PasswordRecoverEmail extends Email{
 	}
 
 	private void createDefaultEmailContent() {
-		EmailContent content = getDefaultEmailContent();
+		EmailContent content = new EmailContent();
 		content.setSubHeading("Your OfferDiary Credentials");
 		content.setSalutation("Dear");
 		content.setName("User");
 		content.setPara1("Your current password is ");
 		content.setPara2("Access your Offerdairy account here <a title='OfferDiary' href='"+"http://www.offerdiary.com"+"'>OfferDiary</a>");
+		setDefaultEmailContent(content);
 	}
 
 	@Override
@@ -62,11 +63,11 @@ public class PasswordRecoverEmail extends Email{
 
 	private void setParamsInHtml() {
 		Document doc = getDocHTML();
-		doc.select(EmailContent.SELECT_SUBHEADING).first().text(getDefaultEmailContent().getSubHeading());
-		doc.select(EmailContent.SELECT_NAME).first().text(getDefaultEmailContent().getName());
-		doc.select(EmailContent.SELECT_SALUTATION).first().text(getDefaultEmailContent().getSalutation());
-		doc.select(EmailContent.SELECT_PARA1).first().text(getDefaultEmailContent().getPara1());
-		doc.select(EmailContent.SELECT_PARA2).first().text(getDefaultEmailContent().getPara2());
+		doc.select(EmailContent.SELECT_SUBHEADING).first().append(getDefaultEmailContent().getSubHeading());
+		doc.select(EmailContent.SELECT_NAME).first().append(getDefaultEmailContent().getName());
+		doc.select(EmailContent.SELECT_SALUTATION).first().append(getDefaultEmailContent().getSalutation());
+		doc.select(EmailContent.SELECT_PARA1).first().append(getDefaultEmailContent().getPara1());
+		doc.select(EmailContent.SELECT_PARA2).first().append(getDefaultEmailContent().getPara2());
 	}
 	
 
@@ -111,5 +112,9 @@ public class PasswordRecoverEmail extends Email{
 	public void setPASSWORD_RECOVERY_EMAIL_HTML(
 			String pASSWORD_RECOVERY_EMAIL_HTML) {
 		PASSWORD_RECOVERY_EMAIL_HTML = pASSWORD_RECOVERY_EMAIL_HTML;
+	}
+
+	public void setDefaultEmailContent(EmailContent defaultEmailContent) {
+		this.defaultEmailContent = defaultEmailContent;
 	}
 }
