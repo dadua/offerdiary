@@ -65,12 +65,13 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	}
 	
 	@Override
-	public User saveEmailUser(String email, String password) {
+	public User saveEmailUser(String name, String email, String password) {
 		User user = new User();
 		user.setLoginType(LoginType.INTERNAL);
 		user.setUserId(email);
 		user.setEmailId(email);
 		user.setPassword(password);
+		user.setName(name);
 		user.setRegistrationTime((new Date(System.currentTimeMillis())));
 		save(user);
 		getUserEventGenerator().newUserAdded(user);
