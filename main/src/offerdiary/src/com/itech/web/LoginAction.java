@@ -158,9 +158,10 @@ public class LoginAction extends CommonAction{
 	public Response emailSignUp (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
+			String name = req.getParameter("name");
 			String email = req.getParameter("email");
 			String password = req.getParameter("password");
-			user = getUserManager().saveEmailUser(email, password);
+			user = getUserManager().saveEmailUser(name, email, password);
 			updateLoggedInUser(req, user);
 		}
 		/*
