@@ -20,7 +20,7 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
 	@Override
 	public boolean addOrUpdate(T object) {
-		getSession().save(object);
+		getSession().saveOrUpdate(object);
 		return true;
 	}
 

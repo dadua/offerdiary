@@ -67,7 +67,8 @@ public class LoginAction extends CommonAction{
 			Gson gson = new Gson();
 			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
 			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
-			if (user == null || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())) {
+			if (user == null || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString()) 
+					|| ! user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString())) {
 				return emailDoesntExist();
 			}
 		}
@@ -161,15 +162,19 @@ public class LoginAction extends CommonAction{
 			String name = req.getParameter("name");
 			String email = req.getParameter("email");
 			String password = req.getParameter("password");
-			user = getUserManager().saveEmailUser(name, email, password);
+			user = getUserManager().getByEmail(email);
+			if(user != null && (user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
+						|| user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString()))){
+				return new Forward("signUpFailed.jsp");
+			}else if(user != null && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
+				user.setLoginType(LoginType.MULTI);
+				user.setPassword(password);
+				getUserManager().save(user);
+			}else if(null == user){
+				user = getUserManager().saveEmailUser(name, email, password);
+			}
 			updateLoggedInUser(req, user);
 		}
-		/*
-		Result<User> result = new Result<User>( user);
-		Type userResultType = new TypeToken<Result<User>>() {
-		}.getType();
-		return new CommonBeanResponse(result, userResultType);
-		 */
 		return new Forward("wallet.do");
 	}
 
