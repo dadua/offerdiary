@@ -89,15 +89,12 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		return getUserDAO().getByUserId(userId);
 	}
 
+	
+	
 	@Override
 	public void save(User user) {
-		User existingUser = getUserDAO().getByUserId(user.getUserId());
-		if (existingUser != null) {
-			user.setId(existingUser.getId());
-			return;
-		}
 		getUserDAO().addOrUpdate(user);
-		existingUser = getUserDAO().getByUserId(user.getUserId());
+		User existingUser = getUserDAO().getByUserId(user.getUserId());
 		user.setId(existingUser.getId());
 	}
 
