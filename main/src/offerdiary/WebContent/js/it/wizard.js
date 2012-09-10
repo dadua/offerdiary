@@ -103,6 +103,9 @@ it.wizard.step.newInstance = function() {
 	getStepValidator: function() {
 	    return _stepValidator;
 	},
+	validate: function () {
+	    return _stepValidator();
+	},
 	setPlotHtmlFromDataCb: _setPlotCb,
 	setFetchDataFromHtmlCb: _setFetchDataFromHtmlCb,
 	getFetchDataFromHtmlCb: function () {
@@ -115,6 +118,30 @@ it.wizard.step.newInstance = function() {
 };
 
 it.wizard.newInstance = function () {
+
+    var _previousNextHtmlBsTemplate = '<ul class="pager"> \
+        					<li class="previous disabled"> \
+                                                	<a href="#">&larr; Older</a> \
+                                        	</li> \
+                                        	<li class="next disabled"> \
+                                                	<a href="#">Newer &rarr;</a> \
+                        			</li> \
+					</ul>';
+
+    var _modalBsTemplate = '<div class="modal hide" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
+				<div class="modal-header wizardHeader"> \
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+        				<h4 id="wizardTitle">Modal header</h4>\
+    				</div>\
+				<div class="modal-body wizardBody">\
+				</div>\
+        			<div class="modal-footer wizardFooter">\
+					<div class="pull-right">\
+            					<button class="btn finalOption" data-dismiss="modal" aria-hidden="true">Close</button>\
+            					<button class="btn btn-primary finalOption">Save changes</button>\
+        				</div>\
+        			</div>\
+			</div>';
 
     var _wizardSteps = [];
     var _setWizardSteps = function (steps) {
@@ -139,8 +166,7 @@ it.wizard.newInstance = function () {
 	var stepBeingIterated = null;
 	for (var i =0; i <= index; i++) {
 	    stepBeingIterated = _getStepWithIndex(i);
-	    var stepValidator = stepBeingIterated.getStepValidator();
-	    var validates = stepValidator();
+	    var validates = stepBeingIterated.validates();
 	    if (!validates) {
 		return false;
 	    }
@@ -149,7 +175,7 @@ it.wizard.newInstance = function () {
     };
 
     var _validateCurrentStep = function () {
-	_validateStepWithIndex(_currentStepIndex);
+	return _validateStepWithIndex(_currentStepIndex);
     };
 
     var _getStepWithIndex = function (index) {
@@ -169,8 +195,9 @@ it.wizard.newInstance = function () {
     };
 
     var _navigateToNext = function () {
-	_validateCurrentStep();
-	_currentStepIndex += 1;
+	if (_validateCurrentStep()) {
+	    _currentStepIndex += 1;
+	}
     };
 
     var _navigateToPrev = function () {
@@ -212,9 +239,32 @@ it.wizard.newInstance = function () {
 	_onWizardFinish = onWizardFinish;
     };
 
-    var _init = function(wizardSteps, formData) {
-	_setWizardSteps(wizardSteps);
-	_setFormData(formData);
+    var _wizardContainerId = null;
+
+    var _setWizardContainerId = function(containerId){
+	_wizardContainerId;
+    };
+
+    var _init = function(containerId, wizardSteps, formData) {
+	_setWizardContainerId(containerId);
+	try {
+	    _setWizardSteps(wizardSteps);
+	} catch (e) {
+	    if (console) {
+		console.log(e.message);
+	    }
+	}
+	try {
+	    _setFormData(formData);
+	} catch (e) {
+	    if (console) {
+		console.log(e.message);
+	    }
+	}
+    };
+
+    var _show = function () {
+	$('#wizardModal').modal('show');
 
     };
 
@@ -222,6 +272,7 @@ it.wizard.newInstance = function () {
 	init: _init,
 	setWizardSteps: _setWizardSteps,
 	setFormData: _setFormData,
+	setContainerId: _setWizardContainerId,
 	getFormData: function () {
 	    return _formData;
 	},
@@ -230,6 +281,7 @@ it.wizard.newInstance = function () {
 	},
 	navigateToNext: _navigateToNext,
 	navigateToPrev: _navigateToPrev,
-	setOnFinish: _setOnFinish
+	setOnFinish: _setOnFinish,
+	show: _show
     };
 };
