@@ -17,10 +17,14 @@ import org.hibernate.annotations.Type;
 import com.itech.common.db.PersistableEntity;
 
 @Entity
-@Table(name=OfferCardModelConstants.TABLE_BANK_CARD)
+@Table(name=OfferCardModelConstants.TABLE_CARD)
 public class OfferCard extends PersistableEntity{
 	public enum CardType{
 		CREDIT, DEBIT,CHARGE,GIFT, LOYALTY, MEMBERSHIP, PREPAID, UNKNOWN
+	}
+
+	public enum CardSource{
+		REDWINE, OFFER_DIARY;
 	}
 
 
@@ -50,14 +54,20 @@ public class OfferCard extends PersistableEntity{
 	@Type(type="text")
 	private String description;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name=OfferCardModelConstants.COL_CARD_SOURCE)
+	private CardSource cardSource = CardSource.OFFER_DIARY;
+
+	@Column(name=OfferCardModelConstants.COL_CARD_SOURCE_IDENTIFIER)
+	private String cardSourceIdentifier;
+
 	@Column(name=OfferCardModelConstants.COL_IMAGE_URL)
 	private String imageURL;
 
+
+
 	@Transient
 	private boolean associatedWithCurrentUser;
-
-
-
 
 	public Vendor getIssuingVendor() {
 		return issuingVendor;
@@ -134,6 +144,22 @@ public class OfferCard extends PersistableEntity{
 
 	public boolean isAssociatedWithCurrentUser() {
 		return associatedWithCurrentUser;
+	}
+
+	public void setCardSource(CardSource cardSource) {
+		this.cardSource = cardSource;
+	}
+
+	public CardSource getCardSource() {
+		return cardSource;
+	}
+
+	public void setCardSourceIdentifier(String cardSourceIdentifier) {
+		this.cardSourceIdentifier = cardSourceIdentifier;
+	}
+
+	public String getCardSourceIdentifier() {
+		return cardSourceIdentifier;
 	}
 
 

@@ -7,6 +7,7 @@
 	<bean id="itech.redanarOfferEngine" class="com.itech.redwine.parser.RedWineOfferEngine">
 		<property name="offerCardManager" ref="itech.offerCardManager"/>
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="offerManager" ref="itech.offerManager"/>
 	</bean>
 	
 	<bean id="itech.scotchWorldEngine" class="com.itech.scotchworld.parser.ScotchWorldEngine">

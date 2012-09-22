@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.user.model.User;
 
@@ -14,6 +15,11 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 	List<Offer> getAllUnexpiredOffersForUser(User user);
 
 	List<Offer> getAllOfferForUser(User user, OfferType offerType);
+
+	void removeOffersForCard(OfferCard offerCard);
+
+	List<Offer> getAllOffersOnCardsForUser(User user);
+
 
 
 }
