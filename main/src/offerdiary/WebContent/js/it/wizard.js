@@ -119,28 +119,29 @@ it.wizard.step.newInstance = function() {
 
 it.wizard.newInstance = function () {
 
-    var _previousNextHtmlBsTemplate = '<ul class="pager"> \
+    var _previousNextHtmlBsFragment = '<ul class="pager" style="margin:0px" > \
         					<li class="previous disabled"> \
-                                                	<a href="#">&larr; Older</a> \
+                                                	<a href="#">&larr; Previous</a> \
                                         	</li> \
                                         	<li class="next disabled"> \
-                                                	<a href="#">Newer &rarr;</a> \
+                                                	<a href="#">Next &rarr;</a> \
                         			</li> \
 					</ul>';
 
-    var _modalBsTemplate = '<div class="modal hide" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
+    var _finalFooterBsHtmlFragment = '<div class="pull-right">\
+						<button class="btn finalOption" data-dismiss="modal" aria-hidden="true">Close</button>\
+            					<button class="btn btn-primary finalOption">Save changes</button>\
+        				</div>';
+
+    var _modalBsTemplate = '<div class="modal hide" id="_wizard" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
 				<div class="modal-header wizardHeader"> \
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
-        				<h4 id="wizardTitle">Modal header</h4>\
+        				<h5 id="wizardTitle">Modal header</h5>\
     				</div>\
 				<div class="modal-body wizardBody">\
 				</div>\
         			<div class="modal-footer wizardFooter">\
-					<div class="pull-right">\
-            					<button class="btn finalOption" data-dismiss="modal" aria-hidden="true">Close</button>\
-            					<button class="btn btn-primary finalOption">Save changes</button>\
-        				</div>\
-        			</div>\
+				</div>\
 			</div>';
 
     var _wizardSteps = [];
@@ -239,14 +240,14 @@ it.wizard.newInstance = function () {
 	_onWizardFinish = onWizardFinish;
     };
 
-    var _wizardContainerId = null;
+    var _wizardRootId = null;
 
-    var _setWizardContainerId = function(containerId){
-	_wizardContainerId;
+    var _setWizardRootId = function(rootId){
+	_wizardRootId = rootId;
     };
 
-    var _init = function(containerId, wizardSteps, formData) {
-	_setWizardContainerId(containerId);
+    var _init = function(rootId, wizardSteps, formData) {
+	_setWizardRootId(rootId);
 	try {
 	    _setWizardSteps(wizardSteps);
 	} catch (e) {
@@ -261,18 +262,34 @@ it.wizard.newInstance = function () {
 		console.log(e.message);
 	    }
 	}
+	_setWizardDom();
+    };
+
+    var _getCurrentModal$ = function() {
+	var modalWithoutFooter$ = $(_modalBsTemplate);
+	if (_currentStepIndex === _getLastStepIndex()) {
+	    modalWithoutFooter$.find('.wizardFooter').append(_finalFooterBsHtmlFragment);
+	} else {
+	    modalWithoutFooter$.find('.wizardFooter').append(_previousNextHtmlBsFragment);
+	}
+	return modalWithoutFooter$;
+    };
+
+    var _setWizardDom = function () {
+	$('#'+_wizardRootId).append(_getCurrentModal$());
     };
 
     var _show = function () {
-	$('#wizardModal').modal('show');
-
+	$('#_wizard').modal('show');
     };
+
+    var _title = 'Wizard';
 
     return {
 	init: _init,
 	setWizardSteps: _setWizardSteps,
 	setFormData: _setFormData,
-	setContainerId: _setWizardContainerId,
+	setRootId: _setWizardRootId,
 	getFormData: function () {
 	    return _formData;
 	},
@@ -282,6 +299,12 @@ it.wizard.newInstance = function () {
 	navigateToNext: _navigateToNext,
 	navigateToPrev: _navigateToPrev,
 	setOnFinish: _setOnFinish,
-	show: _show
+	show: _show,
+	setTitle: function(title) {
+	    _title = title;
+	},
+	getTitle: function() {
+	    return _title;
+	}
     };
 };
