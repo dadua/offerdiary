@@ -13,7 +13,25 @@
 		<script src="js/it/wizard.js" > </script>
 		
 		<script type="text/javascript">
-			var it = it || {};
+			$(function(){
+			    var sampleWizard = it.wizard.newInstance();
+			    var step = it.wizard.step.newInstance();
+			    step.setTitle('This is a sample step');
+			    step.setHtmlTemplateSelector('#randomTemplate');
+			    var steps = []
+			    steps.push(step)
+			    var step2 = it.wizard.step.newInstance();
+			    step2.setTitle('Another step title');
+			    step2.setHtmlTemplateSelector('#another');
+			    steps.push(step2);
+			    sampleWizard.init('wizardRoot', steps, {});
+			    sampleWizard.setTitle('Sample Wizard Title')
+			    /*
+			    sampleWizard.setWizardSteps(steps);
+			    sampleWizard.setRootId('wizardRoot');
+			    */
+			    $('#testBtn').click(sampleWizard.show);
+			});
 			
 		</script>
 		
@@ -33,6 +51,8 @@
 					<h4>
 						c: choose functionality
 					</h4>
+					
+					<button class="btn btn-primary" id="testBtn">On Click Show Modal</button>
 					
 					<c:choose>
 						<c:when test="true">
@@ -57,6 +77,11 @@
 			</div>
 		</div>
 		
+		<div id="wizardRoot">
+		</div>
+		
+		<div id="randomTemplate">This is some text to be used in a step</div>
+		<div id="another">This is some more text</div>
 		
 		<%@include file="common/footer.jsp" %>
 	</body>
