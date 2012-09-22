@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.user.model.User;
 
@@ -43,6 +44,25 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		Query query = getSession().createQuery(hql);
 		query.setParameter("user", user);
 		query.setParameter("offerType", offerType);
+		List list = query.list();
+		return list;
+	}
+
+	@Override
+	public void removeOffersForCard(OfferCard offerCard) {
+		String hql = "delete from " + getEntityClassName() + " o where exists " +
+		" (select 1 from OfferOfferCardAssoc oca where oca.offer=o and oca.offerCard=:offerCard";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offerCard", offerCard);
+		int rowsAffected = query.executeUpdate();
+	}
+
+	@Override
+	public List<Offer> getAllOffersOnCardsForUser(User user) {
+		String hql = "select o from " + getEntityClassName() + " o, OfferOfferCardAssoc oca, OfferCardUserAssoc ocua " +
+		" where oca.offer=o and oca.offerCard=ocua.offerCard and ocua.user=:user";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("user", user);
 		List list = query.list();
 		return list;
 	}

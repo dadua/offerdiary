@@ -60,6 +60,36 @@ public class OfferAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response getOffersOnMyCards (HttpServletRequest req, HttpServletResponse resp) {
+		User loggedInUser = getLoggedInUser();
+		List<Offer> offers = new ArrayList<Offer>();
+		if (loggedInUser != null) {
+			offers = getOfferManager().getAllOffersOnCardsForUser(loggedInUser);
+		} else {
+			offers = new ArrayList<Offer>();
+		}
+		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response getOffersForCard (HttpServletRequest req, HttpServletResponse resp) {
+		User loggedInUser = getLoggedInUser();
+		List<Offer> offers = new ArrayList<Offer>();
+		if (loggedInUser != null) {
+			//offers = getOfferManager().getAllOffersForUser(loggedInUser);
+		} else {
+			offers = new ArrayList<Offer>();
+		}
+		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response saveOffers (HttpServletRequest req, HttpServletResponse resp) {
 		String offersJson = req.getParameter(OfferWalletConstants.OFFER_LIST_PARAM_KEY);
 		Gson gson = new Gson();

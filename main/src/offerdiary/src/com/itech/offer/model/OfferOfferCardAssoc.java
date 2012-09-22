@@ -37,8 +37,8 @@ public class OfferOfferCardAssoc extends PersistableEntity{
 	public OfferCard getOfferCard() {
 		return offerCard;
 	}
-	public void setOfferCard(OfferCard bankCard) {
-		this.offerCard = bankCard;
+	public void setOfferCard(OfferCard offerCard) {
+		this.offerCard = offerCard;
 	}
 	@Override
 	public boolean isTransient() {

@@ -33,6 +33,7 @@ public class ActionMappings {
 		add(new ActionMapping("offers.do", OfferAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
 		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
+		add(new ActionMapping("getOffersOnMyCards.do", OfferAction.class, "getOffersOnMyCards"));
 
 		//Share offer Actions
 		add(new ActionMapping("getSharedOffer.do", OfferAction.class, "getSharedOffer"));

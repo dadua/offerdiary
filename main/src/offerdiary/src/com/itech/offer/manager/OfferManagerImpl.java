@@ -1,6 +1,7 @@
 package com.itech.offer.manager;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,9 +10,12 @@ import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.event.offer.OfferEventGenerator;
 import com.itech.offer.dao.OfferDAO;
+import com.itech.offer.dao.OfferOfferCardAssocDAO;
 import com.itech.offer.dao.OfferShareDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferCard;
+import com.itech.offer.model.OfferOfferCardAssoc;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
@@ -26,6 +30,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private OfferShareDAO offerShareDAO;
 	private VendorManager vendorManager;
 	private OfferEventGenerator offerEventGenerator;
+	private OfferOfferCardAssocDAO offerOfferCardAssocDAO;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -130,6 +135,39 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		return offerShare;
 	}
 
+
+	@Override
+	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
+		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
+		for (Offer offer : offers) {
+			Vendor existingVendor = getVendorManager().getVendorByName(offer.getTargetVendor().getName());
+			if (existingVendor == null) {
+				getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
+			} else {
+				offer.setTargetVendor(existingVendor);
+			}
+			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
+			assoc.setOffer(offer);
+			assoc.setOfferCard(offerCard);
+			assocs.add(assoc);
+		}
+		getOfferDAO().addOrUpdate(offers);
+		getOfferOfferCardAssocDAO().addOrUpdate(assocs);
+		return true;
+	}
+
+	@Override
+	public boolean removeOffersForCard(OfferCard offerCard) {
+		getOfferOfferCardAssocDAO().removeOffersForCard(offerCard);
+		getOfferDAO().removeOffersForCard(offerCard);
+		return true;
+	}
+
+	@Override
+	public List<Offer> getAllOffersOnCardsForUser(User user) {
+		return getOfferDAO().getAllOffersOnCardsForUser(user);
+	}
+
 	public OfferDAO getOfferDAO() {
 		return offerDAO;
 	}
@@ -176,6 +214,14 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	public OfferEventGenerator getOfferEventGenerator() {
 		return offerEventGenerator;
+	}
+
+	public void setOfferOfferCardAssocDAO(OfferOfferCardAssocDAO offerOfferCardAssocDAO) {
+		this.offerOfferCardAssocDAO = offerOfferCardAssocDAO;
+	}
+
+	public OfferOfferCardAssocDAO getOfferOfferCardAssocDAO() {
+		return offerOfferCardAssocDAO;
 	}
 
 

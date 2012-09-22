@@ -1,5 +1,6 @@
 package com.itech.redwine.parser;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,45 +10,81 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.itech.common.CommonFileUtilities;
+import com.itech.common.CommonUtilities;
 import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.CitiOfferParser;
 
 public class RedWineCardsParser {
 
+	private static final int MAX_CARDS_TO_BE_PROCESSED_FOR_OFFERS = 200;
+	private static final int MAX_PAGE_COUNT_FOR_OFFERS = 40;
+	private static final int MAX_PAGE_COUNT_FOR_CARDS = 165;
 	private static final String REDANAR_CARDDATA_JSON_FILE_OUT = "c:\\data\\cards-minimal.json";
-	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
-	private final String redWinedomainName ="http://redanar.com";
-	private String redWineBasePageUrl= redWinedomainName+"/mobile/badge/list?search=&page=";
-	private final String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPageNumber";
+	private static final String REDANAR_CARDDATA_WITH_OFFERS_JSON_FILE_OUT = "c:\\data\\cards-with-offers.json";
+	private final static Logger logger = Logger.getLogger(CitiOfferParser.class);
+	private static final String redWinedomainName ="http://redanar.com";
+	private static final String redWineBasePageUrl= redWinedomainName+"/mobile/badge/list?search=&page=";
+	private static final String redWineOffersBaseUrl = redWinedomainName +"/mobile/badge/offers/cardNumber?page=offerPageNumber";
 
-	private List<RedWineCard> redWineCards = new ArrayList<RedWineCard>();
 
-	public void printGetRedWineOffers(){
-		parseRedWine();
-		writeRedWineRecordsToFile();
+	public static void printGetRedWineOffers(String outPutFile){
+		List<RedWineCard> redWineForCards = parseRedWineForCards(MAX_PAGE_COUNT_FOR_CARDS);
+		writeRecordsToFile(redWineForCards, outPutFile);
 	}
-
-	private void writeRedWineRecordsToFile() {
+	public static List<RedWineCard> readRedWineRecordsFromFile(String sourceFileName) {
+		String cardDataJson = CommonFileUtilities.getResourceFileAsString(sourceFileName);
 		Gson gson = new Gson();
-		String json = gson.toJson(redWineCards);
-		System.out.println(CommonFileUtilities.appendDataToFile(REDANAR_CARDDATA_JSON_FILE_OUT, json, true));
+		Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
+		List<RedWineCard> redWineCards = gson.fromJson(cardDataJson, offerCardJsonType);
+		return redWineCards;
 	}
 
-	private List<RedWineCard> readRedWineRecordsFromFile() {
-		//CommonFileUtilities.readDataFromFile(REDANAR_CARDDATA_JSON_FILE);
-		return null;
-	}
-
-
-
-	public void parseRedWine(){
-		for(int currentPageNumber =0; currentPageNumber <= 165; currentPageNumber++){
-			redWineCards.addAll(getRedWineCardsForPage(currentPageNumber));
+	public static void writeRedWineCardsWithOffers(List<RedWineCard> redWineForCards, String outPutFile){
+		int cardProcessed = 0;
+		for (RedWineCard redWineCard : redWineForCards) {
+			if (cardProcessed >= MAX_CARDS_TO_BE_PROCESSED_FOR_OFFERS) {
+				break;
+			}
+			String cardNumber = RedWineParserUtil.getIdFromCard(redWineCard.getCardUrl());
+			List<RedWineOffer> allOffersForCard = RedWineCardsParser.getAllOffersForCard(cardNumber, 10);
+			redWineCard.setOffers(allOffersForCard);
+			cardProcessed++;
 		}
+		writeRecordsToFile(redWineForCards, outPutFile);
 	}
 
-	private List<RedWineCard> getRedWineCardsForPage(int currentPageNumber) {
+	public static List<RedWineCard> readRedWineCardsWithOfferFile(String sourceFileName) {
+		String cardDataJson = CommonFileUtilities.getResourceFileAsString(sourceFileName);
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
+		List<RedWineCard> redWineCards = gson.fromJson(cardDataJson, offerCardJsonType);
+		return redWineCards;
+	}
+
+
+	private static void writeRecordsToFile(Object data, String outPutFile) {
+		Gson gson = new Gson();
+		String json = gson.toJson(data);
+		System.out.println(CommonFileUtilities.appendDataToFile(outPutFile, json, true));
+	}
+
+
+	public static List<RedWineCard> parseRedWineForCards(int maxPageCount){
+		List<RedWineCard> allCards =  new ArrayList<RedWineCard>();
+		for(int currentPageNumber =0; currentPageNumber <= maxPageCount; currentPageNumber++){
+			List<RedWineCard> redWineCardsForPage = getRedWineCardsForPage(currentPageNumber);
+			if (redWineCardsForPage.size() == 0) {
+				logger.info("number of pages processed by redwine - " + (currentPageNumber -1));
+				break;
+			}
+			allCards.addAll(redWineCardsForPage);
+		}
+		return allCards;
+	}
+
+	private static List<RedWineCard> getRedWineCardsForPage(int currentPageNumber) {
 		List<RedWineCard> redWineCards = new ArrayList<RedWineCard>();
 		String currentPageUrl = getBasePageUrl()+currentPageNumber;
 		String respHtml = UtilHttp.fetchHttpResponse(currentPageUrl);
@@ -67,7 +104,7 @@ public class RedWineCardsParser {
 		return redWineCards;
 	}
 
-	private void setOtherCardDetails(RedWineCard rWCard) {
+	public static void setOtherCardDetails(RedWineCard rWCard) {
 		int countOfOffers = getCountOfOffers(rWCard);
 		rWCard.setOffersCount(countOfOffers);
 		String cardOffersUrl = redWinedomainName+rWCard.getCardUrl();
@@ -79,15 +116,31 @@ public class RedWineCardsParser {
 		rWCard.setImageUrl(imageSrc);
 	}
 
-	private void getAllOffersForCurrentCard(RedWineCard rWCard) {
-		int cardNumber = getCardNumberFromCarUrl(rWCard);
-		for(int pageNumber =1; pageNumber < 10; pageNumber++){
-			rWCard.getOffers().addAll(getCardPageOffers(cardNumber, pageNumber));
-		}
+	private static int getCountOfOffers(RedWineCard rWCard) {
+		String[] offerCount = rWCard.getCardElement().text().split("\\|");
+		String offerCountString = offerCount[1];
+		int count = Integer.parseInt(offerCountString.trim().substring(0, offerCountString.length()-8));
+		return count;
 	}
 
-	private List<RedWineOffer> getCardPageOffers(
-			int cardNumber, int pageNumber) {
+	public static List<RedWineOffer> getAllOffersForCard(String cardNumber, int maxOfferCount) {
+		List<RedWineOffer> offers = new ArrayList<RedWineOffer>();
+		if (CommonUtilities.isNotEmpty(cardNumber)) {
+			for(int pageNumber =1; pageNumber < MAX_PAGE_COUNT_FOR_OFFERS; pageNumber++){
+				if (offers.size() >= maxOfferCount) {
+					break;
+				}
+				List<RedWineOffer> offersForPage = getCardPageOffers(cardNumber, pageNumber);
+				if (offersForPage.size() == 0) {
+					break;
+				}
+				offers.addAll(offersForPage);
+			}
+		}
+		return offers;
+	}
+
+	private static List<RedWineOffer> getCardPageOffers(String cardNumber, int pageNumber) {
 		List<RedWineOffer> redWineOffers = new ArrayList<RedWineOffer>();
 		String offersUrl = redWineOffersBaseUrl.replace("cardNumber", cardNumber+"");
 		offersUrl = offersUrl.replace("offerPageNumber", pageNumber+"");
@@ -106,38 +159,31 @@ public class RedWineCardsParser {
 	}
 
 	public static void main(String[] args){
-		RedWineCardsParser redWineCardsParser = new RedWineCardsParser();
-		redWineCardsParser.printGetRedWineOffers();
+		//RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
 		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
 		//System.out.println(readDataFromFile);
+		//		List<RedWineCard> redwineCards = RedWineCardsParser.readRedWineRecordsFromFile("resources\\redanar\\cards-minimal.json");
+		//		List<RedWineCard> iciciCards = filterCardsWithName("ICICI",  redwineCards);
+		//		RedWineCardsParser.writeRedWineCardsWithOffers(iciciCards,
+		//				RedWineCardsParser.REDANAR_CARDDATA_WITH_OFFERS_JSON_FILE_OUT);
+
+		String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
+		List<RedWineCard> cardsWithOffer = readRedWineCardsWithOfferFile(cardsWithOffersSourceFileName);
 	}
 
-	private int getCardNumberFromCarUrl(RedWineCard rWCard) {
-		int length = rWCard.getCardUrl().length();
-		return Integer.parseInt(rWCard.getCardUrl().substring(length-2, length));
-	}
 
-	private int getCountOfOffers(RedWineCard rWCard) {
-		String[] offerCount = rWCard.getCardElement().text().split("\\|");
-		String offerCountString = offerCount[1];
-		int count = Integer.parseInt(offerCountString.trim().substring(0, offerCountString.length()-8));
-		return count;
-	}
 
-	public List<RedWineCard> getRedWineCards() {
-		return redWineCards;
+	private static List<RedWineCard> filterCardsWithName(String name, List<RedWineCard> cards) {
+		List<RedWineCard> filteredCards = new ArrayList<RedWineCard>();
+		for (RedWineCard redWineCard : cards) {
+			if (redWineCard.getCardName().indexOf(name) != -1) {
+				filteredCards.add(redWineCard);
+			}
+		}
+		return filteredCards;
 	}
-
-	public void setRedWineCards(List<RedWineCard> redWineCards) {
-		this.redWineCards = redWineCards;
-	}
-
-	public String getBasePageUrl() {
+	public static String getBasePageUrl() {
 		return redWineBasePageUrl;
-	}
-
-	public void setBasePageUrl(String basePageUrl) {
-		this.redWineBasePageUrl = basePageUrl;
 	}
 
 }

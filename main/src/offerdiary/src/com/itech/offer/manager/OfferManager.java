@@ -3,6 +3,7 @@ package com.itech.offer.manager;
 import java.util.List;
 
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferShare;
 import com.itech.user.model.User;
 
@@ -29,5 +30,11 @@ public interface OfferManager {
 	public Offer copySharedOffer(String accessToken);
 
 	public Offer getOfferFor(Long offerId);
+
+	public boolean removeOffersForCard(OfferCard offerCard);
+
+	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard);
+
+	public List<Offer> getAllOffersOnCardsForUser(User user);
 
 }

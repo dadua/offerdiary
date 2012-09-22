@@ -13,6 +13,7 @@ public class RedWineCard {
 	private String cardUrl;
 	transient private Element cardElement;
 	private String cardType;
+	private String cardId;
 
 	@Override
 	public String toString(){
@@ -66,5 +67,16 @@ public class RedWineCard {
 	}
 	public void setCardType(String cardType) {
 		this.cardType = cardType;
+	}
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+	public String getCardId() {
+		if (cardId != null) {
+			return cardId;
+		}
+		return RedWineParserUtil.getIdFromCard(getCardUrl());
 	}
 }
