@@ -14,12 +14,23 @@
 		
 		<script type="text/javascript">
 			$(function(){
+			    //TODO: wizardId, and title should be passed in newInstance
+			    // also add data.. in newInstance
 			    var sampleWizard = it.wizard.newInstance();
+			
+			    //TODO: selector, and title should be passed in newInstance
 			    var step = it.wizard.step.newInstance();
 			    step.setTitle('This is a sample step');
 			    step.setHtmlTemplateSelector('#randomTemplate');
+			    step.setPlotHtmlFromDataCb(function(data){
+					if (data&& data.test) {
+					    $('#testForm1').val(data.test);
+					}
+			    });
+				
+				
 			    var steps = []
-			    steps.push(step)
+			    steps.push(step);
 			    var step2 = it.wizard.step.newInstance();
 			    step2.setTitle('Another step title');
 			    step2.setHtmlTemplateSelector('#another');
@@ -30,7 +41,18 @@
 			    sampleWizard.setWizardSteps(steps);
 			    sampleWizard.setRootId('wizardRoot');
 			    */
-			    $('#testBtn').click(sampleWizard.show);
+			    //step.getHtmlTemplateSelector();
+			    
+			    sampleWizard.getWizardStepWithIndex$(0).find('#testForm1').keyup(function(){
+				    var isValidated = false;
+				    if ($(this).val()== '') {
+						isValidated = false;
+				    } else {
+						isValidated = true;
+				    }
+				    step.publishOnValidationChangeCb(isValidated);
+				});
+			   $('#testBtn').click(sampleWizard.show);
 			});
 			
 		</script>
@@ -80,8 +102,13 @@
 		<div id="wizardRoot">
 		</div>
 		
-		<div id="randomTemplate">This is some text to be used in a step</div>
-		<div id="another">This is some more text</div>
+		<div id="randomTemplate">
+			This is some text to be used in a step 1
+			<input id="testForm1" type="text" />
+		</div>
+		<div id="another">This is some more text for step2
+			<input id="testChange" type="text" />
+		</div>
 		
 		<%@include file="common/footer.jsp" %>
 	</body>
