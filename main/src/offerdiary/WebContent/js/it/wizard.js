@@ -250,14 +250,14 @@ it.wizard.newInstance = function () {
 	try {
 	    _setWizardSteps(wizardSteps);
 	} catch (e) {
-	    if (console) {
+	    if (console && console.log) {
 		console.log(e.message);
 	    }
 	}
 	try {
 	    _setFormData(formData);
 	} catch (e) {
-	    if (console) {
+	    if (console && console.log) {
 		console.log(e.message);
 	    }
 	}

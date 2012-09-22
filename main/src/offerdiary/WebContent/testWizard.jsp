@@ -9,8 +9,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Sample blank page</title>
 		
-		<%@include file="../../common/header.jsp" %>
-		<script src="wizard.js" > </script>
+		<%@include file="common/header.jsp" %>
+		<script src="js/it/wizard.js" > </script>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -23,7 +23,7 @@
 	</head>
 	<body>
 	
-		<%@include file="../../common/navHeader.jsp" %>
+		<%@include file="common/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<p> A new row-fluid this is </p>
@@ -58,6 +58,6 @@
 		</div>
 		
 		
-		<%@include file="../../common/footer.jsp" %>
+		<%@include file="common/footer.jsp" %>
 	</body>
 </html>
