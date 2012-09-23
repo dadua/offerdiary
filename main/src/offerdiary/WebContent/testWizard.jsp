@@ -19,7 +19,7 @@
 			
 			    //TODO: selector, and title should be passed in newInstance
 			    var step = it.wizard.step.newInstance();
-			    step.setTitle('This is a sample step');
+				step.setTitle('This is a sample step');
 			    step.setHtmlTemplateSelector('#randomTemplate');
 			    step.setPlotHtmlFromDataCb(function(data){
 					if (data&& data.test) {
@@ -27,12 +27,9 @@
 					}
 			    });
 				
-				
 			    var steps = []
 			    steps.push(step);
-			    var step2 = it.wizard.step.newInstance();
-			    step2.setTitle('Another step title');
-			    step2.setHtmlTemplateSelector('#another');
+			    var step2 = it.wizard.step.newInstance('Another step title','#another');
 			    steps.push(step2);
 			    var step3 = it.wizard.step.newInstance();
 			    step3.setTitle('step title 3');
@@ -46,16 +43,32 @@
 			    */
 			    //step.getHtmlTemplateSelector();
 			    
-			    step.get$().find('#testForm1').keyup(function(){
+			    var validateStep1 = function(){
 				    var isValidated = false;
-				    if ($(this).val()== '') {
+				    if (step.$('#testForm1').val()== '') {
 						isValidated = false;
 				    } else {
 						isValidated = true;
 				    }
 				    step.publishOnValidationChangeCb(isValidated);
-				});
-			   $('#testBtn').click(sampleWizard.show);
+				    return isValidated;
+				};
+				step.setStepValidator(validateStep1);
+				
+			    step.$('#testForm1').keyup(validateStep1);
+			    var validateStep3 = function(){
+				    var isValidated = false;
+				    if (step3.$('#change').val()== '') {
+						isValidated = false;
+				    } else {
+						isValidated = true;
+				    }
+				    step3.publishOnValidationChangeCb(isValidated);
+				    return isValidated;
+				};
+			    step3.$('#change').keyup(validateStep3);
+			    step3.setStepValidator(validateStep3);
+			    $('#testBtn').click(sampleWizard.show);
 			});
 			
 		</script>
@@ -77,7 +90,7 @@
 						c: choose functionality
 					</h4>
 					
-					<button class="btn btn-primary" id="testBtn">On Click Show Modal</button>
+					<button class="btn btn-primary" id="testBtn">Show Wizard</button>
 					
 					<c:choose>
 						<c:when test="true">
