@@ -16,7 +16,6 @@
 			$(function(){
 			    //TODO: wizardId, and title should be passed in newInstance
 			    // also add data.. in newInstance
-			    var sampleWizard = it.wizard.newInstance();
 			
 			    //TODO: selector, and title should be passed in newInstance
 			    var step = it.wizard.step.newInstance();
@@ -35,7 +34,11 @@
 			    step2.setTitle('Another step title');
 			    step2.setHtmlTemplateSelector('#another');
 			    steps.push(step2);
-			    sampleWizard.init('wizardRoot', steps, {});
+			    var step3 = it.wizard.step.newInstance();
+			    step3.setTitle('step title 3');
+			    step3.setHtmlTemplateSelector('#step3');
+			    steps.push(step3);
+			    var sampleWizard = it.wizard.newInstance('wizardRoot', steps, {});
 			    sampleWizard.setTitle('Sample Wizard Title')
 			    /*
 			    sampleWizard.setWizardSteps(steps);
@@ -43,7 +46,7 @@
 			    */
 			    //step.getHtmlTemplateSelector();
 			    
-			    sampleWizard.getWizardStepWithIndex$(0).find('#testForm1').keyup(function(){
+			    step.get$().find('#testForm1').keyup(function(){
 				    var isValidated = false;
 				    if ($(this).val()== '') {
 						isValidated = false;
@@ -108,6 +111,9 @@
 		</div>
 		<div id="another">This is some more text for step2
 			<input id="testChange" type="text" />
+		</div>
+		<div id="step3">This is some more text for step3
+			<input id="change" type="text" />
 		</div>
 		
 		<%@include file="common/footer.jsp" %>
