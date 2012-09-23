@@ -5,7 +5,7 @@ var it = it || {};
 it.wizard = it.wizard || {};
 it.wizard.step = it.wizard.step || {};
 
-it.wizard.step.newInstance = function() {
+it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSelector, pValidatorFunction) {
 
     //private
     var _title = 'Default Step Title';
@@ -89,9 +89,12 @@ it.wizard.step.newInstance = function() {
 
     var _onValidationChangeCb = null;
 
+    var _$ = null;
+
+    //_init(pTitleOrOptionsObj, pJqueryHtmlTemplateSelector, pValidatorFunction);
+
     //public methods and variables
     return {
-	init: _init,
 	setTitle: _setTitle,
 	getTitle: function() {
 	    return _title;
@@ -120,13 +123,24 @@ it.wizard.step.newInstance = function() {
 	},
 	publishOnValidationChangeCb: function(isValidated) {
 	    return _onValidationChangeCb(isValidated);
+	},
+	set$: function(step$) {
+	    _$ = step$;
+	},
+	get$: function() {
+	    if (_$ === null) {
+		throw {
+		    message: 'step not inited from wizard'
+		};
+	    }
+	    return _$;
 	}
     };
 };
 
-it.wizard.newInstance = function () {
+it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 
-    var _previousNextHtmlBsFragment = '<ul class="pager" style="margin:0px" > \
+    var _previousNextHtmlBsFragment = '<ul class="pager wizardPager" style="margin:0px" > \
         					<li class="previous disabled"> \
                                                 	<a href="#">&larr; Previous</a> \
                                         	</li> \
@@ -135,10 +149,17 @@ it.wizard.newInstance = function () {
                         			</li> \
 					</ul>';
 
-    var _finalFooterBsHtmlFragment = '<div class="pull-right">\
+    var _finalFooterBsHtmlFragment = '<div class="wizardFinalFooter">\
+					<ul class="pager pull-left" style="margin:0px" > \
+						<li class="previous disabled"> \
+							<a href="#">&larr; Previous</a> \
+						</li> \
+					</ul>\
+					<div class="pull-right"> \
+						<button class="btn btn-primary finalOption">Save</button>\
 						<button class="btn finalOption" data-dismiss="modal" aria-hidden="true">Close</button>\
-            					<button class="btn btn-primary finalOption">Save changes</button>\
-        				</div>';
+					</div> \
+        			</div>';
 
     var _modalBsTemplate = '<div class="modal hide" id="_wizard" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
 				<div class="modal-header wizardHeader"> \
@@ -171,7 +192,7 @@ it.wizard.newInstance = function () {
     var _currentStepIndex = 0;
 
     var _validateStepWithIndex = function (index) {
-	if (index < 0) {
+	if (index < 0 || index > _getLastStepIndex()) {
 	    return false;
 	}
 	var stepBeingIterated = null;
@@ -206,39 +227,52 @@ it.wizard.newInstance = function () {
     };
 
     var _navigateToNext = function () {
-	if (_validateCurrentStep()) {
-	    _currentStepIndex += 1;
+	if($(this).hasClass('disabled')) {
+	    return;
+	}
+	$(this).addClass('disabled');
+	_navigateToStepWith(_currentStepIndex+1);
+    };
+
+    var _navigateToPrev = function () {
+	if($(this).hasClass('disabled')) {
+	    return;
+	}
+	$(this).addClass('disabled');
+	_navigateToStepWith(_currentStepIndex-1);
+    };
+
+    var _navigateToStepWith = function(index) {
+	if(_validateStepWithIndex(index)) {
+	    _currentStepIndex = index;
 	}
 	_showCurrentStepDom();
     };
 
-    var _navigateToPrev = function () {
-	_currentStepIndex -= 1;
-
+    var _getNextBtn$ = function() {
+	return $('#_wizard .next');
     };
 
-    var _navigateToStepWith = function(index) {
-	_validateStepWithIndex(index);
-
+    var _getPrevBtn$ = function () {
+	return $('#_wizard .previous');
     };
 
     var _setNextButtonEnabled = function () {
-	$('#_wizard .next').removeClass('disabled');
-
+	_getNextBtn$().removeClass('disabled');
     };
 
     var _setPrevButtonEnabled = function () {
-	$('#_wizard .previous').removeClass('disabled');
+	_getPrevBtn$().removeClass('disabled').show();
     };
 
 
     var _setNextButtonDisabled = function () {
-	$('#_wizard .next').addClass('disabled');
+	_getNextBtn$().addClass('disabled');
 
     };
 
-    var _setPrevButtonDiabled = function () {
-	$('#_wizard .previous').addClass('disabled');
+    var _setPrevButtonHide = function () {
+	_getPrevBtn$().addClass('disabled').hide();
 
     };
 
@@ -261,6 +295,122 @@ it.wizard.newInstance = function () {
 	_wizardRootId = rootId;
     };
 
+    var _setupStepDom$ = function() {
+	var currentStep = null;
+	for (var i=0;i<_wizardSteps.length;i++) {
+	    currentStep = _wizardSteps[i];
+	    currentStep.set$($('#_wizard #wizardStep_'+i));
+	    currentStep.setOnValidationChangeCb(function(isValidated){
+		if (isValidated) {
+		    _setNextButtonEnabled();
+		} else {
+		    _setNextButtonDisabled();
+		}
+	    });
+	}
+    };
+
+    var _fillWizardStepsToHtml$ = function (wizardModal$) {
+	var currentStep = null;
+	var wizardModalBody$ = wizardModal$.find('.wizardBody');
+	wizardModalBody$.html('');//Cleaning up
+	for (var i=0;i<_wizardSteps.length;i++) {
+	    currentStep = _wizardSteps[i];
+	    //Cloning and giving a new wizardSpecific id to make it unique
+	    var wizardStep$ = $(currentStep.getHtmlTemplateSelector()).clone().attr('id', 'wizardStep_'+i).addClass('wizardStep hide');
+	    wizardModalBody$.append(wizardStep$);
+	}
+	return wizardModal$;
+    };
+
+    var _fillWizardHeader = function(wizardModal$) {
+	//Iterate over steps and return a title1 > title2 > .. > titleN html
+    };
+
+
+    var _fillWizardFooter = function(wizardModal$) {
+	wizardModal$.find('.wizardFooter').html(_finalFooterBsHtmlFragment).append(_previousNextHtmlBsFragment);
+    };
+
+    var _getWizard$ = function() {
+	var wizardModal$ = $(_modalBsTemplate);
+	_fillWizardHeader(wizardModal$);
+	_fillWizardStepsToHtml$(wizardModal$);
+	_fillWizardFooter(wizardModal$);
+	return wizardModal$;
+    };
+
+
+    var _setupHeaderDomForStepIndex = function(stepIndex) {
+	//TODO: Setup title state here based on stepIndex..
+    };
+
+    var _setupBodyDomForStepIndex = function(stepIndex) {
+	var step$ = _getWizardStepWithIndex$(stepIndex);
+	$('#_wizard .wizardStep').hide();
+	$(step$).show();
+    };
+
+    var _setupFooterDomForStepIndex = function (stepIndex) {
+	var wizardFooter$ = $('#_wizard .wizardFooter');
+	var wizardPagerFooter$ = wizardFooter$.find('.wizardPager').hide();
+	var wizardFinalFooter$ = wizardFooter$.find('.wizardFinalFooter').hide();
+	if (_currentStepIndex === _getLastStepIndex()) {
+	    wizardFinalFooter$.show();
+	    _setPrevButtonEnabled();
+	} else if (_currentStepIndex === 0) {
+	    wizardPagerFooter$.show();
+	    _setPrevButtonHide();
+	} else {
+	    wizardPagerFooter$.show();
+	    _setPrevButtonEnabled();
+	}
+    };
+
+    var _setupDomForStepIndex= function (stepIndex) {
+	_setupHeaderDomForStepIndex(stepIndex);
+	_setupBodyDomForStepIndex(stepIndex);
+	_setupFooterDomForStepIndex(stepIndex);
+    };
+
+    var _showDomForStepWithIndex = function (stepIndex) {
+	var step = _getStepWithIndex(stepIndex);
+	_setupDomForStepIndex(stepIndex);
+	var stepDataPlotter = step.getPlotMethod();
+	stepDataPlotter(_formData);
+	if (step.validate()) {
+	    _setNextButtonEnabled();
+	} else {
+	    _setNextButtonDisabled();
+	}
+    };
+
+    var _showCurrentStepDom = function() {
+	_showDomForStepWithIndex(_currentStepIndex);
+    };
+
+    //Using this so that the handlers that are set after _setupWizardDom aren't washed out
+    var _setupHandlers = function() {
+	_getNextBtn$().click(_navigateToNext);
+	_getPrevBtn$().click(_navigateToPrev);
+    };
+
+    var _isWizardDomSet = false;
+    var _setupWizardDom = function () {
+	if (!_isWizardDomSet) {
+	    $('#'+_wizardRootId).html(_getWizard$());
+	    _setupHandlers();
+	    _isWizardDomSet = true;
+	}
+    };
+
+    var _show = function () {
+	_showCurrentStepDom();
+	$('#_wizard').modal('show');
+    };
+
+    var _title = 'Wizard';
+
     var _init = function(rootId, wizardSteps, formData) {
 	_setWizardRootId(rootId);
 	try {
@@ -278,82 +428,12 @@ it.wizard.newInstance = function () {
 	    }
 	}
 	_setupWizardDom();
+	_setupStepDom$();
     };
 
-    var _fillWizardStepsToHtml$ = function (modal$) {
-	var currentStep = null;
-	for (var i=0;i<_wizardSteps.length;i++) {
-	    currentStep = _wizardSteps[i];
-	    //Cloning and giving a new wizardSpecific id to make it unique
-	    var wizardStep$ = $(currentStep.getHtmlTemplateSelector()).clone().attr('id', 'wizardStep_'+i).addClass('wizardStep hide');
-	    modal$.find('.wizardBody').append(wizardStep$);
-	}
-	return modal$;
-    };
-
-    var _fillWizardHeader = function(modal$) {
-	//Iterate over steps and return a title1 > title2 > .. > titleN html
-    };
-
-    var _getWizard$ = function() {
-	var modal$ = $(_modalBsTemplate);
-	_fillWizardHeader(modal$);
-	_fillWizardStepsToHtml$(modal$);
-	//This part sets the footer
-	//TODO: This needs to be thought out..
-	if (_currentStepIndex === _getLastStepIndex()) {
-	    modal$.find('.wizardFooter').html(_finalFooterBsHtmlFragment);
-	} else {
-	    modal$.find('.wizardFooter').html(_previousNextHtmlBsFragment);
-	}
-	return modal$;
-    };
-
-    var _showDomForStepWithIndex = function (stepIndex) {
-	var step = _getStepWithIndex(stepIndex);
-	var stepDataPlotter = step.getPlotMethod();
-	var step$ = _getWizardStepWithIndex$(stepIndex);
-	$('#_wizard .wizardStep').hide();
-	$(step$).show();
-
-	$('#_wizard .next').click(_navigateToNext);
-	stepDataPlotter(_formData);
-	if (step.validate()) {
-	    _setNextButtonEnabled();
-	} else {
-	    _setNextButtonDisabled();
-	}
-    };
-
-    var _showCurrentStepDom = function() {
-	_showDomForStepWithIndex(_currentStepIndex);
-    };
-
-    var _isWizardDomSet = false;
-
-    var _setupWizardDom = function () {
-	if (!_isWizardDomSet) {
-	    $('#'+_wizardRootId).html(_getWizard$());
-	    _getCurrentStep().setOnValidationChangeCb(function(isValidated){
-		if (isValidated) {
-		    _setNextButtonEnabled();
-		} else {
-		    _setNextButtonDisabled();
-		}
-	    });
-	    _isWizardDomSet = true;
-	}
-    };
-
-    var _show = function () {
-	_showCurrentStepDom();
-	$('#_wizard').modal('show');
-    };
-
-    var _title = 'Wizard';
+    _init (pRootId, pWizardSteps, pFormData);
 
     return {
-	init: _init,
 	setWizardSteps: _setWizardSteps,
 	setFormData: _setFormData,
 	setRootId: _setWizardRootId,
