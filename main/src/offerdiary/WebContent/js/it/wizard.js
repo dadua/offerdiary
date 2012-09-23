@@ -53,11 +53,24 @@ it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSe
 	if (typeof titleOrOptionsObj === 'object') {
 	    _setTitle(titleOrOptionsObj.title);
 	    _setHtmlTemplateSelector(titleOrOptionsObj.htmlTemplateSelector);
-	    _setStepValidator(titleOrOptionsObj.stepValidator);
+	    try {
+		_setStepValidator(titleOrOptionsObj.stepValidator);
+	    } catch (e) {
+		if (console && console.log) {
+		    console.log(e.message);
+		}
+	    }
 	} else {
 	    _setTitle(titleOrOptionsObj);
 	    _setHtmlTemplateSelector(jqueryHtmlTemplateSelector);
-	    _setStepValidator(validatorFunction);
+	    try {
+		_setStepValidator(validatorFunction);
+	    } catch (e) {
+		if (console && console.log) {
+		    console.log(e.message);
+		}
+
+	    }
 	}
     };
 
@@ -74,8 +87,9 @@ it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSe
 	_fetchDataFromHtmlCb = cbFunction;
     };
 
-    var _plotCb = function () {
-
+    var _plotCb = function (formData) {
+	//This default plotter does nothing..
+	//plotCb should be set atleast for the edit case..
     };
 
     var _setPlotCb = function (cbFunction) {
@@ -91,7 +105,9 @@ it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSe
 
     var _$ = null;
 
-    //_init(pTitleOrOptionsObj, pJqueryHtmlTemplateSelector, pValidatorFunction);
+    if (arguments.length > 0) {
+	_init(pTitleOrOptionsObj, pJqueryHtmlTemplateSelector, pValidatorFunction);
+    }
 
     //public methods and variables
     return {
@@ -111,12 +127,15 @@ it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSe
 	    return _stepValidator();
 	},
 	setPlotHtmlFromDataCb: _setPlotCb,
-	setFetchDataFromHtmlCb: _setFetchDataFromHtmlCb,
-	getFetchDataFromHtmlCb: function () {
-	    return _fetchDataFromHtmlCb;
-	},
-	getPlotMethod: function () {
+	getPlotHtmlFromDataCb: function() {
 	    return _plotCb;
+	},
+	plotHtmlWith: function (formData) {
+	    return _plotCb(formData);
+	},
+	setFetchDataFromHtmlCb: _setFetchDataFromHtmlCb,
+	fetchDataFromHtml: function () {
+	    return _fetchDataFromHtmlCb();
 	},
 	setOnValidationChangeCb: function (onValidationChangeCb) {
 	    _onValidationChangeCb = onValidationChangeCb;
@@ -127,13 +146,18 @@ it.wizard.step.newInstance = function (pTitleOrOptionsObj, pJqueryHtmlTemplateSe
 	set$: function(step$) {
 	    _$ = step$;
 	},
-	get$: function() {
+	//This returns the jquery dom object of the step
+	//Will be used to add validators..
+	$: function(selector) {
 	    if (_$ === null) {
 		throw {
 		    message: 'step not inited from wizard'
 		};
 	    }
-	    return _$;
+	    if (selector === undefined) {
+		return _$;
+	    }
+	    return _$.find(selector);
 	}
     };
 };
@@ -156,7 +180,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 						</li> \
 					</ul>\
 					<div class="pull-right"> \
-						<button class="btn btn-primary finalOption">Save</button>\
+						<button class="btn btn-primary finalOption onFinish">Save</button>\
 						<button class="btn finalOption" data-dismiss="modal" aria-hidden="true">Close</button>\
 					</div> \
         			</div>';
@@ -185,7 +209,16 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     };
 
     var _onWizardFinish = function (formData) {
+	//Can submit the form or save the formData
+    };
 
+    var _onFinish = function (e) {
+	if ($(this).hasClass('disabled')) {
+	    return;
+	}
+	_onWizardFinish(_formData);
+
+	$('#_wizard').modal('hide');
     };
 
     //default value of the index of wizard step
@@ -206,14 +239,17 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	return true;
     };
 
-    var _validateCurrentStep = function () {
-	return _validateStepWithIndex(_currentStepIndex);
-    };
 
     var _getStepWithIndex = function (index) {
 	return _wizardSteps[index];
     };
 
+    /*
+     * TODO: Unused private functions
+     * should be removed if not used finally
+    var _validateCurrentStep = function () {
+	return _validateStepWithIndex(_currentStepIndex);
+    };
     var _getCurrentStep = function () {
 	return _getStepWithIndex(_currentStepIndex);
     };
@@ -221,6 +257,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     var _getLastStep = function () {
 	return _wizardSteps[_getLastStepIndex()];
     };
+    */
 
     var _getLastStepIndex = function () {
 	return _wizardSteps.length - 1;
@@ -243,7 +280,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     };
 
     var _navigateToStepWith = function(index) {
-	if(_validateStepWithIndex(index)) {
+	if(index === 0 || _validateStepWithIndex(index-1)) {
 	    _currentStepIndex = index;
 	}
 	_showCurrentStepDom();
@@ -257,8 +294,20 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	return $('#_wizard .previous');
     };
 
+    var _getFinishBtn$ = function () {
+	return $('#_wizard .onFinish');
+    };
+
     var _setNextButtonEnabled = function () {
 	_getNextBtn$().removeClass('disabled');
+    };
+
+    var _setFinishButtonEnabled = function () {
+	_getFinishBtn$().removeClass('disabled');
+    };
+
+    var _setFinishButtonDisabled = function () {
+	_getFinishBtn$().addClass('disabled');
     };
 
     var _setPrevButtonEnabled = function () {
@@ -303,8 +352,10 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	    currentStep.setOnValidationChangeCb(function(isValidated){
 		if (isValidated) {
 		    _setNextButtonEnabled();
+		    _setFinishButtonEnabled();
 		} else {
 		    _setNextButtonDisabled();
+		    _setFinishButtonDisabled();
 		}
 	    });
 	}
@@ -327,7 +378,6 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	//Iterate over steps and return a title1 > title2 > .. > titleN html
     };
 
-
     var _fillWizardFooter = function(wizardModal$) {
 	wizardModal$.find('.wizardFooter').html(_finalFooterBsHtmlFragment).append(_previousNextHtmlBsFragment);
     };
@@ -339,7 +389,6 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	_fillWizardFooter(wizardModal$);
 	return wizardModal$;
     };
-
 
     var _setupHeaderDomForStepIndex = function(stepIndex) {
 	//TODO: Setup title state here based on stepIndex..
@@ -376,12 +425,13 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     var _showDomForStepWithIndex = function (stepIndex) {
 	var step = _getStepWithIndex(stepIndex);
 	_setupDomForStepIndex(stepIndex);
-	var stepDataPlotter = step.getPlotMethod();
-	stepDataPlotter(_formData);
+	step.plotHtmlWith(_formData);
 	if (step.validate()) {
 	    _setNextButtonEnabled();
+	    _setFinishButtonEnabled();
 	} else {
 	    _setNextButtonDisabled();
+	    _setFinishButtonDisabled();
 	}
     };
 
@@ -389,12 +439,13 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	_showDomForStepWithIndex(_currentStepIndex);
     };
 
-    //Using this so that the handlers that are set after _setupWizardDom aren't washed out
     var _setupHandlers = function() {
 	_getNextBtn$().click(_navigateToNext);
 	_getPrevBtn$().click(_navigateToPrev);
+	_getFinishBtn$().click(_onFinish);
     };
 
+    //Using this so that the handlers that are set after _setupWizardDom aren't washed out
     var _isWizardDomSet = false;
     var _setupWizardDom = function () {
 	if (!_isWizardDomSet) {
@@ -446,6 +497,9 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	navigateToNext: _navigateToNext,
 	navigateToPrev: _navigateToPrev,
 	setOnFinish: _setOnFinish,
+	setFinishBtnHtml: function(html) {
+	    _getFinishBtn$().html(html);
+	},
 	show: _show,
 	setTitle: function(title) {
 	    _title = title;
