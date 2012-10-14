@@ -264,6 +264,81 @@
 				});
 			}
 			
+			it.wallet.initAddOfferWizard = function() {
+			    var addWizardSteps = [],
+			    initFormData = {},
+			    addWizard = null,
+			    vendorStep = it.wizard.step.newInstance(),
+			    offerDetailsStep = it.wizard.step.newInstance(),
+			    remindMeStep = it.wizard.step.newInstance();
+			    
+			    addWizardSteps.push(vendorStep);
+			    addWizardSteps.push(offerDetailsStep);
+			    addWizardSteps.push(remindMeStep);
+			    addWizard = it.wizard.newInstance('addWizardRoot', addWizardSteps, initFormData);
+			    
+			    //TODO: This could be chained as well..
+			    vendorStep.setTitle('Vendor');
+			    vendorStep.setHtmlTemplateSelector('#vendorSelectionTemplate');
+			    vendorStep.setPlotHtmlFromDataCb(function(data){
+					//TODO: verify if this vendorVO
+					if (data && data.vendor) {
+					    
+					}
+			    });
+			    var vendorStepValidator = function() {
+					var isValidated = true;
+					//TODO: This is also bound to vendor name in markup
+					if (vendorStep.$('#vendorName').val()== '') {
+					    
+					}
+					vendorStep.publishOnValidationChangeCb(isValidated);
+					return isValidated;
+				};
+			    vendorStep.setStepValidator(vendorStepValidator);
+			    
+			    offerDetailsStep.setTitle('Benefits');
+			    offerDetailsStep.setHtmlTemplateSelector('#benefitDetailsTemplate');
+			    offerDetailsStep.setPlotHtmlFromDataCb(function(data) {
+					if (data) {
+					    //TODO: fill description etc..
+					}
+			    });
+			    offerDetailsStep.setStepValidator(function() {
+					var isValidated = true;
+					//TODO: Do some validation using the below jQuery object
+					offerDetailsStep.$('some');
+				    offerDetailsStep.publishOnValidationChangeCb(isValidated);
+				    return isValidated;
+			    });
+			    
+			     
+			    remindMeStep.setTitle('Reminders');
+			    remindMeStep.setHtmlTemplateSelector('#reminderDetailsTemplate');
+			    remindMeStep.setPlotHtmlFromDataCb(function(data) {
+					var isValidated = true;
+					if (data) {
+					    //TODO: fill expiry date etc to form elements in DOM..
+					}
+				    remindMeStep.publishOnValidationChangeCb(isValidated);
+			    });
+			    var remindMeStepValidator = function(){
+				    var isValidated = false;
+				    if (remindMeStep.$('#change').val()== '') {
+						isValidated = false;
+				    } else {
+						isValidated = true;
+				    }
+				    remindMeStep.publishOnValidationChangeCb(isValidated);
+				    return isValidated;
+				};
+			    remindMeStep.setStepValidator(remindMeStepValidator);
+			   
+			    $('#addOfferWizardBtn').click (addWizard.show);
+			    
+			}
+			
+			
 			$(function() {
 				$('#addOfferToWallet').click(it.wallet.addOffer);
 				var offersJson = '${myOffersJson}',
@@ -272,6 +347,8 @@
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
 				it.wallet.vendorAutoCompleteInit();
+				
+				it.wallet.initAddOfferWizard();
 					
 				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
 				$('.checkBoxSelected').live('click', function() {
@@ -416,6 +493,7 @@
 						</div>
 					</div>
 					<a id="addOfferModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addOfferModal" >Add Offer to Wallet</a>
+					<a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet wizard</a>
 						
 				</div>
 			</div>

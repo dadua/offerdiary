@@ -27,7 +27,7 @@
 					}
 			    });
 				
-			    var steps = []
+			    var steps = [];
 			    steps.push(step);
 			    var step2 = it.wizard.step.newInstance('Another step title','#another');
 			    steps.push(step2);
@@ -68,6 +68,7 @@
 				};
 			    step3.$('#change').keyup(validateStep3);
 			    step3.setStepValidator(validateStep3);
+			    //Bind the sampleWizard's .show method to a click handler
 			    $('#testBtn').click(sampleWizard.show);
 			});
 			
