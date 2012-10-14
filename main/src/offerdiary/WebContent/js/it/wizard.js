@@ -188,13 +188,18 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     var _modalBsTemplate = '<div class="modal hide" id="_wizard" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
 				<div class="modal-header wizardHeader"> \
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
-        				<h5 id="wizardTitle">Modal header</h5>\
+        				<h5 id="wizardTitle"> \
+					</h5>\
+					<ul id="stepTitles" class="breadcrumb"> \
+					</ul> \
     				</div>\
 				<div class="modal-body wizardBody">\
 				</div>\
         			<div class="modal-footer wizardFooter">\
 				</div>\
 			</div>';
+
+
 
     var _wizardSteps = [];
     var _setWizardSteps = function (steps) {
@@ -376,6 +381,21 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 
     var _fillWizardHeader = function(wizardModal$) {
 	//Iterate over steps and return a title1 > title2 > .. > titleN html
+	//Presently adding it as a bread crumb itself..
+	var titleDividerHtml = '<span class="divider">></span>',
+		titleBreadCrumbHtml = '',
+		currentStep = null;
+	wizardModal$.find('#wizardTitle').html(_title);
+	for (var i=0,l=_wizardSteps.length;i<l;i++) {
+	    currentStep = _wizardSteps[i];
+	    titleBreadCrumbHtml += '<li>' + currentStep.getTitle();
+	    if (i!=l-1) {
+		titleBreadCrumbHtml += titleDividerHtml;
+	    }
+	    titleBreadCrumbHtml += '</li>';
+	}
+	wizardModal$.find('#stepTitles').html(titleBreadCrumbHtml);
+
     };
 
     var _fillWizardFooter = function(wizardModal$) {
@@ -391,7 +411,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     };
 
     var _setupHeaderDomForStepIndex = function(stepIndex) {
-	//TODO: Setup title state here based on stepIndex..
+	$('#_wizard .wizardHeader #stepTitles li').removeClass('active').eq(stepIndex).addClass('active');
     };
 
     var _setupBodyDomForStepIndex = function(stepIndex) {
