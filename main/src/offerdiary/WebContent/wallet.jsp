@@ -16,6 +16,7 @@
 		
 		<%@include file="common/header.jsp" %>
 		
+		<script src="js/it/wizard.js" > </script>
 		<script type="text/javascript">
 			var it = it || {};
 			it.wallet = it.wallet || {};
