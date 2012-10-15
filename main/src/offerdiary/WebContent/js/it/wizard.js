@@ -388,7 +388,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	wizardModal$.find('#wizardTitle').html(_title);
 	for (var i=0,l=_wizardSteps.length;i<l;i++) {
 	    currentStep = _wizardSteps[i];
-	    titleBreadCrumbHtml += '<li>' + currentStep.getTitle();
+	    titleBreadCrumbHtml += '<li class="blueColor">' + currentStep.getTitle();
 	    if (i!=l-1) {
 		titleBreadCrumbHtml += titleDividerHtml;
 	    }
@@ -411,7 +411,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     };
 
     var _setupHeaderDomForStepIndex = function(stepIndex) {
-	$('#_wizard .wizardHeader #stepTitles li').removeClass('active').eq(stepIndex).addClass('active');
+	$('#_wizard .wizardHeader #stepTitles li').removeClass('active').addClass('blueColor').eq(stepIndex).addClass('active').removeClass('blueColor');
     };
 
     var _setupBodyDomForStepIndex = function(stepIndex) {
@@ -466,9 +466,12 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     };
 
     //Using this so that the handlers that are set after _setupWizardDom aren't washed out
-    var _isWizardDomSet = false;
-    var _setupWizardDom = function () {
-	if (!_isWizardDomSet) {
+    var _isWizardDomSet = false,
+    _reInitDom = function () {
+	_setupWizardDom(true);
+    };
+    var _setupWizardDom = function (reInit) {
+	if ((typeof reInit == 'boolean' && reInit) || !_isWizardDomSet) {
 	    $('#'+_wizardRootId).html(_getWizard$());
 	    _setupHandlers();
 	    _isWizardDomSet = true;
@@ -498,7 +501,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 		console.log(e.message);
 	    }
 	}
-	_setupWizardDom();
+	_setupWizardDom(true);
 	_setupStepDom$();
     };
 
@@ -529,6 +532,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	},
 	//This returns the jquery dom object of the step
 	//Will be used to add validators..
-	getWizardStepWithIndex$: _getWizardStepWithIndex$
+	getWizardStepWithIndex$: _getWizardStepWithIndex$,
+	reInitDom: _reInitDom
     };
 };

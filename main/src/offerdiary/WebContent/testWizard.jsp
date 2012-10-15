@@ -75,6 +75,9 @@
 		</script>
 		
 		<style type="text/css">
+		.blueColor {
+			color:#3A87AD;
+		}
 		</style>
 		
 	</head>

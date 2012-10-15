@@ -276,7 +276,8 @@
 			    addWizardSteps.push(vendorStep);
 			    addWizardSteps.push(offerDetailsStep);
 			    addWizardSteps.push(remindMeStep);
-			    addWizard = it.wizard.newInstance('addWizardRoot', addWizardSteps, initFormData);
+			    addWizard = it.wizard.newInstance('addOfferWizardRoot', addWizardSteps, initFormData);
+			    addWizard.setTitle('Add offer to wallet');
 			    
 			    //TODO: This could be chained as well..
 			    vendorStep.setTitle('Vendor');
@@ -334,6 +335,7 @@
 				    return isValidated;
 				};
 			    remindMeStep.setStepValidator(remindMeStepValidator);
+			    addWizard.reInitDom();
 			   
 			    $('#addOfferWizardBtn').click (addWizard.show);
 			    
@@ -442,6 +444,11 @@
 			}
 			.margin-zero{
 				margin-left: 0px;
+			}
+			
+			/*TODO: this is a dependecy of wizard.js*/
+			.blueColor {
+				color:#3A87AD;
 			}
 			
 		</style>
@@ -554,6 +561,17 @@
 				</div>
 			</li>
 		</ul>
+		
+		<div id="addOfferWizardRoot"></div>
+		<div id="templates" class="hide">
+			
+			<div id="vendorSelectionTemplate">
+			</div>
+			<div id="benefitDetailsTemplate">
+			</div>
+			<div id="reminderDetailsTemplate">
+			</div>
+		</div>
 		<%-- End of Offer Template UI --%>
 
 		<%@include file="common/footer.jsp" %>
