@@ -10,9 +10,6 @@
 				<li id="voucherTab" >
 					 <a href="#" >Vouchers</a>
 				</li>
-				<li id="offerTab" >
-					 <a href="#" >Offers</a>
-				</li>
 				<li id="cardTab" >
 					<a href="cards.do" >Cards</a>
 				</li>
