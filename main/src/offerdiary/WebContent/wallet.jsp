@@ -566,6 +566,14 @@
 		<div id="templates" class="hide">
 			
 			<div id="vendorSelectionTemplate">
+				<div class="form-search">
+					<div class="input-append">
+						<input id="vendor" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
+						<button class="btn"><i class="icon-search"></i></button>
+					</div>
+				</div>
+				<div id="searchedVendors">
+				</div>
 			</div>
 			<div id="benefitDetailsTemplate">
 			</div>
