@@ -241,6 +241,12 @@
 					$(this).parent().find('.hiddenPartOfTime').show();
 					$(this).tooltip('hide').remove();
 				});
+				$('.checkBoxSelected').live('click', function() {
+					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
+				});
+				$('.checkBoxUnSelected').live('click', function(){
+					$(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
+				});
 			};
 			
 			$(function() {
@@ -252,19 +258,17 @@
 				$('#expiryDate').datepicker();
 				it.vendor.JqUiAutoCompleteInit();
 				it.offer.addwizard.init();
+				
 			    $('#addOfferWizardBtn').click (it.offer.addwizard.getWizard().show);
-					
 				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
-				$('.checkBoxSelected').live('click', function() {
-					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
-				});
-				$('.checkBoxUnSelected').live('click', function(){
-					$(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
-				});
+
 			});
 			
 		</script>
 		<style type="text/css">
+			.popover {
+				z-index: 1200;
+			}
 			.offer {
 				background-color: #F5F5F5;
 			}
@@ -473,7 +477,7 @@
 				<div class="container-fluid" >
 					<div class="form-search row-fluid">
 						<div class="input-append">
-							<input id="vendor" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
+							<input id="vendorQuery" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
 							<button class="btn"><i class="icon-search"></i></button>
 						</div>
 					</div>

@@ -87,12 +87,25 @@ it.offer.addwizard = function () {
 	remindMeStep.setStepValidator(remindMeStepValidator);
     };
 
+    var _initVendorDomHandlers = function () {
+	it.vendor.init();
+	vendorStep.$('#vendorQuery').keyup(function(){
+	    var query = $(this).val();
+	    it.vendor.plotAllAddable(query);
+	});
+    };
+
+    var _initDomHandlers = function () {
+	_initVendorDomHandlers();
+    };
+
     var _initAll = function () {
 	_initWizard();
 	_initVendorStep();
 	_initRemindMeStep();
 	_initOfferDetailsStep();
 	addWizard.reInitDom();
+	_initDomHandlers();
     };
 
     return {
