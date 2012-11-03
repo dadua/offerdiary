@@ -17,6 +17,8 @@
 		<%@include file="common/header.jsp" %>
 		
 		<script src="js/it/wizard.js" > </script>
+		<script src="js/it/addoffer_wizard.js" > </script>
+		<script src="js/it/vendor.js" > </script>
 		<script type="text/javascript">
 			var it = it || {};
 			it.wallet = it.wallet || {};
@@ -144,7 +146,7 @@
 	    		*/
 	    		
 	    		var offer$ = this.getOfferHtml(offer);
-	    		$(offer$).appendTo('.thumbnails');
+	    		$(offer$).appendTo('#offerContainer');
 	    		
 	    		
 	    		/*
@@ -241,107 +243,6 @@
 				});
 			};
 			
-			it.wallet.vendorAutoCompleteInit = function() {
-				var cache = {}, lastXhr;
-				$('#vendor').autocomplete({
-					minLength: 2,
-					source: function( request, response ) {
-						var term = request.term;
-						if ( term in cache ) {
-							response( cache[term] );
-							return;
-						}
-						lastXhr = $.getJSON( "searchVendor.do", {searchKey: term}, function( data, status, xhr ) {
-							var names = [];
-							for (var i=0;i<data.result.length;i++) {
-								names.push(data.result[i].name);
-							}
-							cache[term] = names;
-							if ( xhr === lastXhr ) {
-								response(names);
-							}
-						});
-					}
-				});
-			}
-			
-			it.wallet.initAddOfferWizard = function() {
-			    var addWizardSteps = [],
-			    initFormData = {},
-			    addWizard = null,
-			    vendorStep = it.wizard.step.newInstance(),
-			    offerDetailsStep = it.wizard.step.newInstance(),
-			    remindMeStep = it.wizard.step.newInstance();
-			    
-			    addWizardSteps.push(vendorStep);
-			    addWizardSteps.push(offerDetailsStep);
-			    addWizardSteps.push(remindMeStep);
-			    addWizard = it.wizard.newInstance('addOfferWizardRoot', addWizardSteps, initFormData);
-			    addWizard.setTitle('Add offer to wallet');
-			    
-			    //TODO: This could be chained as well..
-			    vendorStep.setTitle('Vendor');
-			    vendorStep.setHtmlTemplateSelector('#vendorSelectionTemplate');
-			    vendorStep.setPlotHtmlFromDataCb(function(data){
-					//TODO: verify if this vendorVO
-					if (data && data.vendor) {
-					    
-					}
-			    });
-			    var vendorStepValidator = function() {
-					var isValidated = true;
-					//TODO: This is also bound to vendor name in markup
-					if (vendorStep.$('#vendorName').val()== '') {
-					    
-					}
-					vendorStep.publishOnValidationChangeCb(isValidated);
-					return isValidated;
-				};
-			    vendorStep.setStepValidator(vendorStepValidator);
-			    
-			    offerDetailsStep.setTitle('Benefits');
-			    offerDetailsStep.setHtmlTemplateSelector('#benefitDetailsTemplate');
-			    offerDetailsStep.setPlotHtmlFromDataCb(function(data) {
-					if (data) {
-					    //TODO: fill description etc..
-					}
-			    });
-			    offerDetailsStep.setStepValidator(function() {
-					var isValidated = true;
-					//TODO: Do some validation using the below jQuery object
-					offerDetailsStep.$('some');
-				    offerDetailsStep.publishOnValidationChangeCb(isValidated);
-				    return isValidated;
-			    });
-			    
-			     
-			    remindMeStep.setTitle('Reminders');
-			    remindMeStep.setHtmlTemplateSelector('#reminderDetailsTemplate');
-			    remindMeStep.setPlotHtmlFromDataCb(function(data) {
-					var isValidated = true;
-					if (data) {
-					    //TODO: fill expiry date etc to form elements in DOM..
-					}
-				    remindMeStep.publishOnValidationChangeCb(isValidated);
-			    });
-			    var remindMeStepValidator = function(){
-				    var isValidated = false;
-				    if (remindMeStep.$('#change').val()== '') {
-						isValidated = false;
-				    } else {
-						isValidated = true;
-				    }
-				    remindMeStep.publishOnValidationChangeCb(isValidated);
-				    return isValidated;
-				};
-			    remindMeStep.setStepValidator(remindMeStepValidator);
-			    addWizard.reInitDom();
-			   
-			    $('#addOfferWizardBtn').click (addWizard.show);
-			    
-			}
-			
-			
 			$(function() {
 				$('#addOfferToWallet').click(it.wallet.addOffer);
 				var offersJson = '${myOffersJson}',
@@ -349,9 +250,9 @@
 				it.wallet.appendOffers(offers, true);
 				it.wallet.addHandlers();
 				$('#expiryDate').datepicker();
-				it.wallet.vendorAutoCompleteInit();
-				
-				it.wallet.initAddOfferWizard();
+				it.vendor.JqUiAutoCompleteInit();
+				it.offer.addwizard.init();
+			    $('#addOfferWizardBtn').click (it.offer.addwizard.getWizard().show);
 					
 				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
 				$('.checkBoxSelected').live('click', function() {
@@ -451,6 +352,10 @@
 				color:#3A87AD;
 			}
 			
+			.bluishText {
+				color: #0088CC;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -462,8 +367,8 @@
 				<div class="span2" >
 					<%@include file="walletTabs.jsp" %>
 				</div>
-				<div class="span8" id="offerContainer" >
-					<ul class="thumbnails row">
+				<div class="span8"  >
+					<ul id="offerContainer" class="thumbnails row">
 					</ul>
 				</div>
 				<div class="span2" >
@@ -508,7 +413,6 @@
 		</div>
 		
 		<%-- Offer Template Code Begins Here | Use it under a div, implemeting a span class of span4 or more --%>
-				
 		<ul class="hide">		
 			<li class="offer_ui_template thumbnail offerBlock box-shadow span4 hide">
 				<div class="row">
@@ -566,13 +470,23 @@
 		<div id="templates" class="hide">
 			
 			<div id="vendorSelectionTemplate">
-				<div class="form-search">
-					<div class="input-append">
-						<input id="vendor" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
-						<button class="btn"><i class="icon-search"></i></button>
+				<div class="container-fluid" >
+					<div class="form-search row-fluid">
+						<div class="input-append">
+							<input id="vendor" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
+							<button class="btn"><i class="icon-search"></i></button>
+						</div>
 					</div>
-				</div>
-				<div id="searchedVendors">
+					<br/>
+					<div class="row-fluid">
+						<ul id="searchedVendors"  class="thumbnails" >
+							<li class="span4 vendor">
+								<div class="vendorImage thumbnail">
+									<img src="images/stores/defaultVendor.jpg" />
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div id="benefitDetailsTemplate">
