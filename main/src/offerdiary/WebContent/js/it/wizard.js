@@ -353,7 +353,6 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
 	var currentStep = null;
 	for (var i=0;i<_wizardSteps.length;i++) {
 	    currentStep = _wizardSteps[i];
-	    currentStep.set$($('#_wizard #wizardStep_'+i));
 	    currentStep.setOnValidationChangeCb(function(isValidated){
 		if (isValidated) {
 		    _setNextButtonEnabled();
@@ -469,10 +468,19 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     var _isWizardDomSet = false,
     _reInitDom = function () {
 	_setupWizardDom(true);
+    },
+    _setupStep$ = function () {
+	var currentStep = null;
+	for (var i=0;i<_wizardSteps.length;i++) {
+	    currentStep = _wizardSteps[i];
+	    currentStep.set$(_getWizardStepWithIndex$(i));
+	}
     };
+
     var _setupWizardDom = function (reInit) {
 	if ((typeof reInit == 'boolean' && reInit) || !_isWizardDomSet) {
 	    $('#'+_wizardRootId).html(_getWizard$());
+	    _setupStep$();
 	    _setupHandlers();
 	    _isWizardDomSet = true;
 	}
