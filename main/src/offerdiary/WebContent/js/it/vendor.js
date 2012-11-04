@@ -8,6 +8,7 @@ it.vendor.view = it.vendor.view || {};
 
 //This object has all the html related data and methods
 it.vendor.view = function () {
+    var threeVendorsContainerHtml = '<ul class="thumbnails currentSearchedVendors row-fluid"></ul>';
     var vendorHtml = ' \
 	<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" > \
 		<div class="vendorImage thumbnail"> \
@@ -25,6 +26,9 @@ it.vendor.view = function () {
 	},
 	getContainer$: function () {
 	    return containerId$ || (containerId$ = $('#'+ vendorSearchContainerId));
+	},
+	getVendorsHtml: function () {
+	    return threeVendorsContainerHtml;
 	}
     };
 }();
@@ -49,18 +53,30 @@ it.vendor.setNameDesc = function (vendor, vendor$) {
     });
 };
 
-it.vendor.plotOne = function (vendor) {
+it.vendor.get$ = function (vendor) {
     var vendorHtml = this.view.getHtmlTemplate();
     var vendor$ = $(vendorHtml).clone().attr('id', 'vendorSearch_'+vendor.id);
     this.setImage(vendor, vendor$);
     this.setNameDesc(vendor, vendor$);
-    vendor$.appendTo(this.view.getContainer$());
+    return vendor$;
 };
 
 it.vendor.plotAll = function (vendors) {
-    this.view.getContainer$().html('');
+    var vendorsHtml = this.view.getVendorsHtml();
+    var vendors$ = [],
+    currentThreeVendorMax$ = $(vendorsHtml);
+    this.view.getContainer$().html(currentThreeVendorMax$);
     for (var i=0;i < vendors.length;i++) {
-	this.plotOne(vendors[i]);
+	var vendor$ = this.get$(vendors[i]);
+	vendors$.push(vendor$);
+    }
+    for (i=0;i<vendors$.length; i++) {
+	var currentVendor$ = vendors$[i];
+	if (currentThreeVendorMax$.find('li').length=== 3) {
+	    currentThreeVendorMax$ = $(vendorsHtml);
+	    this.view.getContainer$().append(currentThreeVendorMax$);
+	}
+	currentThreeVendorMax$.append(currentVendor$);
     }
     $('.vendorSearch').popover({trigger: 'hover'});
 };
