@@ -482,8 +482,8 @@
 						</div>
 					</div>
 					<br/>
-					<div class="row-fluid">
-						<ul id="searchedVendors"  class="thumbnails" >
+					<div id="searchedVendors" class="row-fluid">
+						<ul class="thumbnails row-fluid" >
 							<li class="span4 vendor">
 								<div class="vendorImage thumbnail">
 									<img src="images/stores/defaultVendor.jpg" />
