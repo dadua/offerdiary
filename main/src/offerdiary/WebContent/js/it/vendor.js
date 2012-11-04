@@ -61,6 +61,16 @@ it.vendor.get$ = function (vendor) {
     return vendor$;
 };
 
+it.vendor.addHandlers = function() {
+    $('.vendorSearch').popover({trigger: 'hover'}).click(function(){
+	$('.vendorSearch').addClass('unselected').removeClass('selected');
+	$(this).removeClass('unselected').addClass('selected');
+	if (it.offer && it.offer.addwizard) {
+	    it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
+	}
+    });
+};
+
 it.vendor.plotAll = function (vendors) {
     var vendorsHtml = this.view.getVendorsHtml();
     var vendors$ = [],
@@ -78,7 +88,7 @@ it.vendor.plotAll = function (vendors) {
 	}
 	currentThreeVendorMax$.append(currentVendor$);
     }
-    $('.vendorSearch').popover({trigger: 'hover'});
+    this.addHandlers();
 };
 
 it.vendor.plotAllAddable = function(query) {

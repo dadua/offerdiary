@@ -25,10 +25,9 @@ it.offer.addwizard = function () {
 	    }
 	});
 	var vendorStepValidator = function() {
-	    var isValidated = true;
-	    //TODO: This is also bound to vendor name in markup
-	    if (vendorStep.$('#vendorName').val()== '') {
-
+	    var isValidated = false;
+	    if (vendorStep.$('li.selected').length == 1) {
+		isValidated = true;
 	    }
 	    vendorStep.publishOnValidationChangeCb(isValidated);
 	    return isValidated;
@@ -92,6 +91,7 @@ it.offer.addwizard = function () {
 	vendorStep.$('#vendorQuery').keyup(function(){
 	    var query = $(this).val();
 	    it.vendor.plotAllAddable(query);
+	    vendorStep.publishOnValidationChangeCb(false);
 	});
     };
 

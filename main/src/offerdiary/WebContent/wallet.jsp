@@ -266,9 +266,15 @@
 			
 		</script>
 		<style type="text/css">
+			/* Add offer related classes */
 			.popover {
 				z-index: 1200;
 			}
+			
+			.selected {
+				background-color: #ADFF2F;
+			}
+			
 			.offer {
 				background-color: #F5F5F5;
 			}
