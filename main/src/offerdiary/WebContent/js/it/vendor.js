@@ -63,10 +63,17 @@ it.vendor.get$ = function (vendor) {
 
 it.vendor.addHandlers = function() {
     $('.vendorSearch').popover({trigger: 'hover'}).click(function(){
-	$('.vendorSearch').addClass('unselected').removeClass('selected');
-	$(this).removeClass('unselected').addClass('selected');
-	if (it.offer && it.offer.addwizard) {
-	    it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
+	if ($(this).hasClass('selected')) {
+	    $(this).removeClass('selected').addClass('unselected');
+	    if (it.offer && it.offer.addwizard) {
+		it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(false);
+	    }
+	} else {
+	    $('.vendorSearch').addClass('unselected').removeClass('selected');
+	    $(this).removeClass('unselected').addClass('selected');
+	    if (it.offer && it.offer.addwizard) {
+		it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
+	    }
 	}
     });
 };
