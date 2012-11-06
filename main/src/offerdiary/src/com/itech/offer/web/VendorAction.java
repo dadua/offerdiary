@@ -18,7 +18,9 @@ import com.itech.offer.model.Vendor;
 public class VendorAction extends CommonAction{
 
 	private static final String VENDOR_JSON_KEY = "vendorJson";
-	private static final int MAX_RESULT_COUNT = 10;
+	//TODO: Send the no. of records wanted from the ui
+	// also consider this as the default count..
+	private static final int MAX_RESULT_COUNT = 9;
 	private static final String VENDOR_NAME_SEARCH_KEY = "searchKey";
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
