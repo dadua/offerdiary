@@ -1,12 +1,12 @@
 <%@page import="com.itech.offer.model.Offer"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+    pageEncoding="utf-8"%>
 <!DOCTYPE html>
 
 <%@page import="java.util.List"%>
 <%@page import="com.itech.offer.model.Offer"%><html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta charset="UTF-8" />
 			<%--
 				TODO: Decide this
 				<!-- The HTML5 charset format -->
@@ -16,7 +16,7 @@
 		
 		<%@include file="common/header.jsp" %>
 		
-		<script src="js/it/wizard.js" > </script>
+		<script src="js/it/wizard.js" charset="UTF-8"> </script>
 		<script src="js/it/addoffer_wizard.js" > </script>
 		<script src="js/it/vendor.js" > </script>
 		<script type="text/javascript">
@@ -273,7 +273,33 @@
 			
 			.selected {
 				background-color: #ADFF2F;
+				position: relative;
 			}
+			
+			.selected-tick {
+				background: none repeat scroll 0 0 #5EF118;
+			    border-radius: 23px 23px 23px 23px;
+			    font-size: 11px;
+			    font-weight: 100;
+			    color:white;
+			    line-height: 22px;
+			    opacity: 0.7;
+			    position: absolute;
+			    text-align: center;
+			    top: -10%;
+			    left: 90%;
+			    width: 22px;
+			}
+			
+			.vendorImage {
+				cursor: pointer;
+			}
+			
+			.selected-tick:hover {
+				color: white;
+				text-decoration: none;
+			}
+			
 			
 			.offer {
 				background-color: #F5F5F5;
@@ -384,7 +410,7 @@
 				<div class="span2" >
 					<div class="modal hide fade" id="addOfferModal" style="display:none" >
 						<div class="modal-header" >
-							<a class="close" data-dismiss="modal">×</a>
+							<a class="close" data-dismiss="modal">Ã—</a>
 							<h2>Add a offer to wallet </h2>
 						</div>
 						<div class="modal-body" >
@@ -474,6 +500,7 @@
 					</div>
 				</div>
 			</li>
+		<%-- End of Offer Template UI --%>
 		</ul>
 		
 		<div id="addOfferWizardRoot"></div>
@@ -504,7 +531,6 @@
 			<div id="reminderDetailsTemplate">
 			</div>
 		</div>
-		<%-- End of Offer Template UI --%>
 
 		<%@include file="common/footer.jsp" %>
 	
