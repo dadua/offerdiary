@@ -63,14 +63,20 @@ it.vendor.get$ = function (vendor) {
 
 it.vendor.addHandlers = function() {
     $('.vendorSearch').popover({trigger: 'hover'}).click(function(){
-	if ($(this).hasClass('selected')) {
-	    $(this).removeClass('selected').addClass('unselected');
+	var $this = $(this);
+	if ($this.hasClass('selected')) {
+	    $this.removeClass('selected').addClass('unselected').find('.selected-tick').hide();
 	    if (it.offer && it.offer.addwizard) {
 		it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(false);
 	    }
 	} else {
-	    $('.vendorSearch').addClass('unselected').removeClass('selected');
-	    $(this).removeClass('unselected').addClass('selected');
+	    $('.vendorSearch').addClass('unselected').removeClass('selected').find('.selected-tick').hide();
+	    $this.removeClass('unselected').addClass('selected');
+	    if($this.find('.selected-tick').length === 0) {
+		$this.append('<a href="#" class="selected-tick">✔</a>');
+	    } else {
+		$this.find('.selected-tick').show();
+	    }
 	    if (it.offer && it.offer.addwizard) {
 		it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
 	    }
