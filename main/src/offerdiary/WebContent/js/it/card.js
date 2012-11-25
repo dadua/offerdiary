@@ -17,13 +17,13 @@ it.card.dismiss = function(e) {
     cardId = it.card.getParentCardId(target),
     card = {id:cardId};
     $.post('removeCardFromWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
-	var ret = $.parseJSON(data);
-	if (ret.success === true) {
-	    $('#myCardsContainer > #card_'+cardId).remove();
-	    it.card.refreshAddableCards();
-	} else {
-	    //Handle error case
-	}
+        var ret = $.parseJSON(data);
+        if (ret.success === true) {
+            $('#myCardsContainer > #card_'+cardId).remove();
+            it.card.refreshAddableCards();
+        } else {
+            //Handle error case
+        }
     });
 };
 
@@ -32,16 +32,16 @@ it.card.associateWithUser = function(e) {
     cardId = it.card.getParentCardId(target),
     card = {id:cardId};
     $.post('addCardToWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
-	var ret = $.parseJSON(data);
-	if (ret.success === true) {
-	    $('#cardsContainer > #card_'+cardId).remove();
-	    var cards = [];
-	    cards.push(ret.result);
-	    it.card.plotMyCards(cards);
-	    it.card.refreshAddableCards();
-	} else {
-	    //Handle error case
-	}
+        var ret = $.parseJSON(data);
+        if (ret.success === true) {
+            $('#cardsContainer > #card_'+cardId).remove();
+            var cards = [];
+            cards.push(ret.result);
+            it.card.plotMyCards(cards);
+            it.card.refreshAddableCards();
+        } else {
+            //Handle error case
+        }
     });
 };
 
@@ -71,7 +71,7 @@ it.card.appendCardTo = function(containerElemSelector, card, actionsHtml) {
 
 it.card.appendCardsTo = function(containerElemSelector, cards, actionsHtml) {
     for (var i=0; i < cards.length; i++) {
-	this.appendCardTo(containerElemSelector, cards[i], actionsHtml);
+        this.appendCardTo(containerElemSelector, cards[i], actionsHtml);
     }
     this.addHandlers();
 };
@@ -84,14 +84,14 @@ it.card.plotMyCards = function(cards) {
 it.card.plotAddableCards = function(query) {
     var actionsHtml = '<a class="pull-right card-associate btn btn-mini">add</a>';
     var seachCriteriaData = {
-	    pageNumber : 1,
-	    resultsPerPage : 10,
-	    searchString : query
+        pageNumber : 1,
+        resultsPerPage : 10,
+        searchString : query
     };
     $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(seachCriteriaData)}, function(data){
-	var cards = data.result;
-	$('#cardsContainer').html('');
-	it.card.appendCardsTo('#cardsContainer', cards, actionsHtml);
+        var cards = data.result;
+        $('#cardsContainer').html('');
+        it.card.appendCardsTo('#cardsContainer', cards, actionsHtml);
     });
 };
 
