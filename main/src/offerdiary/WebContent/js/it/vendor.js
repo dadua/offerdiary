@@ -9,12 +9,7 @@ it.vendor.view = it.vendor.view || {};
 //This object has all the html related data and methods
 it.vendor.view = function () {
     var threeVendorsContainerHtml = '<ul class="thumbnails currentSearchedVendors row-fluid"></ul>';
-    var vendorHtml = ' \
-         <li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" > \
-             <div class="vendorImage thumbnail"> \
-                 <img src="images/stores/defaultVendor.jpg" /> \
-             </div> \
-        </li>',
+    var vendorHtml = '<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/defaultVendor.jpg" /></div></li>',
     vendorSearchContainerId = 'searchedVendors',
     containerId$;
     return {
