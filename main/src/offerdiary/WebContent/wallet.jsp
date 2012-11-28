@@ -1,538 +1,267 @@
 <%@page import="com.itech.offer.model.Offer"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" 
-    pageEncoding="utf-8"%>
-<!DOCTYPE html>
+pageEncoding="utf-8"%>
 
 <%@page import="java.util.List"%>
-<%@page import="com.itech.offer.model.Offer"%><html>
-	<head>
-		<meta charset="UTF-8" />
-			<%--
-				TODO: Decide this
-				<!-- The HTML5 charset format -->
-				<meta charset="UTF-8">
-			 --%>
-		<title>Offer Wallet</title>
-		
-		<%@include file="common/header.jsp" %>
-		
-		<script src="js/it/wizard.js" charset="UTF-8"> </script>
-		<script src="js/it/addoffer_wizard.js" > </script>
-		<script src="js/it/vendor.js" > </script>
-		<script type="text/javascript">
-			var it = it || {};
-			it.wallet = it.wallet || {};
-			
-			it.wallet.appendOffers = function(offers, isOldAddition) {
-				for (var i=0; i<offers.length;i++) {
-					this.appendOffer(offers[i], isOldAddition);
-				}
-			};
-			
-			
-			it.wallet.getDaysToExpire = function(offer) {
-				var expiryMillisUtc = offer.expiryDateInMillis;
-				var d = new Date();
-				var currentMillisUtc = d.getTime();
-				var millisToExpire = (expiryMillisUtc - currentMillisUtc);
-				var daysToExpire = Math.floor(millisToExpire/(1000*60*60*24));
-				return daysToExpire;
-			}
-			
-			it.wallet.getExpiryDateBasedClass = function(daysToExpire) {
-				if(daysToExpire < 0 ) {
-					return '';
-				} else if(daysToExpire < 14) {
-					return 'label-important';
-				} else if (daysToExpire < 30) {
-					return 'label-warning';
-				} else if (daysToExpire < 90) {
-					return 'label-info';
-				} else if (daysToExpire < 120) {
-					return 'label-inverse';
-				} else {
-					return 'label-success';
-				}
-			}
-			
-			it.wallet.getFormattedDaysToExpire = function (daysToExpire) {
-				return daysToExpire + (daysToExpire==1?' day':' days')+' to expire';
-			}
-			
-			it.wallet.getFormattedMonthsToExpire = function(daysToExpire) {
-				var monthsToExpire = Math.floor(daysToExpire/30);
-				return monthsToExpire + (monthsToExpire==1?' month, ':' months, ') + this.getFormattedDaysToExpire(Math.floor(daysToExpire%30));
-			}
-			
-			it.wallet.getFormattedYearsToExpire = function(daysToExpire) {
-				var yearsToExpire = Math.floor(daysToExpire/365);
-				return yearsToExpire + (yearsToExpire==1?' year, ':' years, ') + this.getFormattedMonthsToExpire(Math.floor(daysToExpire%365));
-			}
-			
-			it.wallet.getFormattedTimeToExpire = function(daysToExpire) {
-				if (daysToExpire < 30) {
-					return this.getFormattedDaysToExpire(daysToExpire);
-				} else if (daysToExpire < 365) {
-					return this.getFormattedMonthsToExpire(daysToExpire);
-				} else {
-					return this.getFormattedYearsToExpire(daysToExpire);
-				}
-			};
-			
-			it.wallet.getCompactFormattedTimeToExpire = function(timeToExpireString) {
-				if (timeToExpireString.length > 16) {
-					var displayedTimeToExpire = timeToExpireString.substring(0, 12),
-					undisplayedTimeToExpire = timeToExpireString.substring(16, timeToExpireString.length);
-					displayedTimeToExpire += '<span class="hiddenTillAddSuccess" style="display:none" >';
-					displayedTimeToExpire += timeToExpireString.substring(12,16);
-					displayedTimeToExpire += '</span>';
-					displayedTimeToExpire += '<span style="display:none" class="hiddenPartOfTime">';
-					displayedTimeToExpire += undisplayedTimeToExpire;
-					displayedTimeToExpire += '</span>';
-					displayedTimeToExpire += '<a class="daysToExpireDetails" href="#" title="'+timeToExpireString +'">...</a>';
-					return displayedTimeToExpire;
-				} else {
-					return timeToExpireString;
-				}
-			}
-			
-			
-			it.wallet.getOfferHtml = function(offer) {
-				
-				var offerTemplate$ = $('.offer_ui_template').clone().removeClass('offer_ui_template hide').attr('id', 'offer_' + offer.id);
-				//Setting values from offer vo to the template..
-				if (offer.sourceVendor) {
-					offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ offer.sourceVendor.logoUrl || 'defaultVendor.jpg');
-					offerTemplate$.find('.vendorName').html(offer.sourceVendor.name);
-					offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
-					//offerTemplate$.find('.offerExpiryDate').html(offer.sourceVendor.siteUrl);
-					offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
-				} else {
-					offerTemplate$.find('.sourceVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
-				}
-				offerTemplate$.find('.offerCodeVal').html(offer.offerCode)
-				offerTemplate$.find('.offerNum').html(offer.title);
-				return offerTemplate$;
-			}
-			
-			it.wallet.appendOffer = function (offer, isOldAddition) {
-				
-				var daysToExpire = this.getDaysToExpire(offer);
-				var labelClass = this.getExpiryDateBasedClass(daysToExpire);
-				var daysToExpireHtml = '<div class="daysToExpire label '+ labelClass + '" id="offerExpire_'+ offer.id + '">';
-				var formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
-				if (daysToExpire < 0) {
-					daysToExpireHtml += 'Offer Expired!!';
-				} else {
-					var compactFormattedTime = this.getCompactFormattedTimeToExpire(formattedTimeToExpire);
-					daysToExpireHtml += compactFormattedTime;
-				}
-				daysToExpireHtml += '</div>';
-				/*
-	    		var offerHtml = '<li class="span3" id="offer_';
-	    		offerHtml += offer.id;
-	    		offerHtml += '" >';
-	    		offerHtml += '<span class="addingDoneLabel label label-success">Done!</span>';
-	    		offerHtml += daysToExpireHtml;
-	    		offerHtml += '<div class="thumbnail"><span class="icon-trash icon-white pull-right offer-trash" title="Trash Me" id="offerTrash_';
-	    		offerHtml += offer.id;
-	    		offerHtml += '" ></span><h3>Details:';
-	    		offerHtml += offer.description;
-	    		offerHtml += '</h3><h5>Code:';
-	    		offerHtml += offer.offerCode;
-	    		offerHtml += '</h5><h5>Discount:';
-	    		offerHtml += offer.discountValue;
-	    		offerHtml +=  '</h5></div></li>';
-	    		*/
-	    		
-	    		var offer$ = this.getOfferHtml(offer);
-	    		$(offer$).appendTo('#offerContainer');
-	    		
-	    		
-	    		/*
-	    		$('#offerExpire_'+offer.id).position({
-	    				my: 'center top',
-	    				at: 'center top',
-	    				of: '#offer_' + offer.id,
-	    				offset: '0 0'
-				});
-	    		$('#offer_'+offer.id + ' .thumbnail').addClass('offer', 9000);
-	    		if (isOldAddition) {
-	    			$('#offer_'+offer.id+ ' span.addingDoneLabel').hide();
-	    			$('.hiddenTillAddSuccess').show();
-	    		} else {
-	    			$('#offer_'+offer.id+ ' span.addingDoneLabel').hide('highlight', 9000, function(){
-		    			$(this).parent().find('span.hiddenTillAddSuccess').show();
-		    			$(this).remove();
-		    		});
-	    		}
-	    		*/
-			};
-			
-			it.wallet.clearofferormVals = function () {
-				$('.offerDetail').val('');
-				$('#emailNotify').addClass('active');
-				$('#fbNotify').removeClass('active');
-			};
-			
-			it.wallet.addOffer = function () {
-				var code = $('#code').val(),
-				expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime(),
-				detail = $('#discountDetails').val(),
-				emailNotify = $('#emailNotify').hasClass('active'),
-				fbNotify = $('#fbNotify').hasClass('active'),
-				notifyVO = {
-					emailNotify: emailNotify,
-					fbNotify: fbNotify
-					//Will include time to notify etc. here
-				},
-				offer = {
-					offerCode: code,
-					description: detail,
-					expiryDateInMillis: expiryDateInMillis,
-					notifyVO: notifyVO
-				},		
-				offers = [],
-				vendorId;
-				offers.push(offer);
-				$.post('saveOffers.do',
-						{'offers': JSON.stringify(offers)},
-						function (data) {
-							var ret = $.parseJSON(data);
-							if (ret.success === true) {
-								it.wallet.appendOffers(ret.result);
-								it.wallet.addHandlers();
-							} else {
-								//Handle error case
-							}
-							$('#addOfferModal').modal('hide');
-						});
-			};
-			
-			it.wallet.trashOffer = function(e) {
-				var target = e.target;
-				var targetId = target.id;
-				var offerIdExtractRegex = /^offerTrash_(.*)/;
-				var offerId = offerIdExtractRegex.exec(targetId)[1];
-				var offerIds = [];
-				offerIds.push(offerId);
-				$.post('deleteOffers.do', {'offerIds': JSON.stringify(offerIds)}, function(data) {
-					var ret = $.parseJSON(data);
-					if (ret.success === true) {
-						$('#'+targetId).tooltip('hide');
-						$('#offer_'+offerId).remove();
-					} else {
-						//Handle error case
-					}
-				});
-			};
-			
-			it.wallet.addHandlers = function () {
-				
-				$('.icon-trash').hover(function(e) {
-					$(this).removeClass('icon-white');
-				}, function(e){
-					$(this).addClass('icon-white');
-				});
-				$('.offer-trash').click(it.wallet.trashOffer).tooltip();
-				$('.daysToExpireDetails').tooltip({
-					placement: 'right'
-				}).click(function(e){
-					$(this).parent().find('.hiddenPartOfTime').show();
-					$(this).tooltip('hide').remove();
-				});
-				$('.checkBoxSelected').live('click', function() {
-					$(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
-				});
-				$('.checkBoxUnSelected').live('click', function(){
-					$(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
-				});
-			};
-			
-			$(function() {
-				$('#addOfferToWallet').click(it.wallet.addOffer);
-				var offersJson = '${myOffersJson}',
-				offers = JSON.parse(offersJson);
-				it.wallet.appendOffers(offers, true);
-				it.wallet.addHandlers();
-				$('#expiryDate').datepicker();
-				it.vendor.JqUiAutoCompleteInit();
-				it.offer.addwizard.init();
-				
-			    $('#addOfferWizardBtn').click (it.offer.addwizard.getWizard().show);
-				$('#addOfferModalBtn').click(it.wallet.clearOfferFormVals);
+<%@page import="com.itech.offer.model.Offer"%>
 
-			});
-			
-		</script>
-		<style type="text/css">
-			/* Add offer related classes */
-			.popover {
-				z-index: 1200;
-			}
-			
-			.selected {
-				background-color: #ADFF2F;
-				position: relative;
-			}
-			
-			.selected-tick {
-				background: none repeat scroll 0 0 #5EF118;
-			    border-radius: 23px 23px 23px 23px;
-			    font-size: 11px;
-			    font-weight: 100;
-			    color:white;
-			    line-height: 22px;
-			    opacity: 0.7;
-			    position: absolute;
-			    text-align: center;
-			    top: -10%;
-			    left: 90%;
-			    width: 22px;
-			}
-			
-			.vendorImage {
-				cursor: pointer;
-			}
-			
-			.selected-tick:hover {
-				color: white;
-				text-decoration: none;
-			}
-			
-			
-			.offer {
-				background-color: #F5F5F5;
-			}
-			
-			.daysToExpire {
-				margin-left: 48%;
-				margin-right:10%;
-				padding: 5px;
-			}
-			
-			.checkBoxSelected {
-				color: green;
-			}
-			
-			.checkBoxSelected > .icon-ok {
-				background-color: green;
-			}
-			
-			.checkBoxUnSelected {
-				color: #333333;
-			}
-			
-			.checkBoxUnSelected > .icon-ok {
-				background-color: transparent;
-			}
-			
-			.ui-autocomplete-loading {
-				background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-			}
-			
-			.offerBlock{
-				width: 325px;
-				height: 125px; 
-				position:relative;
-			}
-			
-			.space15{
-				width: 140px;
-				float: left;
-			}
-			
-			.offerNum{
-				font-family:  sans-serif;
-				font-size: 20px;
-				font-style: normal;
-				font-weight: normal;
-				text-transform: normal;
-				line-height: 1.2em;
-			}
-			
-			.sans-serif-normal{
-				font-family:  sans-serif;
-				font-size: 14px;
-			}
-			
-			.sans-serif-small{
-				font-family:  sans-serif;
-				font-size: 12px;
-			}
-			
-			.sans-serif-extra-small{
-				font-family:  sans-serif;
-				font-size: 10px;
-			}
-			
-			.shadow {
-			  -moz-box-shadow:    3px 3px 5px 6px #ccc;
-			  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-			  box-shadow:         3px 3px 5px 6px #ccc;
-			}
-			
-			.margin-left-10{
-				margin-left: 10px;
-			}
-			.offer-icon{
-				margin-left:-5px;
-				
-			}
-			.margin-zero{
-				margin-left: 0px;
-			}
-			
-			/*TODO: this is a dependecy of wizard.js*/
-			.blueColor {
-				color:#3A87AD;
-			}
-			
-			.bluishText {
-				color: #0088CC;
-			}
-			
-		</style>
-	</head>
-	<body>
-	
-		<%@include file="common/navHeader.jsp" %>
-		
-		<div class="container" >
-			<div class="row">
-				<div class="span2" >
-					<%@include file="walletTabs.jsp" %>
-				</div>
-				<div class="span8"  >
-					<ul id="offerContainer" class="thumbnails row">
-					</ul>
-				</div>
-				<div class="span2" >
-					<div class="modal hide fade" id="addOfferModal" style="display:none" >
-						<div class="modal-header" >
-							<a class="close" data-dismiss="modal">×</a>
-							<h2>Add a offer to wallet </h2>
-						</div>
-						<div class="modal-body" >
-							<form >
-								<label>Code: </label>
-								<input id="code" type="text" class="span3 offerDetail" placeholder="Offer Code?" />
-								<label>Discount Description: </label>
-								<textarea class="span3 OfferDetail" id="discountDetails" placeholder="Discount Details"></textarea>
-								<label> Expiry Date: </label>
-								<input id="expiryDate"  class="offerDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
-								<label> Vendor: </label>
-								<input id="vendor" class="offerDetail" type="text" placeholder="Vendors" />
-								<label>Notifications Config: </label>
-								<div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
-									<a id="emailNotify" class="btn active checkBoxSelected">
-										<i class="icon-envelope"></i>
-										 Email
-										<i class="icon-ok icon-white" ></i>
-									</a>
-									<a id="fbNotify" class="btn checkBoxUnSelected">
-										Fb <i class="icon-ok icon-white"></i>
-									</a>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer" >
-							<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-							<a id="addOfferToWallet" class="btn btn-primary">Add Offer</a>
-						</div>
-					</div>
-					<a id="addOfferModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addOfferModal" >Add Offer to Wallet</a>
-					<a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet wizard</a>
-						
-				</div>
-			</div>
-		</div>
-		
-		<%-- Offer Template Code Begins Here | Use it under a div, implemeting a span class of span4 or more --%>
-		<ul class="hide">		
-			<li class="offer_ui_template thumbnail offerBlock box-shadow span4 hide">
-				<div class="row">
-					<div class="span2 pull-left">
-						<img class="sourceVendor-logoUrl" alt="99labels" src="images/stores/99labels.jpg">
-						<span class="offerCode margin-left-10 sans-serif-extra-small">Code: <span class="offerCodeVal">5455X34</span></span>
-					</div>
-					<div class="space15">
-						<div class="row margin-zero">
-							<span class="offerNum">
-								Buy 2 & get 5 Free
-							</span>
-						</div>
-						<div class="row margin-zero">
-							<span class="vendorName sans-serif-normal">
-								99Lables
-							</span>
-						</div>
-						<div class="row margin-zero">
-							<span class="sans-serif-small">
-								<a class="vendorUrl" href="http://www.99labels.com"
-									target="_blank">
-									www.99labels.com
-								</a>
-							</span>
-						</div >
-						<div class="row margin-zero">
-							<span class="sans-serif-small">
-								Expire
-							</span>
-							<i class="icon-calendar"></i>
-							<span class="offerExpiryDate sans-serif-extra-small">
-								: 28-Sept, 2012
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="row offer-icon" >
-					<div class="span2" style="margin-left:15px;">
-						<a href="#" onClick="" >
-							<i class="icon-trash"></i>
-						</a>
-						<a href="#" onClick="" >
-							<i class="icon-wrench"></i>
-						</a>
-						<a href="#" onClick="" >
-							<i class="icon-envelope"></i>
-						</a>
-					</div>
-				</div>
-			</li>
-		<%-- End of Offer Template UI --%>
-		</ul>
-		
-		<div id="addOfferWizardRoot"></div>
-		<div id="templates" class="hide">
-			
-			<div id="vendorSelectionTemplate">
-				<div class="container-fluid" >
-					<div class="form-search row-fluid">
-						<div class="input-append">
-							<input id="vendorQuery" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
-							<button class="btn"><i class="icon-search"></i></button>
-						</div>
-					</div>
-					<br/>
-					<div id="searchedVendors" class="row-fluid">
-						<ul class="thumbnails row-fluid" >
-							<li class="span4 vendor">
-								<div class="vendorImage thumbnail">
-									<img src="images/stores/defaultVendor.jpg" />
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div id="benefitDetailsTemplate">
-			</div>
-			<div id="reminderDetailsTemplate">
-			</div>
-		</div>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Offer Wallet</title>
 
-		<%@include file="common/footer.jsp" %>
-	
-	</body>
+        <%@include file="common/header.jsp" %>
+
+        <script src="js/it/wizard.js" charset="UTF-8"> </script>
+        <script src="js/it/addoffer_wizard.js" > </script>
+        <script src="js/it/vendor.js" > </script>
+        <script src="js/it/offer.js" > </script>
+        <script type="text/javascript">
+            $(function() {
+                $('#addOfferToWallet').click(it.offer.addOffer);
+                var offersJson = '${myOffersJson}',
+                    offers = JSON.parse(offersJson);
+                it.offer.appendOffers(offers, true);
+                it.offer.addHandlers();
+                $('#expiryDate').datepicker();
+                it.vendor.JqUiAutoCompleteInit();
+                it.offer.addwizard.init();
+                $('#addOfferWizardBtn').click (it.offer.addwizard.getWizard().show);
+                $('#addOfferModalBtn').click(it.offer.clearOfferFormVals);
+            });
+                
+        </script>
+
+        <style type="text/css">
+            /* Add offer related classes */
+            .popover {
+                z-index: 1200;
+            }
+
+            .selected {
+                background-color: #ADFF2F;
+                position: relative;
+            }
+
+            .selected-tick {
+                background: none repeat scroll 0 0 #5EF118;
+                border-radius: 23px 23px 23px 23px;
+                font-size: 11px;
+                font-weight: 100;
+                color:white;
+                line-height: 22px;
+                opacity: 0.7;
+                position: absolute;
+                text-align: center;
+                top: -10%;
+                left: 90%;
+                width: 22px;
+            }
+
+            .vendorImage {
+                cursor: pointer;
+            }
+
+            .selected-tick:hover {
+                color: white;
+                text-decoration: none;
+            }
+
+
+            .offer {
+                background-color: #F5F5F5;
+            }
+
+            .daysToExpire {
+                margin-left: 48%;
+                margin-right:10%;
+                padding: 5px;
+            }
+
+            .checkBoxSelected {
+                color: green;
+            }
+
+            .checkBoxSelected > .icon-ok {
+                background-color: green;
+            }
+
+            .checkBoxUnSelected {
+                color: #333333;
+            }
+
+            .checkBoxUnSelected > .icon-ok {
+                background-color: transparent;
+            }
+
+            .ui-autocomplete-loading {
+                background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+            }
+
+            /*TODO: this is a dependecy of eachOfferTemplate.html*/
+            .offerBlock{
+                width: 325px;
+                height: 125px; 
+                position:relative;
+            }
+
+            .space15{
+                width: 140px;
+                float: left;
+            }
+
+            .offerNum{
+                font-family:  sans-serif;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: normal;
+                text-transform: normal;
+                line-height: 1.2em;
+            }
+
+            .sans-serif-normal{
+                font-family:  sans-serif;
+                font-size: 14px;
+            }
+
+            .sans-serif-small{
+                font-family:  sans-serif;
+                font-size: 12px;
+            }
+
+            .sans-serif-extra-small{
+                font-family:  sans-serif;
+                font-size: 10px;
+            }
+
+            .shadow {
+                -moz-box-shadow:    3px 3px 5px 6px #ccc;
+                -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+                box-shadow:         3px 3px 5px 6px #ccc;
+            }
+
+            .margin-left-10{
+                margin-left: 10px;
+            }
+            .offer-icon{
+                margin-left:-5px;
+
+            }
+            .margin-zero{
+                margin-left: 0px;
+            }
+
+            /*TODO: this is a dependecy of wizard.js*/
+            .blueColor {
+                color:#3A87AD;
+            }
+
+            .bluishText {
+                color: #0088CC;
+            }
+        </style>
+    </head>
+    <body>
+
+        <%@include file="common/navHeader.jsp" %>
+
+        <div class="container" >
+            <div class="row">
+                <div class="span2" >
+                    <%@include file="walletTabs.jsp" %>
+                </div>
+                <div class="span8"  >
+                    <ul id="offerContainer" class="thumbnails row">
+                    </ul>
+                </div>
+                <div class="span2" >
+                    <div class="modal hide fade" id="addOfferModal" style="display:none" >
+                        <div class="modal-header" >
+                            <a class="close" data-dismiss="modal">×</a>
+                            <h2>Add a offer to wallet </h2>
+                        </div>
+                        <div class="modal-body" >
+                            <form >
+                                <label>Code: </label>
+                                <input id="code" type="text" class="span3 offerDetail" placeholder="Offer Code?" />
+                                <label>Discount Description: </label>
+                                <textarea class="span3 OfferDetail" id="discountDetails" placeholder="Discount Details"></textarea>
+                                <label> Expiry Date: </label>
+                                <input id="expiryDate"  class="offerDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
+                                <label> Vendor: </label>
+                                <input id="vendor" class="offerDetail" type="text" placeholder="Vendors" />
+                                <label>Notifications Config: </label>
+                                <div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
+                                    <a id="emailNotify" class="btn active checkBoxSelected">
+                                        <i class="icon-envelope"></i>
+                                        Email
+                                        <i class="icon-ok icon-white" ></i>
+                                    </a>
+                                    <a id="fbNotify" class="btn checkBoxUnSelected">
+                                        Fb <i class="icon-ok icon-white"></i>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer" >
+                            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                            <a id="addOfferToWallet" class="btn btn-primary">Add Offer</a>
+                        </div>
+                    </div>
+                    <a id="addOfferModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addOfferModal" >Add Offer to Wallet</a>
+                    <a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet wizard</a>
+
+                </div>
+            </div>
+        </div>
+        <%@include file="eachOfferTemplate.html" %>
+<div id="addOfferWizardRoot"></div>
+        <div id="templates" class="hide">
+            <div id="vendorSelectionTemplate">
+                <div class="container-fluid" >
+                    <div class="form-search row-fluid">
+                        <div class="input-append">
+                            <input id="vendorQuery" class="offerDetail search-query input-large" type="text" placeholder="Vendor name" />
+                            <button class="btn"><i class="icon-search"></i></button>
+                        </div>
+                    </div>
+                    <br/>
+                    <div id="searchedVendors" class="row-fluid">
+                        <ul class="thumbnails row-fluid" >
+                            <li class="span4 vendor">
+                            <div class="vendorImage thumbnail">
+                                <img src="images/stores/defaultVendor.jpg" />
+                            </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="benefitDetailsTemplate">
+                <div class="form-horizontal">
+
+                    <div class="control-group">
+                        <label class="control-label bluishText" for="couponCode">Coupon Code:</label>
+                        <div class="controls">
+                            <input id="couponCode" type="text" placeholder="Coupon Code" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label bluishText" for="offerDescription">Offer Description:</label>
+                        <div class="controls">
+                            <input id="description" type="text" placeholder="Offer Description" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="reminderDetailsTemplate">
+            </div>
+        </div>
+
+        <%@include file="common/footer.jsp" %>
+
+    </body>
 </html>
