@@ -56,7 +56,7 @@ it.offer.addwizard = function () {
         offerDetailsStep.setStepValidator(function() {
             var isValidated = true;
             //TODO: Do some validation using the below jQuery object
-            offerDetailsStep.$('some');
+            //offerDetailsStep.$('some');
             offerDetailsStep.publishOnValidationChangeCb(isValidated);
             return isValidated;
         });
@@ -95,8 +95,17 @@ it.offer.addwizard = function () {
         });
     };
 
+    var _initRemindMeDomHandlers = function () {
+        remindMeStep.$('#expiryDatePicker').datepicker({
+            inline: true,
+            altField: '#expiryDateInput',
+            altFormat: "d MM, yy"
+        });
+    };
+
     var _initDomHandlers = function () {
         _initVendorDomHandlers();
+        _initRemindMeDomHandlers();
     };
 
     var _initAll = function () {

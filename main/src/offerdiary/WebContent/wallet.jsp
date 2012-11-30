@@ -251,13 +251,20 @@ pageEncoding="utf-8"%>
                     <div class="control-group">
                         <label class="control-label bluishText" for="offerDescription">Offer Description:</label>
                         <div class="controls">
-                            <input id="description" type="text" placeholder="Offer Description" />
+                            <textarea id="description" rows="3" placeholder="Offer Description" ></textarea>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div id="reminderDetailsTemplate">
+                <div class="control-group">
+                    <label class="control-label bluishText" for="expiryDateInput">Expiry Date:</label>
+                    <div class="controls">
+                        <input id="expiryDateInput" type="text" placeholder="Example: 16 December, 2013" />
+                        <div id="expiryDatePicker"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
