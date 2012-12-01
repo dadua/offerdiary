@@ -251,11 +251,13 @@ it.offer.addHandlers = function () {
         $(this).parent().find('.hiddenPartOfTime').show();
         $(this).tooltip('hide').remove();
     });
+    /*
     $('.checkBoxSelected').live('click', function() {
         $(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
     });
     $('.checkBoxUnSelected').live('click', function(){
         $(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
     });
+   */
 };
 

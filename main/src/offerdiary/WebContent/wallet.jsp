@@ -1,15 +1,10 @@
-<%@page import="com.itech.offer.model.Offer"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" 
 pageEncoding="utf-8"%>
-
-<%@page import="java.util.List"%>
-<%@page import="com.itech.offer.model.Offer"%>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Offer Wallet</title>
 
         <%@include file="common/header.jsp" %>
 
@@ -20,15 +15,13 @@ pageEncoding="utf-8"%>
         
         <script type="text/javascript">
             $(function() {
-                $('#addOfferToWallet').click(it.offer.addOffer);
                 var offersJson = '${myOffersJson}',
                     offers = JSON.parse(offersJson);
                 it.offer.appendOffers(offers, true);
                 it.offer.addHandlers();
                 $('#expiryDate').datepicker();
-                it.vendor.JqUiAutoCompleteInit();
                 it.offer.addwizard.init();
-                $('#addOfferWizardBtn').click (it.offer.addwizard.getWizard().show);
+                $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
                 $('#addOfferModalBtn').click(it.offer.clearOfferFormVals);
             });
                 
@@ -68,7 +61,6 @@ pageEncoding="utf-8"%>
                 color: white;
                 text-decoration: none;
             }
-
 
             .offer {
                 background-color: #F5F5F5;
@@ -162,6 +154,8 @@ pageEncoding="utf-8"%>
                 color: #0088CC;
             }
         </style>
+
+        <title>Offer Wallet</title>
     </head>
     <body>
 
@@ -177,47 +171,12 @@ pageEncoding="utf-8"%>
                     </ul>
                 </div>
                 <div class="span2" >
-                    <div class="modal hide fade" id="addOfferModal" style="display:none" >
-                        <div class="modal-header" >
-                            <a class="close" data-dismiss="modal">×</a>
-                            <h2>Add a offer to wallet </h2>
-                        </div>
-                        <div class="modal-body" >
-                            <form >
-                                <label>Code: </label>
-                                <input id="code" type="text" class="span3 offerDetail" placeholder="Offer Code?" />
-                                <label>Discount Description: </label>
-                                <textarea class="span3 OfferDetail" id="discountDetails" placeholder="Discount Details"></textarea>
-                                <label> Expiry Date: </label>
-                                <input id="expiryDate"  class="offerDetail" placeholder="Expiry Date(mm/dd/yyyy)"/>
-                                <label> Vendor: </label>
-                                <input id="vendor" class="offerDetail" type="text" placeholder="Vendors" />
-                                <label>Notifications Config: </label>
-                                <div id="notificationConfig" class="btn-group" data-toggle="buttons-checkbox" >
-                                    <a id="emailNotify" class="btn active checkBoxSelected">
-                                        <i class="icon-envelope"></i>
-                                        Email
-                                        <i class="icon-ok icon-white" ></i>
-                                    </a>
-                                    <a id="fbNotify" class="btn checkBoxUnSelected">
-                                        Fb <i class="icon-ok icon-white"></i>
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer" >
-                            <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-                            <a id="addOfferToWallet" class="btn btn-primary">Add Offer</a>
-                        </div>
-                    </div>
-                    <a id="addOfferModalBtn" class="btn btn-primary btn-large" data-toggle="modal" href="#addOfferModal" >Add Offer to Wallet</a>
-                    <a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet wizard</a>
-
+	                <a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet</a>
                 </div>
             </div>
         </div>
         <%@include file="eachOfferTemplate.html" %>
-<div id="addOfferWizardRoot"></div>
+		<div id="addOfferWizardRoot"></div>
         <div id="templates" class="hide">
             <div id="vendorSelectionTemplate">
                 <div class="container-fluid" >
@@ -241,7 +200,6 @@ pageEncoding="utf-8"%>
             </div>
             <div id="benefitDetailsTemplate">
                 <div class="form-horizontal">
-
                     <div class="control-group">
                         <label class="control-label bluishText" for="offerCode">Offer Code:</label>
                         <div class="controls">
