@@ -1,6 +1,6 @@
 <%@page import="com.itech.web.LoginConstants"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" 
+pageEncoding="utf-8"%>
 <!DOCTYPE html>
 
 	<head>
@@ -110,7 +110,7 @@
 				<div class="span6 offset3">
 					<div class="row">
 						<div class="span4 offset4">
-							<form id="goToWallet" action="wallet.do" method="post">
+							<form id="goToWallet" action="wallet.do" method="get">
 								<input id="loginToFb" class="btn btn-large btn-primary fb-btn-color"  type="button" value="Connect with Facebook" />
 								<input type="hidden" name="login" value="success" />
 							</form>
@@ -126,7 +126,7 @@
 					<div class="row">
 						<div id="emailCredsForm" class="span6 offset3">
 							<div id="invalidUserNamePassword" class="hide alert alert-error">
-								<button class="close" type="button">×</button>
+								<button class="close" type="button">Ã—</button>
 								Invalid email/password
 							</div>
 							<div class="form">

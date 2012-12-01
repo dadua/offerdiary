@@ -33,6 +33,15 @@ it.offer.addwizard = function () {
             return isValidated;
         };
         vendorStep.setStepValidator(vendorStepValidator);
+        vendorStep.setFetchDataFromHtmlCb(function(){
+            var selectedVendorLiDomId = vendorStep.$('li.selected').attr('id');
+            var selectedVendorId = /vendorSearch_(\d+)/.exec(selectedVendorLiDomId)[1];
+            return {
+                vendor: {
+                    id: selectedVendorId
+                }
+            };
+        });
     };
 
     var _initWizard = function () {
@@ -42,6 +51,9 @@ it.offer.addwizard = function () {
         addWizard = it.wizard.newInstance('addOfferWizardRoot', addWizardSteps, initFormData);
         addWizard.setTitle('Add offer to wallet');
 
+        addWizard.setOnFinish(function (offerData) {
+            it.offer.saveOfferFromWizard(offerData);
+        });
     };
 
     var _initOfferDetailsStep = function () {
@@ -59,6 +71,16 @@ it.offer.addwizard = function () {
             //offerDetailsStep.$('some');
             offerDetailsStep.publishOnValidationChangeCb(isValidated);
             return isValidated;
+        });
+        offerDetailsStep.setFetchDataFromHtmlCb(function() {
+            var code = offerDetailsStep.$('#offerCode').val(),
+                description = offerDetailsStep.$('#offerDescription').val();
+
+            return {
+                code: code,
+                description: description
+            };
+
         });
     };
 
@@ -84,6 +106,11 @@ it.offer.addwizard = function () {
             return isValidated;
         };
         remindMeStep.setStepValidator(remindMeStepValidator);
+        remindMeStep.setFetchDataFromHtmlCb(function () {
+            return {
+                expiryDateInMillis : $('#expiryDatePicker').datepicker('getDate').getTime()
+            };
+        });
     };
 
     var _initVendorDomHandlers = function () {
@@ -116,6 +143,7 @@ it.offer.addwizard = function () {
         addWizard.reInitDom();
         _initDomHandlers();
     };
+
 
     return {
         init: _initAll,

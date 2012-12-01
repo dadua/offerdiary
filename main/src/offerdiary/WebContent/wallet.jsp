@@ -17,6 +17,7 @@ pageEncoding="utf-8"%>
         <script src="js/it/addoffer_wizard.js" > </script>
         <script src="js/it/vendor.js" > </script>
         <script src="js/it/offer.js" > </script>
+        
         <script type="text/javascript">
             $(function() {
                 $('#addOfferToWallet').click(it.offer.addOffer);
@@ -242,16 +243,16 @@ pageEncoding="utf-8"%>
                 <div class="form-horizontal">
 
                     <div class="control-group">
-                        <label class="control-label bluishText" for="couponCode">Coupon Code:</label>
+                        <label class="control-label bluishText" for="offerCode">Offer Code:</label>
                         <div class="controls">
-                            <input id="couponCode" type="text" placeholder="Coupon Code" />
+                            <input id="offerCode" type="text" placeholder="Offer Code" />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label bluishText" for="offerDescription">Offer Description:</label>
                         <div class="controls">
-                            <textarea id="description" rows="3" placeholder="Offer Description" ></textarea>
+                            <textarea id="offerDescription" rows="3" placeholder="Offer Description" ></textarea>
                         </div>
                     </div>
 

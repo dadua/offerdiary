@@ -15,7 +15,7 @@
 :: Define DEFAULT locations for various tools
 ::
 
-set PROJ_JDK_HOME=C:\Program Files (x86)\Java\jdk1.6.0_18
+set PROJ_JDK_HOME=c:\Program Files\Java\jdk1.6.0_26
 set PROJ_ANT_HOME=E:\code\mcafee\svn\main\prod\ePO\dev-tools\apache-ant-1.7.1
 set TOMCAT_HOME=C:\Program Files\Apache Software Foundation\Tomcat 6.0
 

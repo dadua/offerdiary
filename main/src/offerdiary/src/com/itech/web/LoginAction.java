@@ -36,12 +36,13 @@ public class LoginAction extends CommonAction{
 		return new Forward("signup.jsp");
 	}
 
+
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response getPassword(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.FALSE.toString());
 		return new Forward("forgotPassword.jsp");
 	}
-	
+
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response gotPassword(HttpServletRequest req, HttpServletResponse resp){
 		User user = getLoggedInUser();
@@ -58,7 +59,7 @@ public class LoginAction extends CommonAction{
 		return new Forward("forgotPassword.jsp");
 	}
 
-	
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response verifyEmail(HttpServletRequest req, HttpServletResponse resp){
 		User user = getLoggedInUser();
@@ -67,7 +68,7 @@ public class LoginAction extends CommonAction{
 			Gson gson = new Gson();
 			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
 			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
-			if (user == null || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString()) 
+			if ((user == null) || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
 					|| ! user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString())) {
 				return emailDoesntExist();
 			}
@@ -77,8 +78,8 @@ public class LoginAction extends CommonAction{
 		}.getType();
 		return new CommonBeanResponse(result, userResultType);
 	}
-	
-	
+
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response loginDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
@@ -155,7 +156,7 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
-	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionResponseAnnotation(responseType=Redirect.class)
 	public Response emailSignUp (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -163,10 +164,10 @@ public class LoginAction extends CommonAction{
 			String email = req.getParameter("email");
 			String password = req.getParameter("password");
 			user = getUserManager().getByEmail(email);
-			if(user != null && (user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
-						|| user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString()))){
+			if((user != null) && (user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
+					|| user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString()))){
 				return new Forward("signUpFailed.jsp");
-			}else if(user != null && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
+			}else if((user != null) && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
 				user.setLoginType(LoginType.MULTI);
 				user.setPassword(password);
 				getUserManager().save(user);
@@ -175,7 +176,7 @@ public class LoginAction extends CommonAction{
 			}
 			updateLoggedInUser(req, user);
 		}
-		return new Forward("wallet.do");
+		return new Redirect("wallet.do");
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

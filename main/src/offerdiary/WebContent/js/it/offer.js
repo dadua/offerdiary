@@ -153,6 +153,32 @@ it.offer.clearofferormVals = function () {
     $('#fbNotify').removeClass('active');
 };
 
+it.offer.saveOfferFromWizard= function (offerData) {
+    var offerVO = {
+        offerCode: offerData.code,
+        description: offerData.description,
+        expiryDateInMillis: offerData.expiryDateInMillis,
+        sourceVendor: offerData.vendor
+    },
+    offers = [];
+    offers.push(offerVO);
+
+    $.post('saveOffers.do',
+           {'offers': JSON.stringify(offers)},
+           function (data) {
+               var ret = $.parseJSON(data);
+               if (ret.success === true) {
+                   it.offer.appendOffers(ret.result);
+                   it.offer.addHandlers();
+               } else {
+                   //Handle error case
+               }
+               $('#addOfferModal').modal('hide');
+           });
+
+
+};
+
 it.offer.addOffer = function () {
     var code = $('#code').val(),
     expiryDateInMillis = $('#expiryDate').datepicker('getDate').getTime(),

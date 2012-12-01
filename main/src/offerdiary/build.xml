@@ -76,6 +76,10 @@
 	    <copy file="${dist.home}/${product.war.name}.war" todir="${tomcat.home}/webapps" overwrite="true"/>
 	</target>
 
+        <target name="refreshEclipse" description="Refresh OD project in
+            eclipse">
+        </target>
+
 </project>
 
 
