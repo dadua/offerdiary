@@ -7,6 +7,11 @@ it.offer.appendOffers = function(offers, isOldAddition) {
     }
 };
 
+it.offer.getReadableDate = function (offer) {
+    var expiryMillisUtc = offer.expiryDateInMillis;
+    return $.datepicker.formatDate('dd M, yy', new Date(expiryMillisUtc));
+};
+
 
 it.offer.getDaysToExpire = function(offer) {
     var expiryMillisUtc = offer.expiryDateInMillis;
@@ -82,14 +87,15 @@ it.offer.getOfferHtml = function(offer) {
     if (offer.sourceVendor) {
         offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ offer.sourceVendor.logoUrl || 'defaultVendor.jpg');
         offerTemplate$.find('.vendorName').html(offer.sourceVendor.name);
-        offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
-        //offerTemplate$.find('.offerExpiryDate').html(offer.sourceVendor.siteUrl);
-        offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl);
+        offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl).attr('href', offer.sourceVendor.siteUrl);
     } else {
         offerTemplate$.find('.sourceVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
+    offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
+
+
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
-    offerTemplate$.find('.offerNum').html(offer.title);
+    offerTemplate$.find('.offerDesc').html(offer.description);
     return offerTemplate$;
 };
 

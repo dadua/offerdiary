@@ -126,7 +126,7 @@ it.offer.addwizard = function () {
         remindMeStep.$('#expiryDatePicker').datepicker({
             inline: true,
             altField: '#expiryDateInput',
-            altFormat: "d MM, yy"
+            altFormat: "d M, yy"
         });
     };
 

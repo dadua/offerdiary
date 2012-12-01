@@ -112,7 +112,7 @@ pageEncoding="utf-8"%>
                 float: left;
             }
 
-            .offerNum{
+            .offerDesc {
                 font-family:  sans-serif;
                 font-size: 20px;
                 font-style: normal;
