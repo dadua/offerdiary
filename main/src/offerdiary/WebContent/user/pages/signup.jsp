@@ -6,7 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Sign Up to Offer Diary</title>
 		
-		<%@include file="common/header.jsp" %>
+		<%@include file="/common/pages/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -106,7 +106,7 @@
 	</head>
 	<body>
 	
-		<%@include file="common/navHeader.jsp" %>
+		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span6 offset3">
@@ -168,7 +168,7 @@
 
 				</div>
 			</div>
-			<%@include file="common/footer.jsp" %>
+			<%@include file="/common/pages/footer.jsp" %>
 		</div>
 	</body>
 </html>

@@ -7,7 +7,7 @@ pageEncoding="utf-8"%>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Login to Offer Diary</title>
 		
-		<%@include file="common/header.jsp" %>
+		<%@include file="/common/pages/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -104,7 +104,7 @@ pageEncoding="utf-8"%>
 	</head>
 	<body>
 	
-		<%@include file="common/navHeader.jsp" %>
+		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span6 offset3">
@@ -159,10 +159,7 @@ pageEncoding="utf-8"%>
 					</div>
 				</div>
 			</div>
-		<%@include file="common/footer.jsp" %>
+		<%@include file="/common/pages/footer.jsp" %>
 		</div>
-		
-<%-- 		<%@include file="common/footer.jsp" %> --%>
-		
 	</body>
 </html>

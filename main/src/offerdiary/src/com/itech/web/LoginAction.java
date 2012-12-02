@@ -28,19 +28,19 @@ public class LoginAction extends CommonAction{
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
-		return new Forward("login.jsp");
+		return new Forward("user/pages/login.jsp");
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response signup(HttpServletRequest req, HttpServletResponse resp) {
-		return new Forward("signup.jsp");
+		return new Forward("user/pages/signup.jsp");
 	}
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response getPassword(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.FALSE.toString());
-		return new Forward("forgotPassword.jsp");
+		return new Forward("user/pages/forgotPassword.jsp");
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -56,7 +56,7 @@ public class LoginAction extends CommonAction{
 			}
 		}
 		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.TRUE.toString());
-		return new Forward("forgotPassword.jsp");
+		return new Forward("user/pages/forgotPassword.jsp");
 	}
 
 
