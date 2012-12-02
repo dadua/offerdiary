@@ -6,7 +6,7 @@ pageEncoding="utf-8"%>
     <head>
         <meta charset="UTF-8">
 
-        <%@include file="common/header.jsp" %>
+        <%@include file="/common/pages/header.jsp" %>
 
         <script src="js/it/wizard.js" charset="UTF-8"> </script>
         <script src="js/it/addoffer_wizard.js" > </script>
@@ -159,12 +159,12 @@ pageEncoding="utf-8"%>
     </head>
     <body>
 
-        <%@include file="common/navHeader.jsp" %>
+        <%@include file="/common/pages/navHeader.jsp" %>
 
         <div class="container" >
             <div class="row">
                 <div class="span2" >
-                    <%@include file="walletTabs.jsp" %>
+                    <%@include file="/common/pages/featureTabs.jsp" %>
                 </div>
                 <div class="span8"  >
                     <ul id="offerContainer" class="thumbnails row">
@@ -175,7 +175,7 @@ pageEncoding="utf-8"%>
                 </div>
             </div>
         </div>
-        <%@include file="eachOfferTemplate.html" %>
+        <%@include file="/offers/templates/eachOfferTemplate.html" %>
 		<div id="addOfferWizardRoot"></div>
         <div id="templates" class="hide">
             <div id="vendorSelectionTemplate">
@@ -227,7 +227,7 @@ pageEncoding="utf-8"%>
             </div>
         </div>
 
-        <%@include file="common/footer.jsp" %>
+        <%@include file="/common/pages/footer.jsp" %>
 
     </body>
 </html>

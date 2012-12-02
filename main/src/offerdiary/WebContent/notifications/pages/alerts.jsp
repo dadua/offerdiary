@@ -13,7 +13,7 @@
 			 --%>
 		<title>My Alerts</title>
 		
-		<%@include file="common/header.jsp" %>
+		<%@include file="/common/pages/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -62,11 +62,11 @@
 	</head>
 	<body>
 	
-		<%@include file="common/navHeader.jsp" %>
+		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span2" >
-					<%@include file="walletTabs.jsp" %>
+					<%@include file="/common/pages/featureTabs.jsp" %>
 				</div>
 				<div class="span10" id="alertContainer" >
 				 <% 
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 		
-		<%@include file="common/footer.jsp" %>
+		<%@include file="/common/pages/footer.jsp" %>
 	
 	</body>
 </html>

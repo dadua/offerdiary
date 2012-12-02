@@ -119,6 +119,6 @@ public class OfferCardAction extends CommonAction{
 		Gson gson = new Gson();
 		String myOfferCardsJson = gson.toJson(offerCards, offerCardsType);
 		req.setAttribute(OFFER_CARD_JSON_ATTR_KEY, myOfferCardsJson);
-		return new Forward("cards.jsp");
+		return new Forward("cards/pages/cards.jsp");
 	}
 }

@@ -12,7 +12,7 @@
 			 --%>
 		<title>My Cards</title>
 		
-		<%@include file="common/header.jsp" %>
+		<%@include file="/common/pages/header.jsp" %>
 		
 		<script src="js/it/card.js" > </script>
 		<script type="text/javascript">
@@ -39,11 +39,11 @@
 	</head>
 	<body>
 	
-		<%@include file="common/navHeader.jsp" %>
+		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
 			<div class="row">
 				<div class="span2 " >
-					<%@include file="walletTabs.jsp" %>
+					<%@include file="/common/pages/featureTabs.jsp" %>
 				</div>
 				<div class="span10" >
 					<h3 class="bluishText">My Cards</h3>
@@ -69,7 +69,7 @@
 			</div>
 		</div>
 		
-		<%@include file="common/footer.jsp" %>
+		<%@include file="/common/pages/footer.jsp" %>
 	
 	</body>
 </html>
