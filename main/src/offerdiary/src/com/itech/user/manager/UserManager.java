@@ -12,5 +12,4 @@ public interface UserManager {
 	public void saveInterestedUserForSubscription(String email);
 	public User getByEmail(String email);
 	public void notifyPassword(User user);
-
 }

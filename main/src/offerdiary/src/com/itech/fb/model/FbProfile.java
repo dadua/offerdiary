@@ -24,6 +24,18 @@ public class FbProfile {
 
 	private String locale;
 
+	private String firstName;
+
+	private String lastName;
+
+	private String gender;
+
+	private String timeZone;
+
+	private String profileUrl;
+
+
+
 	public String getId() {
 		return id;
 	}
@@ -96,15 +108,7 @@ public class FbProfile {
 		return locale;
 	}
 
-	private String firstName;
 
-	private String lastName;
-
-	private String gender;
-
-	private String timeZone;
-
-	private String profileUrl;
 
 
 }

@@ -16,4 +16,6 @@ public class UserModelConstants {
 	public static final String COL_USER_ROLE = "USER_ROLE";
 	public static final String COL_REGISTRATION_TIME = "REGISTRATION_TIME";
 	public static final String COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME= "PASSWORD_NOTIFY_TIME";
+	public static final String COL_FACEBOOK_ID = "FACEBOOK_ID";
+	public static final String COL_ACTIVATION_STATUS = "ACTIVATION_STATUS";
 }

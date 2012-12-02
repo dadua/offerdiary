@@ -12,11 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.user.constants.InterestedUserSubscriptionModelConstants;
 import com.itech.user.constants.UserModelConstants;
 
 @Entity
-@Table(name="USERS")
+@Table(name=UserModelConstants.TABLE_USER)
 public class User extends PersistableEntity{
 
 	/**
@@ -68,7 +67,16 @@ public class User extends PersistableEntity{
 
 	@Column(name=UserModelConstants.COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME)
 	private Date notifyPasswordTime;
-	
+
+
+	public enum ActivationStatus {
+		ACTIVE, INACTIVE;
+	}
+
+	@Enumerated(EnumType.STRING)
+	@Column(name=UserModelConstants.COL_ACTIVATION_STATUS)
+	private ActivationStatus activationStatus = ActivationStatus.INACTIVE;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -147,6 +155,13 @@ public class User extends PersistableEntity{
 	}
 	public void setNotifyPasswordTime(Date notifyPasswordTime) {
 		this.notifyPasswordTime = notifyPasswordTime;
+	}
+
+	public ActivationStatus getActivationStatus() {
+		return activationStatus;
+	}
+	public void setActivationStatus(ActivationStatus activationStatus) {
+		this.activationStatus = activationStatus;
 	}
 
 

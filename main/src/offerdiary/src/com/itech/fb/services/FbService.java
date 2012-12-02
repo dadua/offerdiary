@@ -32,6 +32,11 @@ public class FbService {
 		return fbAdapter.getFbProfile();
 	}
 
+	public List<FbProfile> getFriendProfiles () {
+		return fbAdapter.getFriendProfiles();
+
+	}
+
 	public FbAlbum createAlbum(String albumName, String albumDescription) {
 		return fbAdapter.createFbAlbum(albumName, albumDescription);
 	}

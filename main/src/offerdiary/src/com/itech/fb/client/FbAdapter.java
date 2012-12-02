@@ -29,6 +29,7 @@ import org.json.me.JSONObject;
 import com.google.gson.Gson;
 import com.itech.common.util.UtilHttp;
 import com.itech.fb.model.FbAlbum;
+import com.itech.fb.model.FbFriends;
 import com.itech.fb.model.FbLike;
 import com.itech.fb.model.FbLikes;
 import com.itech.fb.model.FbPage;
@@ -163,6 +164,27 @@ public class FbAdapter {
 			//TODO: Throw FbAdapterException
 			e.printStackTrace();
 		}
+	}
+
+	public List<FbProfile> getFriendProfiles() {
+		UtilHttp utilHttpGet = new UtilHttp();
+		List<FbProfile> fbProfiles = null;
+		try {
+
+			ArrayList<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
+			params.add(new BasicNameValuePair("access_token", this.accessToken));
+			URI url = URIUtils.createURI("https", FB_GRAPH_URL, -1, "me/friends",
+					URLEncodedUtils.format(params, "UTF-8"),null);
+			String friendsJsonStr = utilHttpGet.getHttpResponse(url.toString());
+			Gson gson = new Gson();
+			//TODO: handle pagination..
+
+			fbProfiles = gson.fromJson(friendsJsonStr, FbFriends.class).getFriendFbProfiles();
+		} catch (Exception e) {
+			logger.error("Friends couldn't be found", e);
+
+		}
+		return fbProfiles;
 	}
 
 
