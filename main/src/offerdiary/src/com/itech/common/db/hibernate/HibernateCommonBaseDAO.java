@@ -101,6 +101,13 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 		return (T) getSession().get(getEntityClass(), id);
 	}
 
+	protected T getSingleResultFrom(Query query) {
+		List list = query.list();
+		if (!list.isEmpty()) {
+			return (T) list.get(0);
+		}
+		return null;
+	}
 	protected Session getSession() {
 		return getHibernateSessionFactory().getCurrentSession();
 	}

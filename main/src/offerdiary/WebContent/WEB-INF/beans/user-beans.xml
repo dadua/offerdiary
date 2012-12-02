@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+     	   
+   	<bean name="itech.UserManager" class="com.itech.user.manager.UserManagerImpl" parent="itech.CommonBaseManager" scope="singleton">
+   		<property name="userDAO" ref="itech.UserDAO"/>
+   		<property name="intUserSubscriptionDAO" ref="itech.InterestedUserSubscriptionDAO"/>
+   		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
+   		<property name="linkedAccountManager" ref="itech.LinkedAccountManager"/>
+   		<property name="socialProfileManager" ref="itech.SocialProfileManager"/>
+	</bean>
+   	
+   	
+	<bean name="itech.UserDAO" class="com.itech.user.dao.HibernateUserDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+       
+	<bean name="itech.InterestedUserSubscriptionDAO" class="com.itech.user.dao.HibernateInterestedUserSubscriptionDAOImpl" 
+			parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+
+	<bean name="itech.LinkedAccountDAO" class="com.itech.user.dao.LinkedAccountDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	
+	<bean name="itech.LinkedAccountManager" class="com.itech.user.manager.LinkedAccountManagerImpl" parent="itech.CommonBaseManager" scope="singleton">
+		<property name="linkedAccountDAO" ref="itech.LinkedAccountDAO"/>
+	</bean>
+	
+	<bean name="itech.SocialProfileDAO" class="com.itech.user.dao.SocialProfileDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	
+	<bean name="itech.SocialProfileConnectionDAO" class="com.itech.user.dao.SocialProfileConnectionDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	
+	<bean name="itech.SocialProfileManager" class="com.itech.user.manager.SocialProfileManagerImpl" parent="itech.CommonBaseManager" scope="singleton">
+		<property name="socialProfileConnectionDao" ref="itech.SocialProfileConnectionDAO"/>
+		<property name="socialProfileDAO" ref="itech.SocialProfileDAO"/>
+		<property name="linkedAccountManager" ref="itech.LinkedAccountManager"/>
+	</bean>
+	 	
+</beans>

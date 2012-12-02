@@ -1,7 +1,5 @@
 package com.itech.user.dao;
 
-import java.util.List;
-
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
@@ -19,11 +17,7 @@ public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implement
 		String hql = "from " + getEntityClassName() + " where userId = :userId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("userId", userId);
-		List list = query.list();
-		if (!list.isEmpty()) {
-			return (User) list.get(0);
-		}
-		return null;
+		return getSingleResultFrom(query);
 	}
 
 	@Override
@@ -31,10 +25,6 @@ public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implement
 		String hql = "from " + getEntityClassName() + " where emailId = :emailId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("emailId", email);
-		List list = query.list();
-		if (!list.isEmpty()) {
-			return (User) list.get(0);
-		}
-		return null;
+		return getSingleResultFrom(query);
 	}
 }
