@@ -14,7 +14,7 @@
 		
 		<%@include file="/common/pages/header.jsp" %>
 		
-		<script src="js/it/card.js" > </script>
+		<script src="cards/js/card.js" > </script>
 		<script type="text/javascript">
 
 			$(function(){

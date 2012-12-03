@@ -1,0 +1,33 @@
+/* Add offer related classes */
+            .popover {
+                z-index: 1200;
+            }
+
+            .selected {
+                background-color: #ADFF2F;
+                position: relative;
+            }
+
+            .selected-tick {
+                background: none repeat scroll 0 0 #5EF118;
+                border-radius: 23px 23px 23px 23px;
+                font-size: 11px;
+                font-weight: 100;
+                color:white;
+                line-height: 22px;
+                opacity: 0.7;
+                position: absolute;
+                text-align: center;
+                top: -10%;
+                left: 90%;
+                width: 22px;
+            }
+
+            .vendorImage {
+                cursor: pointer;
+            }
+
+            .selected-tick:hover {
+                color: white;
+                text-decoration: none;
+            }
