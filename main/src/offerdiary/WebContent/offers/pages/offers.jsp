@@ -8,10 +8,10 @@ pageEncoding="utf-8"%>
 
         <%@include file="/common/pages/header.jsp" %>
 
-        <script src="js/it/wizard.js" charset="UTF-8"> </script>
-        <script src="js/it/addoffer_wizard.js" > </script>
-        <script src="js/it/vendor.js" > </script>
-        <script src="js/it/offer.js" > </script>
+        <script src="common/js/wizard.js" charset="UTF-8"> </script>
+        <script src="offers/js/addoffer_wizard.js" > </script>
+        <script src="offers/js/vendor.js" > </script>
+        <script src="offers/js/offer.js" > </script>
         
         <script type="text/javascript">
             $(function() {
@@ -28,131 +28,18 @@ pageEncoding="utf-8"%>
         </script>
 
         <style type="text/css">
-            /* Add offer related classes */
-            .popover {
-                z-index: 1200;
-            }
-
-            .selected {
-                background-color: #ADFF2F;
-                position: relative;
-            }
-
-            .selected-tick {
-                background: none repeat scroll 0 0 #5EF118;
-                border-radius: 23px 23px 23px 23px;
-                font-size: 11px;
-                font-weight: 100;
-                color:white;
-                line-height: 22px;
-                opacity: 0.7;
-                position: absolute;
-                text-align: center;
-                top: -10%;
-                left: 90%;
-                width: 22px;
-            }
-
-            .vendorImage {
-                cursor: pointer;
-            }
-
-            .selected-tick:hover {
-                color: white;
-                text-decoration: none;
-            }
-
-            .offer {
-                background-color: #F5F5F5;
-            }
-
-            .daysToExpire {
-                margin-left: 48%;
-                margin-right:10%;
-                padding: 5px;
-            }
-
-            .checkBoxSelected {
-                color: green;
-            }
-
-            .checkBoxSelected > .icon-ok {
-                background-color: green;
-            }
-
-            .checkBoxUnSelected {
-                color: #333333;
-            }
-
-            .checkBoxUnSelected > .icon-ok {
-                background-color: transparent;
-            }
+        
+        	<%@include file="/common/css/wizard.css" %>
+        	<%@include file="/offers/css/vendor.css" %>
+        	
+        	<%@include file="/offers/css/offer.css" %>
 
             .ui-autocomplete-loading {
                 background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
             }
 
-            /*TODO: this is a dependecy of eachOfferTemplate.html*/
-            .offerBlock{
-                width: 325px;
-                height: 125px; 
-                position:relative;
-            }
+        	<%@include file="/offers/css/eachOffer.css" %>
 
-            .space15{
-                width: 140px;
-                float: left;
-            }
-
-            .offerDesc {
-                font-family:  sans-serif;
-                font-size: 20px;
-                font-style: normal;
-                font-weight: normal;
-                text-transform: normal;
-                line-height: 1.2em;
-            }
-
-            .sans-serif-normal{
-                font-family:  sans-serif;
-                font-size: 14px;
-            }
-
-            .sans-serif-small{
-                font-family:  sans-serif;
-                font-size: 12px;
-            }
-
-            .sans-serif-extra-small{
-                font-family:  sans-serif;
-                font-size: 10px;
-            }
-
-            .shadow {
-                -moz-box-shadow:    3px 3px 5px 6px #ccc;
-                -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-                box-shadow:         3px 3px 5px 6px #ccc;
-            }
-
-            .margin-left-10{
-                margin-left: 10px;
-            }
-            .offer-icon{
-                margin-left:-5px;
-
-            }
-            .margin-zero{
-                margin-left: 0px;
-            }
-
-            /*TODO: this is a dependecy of wizard.js*/
-            .blueColor {
-                color:#3A87AD;
-            }
-
-            .bluishText {
-                color: #0088CC;
-            }
         </style>
 
         <title>Offer Wallet</title>
