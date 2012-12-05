@@ -1,25 +1,50 @@
-            .offer {
-                background-color: #F5F5F5;
-            }
+.offer {
+    background-color: #F5F5F5;
+}
 
-            .daysToExpire {
-                margin-left: 48%;
-                margin-right:10%;
-                padding: 5px;
-            }
+.daysToExpire {
+    margin-left: 48%;
+    margin-right:10%;
+    padding: 5px;
+}
 
-            .checkBoxSelected {
-                color: green;
-            }
+.checkBoxSelected {
+    color: green;
+}
 
-            .checkBoxSelected > .icon-ok {
-                background-color: green;
-            }
+.checkBoxSelected > .icon-ok {
+    background-color: green;
+}
 
-            .checkBoxUnSelected {
-                color: #333333;
-            }
+.checkBoxUnSelected {
+    color: #333333;
+}
 
-            .checkBoxUnSelected > .icon-ok {
-                background-color: transparent;
-            }
+.checkBoxUnSelected > .icon-ok {
+    background-color: transparent;
+}
+
+
+.ui-autocomplete-loading {
+    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.options-left-container {
+	 background-color: #FFFFFF;
+	 border-radius: 6px 6px 6px 6px;
+	 padding: 0;
+	 border: 1px solid #DDDDDD;
+}
+
+.offerContainer {
+	 border-left: 1px solid #DDDDDD;
+	 border-right: 1px solid #DDDDDD;
+	 padding-top: 20px;
+	 min-height: 400px;
+}
+
+.addOfferBlock {
+	margin-left: 20px;
+	min-height: 100px;
+	
+}
