@@ -101,6 +101,7 @@ it.offer.getOfferHtml = function(offer) {
 
 it.offer.appendOffer = function (offer, isOldAddition) {
 
+    /*
     var daysToExpire = this.getDaysToExpire(offer);
     var labelClass = this.getExpiryDateBasedClass(daysToExpire);
     var daysToExpireHtml = '<div class="daysToExpire label '+ labelClass + '" id="offerExpire_'+ offer.id + '">';
@@ -112,7 +113,6 @@ it.offer.appendOffer = function (offer, isOldAddition) {
         daysToExpireHtml += compactFormattedTime;
     }
     daysToExpireHtml += '</div>';
-    /*
        var offerHtml = '<li class="span3" id="offer_';
        offerHtml += offer.id;
        offerHtml += '" >';
@@ -182,7 +182,6 @@ it.offer.saveOfferFromWizard= function (offerData) {
                $('#addOfferModal').modal('hide');
            });
 
-
 };
 
 it.offer.addOffer = function () {
@@ -239,6 +238,7 @@ it.offer.trashOffer = function(e) {
 
 it.offer.addHandlers = function () {
 
+    /*
     $('.icon-trash').hover(function(e) {
         $(this).removeClass('icon-white');
     }, function(e){
@@ -251,13 +251,12 @@ it.offer.addHandlers = function () {
         $(this).parent().find('.hiddenPartOfTime').show();
         $(this).tooltip('hide').remove();
     });
-    /*
-    $('.checkBoxSelected').live('click', function() {
-        $(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
-    });
-    $('.checkBoxUnSelected').live('click', function(){
-        $(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
-    });
-   */
+       $('.checkBoxSelected').live('click', function() {
+       $(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
+       });
+       $('.checkBoxUnSelected').live('click', function(){
+       $(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
+       });
+       */
 };
 
