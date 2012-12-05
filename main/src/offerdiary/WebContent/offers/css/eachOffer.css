@@ -1,38 +1,29 @@
 /*these are dependecies of offers/templates/eachOfferTemplate.html*/
 
             .offerBlock{
-                width: 325px;
-                height: 125px; 
-                position:relative;
-            }
-
-            .space15{
-                width: 140px;
-                float: left;
+            	min-height: 100px;
             }
 
             .offerDesc {
                 font-family:  sans-serif;
-                font-size: 20px;
-                font-style: normal;
-                font-weight: normal;
-                text-transform: normal;
+                font-size: 1.1em;
+                font-weight: bold;
                 line-height: 1.2em;
             }
 
             .sans-serif-normal{
                 font-family:  sans-serif;
-                font-size: 14px;
+                font-size: 1.1em;
             }
 
             .sans-serif-small{
                 font-family:  sans-serif;
-                font-size: 12px;
+                font-size: 1em;
             }
 
             .sans-serif-extra-small{
                 font-family:  sans-serif;
-                font-size: 10px;
+                font-size: .8em;
             }
 
             .shadow {
@@ -41,13 +32,6 @@
                 box-shadow:         3px 3px 5px 6px #ccc;
             }
 
-            .margin-left-10{
-                margin-left: 10px;
-            }
-            .offer-icon{
-                margin-left:-5px;
-
-            }
             .margin-zero{
-                margin-left: 0px;
+                margin-left: 0;
             }

@@ -1,12 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" 
-pageEncoding="utf-8"%>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-
-        <%@include file="/common/pages/header.jsp" %>
+<%@include file="/common/pages/headBegin.jsp" %>
 
         <script src="common/js/wizard.js" charset="UTF-8"> </script>
         <script src="offers/js/addoffer_wizard.js" > </script>
@@ -34,34 +26,66 @@ pageEncoding="utf-8"%>
         	
         	<%@include file="/offers/css/offer.css" %>
 
-            .ui-autocomplete-loading {
-                background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-            }
-
         	<%@include file="/offers/css/eachOffer.css" %>
 
         </style>
 
         <title>Offer Wallet</title>
-    </head>
-    <body>
-
-        <%@include file="/common/pages/navHeader.jsp" %>
+        
+<%@include file="/common/pages/bodyBegin.jsp" %>
 
         <div class="container" >
+        	<div class="row">
+        		<%--
+	        	<div class="span2">
+               		<img src="images/profile/batman.jpg" class="img-polaroid"/>
+               	</div>
+               	 --%>
+        		<div class="span5 offset2">
+		        	<%@include file="/common/pages/featureTabs.jsp" %>
+	        	</div>
+            </div>
             <div class="row">
                 <div class="span2" >
-                    <%@include file="/common/pages/featureTabs.jsp" %>
+                	<!-- 
+                	<div class="container-fluid">
+                		<div class="row-fluid">
+	                		<img src="images/profile/batman.jpg" class="img-polaroid"/>
+                		</div>
+                	</div>
+                	 -->
+                	<div class="container-fluid options-left-container">
+	                	<ul class="nav nav-list">
+			                <li class="nav-header">Offers by:</li>
+							<li class="active"><a href="#">All</a></li>
+							<li><a href="#">Available</a></li>
+							<li><a href="#">Expired</a></li>
+							<li class="divider"></li>
+							<li class="nav-header">Other filters:</li>
+							<li><a href="#"></a></li>
+							<li><a href="#">Expires in 7days</a></li>
+						</ul>
+					</div>
                 </div>
-                <div class="span8"  >
-                    <ul id="offerContainer" class="thumbnails row">
-                    </ul>
-                </div>
-                <div class="span2" >
-	                <a id="addOfferWizardBtn" class="btn btn-primary btn-large" href="#" >Add Offer to Wallet</a>
+                
+                <div class="span10"  >
+               		<div class="row-fluid">
+                         <ul id="offerContainer" class="thumbnails offerContainer">
+	                         <li class="span5 thumbnail offerBlock addOfferBlock" style="min-height: 100px; margin-left:2.5641%;">
+	                         	<br>
+	                         	<br>
+	                         	<div class="row-fluid">
+	                         		<div class="span6 offset3">
+		                         		<a id="addOfferWizardBtn" class="btn btn-success btn-large" href="#" >Add New Offer</a>
+		                         	</div>
+                                 </div>
+			                </li>
+	                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <%@include file="/offers/templates/eachOfferTemplate.html" %>
 		<div id="addOfferWizardRoot"></div>
         <div id="templates" class="hide">
@@ -113,8 +137,4 @@ pageEncoding="utf-8"%>
                 </div>
             </div>
         </div>
-
-        <%@include file="/common/pages/footer.jsp" %>
-
-    </body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
