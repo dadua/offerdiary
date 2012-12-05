@@ -68,9 +68,19 @@
 					</div>
                 </div>
                 
-                <div class="span10"  >
+                <div class="span10 offerContainer"  >
+                	<div class="row-fluid">
+		                <div class="form-search span5 offset6">
+	                        <div class="input-append">
+	                            <input id="vendorQuery" class="offerDetail search-query input-large" type="text" placeholder="Search Offers" />
+	                            <button class="btn"><i class="icon-search"></i></button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <br>
+                    
                		<div class="row-fluid">
-                         <ul id="offerContainer" class="thumbnails offerContainer">
+                         <ul id="offerContainer" class="thumbnails ">
 	                         <li class="span5 thumbnail offerBlock addOfferBlock" style="min-height: 100px; margin-left:2.5641%;">
 	                         	<br>
 	                         	<br>
@@ -79,6 +89,7 @@
 		                         		<a id="addOfferWizardBtn" class="btn btn-success btn-large" href="#" >Add New Offer</a>
 		                         	</div>
                                  </div>
+                                 <br>
 			                </li>
 	                    </ul>
                     </div>
