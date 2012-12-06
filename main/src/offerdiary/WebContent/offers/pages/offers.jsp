@@ -32,7 +32,7 @@
 
         </style>
 
-        <title>Offer Wallet</title>
+        <title>Offers</title>
         
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
@@ -47,9 +47,12 @@
 							<li><a href="#">Available</a></li>
 							<li><a href="#">Expired</a></li>
 							<li class="divider"></li>
-							<li class="nav-header">Other filters:</li>
+							<li class="nav-header">Expiry based filters:</li>
 							<li><a href="#"></a></li>
 							<li><a href="#">Expires in 7days</a></li>
+							<li class="nav-header">Addition time based:</li>
+							<li><a href="#">Added in the last week</a></li>
+							<li><a href="#">Added in the last month</a></li>
 						</ul>
 					</div>
                 </div>
@@ -58,7 +61,7 @@
                 	<div class="row-fluid">
 		                <div class="form-search span5 offset6">
 	                        <div class="input-append">
-	                            <input id="vendorQuery" class="offerDetail search-query input-large" type="text" placeholder="Search Offers" />
+	                            <input id="vendorQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Offers" />
 	                            <button class="btn"><i class="icon-search"></i></button>
 	                        </div>
 	                    </div>
