@@ -187,7 +187,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
     
     var _modalBsTemplate = '<div class="modal hide" id="_wizard" tabindex="-1" role="dialog" aria-labelledby="wizardTitle" aria-hidden="true">\
                                 <div class="modal-header wizardHeader"> \
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">\u00D7</button>\
                                     <h5 id="wizardTitle"> \
                                     </h5>\
                                     <ul id="stepTitles" class="breadcrumb"> \
