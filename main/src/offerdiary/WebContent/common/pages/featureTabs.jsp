@@ -13,5 +13,8 @@
 				<li id="shareTab" >
 					<a href="#" >Friends</a>
 				</li>
+				<li id="profileTab" >
+					<a href="#" >Profile</a>
+				</li>
 			</ul>
 		</div>

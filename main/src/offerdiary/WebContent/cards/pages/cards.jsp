@@ -1,18 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-
-<%@page import="java.util.List"%>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-			<%--
-				TODO: Decide this
-				<!-- The HTML5 charset format -->
-				<meta charset="UTF-8">
-			 --%>
+<%@include file="/common/pages/headBegin.jsp" %>
 		<title>My Cards</title>
-		
-		<%@include file="/common/pages/header.jsp" %>
 		
 		<script src="cards/js/card.js" > </script>
 		<script type="text/javascript">
@@ -27,49 +14,71 @@
 		</script>
 		
 		<style type="text/css">
-			.card {
-				background-color: #F5F5F5;
-			}
+        	<%@include file="/common/css/layout.css" %>
+			<%@include file="/cards/css/cards.css" %>
 			
 			.bluishText {
 				color: #0088CC;
 			}
 			
+			
 		</style>
-	</head>
-	<body>
+<%@include file="/common/pages/bodyBegin.jsp" %>
 	
-		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
+	        <%@include file="/common/pages/featureTabsRow.jsp" %>
 			<div class="row">
 				<div class="span2 " >
-					<%@include file="/common/pages/featureTabs.jsp" %>
-				</div>
-				<div class="span10" >
-					<h3 class="bluishText">My Cards</h3>
-					<br/>
-					<ul id="myCardsContainer" class="thumbnails">
-					</ul>
-				</div>
-			</div>
-			<hr class="span10 offset1" >
-			<div class="row">
-				<div class="span10 offset2" >
-					<div class="row" >
-						<h3 class="bluishText">Discover your Cards</h3>
-						<br/>
-					</div>
-					
-					<div class="row span10">
-						<input id="cardFullName" class="cardDetail span4" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
-						<ul id="cardsContainer" class="thumbnails">
+					<div class="container-fluid options-left-container">
+	                	<ul class="nav nav-list">
+			                <li class="nav-header">Cards by:</li>
+							<li class="active"><a href="#">My Cards</a></li>
+							<li><a href="#">Discover new cards</a></li>
+							<li class="divider"></li>
+							<li class="nav-header">By Issuing Bank:</li>
+							<li><a href="#">CitiBank</a></li>
+							<li><a href="#">ICICI Bank</a></li>
+							<li><a href="#">HSBC Bank</a></li>
 						</ul>
 					</div>
 				</div>
+				<div class="span10 content-container" >
+					<div class="container-fluid">
+						<div class="row-fluid">
+							<h3 class="bluishText">My Cards</h3>
+						</div>
+						<div class="row-fluid">
+							<ul id="myCardsContainer" class="thumbnails">
+							</ul>
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row-fluid">
+							<hr />
+						</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row-fluid" >
+							<h3 class="bluishText">Discover your Cards</h3>
+							<br/>
+						</div>
+						<div class="row-fluid">
+			                <div class="form-search span5 offset6">
+		                        <div class="input-append">
+									<input id="cardFullName" class="cardDetail search-query input-xlarge" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
+		                            <button class="btn"><i class="icon-search"></i></button>
+		                        </div>
+		                    </div>
+						</div>
+						<br/>
+						<div class="row-fluid">
+							<ul id="cardsContainer" class="thumbnails">
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
+					
 		</div>
-		
-		<%@include file="/common/pages/footer.jsp" %>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
 	
-	</body>
-</html>
