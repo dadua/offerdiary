@@ -24,26 +24,6 @@
     background-color: transparent;
 }
 
-
-.ui-autocomplete-loading {
-    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
-}
-
-.options-left-container {
-	 background-color: #FFFFFF;
-	 border-radius: 6px 6px 6px 6px;
-	 padding: 0;
-	 border: 1px solid #DDDDDD;
-}
-
-.offerContainer {
-	 border-left: 1px solid #DDDDDD;
-	 border-right: 1px solid #DDDDDD;
-	 padding-top: 20px;
-	 min-height: 400px;
-	 margin-left: 28px;
-}
-
 .addOfferBlock {
 	margin-left: 20px;
 	min-height: 100px;

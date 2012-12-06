@@ -22,7 +22,9 @@
         <style type="text/css">
         
         	<%@include file="/common/css/wizard.css" %>
+        	<%@include file="/common/css/layout.css" %>
         	<%@include file="/offers/css/vendor.css" %>
+        	
         	
         	<%@include file="/offers/css/offer.css" %>
 
@@ -35,25 +37,9 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
         <div class="container" >
-        	<div class="row">
-        		<%--
-	        	<div class="span2">
-               		<img src="images/profile/batman.jpg" class="img-polaroid"/>
-               	</div>
-               	 --%>
-        		<div class="span5 offset2">
-		        	<%@include file="/common/pages/featureTabs.jsp" %>
-	        	</div>
-            </div>
+	        <%@include file="/common/pages/featureTabsRow.jsp" %>
             <div class="row">
                 <div class="span2" >
-                	<!-- 
-                	<div class="container-fluid">
-                		<div class="row-fluid">
-	                		<img src="images/profile/batman.jpg" class="img-polaroid"/>
-                		</div>
-                	</div>
-                	 -->
                 	<div class="container-fluid options-left-container">
 	                	<ul class="nav nav-list">
 			                <li class="nav-header">Offers by:</li>
@@ -68,7 +54,7 @@
 					</div>
                 </div>
                 
-                <div class="span10 offerContainer"  >
+                <div class="span10 content-container"  >
                 	<div class="row-fluid">
 		                <div class="form-search span5 offset6">
 	                        <div class="input-append">
@@ -90,7 +76,7 @@
 		                         	</div>
                                  </div>
                                  <br>
-			                </li>
+                             </li>
 	                    </ul>
                     </div>
                 </div>
@@ -135,7 +121,6 @@
                             <textarea id="offerDescription" rows="3" placeholder="Offer Description" ></textarea>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div id="reminderDetailsTemplate">
