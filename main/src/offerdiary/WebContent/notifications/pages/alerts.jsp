@@ -1,19 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-
-<%@page import="java.util.List"%>
-<%@page import="com.itech.alert.model.Alert"%><html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-			<%--
-				TODO: Decide this
-				<!-- The HTML5 charset format -->
-				<meta charset="UTF-8">
-			 --%>
-		<title>My Alerts</title>
+<%@page import="com.itech.alert.model.Alert" %>
+<%@page import="java.util.List" %>
+<%@include file="/common/pages/headBegin.jsp" %>
+		<title>Notifications</title>
 		
-		<%@include file="/common/pages/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -54,44 +43,58 @@
 			
 		</script>
 		<style type="text/css">
+			<%@include file="/common/css/layout.css" %>
 			.alert {
 				background: none repeat scroll 0 0 #CCCCFF;
 			};
 			
 		</style>
-	</head>
-	<body>
-	
-		<%@include file="/common/pages/navHeader.jsp" %>
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
-			<div class="row-fluid">
+			<%@include file="/common/pages/featureTabsRow.jsp" %>
+			<div class="row">
 				<div class="span2" >
-					<%@include file="/common/pages/featureTabs.jsp" %>
-				</div>
-				<div class="span10" id="alertContainer" >
-				 <% 
-				 	List<Alert> myAlerts = (List<Alert>) request.getAttribute("myAlerts");
-				 %>	
-				 <ul class="thumbnails">
-				 <% 
-				    for (Alert alert : myAlerts) {
-				    	%>
-				    		<li class="span3" id="alert_<%=alert.getId()%>">
-								<div class="thumbnail alert"  >
-								<span class="icon-trash icon-white pull-right alert-dismiss" id="alertDismiss_<%=alert.getId()%>"></span>
-								<h3> <%=alert.getMessage()%> </h3>
-								</div>
-							</li>
-				    	<%
-					}
-				%>
-				</ul>
-				&nbsp;
+                	<div class="container-fluid options-left-container">
+	                	<ul class="nav nav-list">
+			                <li class="nav-header">Notifications:</li>
+							<li class="active"><a href="#">All</a></li>
+							<li><a href="#">On my offers</a></li>
+							<li><a href="#">On Offer on my cards</a></li>
+							<li><a href="#">By my Friends</a></li>
+							<li class="divider"></li>
+							<li class="nav-header">Other filters:</li>
+							<li><a href="#">Snoozed</a></li>
+							<li><a href="#">Actionable</a></li>
+							<li><a href="#">Dismissed</a></li>
+						</ul>
+					</div>
+                </div>
+                
+				<div class="span10 content-container" id="alertContainer" >
+					<div class="container-fluid">
+						<div class="row-fluid">
+							 <% 
+							 	List<Alert> myAlerts = (List<Alert>) request.getAttribute("myAlerts");
+							 %>	
+							 
+							 <ul class="thumbnails">
+							 <% 
+							    for (Alert alert : myAlerts) {
+							    	%>
+							    		<li class="span3" id="alert_<%=alert.getId()%>">
+											<div class="thumbnail alert"  >
+											<span class="icon-trash icon-white pull-right alert-dismiss" id="alertDismiss_<%=alert.getId()%>"></span>
+											<h3> <%=alert.getMessage()%> </h3>
+											</div>
+										</li>
+							    	<%
+								}
+							%>
+							</ul>
+						</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
-		
-		<%@include file="/common/pages/footer.jsp" %>
-	
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
