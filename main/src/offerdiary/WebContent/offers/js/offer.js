@@ -2,6 +2,7 @@ var it = it || {};
 it.offer = it.offer || {};
 
 it.offer.appendOffers = function(offers, isOldAddition) {
+
     for (var i=0; i<offers.length;i++) {
         this.appendOffer(offers[i], isOldAddition);
     }
@@ -97,6 +98,27 @@ it.offer.getOfferHtml = function(offer) {
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);
     return offerTemplate$;
+};
+
+
+it.offer.view = function () {
+
+}();
+
+
+it.offer.plotAll = function (offers, isOldAddition) {
+    var offers$ = [],
+        addRowOffer$ = $('.addOfferBlock');
+    offers$.push(addRowOffer$);
+
+    //TODO: add addOffer$ to the offers$
+    for (var i=0; i< offers.length; i++) {
+        offers$.push(this.getOfferHtml(offers[i]));
+    }
+
+    $('#offerContainerFluid').rowFluidAdder({ items$: offers$,
+                                      itemRowContainerTemplate$: '<ul class="thumbnails row-fluid"></ul>' });
+
 };
 
 it.offer.appendOffer = function (offer, isOldAddition) {
