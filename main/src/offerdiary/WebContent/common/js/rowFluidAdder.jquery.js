@@ -48,14 +48,20 @@
  */
 (function ($) {
 
-    var _getSpanNo = function (item$) {
-        var itemClassesExec = /.*span(\d+).*/.exec($(item$).attr('class')),
-        spanNo = -1;
-        
-        if (itemClassesExec && itemClassesExec[1]) {
-            spanNo = parseInt(itemClassesExec[1], 10);
+    var _getSpansOccupied = function (item$) {
+        var itemClasses = $(item$).attr('class'),
+            spanRegExec = /.*span(\d+).*/.exec(itemClasses),
+            offsetRegExec = /.*offset(\d+).*/.exec(itemClasses),
+            spanNo = -1,
+            offsetsNo= 0;
+            
+        if (spanRegExec && spanRegExec[1]) {
+            spanNo = parseInt(spanRegExec[1], 10);
         }
-        return spanNo;
+        if (offsetRegExec && offsetRegExec[1]) {
+            offsetsNo = parseInt(offsetRegExec[1], 10);
+        }
+        return spanNo + offsetsNo;
     };
 
     $.fn.rowFluidAdder = function (options) {
@@ -74,9 +80,14 @@
             items$ = $(settings.items$),
             itemsLen = items$.size();
 
+
+        if (items$.length === 0 ) {
+            return this;
+        }
+
         for (var i=0; i< itemsLen; i++) {
             var item$ = items$[i],
-            currentSpanNo = _getSpanNo(item$), 
+            currentSpanNo = _getSpansOccupied(item$), 
             spanNoNotFound = false;
 
             if (currentSpanNo === -1) {
@@ -84,13 +95,13 @@
             }
 
             currentSpanSum += currentSpanNo;
+            currentItemRow$.append(item$);
 
-            if (currentSpanSum >12) {
+            if (currentSpanSum >= 12 || (i === (itemsLen -1))) {
                 itemRows$.push(currentItemRow$);
                 currentItemRow$ = itemRowContainerTemplate$.clone();
-                currentSpanSum=currentSpanNo;
+                currentSpanSum = 0;
             } 
-            currentItemRow$.append(item$);
         }
 
         //This step reduces the no. of browser repaints
@@ -99,5 +110,6 @@
             appendedRowsTmp$.append(itemRows$[j]);
         }
         rootContainer$.append(appendedRowsTmp$.html());
+        return this;
     };
 })(jQuery);
