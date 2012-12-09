@@ -52,7 +52,7 @@
         var itemClassesExec = /.*span(\d+).*/.exec($(item$).attr('class')),
         spanNo = -1;
         
-        if (itemClassesExec[1]) {
+        if (itemClassesExec && itemClassesExec[1]) {
             spanNo = parseInt(itemClassesExec[1], 10);
         }
         return spanNo;

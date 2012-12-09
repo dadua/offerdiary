@@ -152,8 +152,7 @@ it.offer.appendOffer = function (offer, isOldAddition) {
        */
 
     var offer$ = this.getOfferHtml(offer);
-    $(offer$).appendTo('#offerContainer');
-
+    $(offer$).appendTo('#offerContainerFluid');
 
     /*
        $('#offerExpire_'+offer.id).position({
