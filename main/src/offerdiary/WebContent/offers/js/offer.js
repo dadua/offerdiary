@@ -93,7 +93,7 @@ it.offer.getOfferHtml = function(offer) {
         offerTemplate$.find('.sourceVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
     offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
-
+    offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);
@@ -259,6 +259,7 @@ it.offer.trashOffer = function(e) {
 
 it.offer.addHandlers = function () {
 
+    $('.offerTrash').click(it.offer.trashOffer).tooltip();
     /*
     $('.icon-trash').hover(function(e) {
         $(this).removeClass('icon-white');
