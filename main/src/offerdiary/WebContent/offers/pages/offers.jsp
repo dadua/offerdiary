@@ -12,7 +12,6 @@
                 offers = JSON.parse(offersJson);
             it.offer.plotAll(offers, true);
             it.offer.addHandlers();
-            $('#expiryDate').datepicker();
             it.offer.addwizard.init();
             $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
             $('#addOfferModalBtn').click(it.offer.clearOfferFormVals);
@@ -69,6 +68,7 @@
 
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
+                            <%@include file="/offers/templates/addOfferTemplate.html" %>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,6 @@
 
     <div id="addOfferWizardRoot"></div>
     <div id="templates" class="hide">
-    <%@include file="/offers/templates/addOfferTemplate.html" %>
         <div id="vendorSelectionTemplate">
             <div class="container-fluid" >
                 <div class="form-search row-fluid">
