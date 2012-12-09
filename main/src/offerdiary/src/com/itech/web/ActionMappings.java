@@ -29,7 +29,7 @@ public class ActionMappings {
 		//Coupon/Offer actions
 		add(new ActionMapping("home.do", OfferAction.class, "goToHome"));
 		add(new ActionMapping("wallet.do", OfferAction.class, "goToMyWallet"));
-		add(new ActionMapping("getMyCoupons.do", OfferAction.class, "getMyOffers"));
+		add(new ActionMapping("getMyOffers.do", OfferAction.class, "getMyOffers"));
 		add(new ActionMapping("offers.do", OfferAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
 		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
