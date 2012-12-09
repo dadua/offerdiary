@@ -106,6 +106,17 @@ it.offer.view = function () {
 }();
 
 
+it.offer.refreshOffers = function () {
+	$.getJSON('getMyOffers.do', function (resp) {
+	    if (resp.success) {
+	        it.offer.plotAll(resp.result, true);
+	    } else {
+	    	//TODO: Error..
+	    }
+	});
+}
+
+
 it.offer.plotAll = function (offers, isOldAddition) {
     var offers$ = [],
         addRowOffer$ = $('.addOfferBlock');
@@ -118,7 +129,7 @@ it.offer.plotAll = function (offers, isOldAddition) {
 
     $('#offerContainerFluid').rowFluidAdder({ items$: offers$,
                                       itemRowContainerTemplate$: '<ul class="thumbnails row-fluid"></ul>' });
-
+    it.offer.addHandlers();
 };
 
 it.offer.appendOffer = function (offer, isOldAddition) {
@@ -195,8 +206,7 @@ it.offer.saveOfferFromWizard= function (offerData) {
            function (data) {
                var ret = $.parseJSON(data);
                if (ret.success === true) {
-                   it.offer.appendOffers(ret.result);
-                   it.offer.addHandlers();
+            	   it.offer.refreshOffers ();
                } else {
                    //Handle error case
                }
@@ -251,6 +261,7 @@ it.offer.trashOffer = function(e) {
         if (ret.success === true) {
             $('#'+targetId).tooltip('hide');
             $('#offer_'+offerId).remove();
+            it.offer.refreshOffers();
         } else {
             //Handle error case
         }
@@ -258,7 +269,7 @@ it.offer.trashOffer = function(e) {
 };
 
 it.offer.addHandlers = function () {
-
+	$('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
     $('.offerTrash').click(it.offer.trashOffer).tooltip();
     /*
     $('.icon-trash').hover(function(e) {

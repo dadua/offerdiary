@@ -109,7 +109,7 @@
         for (var j=0; j< itemRows$.length; j++) {
             appendedRowsTmp$.append(itemRows$[j]);
         }
-        rootContainer$.append(appendedRowsTmp$.html());
+        rootContainer$.html(appendedRowsTmp$.html());
         return this;
     };
 })(jQuery);

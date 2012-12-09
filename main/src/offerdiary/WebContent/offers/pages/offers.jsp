@@ -8,11 +8,10 @@
     
     <script type="text/javascript">
         $(function() {
+            it.offer.addwizard.init();
             var offersJson = '${myOffersJson}',
                 offers = JSON.parse(offersJson);
             it.offer.plotAll(offers, true);
-            it.offer.addHandlers();
-            it.offer.addwizard.init();
             $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
             $('#addOfferModalBtn').click(it.offer.clearOfferFormVals);
         });
