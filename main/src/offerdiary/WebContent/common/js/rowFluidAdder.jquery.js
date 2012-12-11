@@ -95,13 +95,31 @@
             }
 
             currentSpanSum += currentSpanNo;
-            currentItemRow$.append(item$);
 
-            if (currentSpanSum >= 12 || (i === (itemsLen -1))) {
+            if (currentSpanSum === 12) {
+
+                currentItemRow$.append(item$);
                 itemRows$.push(currentItemRow$);
+
                 currentItemRow$ = itemRowContainerTemplate$.clone();
                 currentSpanSum = 0;
-            } 
+
+            } else if (currentSpanSum > 12) {
+
+                itemRows$.push(currentItemRow$);
+                currentItemRow$ = itemRowContainerTemplate$.clone();
+                currentItemRow$.append(item$);
+                currentSpanSum = currentSpanNo;
+
+            } else {
+
+                currentItemRow$.append(item$);
+
+            }
+
+            if (i === itemsLen -1 ) {
+                itemRows$.push(currentItemRow$);
+            }
         }
 
         //This step reduces the no. of browser repaints
