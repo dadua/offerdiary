@@ -28,19 +28,8 @@
     <div class="container" >
         <%@include file="/common/pages/featureTabsRow.jsp" %>
         <div class="row">
-            <div class="span2 " >
-                <div class="container-fluid options-left-container">
-                    <ul class="nav nav-list">
-                        <li class="nav-header">Cards by:</li>
-                        <li class="active"><a href="#">My Cards</a></li>
-                        <li><a href="#">Discover new cards</a></li>
-                        <li class="divider"></li>
-                        <li class="nav-header">By Issuing Bank:</li>
-                        <li><a href="#">CitiBank</a></li>
-                        <li><a href="#">ICICI Bank</a></li>
-                        <li><a href="#">HSBC Bank</a></li>
-                    </ul>
-                </div>
+            <div id="filterOptionsContainer" class="span2 " >
+            	<%@include file="/cards/pages/cardsFilters.html" %>
             </div>
             <div class="span10 content-container" >
                 <div class="container-fluid">
@@ -53,32 +42,30 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="container-fluid">
                     <div class="row-fluid">
                         <hr />
                     </div>
                 </div>
+                
                 <div id="featureContainer" class="container-fluid">
-                    <div id="featureHeadingRow" class="row-fluid" >
-                        <div class="span6">
-                            <h3 id="featureHeading" class="bluishText discoverCards">Discover your Cards</h3>
-                        </div>
-                        <div class="span5 offset1">
-                        	<br/>
-	                        <div class="form-search">
-	                            <div class="input-append discoverCards">
-	                                <input id="cardFullName" class="cardDetail search-query input-xlarge" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
-	                                <button class="btn"><i class="icon-search"></i></button>
-	                            </div>
-	                        </div>
-	                    </div>
-                    </div>
+                	
+                	<%@include file="/cards/pages/discoverCardHeadingRow.html" %>
+
+					<%@include file="/cards/pages/offerOnCardHeadingRow.html" %>
+                    
                     <br/>
+                    
                     <div class="row-fluid">
-                        <div id="cardsContainer" class="container-fluid">
+                        <div id="cardsContainer" class="container-fluid discoverCards">
+                        </div>
+                        <div id="offerOnCardContainer" class="container-fluid offerOnCard hide">
                         </div>
                     </div>
+                    
                 </div>
+                
             </div>
         </div>
 
