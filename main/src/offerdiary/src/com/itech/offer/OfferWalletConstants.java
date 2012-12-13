@@ -14,4 +14,6 @@ public class OfferWalletConstants {
 	public static final String SHARED_OFFER_ATTR_KEY = "sharedOffer";
 	public static final String SHARED_OFFER_URL_ATTR_KEY = "sharedOfferUrl";
 	public static final String SHARED_OFFER_ID_ATTR_KEY = "sharedOfferId";
+
+	public static final String OFFER_CARD_ID_PARAM_KEY = "cardIdKey";
 }

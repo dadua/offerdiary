@@ -73,6 +73,17 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response getOffersOnCard (HttpServletRequest req, HttpServletResponse resp) {
+		String offerCardId = req.getParameter(OfferWalletConstants.OFFER_CARD_ID_PARAM_KEY);
+		Long cardId = Long.parseLong(offerCardId);
+		List<Offer> offers = getOfferManager().getAllOffersForCard(cardId);
+		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
+
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response getOffersForCard (HttpServletRequest req, HttpServletResponse resp) {

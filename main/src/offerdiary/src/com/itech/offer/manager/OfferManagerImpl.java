@@ -31,6 +31,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private VendorManager vendorManager;
 	private OfferEventGenerator offerEventGenerator;
 	private OfferOfferCardAssocDAO offerOfferCardAssocDAO;
+	private OfferCardManager offerCardManager;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -168,6 +169,13 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		return getOfferDAO().getAllOffersOnCardsForUser(user);
 	}
 
+	@Override
+	public List<Offer> getAllOffersForCard(Long offerCardId) {
+		OfferCard offerCard = getOfferCardManager().getOfferCardFor(offerCardId);
+		return getOfferDAO().getAllOffersForCard(offerCard);
+	}
+
+
 	public OfferDAO getOfferDAO() {
 		return offerDAO;
 	}
@@ -223,6 +231,15 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public OfferOfferCardAssocDAO getOfferOfferCardAssocDAO() {
 		return offerOfferCardAssocDAO;
 	}
+
+	public OfferCardManager getOfferCardManager() {
+		return offerCardManager;
+	}
+
+	public void setOfferCardManager(OfferCardManager offerCardManager) {
+		this.offerCardManager = offerCardManager;
+	}
+
 
 
 

@@ -18,6 +18,8 @@ public class FbProfile {
 
 	private String id;
 
+	private String name;
+
 	private String fullName;
 
 	private String emailId;
@@ -106,6 +108,14 @@ public class FbProfile {
 
 	public String getLocale() {
 		return locale;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
