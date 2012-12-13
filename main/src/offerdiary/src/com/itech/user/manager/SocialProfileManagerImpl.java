@@ -80,7 +80,7 @@ SocialProfileManager {
 	private SocialProfile convertToUserProfile(FbProfile fbProfile) {
 		SocialProfile socialProfile = new SocialProfile();
 		socialProfile.setUniqueId(fbProfile.getId());
-		socialProfile.setName(fbProfile.getFullName());
+		socialProfile.setName(fbProfile.getName());
 		socialProfile.setEmailId(fbProfile.getEmailId());
 		socialProfile.setSocialProfileType(LinkedAccountType.FACEBOOK);
 		return socialProfile;

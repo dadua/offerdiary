@@ -20,6 +20,8 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 
 	List<Offer> getAllOffersOnCardsForUser(User user);
 
+	List<Offer> getAllOffersForCard(OfferCard offerCard);
+
 
 
 }

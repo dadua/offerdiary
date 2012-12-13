@@ -37,4 +37,6 @@ public interface OfferManager {
 
 	public List<Offer> getAllOffersOnCardsForUser(User user);
 
+	public List<Offer> getAllOffersForCard(Long offerCardId);
+
 }

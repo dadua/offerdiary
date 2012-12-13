@@ -18,8 +18,9 @@ public class TestFbAdapter {
 	 */
 	public static void main(String[] args) {
 
-		String accessToken = "AAACqK9c7qWQBANMYfsUAQOZAbW0sq56GtjRkB0AxVcrWekEV6wPNkWblmPypph6pyv5Iv2clrV1caMlDOVgVpBC7NMKn6guNbQhv38wZDZD";
+		String accessToken = "AAACqK9c7qWQBAFz9XgP7W2slHMi7TCNvdX1CZBk9hZBgrID2HipBqRgMoqsZB1B5K7VQzTAJyx9XYZAR6lWmPMV4UPspnUAZD";
 		FbAdapter fbAdapter = FbAdapterFactory.getFbAdapter(accessToken);
+		List<FbProfile> friendProfiles = fbAdapter.getFriendProfiles();
 		FbProfile profile = fbAdapter.getFbProfile();
 		System.out.println(profile.getFirstName());
 		//		testAlbumCreateAndPost(fbAdapter);
@@ -61,7 +62,7 @@ public class TestFbAdapter {
 	private static void testPostToWall(FbAdapter fbAdapter) {
 		fbAdapter.postDataToWall("www.socialbaba.com", "http://dl.dropbox.com/u/8774260/socialbaba/images/logo.jpg", "www.socialbaba.com",
 				"Orkut To Facebook Album Exporter",
-		"Imported 10 albums containing 50 photos from Orkut to facebook using www.socialbaba.com");
+				"Imported 10 albums containing 50 photos from Orkut to facebook using www.socialbaba.com");
 
 	}
 
@@ -70,9 +71,9 @@ public class TestFbAdapter {
 		//	fbAdapter.addPhotoToAlbum(album.getId(), new File("C:\\Documents and Settings\\alok\\Desktop\\new_bliss_tree_green_landscape_scenery_wallpaper.jpg"), "Test photo caption");
 		//		fbAdapter.addPhotoToAlbum(album.getId(), byteArray, "Test photo caption");
 		String validOrkutPhotoUrlStr = "http://images.orkut.com/orkut/photos/"+
-		"OgAAABnqEztTilS9D7H6sI1mdy_sCtVlCZfSHUX1ligb5b3Bi7taKyLfE_gLs06hWAO9w97TEw5sjTS5TFk3a0Z5pk0Am1T1UPqtak-lRnrU8otaPII2ukBdBo92.jpg";
+				"OgAAABnqEztTilS9D7H6sI1mdy_sCtVlCZfSHUX1ligb5b3Bi7taKyLfE_gLs06hWAO9w97TEw5sjTS5TFk3a0Z5pk0Am1T1UPqtak-lRnrU8otaPII2ukBdBo92.jpg";
 		fbAdapter.addPhotoToAlbum(album.getId(),validOrkutPhotoUrlStr,
-		"Test photo caption");
+				"Test photo caption");
 	}
 
 }
