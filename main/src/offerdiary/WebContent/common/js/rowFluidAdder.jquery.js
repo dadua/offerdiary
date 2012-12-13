@@ -66,7 +66,7 @@
 
     $.fn.rowFluidAdder = function (options) {
         var settings = $.extend( {
-            'items$': [],
+            'items$': null,
             'itemRowContainerTemplate$':
                 '<div class="row-fluid"> </div>',
             'directionToAdd': 'append'
@@ -81,7 +81,7 @@
             itemsLen = items$.size();
 
 
-        if (items$.length === 0 ) {
+        if (items$ === null) {
             return this;
         }
 
