@@ -46,6 +46,7 @@
                         <li class="nav-header">Expiry based filters:</li>
                         <li><a href="#"></a></li>
                         <li><a href="#">Expires in 7days</a></li>
+                        <li class="divider"></li>
                         <li class="nav-header">Addition time based:</li>
                         <li><a href="#">Added in the last week</a></li>
                         <li><a href="#">Added in the last month</a></li>

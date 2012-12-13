@@ -1,3 +1,7 @@
 .card {
 	/*background-color: #F5F5F5;*/
 }
+
+#myCardsContainer {
+    min-height: 150px;
+}
