@@ -47,6 +47,7 @@
                     <div class="row-fluid">
                         <h3 class="bluishText">My Cards</h3>
                     </div>
+                    <br/>
                     <div class="row-fluid">
                         <div id="myCardsContainer" class="container-fluid">
                         </div>
@@ -57,15 +58,15 @@
                         <hr />
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <div class="row-fluid" >
+                <div id="featureContainer" class="container-fluid">
+                    <div id="featureHeadingRow" class="row-fluid" >
                         <div class="span6">
-                            <h3 class="bluishText">Discover your Cards</h3>
+                            <h3 id="featureHeading" class="bluishText discoverCards">Discover your Cards</h3>
                         </div>
                         <div class="span5 offset1">
                         	<br/>
 	                        <div class="form-search">
-	                            <div class="input-append">
+	                            <div class="input-append discoverCards">
 	                                <input id="cardFullName" class="cardDetail search-query input-xlarge" type="text" placeholder="Card Name (e.g. Citibank Platinum MasterCard)" />
 	                                <button class="btn"><i class="icon-search"></i></button>
 	                            </div>
@@ -81,6 +82,9 @@
             </div>
         </div>
 
+    </div>
+    <div class="templates hide" style="display:none">
+    
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
 	
