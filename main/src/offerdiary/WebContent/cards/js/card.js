@@ -4,6 +4,7 @@
 var it = it || {};
 it.card = it.card || {};
 
+//Utility function
 it.card.getParentCardId = function(actionElem) {
     var cardIdExtractRegex = /^card_(.*)/,
     parentCardElem$ = $(actionElem).parent().parent(),
@@ -11,6 +12,7 @@ it.card.getParentCardId = function(actionElem) {
     return cardId;
 };
 
+//Event handler functions
 it.card.dismiss = function(e) {
     $(this).addClass('disable');
     e.preventDefault();
@@ -41,7 +43,6 @@ it.card.associateWithUser = function(e) {
     });
 };
 
-
 it.card.discoverRefreshHandler = function() {
     $('#cardFullName').keyup(it.card.refreshAddableCards);
 };
@@ -52,20 +53,34 @@ it.card.addHandlers = function () {
 };
 
 
-it.card.getCard$ = function (card, actionsHtml) {
-	
-    var cardDisplayHtml = '<li class="span4 thumbnail" id="card_'+ card.id + '">';
-    cardDisplayHtml += '<div class="card">';
-    cardDisplayHtml += actionsHtml;
-    cardDisplayHtml += '<h4> Card Name: </h4>'+card.name+'</div></li>';
-    return $(cardDisplayHtml);
-	
-};
+//Card UI views Plotting/refreshing funcitons
+it.card.view = function () {
+
+    var getCard$ = function (card, actionsHtml) {
+        var cardDisplayHtml = '<li class="span4 thumbnail" id="card_'+ card.id + '">';
+        cardDisplayHtml += '<div class="card">';
+        cardDisplayHtml += actionsHtml;
+        cardDisplayHtml += '<h4> Card Name: </h4>'+card.name+'</div></li>';
+        return $(cardDisplayHtml);
+    };
+
+    return {
+        'getMyCard$': function (card) {
+            var actionsHtml = '<a class="pull-right card-dismiss btn btn-mini">remove</a>';
+            return getCard$(card, actionsHtml);
+        },
+        'getAddableCard$': function (card) {
+            var actionsHtml = '<a class="pull-right card-associate btn btn-mini btn-success">add</a>';
+            return getCard$(card, actionsHtml);
+        },
+        'getCard$': getCard$
+    };
+}();
 
 it.card.plotCards = function(containerElemSelector, cards, actionsHtml) {
     var cards$ = [];
     for (var i=0; i < cards.length; i++) {
-        cards$.push(it.card.getCard$(cards[i], actionsHtml));
+        cards$.push(it.card.view.getCard$(cards[i], actionsHtml));
     }
 
     $(containerElemSelector).rowFluidAdder({
@@ -111,9 +126,7 @@ it.card.refreshMyCards = function() {
     });
 };
 
-
 it.card.refreshAll = function () {
-    //TODO: Implement this.. using refreshAddableCards
     it.card.refreshMyCards ();
     it.card.refreshAddableCards();
 };
