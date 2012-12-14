@@ -108,13 +108,13 @@ it.offer.view = function () {
 
 it.offer.refreshOffers = function () {
 	$.getJSON('getMyOffers.do', function (resp) {
-	    if (resp.success) {
-	        it.offer.plotAll(resp.result, true);
-	    } else {
-	    	//TODO: Error..
-	    }
-	});
-}
+            if (resp.success) {
+                it.offer.plotAll(resp.result, true);
+            } else {
+                //TODO: Error..
+            }
+        });
+};
 
 
 it.offer.plotAll = function (offers, isOldAddition) {
@@ -206,7 +206,7 @@ it.offer.saveOfferFromWizard= function (offerData) {
            function (data) {
                var ret = $.parseJSON(data);
                if (ret.success === true) {
-            	   it.offer.refreshOffers ();
+                   it.offer.refreshOffers ();
                } else {
                    //Handle error case
                }
@@ -269,7 +269,7 @@ it.offer.trashOffer = function(e) {
 };
 
 it.offer.addHandlers = function () {
-	$('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
+    $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
     $('.offerTrash').click(it.offer.trashOffer).tooltip();
     /*
     $('.icon-trash').hover(function(e) {
