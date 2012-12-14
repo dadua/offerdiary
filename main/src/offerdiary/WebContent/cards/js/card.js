@@ -45,42 +45,60 @@ it.card.associateWithUser = function(e) {
 
 it.card.discoverRefreshHandler = function() {
     $('#cardFullName').keyup(it.card.refreshAddableCards);
+    $('#cardFullName').focus();
 };
 
 it.card.addHandlers = function () {
     $('.card-dismiss').click(it.card.dismiss);
     $('.card-associate').click(it.card.associateWithUser);
+    it.offersoncard.addHandlers();
 };
 
+it.card.setupCardFiltersHandlers = function () {
+   $('.discoverNewCards').click (function() {
+       it.card.toggler.showDiscoverCards();
+       //$('.discoverNewCards').parent().addClass('active');
+   }); 
+};
 
 //Card UI views Plotting/refreshing funcitons
 it.card.view = function () {
 
-    var getCard$ = function (card, actionsHtml) {
-        var cardDisplayHtml = '<li class="span4 thumbnail" id="card_'+ card.id + '">';
-        cardDisplayHtml += '<div class="card">';
-        cardDisplayHtml += actionsHtml;
-        cardDisplayHtml += '<h4> Card Name: </h4>'+card.name+'</div></li>';
-        return $(cardDisplayHtml);
+    var _getMyCard$ = function (card) {
+        var myCard$ = $('.my_card_template').clone();
+        myCard$.removeClass('my_card_template').attr('id', 'card_' + card.id).find('.cardName').html(card.name);
+        myCard$.find('.offersOnCardLabel').attr('id', 'offersOnCardLabel_' + card.id);
+        return myCard$;
+    };
+
+    var _getAddableCard$ = function (card) {
+        var addableCard$ = $('.addable_card_template').clone();
+        addableCard$.removeClass('addable_card_template').attr('id', 'card_' + card.id).find('.cardName').html(card.name);
+        return addableCard$;
     };
 
     return {
-        'getMyCard$': function (card) {
-            var actionsHtml = '<a class="pull-right card-dismiss btn btn-mini">remove</a>';
-            return getCard$(card, actionsHtml);
-        },
-        'getAddableCard$': function (card) {
-            var actionsHtml = '<a class="pull-right card-associate btn btn-mini btn-success">add</a>';
-            return getCard$(card, actionsHtml);
-        },
-        'getCard$': getCard$
+        'getMyCard$': _getMyCard$,
+        'getAddableCard$': _getAddableCard$
     };
 }();
 
-it.card.plotCards = function(containerElemSelector, cards, actionsHtml) {
-    var cards$ = [];
+/**
+ * options = {
+ *              my: true,
+ *              addable: false
+ *          };
+ */
+it.card.plotCards = function(containerElemSelector, cards, options) {
+    var cards$ = [], 
+        settings = $.extend({my: false, addable: false}, options);
+
     for (var i=0; i < cards.length; i++) {
-        cards$.push(it.card.view.getCard$(cards[i], actionsHtml));
+        if (settings.my) {
+            cards$.push(it.card.view.getMyCard$(cards[i]));
+        } else {
+            cards$.push(it.card.view.getAddableCard$(cards[i]));
+        }
     }
 
     $(containerElemSelector).rowFluidAdder({
@@ -92,12 +110,10 @@ it.card.plotCards = function(containerElemSelector, cards, actionsHtml) {
 };
 
 it.card.plotMyCards = function(cards) {
-    var actionsHtml = '<a class="pull-right card-dismiss btn btn-mini">remove</a>';
-    this.plotCards('#myCardsContainer', cards, actionsHtml);
+    this.plotCards('#myCardsContainer', cards, {my: true});
 };
 
 it.card.plotAddableCards = function(query) {
-    var actionsHtml = '<a class="pull-right card-associate btn btn-mini btn-success">add</a>';
     var seachCriteriaData = {
         pageNumber : 1,
         resultsPerPage : 10,
@@ -106,7 +122,7 @@ it.card.plotAddableCards = function(query) {
     $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(seachCriteriaData)}, function(data){
         var cards = data.result;
         $('#cardsContainer').html('');
-        it.card.plotCards('#cardsContainer', cards, actionsHtml);
+        it.card.plotCards('#cardsContainer', cards, {addable: true});
     });
 };
 
@@ -135,4 +151,30 @@ it.card.plotAll = function(myCardJson) {
     var myCards = JSON.parse(myCardJson);
     this.plotMyCards(myCards);
     this.plotAddableCards('');//Empty String for default set of cards..
+};
+
+
+//This would toggle between content in the container below..
+//  - discoverCards 
+//  - offersoncard
+//  - any further features..
+it.card.toggler = function () {
+    return {
+        showDiscoverCards: function () {
+            it.offersoncard.hide();
+            it.card.showDiscoverCards();
+        },
+        showOffersOnCard: function () {
+            it.offersoncard.show();
+            it.card.hideDiscoverCards();
+        }
+    };
+}();
+
+it.card.hideDiscoverCards = function () {
+    $('.discoverCards').hide();
+};
+
+it.card.showDiscoverCards = function () {
+    $('.discoverCards').show();
 };

@@ -1,28 +1,30 @@
 <%@include file="/common/pages/headBegin.jsp" %>
-		<title>My Cards</title>
-		
-		<script src="cards/js/card.js" > </script>
-		<script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
-		<script type="text/javascript">
+    <title>My Cards</title>
+    <script src="cards/js/card.js" > </script>
+    <script src="offers/js/offer.js" > </script>
+    <script src="cards/js/offers_card.js" > </script>
+    <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
 
-			$(function(){
-				it.card.plotAll('${myOfferCardsJsonAttrKey}');
-				it.card.discoverRefreshHandler();
-				it.card.addHandlers();
-				$('div.tabbable ul.nav li').removeClass('active');
-				$('#cardTab').addClass('active');
-			});
-		</script>
-		
-		<style type="text/css">
-        	<%@include file="/common/css/layout.css" %>
-			<%@include file="/cards/css/cards.css" %>
-			
-			.bluishText {
-				color: #0088CC;
-			}
-			
-		</style>
+    <script type="text/javascript">
+
+        $(function(){
+            it.card.plotAll('${myOfferCardsJsonAttrKey}');
+            it.card.discoverRefreshHandler();
+            it.card.addHandlers();
+            it.card.setupCardFiltersHandlers();
+
+            $('div.tabbable ul.nav li').removeClass('active');
+            $('#cardTab').addClass('active');
+            });
+    </script>
+
+    <style type="text/css">
+        <%@include file="/common/css/layout.css" %>
+        <%@include file="/cards/css/cards.css" %>
+        <%@include file="/cards/css/eachCard.css" %>
+        <%@include file="/offers/css/eachOffer.css" %>
+    </style>
+
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
     <div class="container" >
@@ -71,7 +73,8 @@
 
     </div>
     <div class="templates hide" style="display:none">
-    
+        <%@include file="/cards/templates/eachCardTemplate.html" %>
+        <%@include file="/offers/templates/eachOfferTemplate.html" %>
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
 	

@@ -76,10 +76,10 @@
         </div>
     </div>
 
-    <%@include file="/offers/templates/eachOfferTemplate.html" %>
 
     <div id="addOfferWizardRoot"></div>
     <div id="templates" class="hide">
+        <%@include file="/offers/templates/eachOfferTemplate.html" %>
         <div id="vendorSelectionTemplate">
             <div class="container-fluid" >
                 <div class="form-search row-fluid">
