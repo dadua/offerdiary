@@ -17,3 +17,9 @@
 		text-align: center;
 	}
 </style>
+
+<script type="text/javascript" charset="utf-8">
+    <%@include file="/common/js/bs.extend.js" %>
+	
+</script>
+

@@ -1,9 +1,8 @@
 		<%@include file="/common/pages/jqueryAllInclude.html" %>
-		<%@include file="/common/pages/bootstrapHeadInclude.html" %>
+		<%@include file="/common/pages/bootstrapHeadInclude.jsp" %>
 		<%@include file="/common/pages/fb/fbLoginAboveHeadJs.jsp" %>
 		<link rel="shortcut icon" href="favicon.ico" />
 		<script type="text/javascript">
-			var it = it || {};
 			$(function() {
 					
 				var onServerUpChange =function(data) {
