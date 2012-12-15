@@ -1,5 +1,6 @@
 <%@include file="/common/pages/headBegin.jsp" %>
     <title>My Cards</title>
+    <script src="common/js/async.jquery.js" charset="UTF-8"> </script>
     <script src="cards/js/card.js" > </script>
     <script src="offers/js/offer.js" > </script>
     <script src="cards/js/offers_card.js" > </script>
@@ -28,7 +29,9 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
     <div class="container" >
+    	<%@include file="/common/pages/actionInfoRow.jsp" %>
         <%@include file="/common/pages/featureTabsRow.jsp" %>
+        
         <div class="row">
             <div id="filterOptionsContainer" class="span2 " >
             	<%@include file="/cards/pages/cardsFilters.html" %>
