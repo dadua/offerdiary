@@ -1,14 +1,7 @@
 <%@page import="com.itech.web.LoginConstants"%>
-<%@ page language="java" contentType="text/html; charset=utf-8" 
-pageEncoding="utf-8"%>
-<!DOCTYPE html>
+<%@include file="/common/pages/headBegin.jsp" %>
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Login to Offer Diary</title>
-		
-		<%@include file="/common/pages/header.jsp" %>
-		
 		<script type="text/javascript">
 			var it = it || {};
 			it.user = it.user || {};
@@ -106,6 +99,7 @@ pageEncoding="utf-8"%>
 	
 		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
+			<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
 				<div class="span6 offset3">
 					<div class="row">
@@ -126,7 +120,7 @@ pageEncoding="utf-8"%>
 					<div class="row">
 						<div id="emailCredsForm" class="span6 offset3">
 							<div id="invalidUserNamePassword" class="hide alert alert-error">
-								<button class="close" type="button">Ã—</button>
+								<button class="close" type="button">×</button>
 								Invalid email/password
 							</div>
 							<div class="form">
