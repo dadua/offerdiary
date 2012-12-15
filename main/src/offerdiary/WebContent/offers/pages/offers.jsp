@@ -1,5 +1,6 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
+    <script src="common/js/async.jquery.js" charset="UTF-8"> </script>
     <script src="common/js/wizard.js" charset="UTF-8"> </script>
     <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
     <script src="offers/js/addoffer_wizard.js" > </script>
@@ -33,6 +34,7 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
     <div class="container" >
+    	<%@include file="/common/pages/actionInfoRow.jsp" %>
         <%@include file="/common/pages/featureTabsRow.jsp" %>
         <div class="row">
             <div class="span2" >

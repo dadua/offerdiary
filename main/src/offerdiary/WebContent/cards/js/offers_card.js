@@ -30,10 +30,9 @@ it.offersoncard.plotOffers = function (offers) {
 
 it.offersoncard.plotAllOffersForCard = function (cardId) {
 
-    $.post('getOffersOnCard.do', {cardIdKey: cardId}, function (resp) {
-        var ret = JSON.parse(resp);
-        if (ret.success) {
-            it.offersoncard.plotOffers(ret.result);
+    $.getJSON('getOffersOnCard.do', {cardIdKey: cardId}, function (resp) {
+        if (resp.success) {
+            it.offersoncard.plotOffers(resp.result);
         } else {
             //TODO: Error case
         }
