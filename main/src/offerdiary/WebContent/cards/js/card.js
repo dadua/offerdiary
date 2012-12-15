@@ -45,7 +45,7 @@ it.card.associateWithUser = function(e) {
 
 it.card.discoverRefreshHandler = function() {
     $('#cardFullName').keyup(it.card.refreshAddableCards);
-    $('#cardFullName').focus();
+    //$('#cardFullName').focus();
 };
 
 it.card.addMyCardHandlers = function () {
