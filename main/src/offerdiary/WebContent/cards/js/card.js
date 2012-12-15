@@ -48,10 +48,18 @@ it.card.discoverRefreshHandler = function() {
     $('#cardFullName').focus();
 };
 
-it.card.addHandlers = function () {
+it.card.addMyCardHandlers = function () {
     $('.card-dismiss').click(it.card.dismiss);
-    $('.card-associate').click(it.card.associateWithUser);
     it.offersoncard.addHandlers();
+};
+
+it.card.addAddableCardHandlers = function () {
+    $('.card-associate').click(it.card.associateWithUser);
+};
+
+it.card.addHandlers = function () {
+    it.card.addMyCardHandlers();
+    it.card.addAddableCardHandlers();
 };
 
 it.card.setupCardFiltersHandlers = function () {
@@ -106,7 +114,11 @@ it.card.plotCards = function(containerElemSelector, cards, options) {
         itemRowContainerTemplate$: '<ul class="thumbnails"></ul>'
     });
 
-    this.addHandlers();
+    if (settings.my) {
+        this.addMyCardHandlers ();
+    } else {
+        this.addAddableCardHandlers ();
+    }
 };
 
 it.card.plotMyCards = function(cards) {
@@ -129,7 +141,6 @@ it.card.plotAddableCards = function(query) {
 it.card.refreshAddableCards = function(e) {
     var query = $('#cardFullName').val();
     it.card.plotAddableCards(query);
-    it.card.addHandlers();
 };
 
 it.card.refreshMyCards = function() {
