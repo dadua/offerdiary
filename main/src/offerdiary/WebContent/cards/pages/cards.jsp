@@ -10,7 +10,6 @@
         $(function(){
             it.card.plotAll('${myOfferCardsJsonAttrKey}');
             it.card.discoverRefreshHandler();
-            it.card.addHandlers();
             it.card.setupCardFiltersHandlers();
 
             $('div.tabbable ul.nav li').removeClass('active');
