@@ -1,6 +1,5 @@
 <%@include file="/common/pages/headBegin.jsp" %>
     <title>My Cards</title>
-    <script src="common/js/async.jquery.js" charset="UTF-8"> </script>
     <script src="cards/js/card.js" > </script>
     <script src="offers/js/offer.js" > </script>
     <script src="cards/js/offers_card.js" > </script>

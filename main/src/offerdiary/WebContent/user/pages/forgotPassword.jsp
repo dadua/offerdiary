@@ -1,16 +1,6 @@
 <%@page import="com.itech.web.LoginConstants"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-
-<!DOCTYPE html>
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="/common/pages/headBegin.jsp" %>
 		<title>Login to Offer Diary</title>
-		
-		<%@include file="common/header.jsp" %>
-		
 		<script type="text/javascript">
 			var it = it || {};
 			it.user = it.user || {};
@@ -74,6 +64,7 @@
 			h1.forgot-password-heading{
 				font-size: 28px;
 				font-weight: bold;
+				color: #0088CC;
 			}
 			h1.success-text{
 				color:green;
@@ -89,8 +80,9 @@
 		</style>
 	</head>
 	<body>
-		<%@include file="common/navHeader.jsp" %>
+		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
+	    	<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
 				<c:choose>
 					<c:when test="${requestScope.forgotPasswordStatus=='false'}">
@@ -103,7 +95,7 @@
 								Invalid Email !
 							</div>
 							<h1 class="forgot-password-heading">
-								Forgot your password ?
+								Forgot your password?
 							</h1>
 							<form id="getPasswordRequest"
 								action="gotPassword.do" method="post">
@@ -164,7 +156,7 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-		<%@include file="common/footer.jsp" %>
+		<%@include file="/common/pages/footer.jsp" %>
 		</div>
 	</body>
 </html>

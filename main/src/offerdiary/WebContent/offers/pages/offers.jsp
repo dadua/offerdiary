@@ -1,6 +1,5 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
-    <script src="common/js/async.jquery.js" charset="UTF-8"> </script>
     <script src="common/js/wizard.js" charset="UTF-8"> </script>
     <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
     <script src="offers/js/addoffer_wizard.js" > </script>
