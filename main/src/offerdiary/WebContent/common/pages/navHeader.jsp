@@ -45,7 +45,7 @@ div.tile-div{
 						<%
 							User user = (User) userSessionObj;
 						%>
-						<a class="btn btn-inverse" href="wallet.do">
+						<a class="btn btn-info" href="wallet.do">
 						<%
 						if(user.getName()!=null) {
 						%>
@@ -65,7 +65,7 @@ div.tile-div{
 						<%
 						if (user.getLoginType() == LoginType.FACEBOOK) {
 						 %>
-						 <img class="tinyPic" width="23px"  height="23px" src="https://graph.facebook.com/<%=user.getUserId()%>/picture?type=square" />
+						 <img class="tinyPic" width="20px"  height="20px" src="https://graph.facebook.com/<%=user.getUserId()%>/picture?type=square" />
 						 <%
 						} 
 						%>
@@ -74,11 +74,11 @@ div.tile-div{
 						<%
 						if (user.getLoginType() == LoginType.FACEBOOK) {
 						 %>
-						<a class="btn btn-large btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
 						<%
 						} else {
 						%>
-						<a class="btn btn-small btn-inverse dropdown-toggle" data-toggle="dropdown" href="#">
+						<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
 						<%
 						} 
 						%>
