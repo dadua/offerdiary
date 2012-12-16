@@ -1,5 +1,3 @@
-<%@include file="fbInitAboveHeadJs.jsp" %> 
-
 <%--
 	button with id=loginToFb is to present in the DOM
 	For e.g.:
@@ -13,10 +11,7 @@ TODO: Make Permission Flexible
 --%>
 
 <script>
-	$(function() {
-		$(":button").button();
-	});
-	
+
 	var it = it|| {};
 	it.fb = function () {
 		
@@ -41,7 +36,8 @@ TODO: Make Permission Flexible
 			if (response.authResponse) {
 				serverUpdate(response.authResponse, lastOnServerUp);
 			} else {
-				alert('User LogIn failed!!');
+			    $('#loginToFb').removeClass('disabled');
+				alert('User login failed!!');
 			}
 		};
 		
@@ -58,6 +54,10 @@ TODO: Make Permission Flexible
 		};
 		
 		var checkAndLogin = function(e) {
+		    if ($(this).hasClass('disabled')) {
+				return;
+		    }
+		    $(this).addClass('disabled');
 			var onServerUp = e.data.onServerUp;
 			if (typeof onServerUp === 'function') {
 				lastOnServerUp = onServerUp;

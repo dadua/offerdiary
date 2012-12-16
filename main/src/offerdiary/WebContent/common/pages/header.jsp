@@ -8,12 +8,14 @@
 				var onServerUpChange =function(data) {
 					var resultData = $.parseJSON(data);
 					var user = resultData.result;
-					$('#userContainer').html('Welcome '+ user.name + '!').append(
-							'<span><img src="http://graph.facebook.com/'+ user.userId +'/picture" /></span>'
+					if (user) {
+					    
+						$('#userContainer').html('Welcome '+ user.name + '!').append(
+								'<span><img src="http://graph.facebook.com/'+ user.userId +'/picture" /></span>'
 							);
+					}
 					$('#actionsContainer').show();
 					$('#walletAction').show();
-					$("#loginToFb").hide();
 				};
 		
 				var onServerUpGotoWallet =function(data) {
