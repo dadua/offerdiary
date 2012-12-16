@@ -94,10 +94,8 @@
 				padding-right:10%;
 			}
 		</style>
-	</head>
-	<body>
-	
-		<%@include file="/common/pages/navHeader.jsp" %>
+
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
 			<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
@@ -153,7 +151,4 @@
 					</div>
 				</div>
 			</div>
-		<%@include file="/common/pages/footer.jsp" %>
-		</div>
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>

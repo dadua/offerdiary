@@ -1,12 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="/common/pages/headBegin.jsp" %>
 		<title>Sign Up to Offer Diary</title>
-		
-		<%@include file="/common/pages/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -103,10 +96,8 @@
 			}
 			
 		</style>
-	</head>
-	<body>
 	
-		<%@include file="/common/pages/navHeader.jsp" %>
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
 			<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
@@ -169,7 +160,4 @@
 
 				</div>
 			</div>
-			<%@include file="/common/pages/footer.jsp" %>
-		</div>
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>

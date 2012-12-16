@@ -156,7 +156,4 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-		<%@include file="/common/pages/footer.jsp" %>
-		</div>
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>

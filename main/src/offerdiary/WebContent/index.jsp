@@ -1,20 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-			<%--
-				TODO: Decide this
-				<!-- The HTML5 charset format -->
-				<meta charset="UTF-8">
-			 --%>
-		<title>OfferDiary : Your Official Offer Journal</title>
-		<%@include file="/common/pages/header.jsp" %>
-	
-	</head>
-	<body >
-		<%@include file="/common/pages/navHeader.jsp" %>
+<%@include file="/common/pages/headBegin.jsp" %>
+	<title>OfferDiary : Your Official Offer Journal</title>
+	<script type="text/javascript">
+		$(function(){
+			$('#newEmailSubscription').click(function(){
+				var email = $('#email').val();
+				if (email === '' || email.indexOf('@')===-1) {
+					return;
+				}
+				$.post('hearMore.do', {'email': email}, function(data){
+					var result = JSON.parse(data);
+					if (result.success == true) {
+						$('#onEmailSuccess').show();
+					}
+				});
+			});
+			$('#onEmailSuccess > .close').click(function(){
+				$('#onEmailSuccess').hide();
+			});
+		});
+	</script>
+		
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container">
 			<div class="row">
 				<div class="span2 offset2" >
@@ -97,29 +103,4 @@
 				</div>
 			</div>
 		</div>
-			
-		<%@include file="/common/pages/footer.jsp" %>
-		
-			
-		<script type="text/javascript">
-			$(function(){
-				$('#newEmailSubscription').click(function(){
-					var email = $('#email').val();
-					if (email === '' || email.indexOf('@')===-1) {
-						return;
-					}
-					$.post('hearMore.do', {'email': email}, function(data){
-						var result = JSON.parse(data);
-						if (result.success == true) {
-							$('#onEmailSuccess').show();
-						}
-					});
-				});
-				$('#onEmailSuccess > .close').click(function(){
-					$('#onEmailSuccess').hide();
-				});
-			});
-		</script>
-
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
