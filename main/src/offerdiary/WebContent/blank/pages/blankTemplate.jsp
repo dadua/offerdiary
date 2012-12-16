@@ -1,15 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    
-
-<!DOCTYPE html>
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@include file="/common/pages/headBegin.jsp" %>
 		<title>Sample blank page</title>
-		
-		<%@include file="common/header.jsp" %>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -19,10 +9,7 @@
 		<style type="text/css">
 		</style>
 		
-	</head>
-	<body>
-	
-		<%@include file="common/navHeader.jsp" %>
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 				<p> A new row-fluid this is </p>
@@ -47,7 +34,7 @@
 						c: if functionality
 					</h4>
 					<c:if test="false">
-						Mangu says me no printing.. :) 
+						no printing.. :) 
 					</c:if>
 					<c:if test="true">
 						prints
@@ -56,7 +43,4 @@
 			</div>
 		</div>
 		
-		
-		<%@include file="common/footer.jsp" %>
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>

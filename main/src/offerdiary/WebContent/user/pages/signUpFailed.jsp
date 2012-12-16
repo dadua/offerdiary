@@ -1,15 +1,7 @@
 <%@page import="com.itech.web.LoginConstants"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-
-<!DOCTYPE html>
-
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login to Offer Diary</title>
+<%@include file="/common/pages/headBegin.jsp" %>
+		<itle>Login to Offer Diary</title>
 		
-		<%@include file="common/header.jsp" %>
 		<style type="text/css">
 			h1.forgot-password-heading{
 				font-size: 28px;
@@ -27,9 +19,7 @@
 				line-height: 1.6em;
 			}
 		</style>
-	</head>
-	<body>
-		<%@include file="common/navHeader.jsp" %>
+<%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
 			<div class="row-fluid">
 						<div class="span6 offset3">
@@ -77,7 +67,4 @@
 							</div>
 						</div>
 			</div>
-		<%@include file="common/footer.jsp" %>
-		</div>
-	</body>
-</html>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
