@@ -126,12 +126,12 @@ it.card.plotMyCards = function(cards) {
 };
 
 it.card.plotAddableCards = function(query) {
-    var seachCriteriaData = {
+    var searchCriteriaData = {
         pageNumber : 1,
         resultsPerPage : 10,
         searchString : query
     };
-    $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(seachCriteriaData)}, function(data){
+    $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(searchCriteriaData)}, function(data){
         var cards = data.result;
         $('#cardsContainer').html('');
         it.card.plotCards('#cardsContainer', cards, {addable: true});

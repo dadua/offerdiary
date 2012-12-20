@@ -26,13 +26,11 @@
     var urlsToMonitorCache = {};
 
     var _ajaxStartHandler = function () {
-        $('#loadingActionRow').removeClass('invisible');
-        //$('#actionInfoRow').removeClass('invisible');
+        it.actionInfo.showLoading();
     };
 
     var _ajaxStopHandler = function () {
-        $('#loadingActionRow').addClass('invisible');
-        //$('#actionInfoRow').addClass('invisible');
+        it.actionInfo.hideLoading();
     };
 
     var _getUrlPath = function (url) {
@@ -49,6 +47,19 @@
 
     var _getResponseMsg = function (resp) {
         return resp.msg;
+    };
+
+
+    var _ajaxSuccessHandler = function (e, xhr, settings) {
+
+    };
+
+    //TODO: change the http error detection strategy to
+    //Rely on jquery for ajax http success /error detection..
+    var _ajaxErrorHandler = function (e, xhr, settings, jsException) {
+        //If 404 -> Not connected..
+        //If 500 -> Something wrong happened..
+
     };
 
     /**
@@ -92,16 +103,12 @@
         }
 
         if (isRegistered) {
-            $('#actionInfoRow').removeClass('invisible');
-            $('#alertMessage').html(msgToDisplay);
+            it.actionInfo.showActionMsg(msgToDisplay);
         }
     };
 
     var _initAsyncHandlers = function () {
         $(elemSelector).ajaxStart(_ajaxStartHandler).ajaxStop(_ajaxStopHandler).ajaxComplete(_ajaxCompleteHandler);
-        $('#actionInfoRow .hideAlert').click(function () {
-            $(this).parent().addClass('invisible');
-        });
     };
 
     $.async = $.async || {};
