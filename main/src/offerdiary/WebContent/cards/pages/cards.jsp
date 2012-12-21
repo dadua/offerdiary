@@ -8,10 +8,6 @@
     <script type="text/javascript">
 
         $(function(){
-            $.async.registerUrlsToMonitor({
-        		'getOffersOnCard.do': {success: 'Got offers on cards', fail: 'couldn\'t get offers on cards'},
-	            'removeCardFromWallet.do': {success: 'Successfully removed card ', fail: 'Failed to remove card'}
-        		});
             it.card.plotAll('${myOfferCardsJsonAttrKey}');
             it.card.discoverRefreshHandler();
             it.card.setupCardFiltersHandlers();

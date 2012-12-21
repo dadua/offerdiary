@@ -17,7 +17,7 @@ it.actionInfo = function () {
     };
 
     //Defaults..
-    var DEFAULT_HIDE_INTERVAL_MILLIS = 5000,
+    var DEFAULT_HIDE_INTERVAL_MILLIS = 3000,
         LOGLEVEL_TO_ALERT_CLASS_MAP = {
             'success': 'alert-success',
             'error': 'alert-error',
@@ -31,14 +31,23 @@ it.actionInfo = function () {
     },
     _getAlertClassForLogLevel = function (logLevel) {
         var alertClass = LOGLEVEL_TO_ALERT_CLASS_MAP[logLevel];
-        if (alertClass) {
-            alertClass = '';
+        if (!alertClass) {
+            alertClass = null;
         }
         return alertClass;
     },
     _showActionMsg = function (msg, logLevel, hideIntervalSeconds) {
+        if (!hideIntervalSeconds) {
+            hideIntervalSeconds = DEFAULT_HIDE_INTERVAL_MILLIS;
+        }
+
         $(_view.getActionMsgRowSel()).removeClass('invisible');
-        $(_view.getActionMsgDivSel()).html(msg).addClass(_getAlertClassForLogLevel(logLevel));
+        var alertClassToAdd = _getAlertClassForLogLevel(logLevel);
+        if (alertClassToAdd === null) {
+            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass('invisible', hideIntervalSeconds);
+        } else {
+            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass(alertClassToAdd).addClass('invisible', hideIntervalSeconds);
+        }
     },
     _hideActionMsg = function () {
         $(_view.getActionMsgRowSel()).addClass('invisible');
