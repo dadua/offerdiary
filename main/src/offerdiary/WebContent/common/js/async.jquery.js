@@ -11,19 +11,15 @@
  *          - ajax HTTP call failed..
  *              for this case the error would be handled displayed based on status codes..
  *          - for a successful http ajax, the response result had an result.success != true..
- *              registration of the urls would be required..
  *      o For success messages to be displayed in the actionsPanel
- *          - the urls that have been registered with a default msg would be considered..
- *          - first preference would be given to the response msg if available,
- *              and then fallback to the default messages registered.. 
+ *          - response should contain the msg
  *          
  */
 (function ($) {
 
     //Default
-    var elemSelector = 'body';
-
-    var urlsToMonitorCache = {};
+    var elemSelector = 'body',
+        domain = 'offerdiary.com';
 
     var _ajaxStartHandler = function () {
         it.actionInfo.showLoading();
@@ -49,66 +45,35 @@
         return resp.msg;
     };
 
-
+    /**
+     * Handle the error display case.. 
+     */
     var _ajaxSuccessHandler = function (e, xhr, settings) {
+        var resp = _getResponse (xhr),
+        respMsg = _getResponseMsg(resp);
 
+        if (typeof respMsg === 'string') {
+            it.actionInfo.showActionMsg(respMsg);
+        }
     };
 
     //TODO: change the http error detection strategy to
     //Rely on jquery for ajax http success /error detection..
     var _ajaxErrorHandler = function (e, xhr, settings, jsException) {
         //If 404 -> Not connected..
-        //If 500 -> Something wrong happened..
-
+        //If 500 -> Something wrong happened at server..
+        //
+        var actionMsg = 'Not Connected, Retry again in sometime..';
+        if (xhr.status === 500) {
+            actionMsg = 'Something bad happened at '+ domain + ', contact support@' + 'offerdiary.com';
+        } 
+        
+        it.actionInfo.showErrorActionMsg(actionMsg);
     };
 
-    /**
-     * Handle the error display case.. 
-     */
-    var _ajaxCompleteHandler = function (e, xhr, settings) {
-        var paramStrippedUrl = _getUrlPath(settings.url),
-            defaultMsgsForUrl = urlsToMonitorCache[paramStrippedUrl],
-            isHttpSuccess = (xhr.status === 200),//Handle not modified and cached kind of cases??
-            isSuccess = isHttpSuccess,
-            msgToDisplay = '',
-            isRegistered = false; 
-
-        if (isHttpSuccess) {
-
-            //Handle only registered url paths..
-            if (typeof paramStrippedUrl === 'string' &&
-                $.isPlainObject(defaultMsgsForUrl) &&
-                typeof defaultMsgsForUrl.success === 'string') {
-
-                isRegistered = true;
-
-                var resp = _getResponse (xhr),
-                    respMsg = _getResponseMsg(resp);
-
-                isSuccess = resp.success;
-
-                if (typeof respMsg === 'string') {
-                    msgToDisplay = respMsg;
-                } else if (isSuccess) {
-                    msgToDisplay = defaultMsgsForUrl.success;
-                } else {
-                    msgToDisplay = defaultMsgsForUrl.fail;
-                }
-            }
-        } else {
-            //No Internet connection??
-            isRegistered = true;
-            msgToDisplay = 'Not connected';
-            isSuccess = false;
-        }
-
-        if (isRegistered) {
-            it.actionInfo.showActionMsg(msgToDisplay);
-        }
-    };
 
     var _initAsyncHandlers = function () {
-        $(elemSelector).ajaxStart(_ajaxStartHandler).ajaxStop(_ajaxStopHandler).ajaxComplete(_ajaxCompleteHandler);
+        $(elemSelector).ajaxStart(_ajaxStartHandler).ajaxStop(_ajaxStopHandler).ajaxSuccess(_ajaxSuccessHandler).ajaxError(_ajaxErrorHandler);
     };
 
     $.async = $.async || {};
@@ -123,20 +88,5 @@
         return $.ajax(settings);
     };
 
-    /**
-     * urlMsgMapper = {
-     *      actionUrl1: {
-     *                      success: 'default success message',
-     *                      fail: 'default error message'
-     *                  },
-     *      actionUrl2: {
-     *                      success: 'default message2',
-     *                      fail: 'default error message'
-     *                  }
-     * }
-     */
-    $.async.registerUrlsToMonitor = function (urlMsgMapper) {
-        urlsToMonitorCache = urlMsgMapper;
-    };
 
 })(jQuery);

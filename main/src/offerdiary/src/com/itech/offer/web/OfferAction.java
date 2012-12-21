@@ -79,6 +79,7 @@ public class OfferAction extends CommonAction{
 		Long cardId = Long.parseLong(offerCardId);
 		List<Offer> offers = getOfferManager().getAllOffersForCard(cardId);
 		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		result.setMsg("Got offers on cards");
 		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
