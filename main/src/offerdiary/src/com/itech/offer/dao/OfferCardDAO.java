@@ -21,4 +21,7 @@ public interface OfferCardDAO extends CommonBaseDAO<OfferCard>{
 	List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria,
 			boolean excludeAssociatedCard);
 
+	Long getTotalOfferCardCount(SearchCriteria searchCriteria,
+			boolean excludeAssociatedCard);
+
 }

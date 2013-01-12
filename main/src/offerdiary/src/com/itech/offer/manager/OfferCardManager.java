@@ -6,6 +6,7 @@ import java.util.Map;
 import com.itech.common.db.SearchCriteria;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCardUserAssoc;
+import com.itech.offer.vo.OfferCardVO;
 import com.itech.user.model.User;
 
 public interface OfferCardManager {
@@ -22,6 +23,9 @@ public interface OfferCardManager {
 	public OfferCard associateOfferCardToUser(OfferCard offerCard, User user);
 	public void deAssociateOfferCardFromUser(OfferCard offerCard, User user);
 
-	List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria,
+	public List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria,
 			boolean excludeAssociatedCard);
+
+
+	public OfferCardVO getOfferCardVOsFor(SearchCriteria searchCriteria, boolean excludeAssociatedCard);
 }

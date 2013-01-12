@@ -125,10 +125,10 @@ it.card.plotMyCards = function(cards) {
     this.plotCards('#myCardsContainer', cards, {my: true});
 };
 
-it.card.plotAddableCards = function(query) {
+it.card.plotAddableCards = function(query, page_no) {
     var searchCriteriaData = {
-        pageNumber : 1,
-        resultsPerPage : 10,
+        pageNumber : page_no || 1,
+        resultsPerPage : 9,
         searchString : query
     };
     $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(searchCriteriaData)}, function(data){
@@ -158,12 +158,26 @@ it.card.refreshAll = function () {
     it.card.refreshAddableCards();
 };
 
+
 it.card.plotAll = function(myCardJson) {
     var myCards = JSON.parse(myCardJson);
     this.plotMyCards(myCards);
     this.plotAddableCards('');//Empty String for default set of cards..
 };
 
+
+it.card.setupPagination = function (totalNoOfCards) {
+    var handlePaginationClick = function (new_page_index) {
+        return false;
+    };
+
+    $('#cardPaginationContainer').pagination(totalNoOfCards || 90, {
+        items_per_page:20,
+        callback:handlePaginationClick
+    });
+
+};
+ 
 
 //This would toggle between content in the container below..
 //  - discoverCards 

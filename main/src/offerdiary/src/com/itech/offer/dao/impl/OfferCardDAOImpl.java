@@ -53,21 +53,40 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 
 
 	@Override
+	public Long getTotalOfferCardCount(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
+
+		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard);
+		Query countQuery = getSession().createQuery("select count(*) " + whereClause);
+		countQuery.setParameter("cardName", "%" + searchCriteria.getSearchString() + "%");
+		Object singleResult = getSingleResult(countQuery);
+		return (Long) singleResult;
+	}
+
+	@Override
 	public List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
 		String searchString = searchCriteria.getSearchString();
-		String hql = "select oc from " + getEntityClassName() + " oc " +
-		" where  oc.name like :cardName ";
-		if (excludeAssociatedCard) {
-			hql += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
-		}
-		hql += " order by name";
+		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard);
+
+		String hql = "select oc " + whereClause;
+
 		Query query = getSession().createQuery(hql);
 		query.setParameter("cardName", "%" + searchString + "%");
 		if (excludeAssociatedCard) {
 			query.setParameter("user", getLoggedInUser());
 		}
+
 		List<OfferCard> list = getPaginatedResultFor(query, searchCriteria);
 		return list;
+	}
+
+	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard) {
+		String whereClause = " from " + getEntityClassName() + " oc " +
+		" where  oc.name like :cardName ";
+		if (excludeAssociatedCard) {
+			whereClause += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
+		}
+		whereClause += " order by name";
+		return whereClause;
 	}
 
 	@Override
@@ -76,8 +95,9 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		Query query = getSession().createQuery(hql);
 		query.setParameter("cardName", cardName);
 		List<OfferCard> list = query.list();
-		if (list.isEmpty())
+		if (list.isEmpty()) {
 			return null;
+		}
 		return list.get(0);
 	}
 

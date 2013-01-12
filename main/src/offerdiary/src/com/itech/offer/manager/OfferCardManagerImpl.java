@@ -9,6 +9,7 @@ import com.itech.offer.dao.OfferCardDAO;
 import com.itech.offer.dao.OfferCardUserAssocDAO;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCardUserAssoc;
+import com.itech.offer.vo.OfferCardVO;
 import com.itech.user.model.User;
 
 public class OfferCardManagerImpl extends CommonBaseManager implements
@@ -115,5 +116,18 @@ OfferCardManager {
 
 	public OfferCardUserAssocDAO getOfferCardUserAssocDAO() {
 		return offerCardUserAssocDAO;
+	}
+
+	@Override
+	public OfferCardVO getOfferCardVOsFor(SearchCriteria searchCriteria,
+			boolean excludeAssociatedCard) {
+		List<OfferCard> offerCardsFor = getOfferCardsFor(searchCriteria, excludeAssociatedCard);
+		Long totalOfferCardCount = getOfferCardDAO().getTotalOfferCardCount(searchCriteria, excludeAssociatedCard);
+
+		OfferCardVO offerCardVO = new OfferCardVO();
+		offerCardVO.setCards(offerCardsFor);
+		offerCardVO.setTotalCount(totalOfferCardCount);
+		offerCardVO.setPerPageCount(searchCriteria.getResultsPerPage());
+		return offerCardVO;
 	}
 }
