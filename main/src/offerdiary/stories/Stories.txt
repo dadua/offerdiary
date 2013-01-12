@@ -86,23 +86,15 @@ Tech Story
 1) Have Spring/Hibernate Infrastructure
 2) Test Strategy (DBUnit Infrastructure) 
  
+----------------------------------------------------------------------
 
+Story: Discover offers on cards
 
+As a user I should be able to view the offers that are available for the cards
+that I own.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Task:
+1) Adding pagination..
 
 
 
