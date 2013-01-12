@@ -83,7 +83,7 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 			return null;
 		}
 
-		if (result.size() > 1 && failIfResultsMoreThanOne) {
+		if ((result.size() > 1) && failIfResultsMoreThanOne) {
 			throw new CommonException(ReturnCodes.UNEXPECTED_RESULT_COUNT_FROM_DB);
 		}
 

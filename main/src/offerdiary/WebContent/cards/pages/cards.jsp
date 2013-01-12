@@ -4,6 +4,7 @@
     <script src="offers/js/offer.js" > </script>
     <script src="cards/js/offers_card.js" > </script>
     <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
+    <script src="common/libs/jquery-pagination/jquery.pagination.js" charset="UTF-8"> </script>
 
     <script type="text/javascript">
 
@@ -14,7 +15,7 @@
 
             $('div.tabbable ul.nav li').removeClass('active');
             $('#cardTab').addClass('active');
-            });
+		});
     </script>
 
     <style type="text/css">
@@ -22,6 +23,8 @@
         <%@include file="/cards/css/cards.css" %>
         <%@include file="/cards/css/eachCard.css" %>
         <%@include file="/offers/css/eachOffer.css" %>
+        <%@include file="/common/libs/jquery-pagination/pagination.css" %>
+        
     </style>
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
@@ -44,6 +47,8 @@
                         <div id="myCardsContainer" class="container-fluid">
                         </div>
                     </div>
+                    
+                    
                 </div>
                 
                 <div class="container-fluid">
@@ -62,9 +67,15 @@
                     
                     <div class="row-fluid">
                         <div id="cardsContainer" class="container-fluid discoverCards">
+                        
                         </div>
                         <div id="offerOnCardContainer" class="container-fluid offerOnCard hide">
                         </div>
+                        <div class="container-fluid">
+	                        <div id="cardPaginationContainer" class="row-fluid">
+		                    </div>
+	                    </div>
+                        
                     </div>
                     
                 </div>
