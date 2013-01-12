@@ -58,6 +58,9 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard);
 		Query countQuery = getSession().createQuery("select count(*) " + whereClause);
 		countQuery.setParameter("cardName", "%" + searchCriteria.getSearchString() + "%");
+		if (excludeAssociatedCard) {
+			countQuery.setParameter("user", getLoggedInUser());
+		}
 		Object singleResult = getSingleResult(countQuery);
 		return (Long) singleResult;
 	}
