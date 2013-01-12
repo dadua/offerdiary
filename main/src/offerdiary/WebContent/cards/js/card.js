@@ -132,7 +132,7 @@ it.card.plotAddableCards = function(query, page_no) {
         searchString : query
     };
     $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(searchCriteriaData)}, function(data){
-        var cards = data.result;
+        var cards = data.result.cards;
         $('#cardsContainer').html('');
         it.card.plotCards('#cardsContainer', cards, {addable: true});
     });
