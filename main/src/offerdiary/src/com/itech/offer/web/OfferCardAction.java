@@ -17,6 +17,7 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.model.OfferCard;
+import com.itech.offer.vo.OfferCardVO;
 import com.itech.user.model.User;
 
 public class OfferCardAction extends CommonAction{
@@ -44,9 +45,9 @@ public class OfferCardAction extends CommonAction{
 	public Response searchOfferCards(HttpServletRequest req, HttpServletResponse resp) {
 		//String cardSearchString = req.getParameter(OFFER_CARD_NAME_SEARCH_KEY);
 		SearchCriteria searchCriteria = getSearchCriteria(req);
-		List<OfferCard> offerCards = getOfferCardManager().getOfferCardsFor(searchCriteria, true);
-		Result<List<OfferCard>> result = new Result<List<OfferCard>>(offerCards);
-		Type type = new TypeToken<Result<List<OfferCard>>>() { }.getType();
+		OfferCardVO offerCardVOs = getOfferCardManager().getOfferCardVOsFor(searchCriteria, true);
+		Result<OfferCardVO> result = new Result<OfferCardVO>(offerCardVOs);
+		Type type = new TypeToken<Result<OfferCardVO>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
