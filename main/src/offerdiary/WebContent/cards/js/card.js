@@ -132,9 +132,12 @@ it.card.plotAddableCards = function(query, page_no) {
         searchString : query
     };
     $.getJSON('searchOfferCards.do', {searchCriteria:JSON.stringify(searchCriteriaData)}, function(data){
-        var cards = data.result.cards;
+        var result = data.result,
+            totalCount = result.totalCount,
+            cards = result.cards;
         $('#cardsContainer').html('');
         it.card.plotCards('#cardsContainer', cards, {addable: true});
+        it.card.pagination.init(totalCount);
     });
 };
 
@@ -166,17 +169,31 @@ it.card.plotAll = function(myCardJson) {
 };
 
 
-it.card.setupPagination = function (totalNoOfCards) {
+it.card.pagination = (function () {
     var handlePaginationClick = function (new_page_index) {
+        var query = $('#cardFullName').val();
+        it.card.plotAddableCards(query, new_page_index+1);
         return false;
     };
 
-    $('#cardPaginationContainer').pagination(totalNoOfCards || 90, {
-        items_per_page:20,
-        callback:handlePaginationClick
-    });
+    var _lastTotalNoOfCards = 0;
 
-};
+    var _init = function (totalNoOfCards) {
+        if (totalNoOfCards !== _lastTotalNoOfCards) {
+            $('#cardPaginationContainer').pagination(totalNoOfCards, {
+                items_per_page:9,
+                callback:handlePaginationClick,
+                num_edge_entries:1
+            });
+            _lastTotalNoOfCards = totalNoOfCards;
+        }
+    };
+
+    return {
+        init: _init
+    };
+
+})();
  
 
 //This would toggle between content in the container below..
