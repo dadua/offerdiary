@@ -8,6 +8,7 @@ import com.itech.common.web.action.ActionMapping;
 import com.itech.offer.web.OfferAction;
 import com.itech.offer.web.OfferCardAction;
 import com.itech.offer.web.VendorAction;
+import com.itech.profile.web.ProfileAction;
 
 public class ActionMappings {
 	private static final Map<String, ActionMapping> actions = new HashMap<String, ActionMapping>();
@@ -72,5 +73,9 @@ public class ActionMappings {
 		add(new ActionMapping("searchOfferCards.do", OfferCardAction.class, "searchOfferCards"));
 		add(new ActionMapping("cards.do", OfferCardAction.class, "goToMyCards"));
 		add(new ActionMapping("removeCardFromWallet.do", OfferCardAction.class, "removeCardFromWallet"));
+
+
+		//Profile actions
+		add(new ActionMapping("profile.do", ProfileAction.class, "goToProfile"));
 	}
 }

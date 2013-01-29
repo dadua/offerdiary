@@ -14,7 +14,7 @@
 					<a href="#" >Friends</a>
 				</li>
 				<li id="profileTab" >
-					<a href="#" >Profile</a>
+					<a href="profile.do" >Profile</a>
 				</li>
 			</ul>
 		</div>
