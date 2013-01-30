@@ -18,4 +18,8 @@ public class UserModelConstants {
 	public static final String COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME= "PASSWORD_NOTIFY_TIME";
 	public static final String COL_FACEBOOK_ID = "FACEBOOK_ID";
 	public static final String COL_ACTIVATION_STATUS = "ACTIVATION_STATUS";
+	public static final String COL_MOBILE_NUMBER = "MOBILE_NUMBER";
+	public static final String COL_CITY = "CITY";
+	public static final String COL_NICKNAME = "NICKNAME";
+	public static final String COL_PIN_CODE = "PIN_CODE";
 }

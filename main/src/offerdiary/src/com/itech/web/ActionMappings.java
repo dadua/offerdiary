@@ -8,7 +8,7 @@ import com.itech.common.web.action.ActionMapping;
 import com.itech.offer.web.OfferAction;
 import com.itech.offer.web.OfferCardAction;
 import com.itech.offer.web.VendorAction;
-import com.itech.profile.web.ProfileAction;
+import com.itech.user.web.ProfileAction;
 
 public class ActionMappings {
 	private static final Map<String, ActionMapping> actions = new HashMap<String, ActionMapping>();
@@ -77,5 +77,8 @@ public class ActionMappings {
 
 		//Profile actions
 		add(new ActionMapping("profile.do", ProfileAction.class, "goToProfile"));
+		add(new ActionMapping("getUserInfo.do", ProfileAction.class, "getUserInfo"));
+		add(new ActionMapping("updateUserInfo.do", ProfileAction.class, "updateUserInfo"));
+		add(new ActionMapping("changePassword.do", ProfileAction.class, "changePassword"));
 	}
 }

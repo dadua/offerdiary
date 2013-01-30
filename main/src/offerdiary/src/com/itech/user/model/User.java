@@ -77,6 +77,18 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_ACTIVATION_STATUS)
 	private ActivationStatus activationStatus = ActivationStatus.INACTIVE;
 
+	@Column(name=UserModelConstants.COL_PASSWORD)
+	private String city;
+
+	@Column(name=UserModelConstants.COL_MOBILE_NUMBER)
+	private String mobileNumber;
+
+	@Column(name=UserModelConstants.COL_PIN_CODE)
+	private String pinCode;
+
+	@Column(name=UserModelConstants.COL_NICKNAME)
+	private String nickname;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -162,6 +174,30 @@ public class User extends PersistableEntity{
 	}
 	public void setActivationStatus(ActivationStatus activationStatus) {
 		this.activationStatus = activationStatus;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+	public String getPinCode() {
+		return pinCode;
+	}
+	public void setPinCode(String pinCode) {
+		this.pinCode = pinCode;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickName) {
+		this.nickname = nickName;
 	}
 
 

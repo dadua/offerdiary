@@ -4,6 +4,9 @@ import java.sql.Date;
 
 import org.apache.log4j.Logger;
 
+import com.itech.common.CommonUtilities;
+import com.itech.common.exeption.CommonException;
+import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.event.user.UserEventGenerator;
 import com.itech.fb.model.FbProfile;
@@ -90,6 +93,21 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		user.setNotifyPasswordTime((new Date(System.currentTimeMillis())));
 		getUserDAO().addOrUpdate(user);
 		getUserEventGenerator().forgotPassword(user);
+	}
+
+	@Override
+	public void changePassword(String userId, String currentPassword,
+			String newPassword) {
+		User existingUser = getByUserId(userId);
+
+		if (CommonUtilities.isNullOrEmpty(newPassword)) {
+			throw new CommonException(ReturnCodes.VALIDATION_FAILURE);
+		}
+		if(!existingUser.getPassword().equals(currentPassword)) {
+			throw new CommonException(ReturnCodes.INVALID_CURRENT_PASSWORD);
+		}
+
+		existingUser.setPassword(newPassword);
 	}
 
 	@Override
