@@ -12,4 +12,5 @@ public interface UserManager {
 	public void saveInterestedUserForSubscription(String email);
 	public User getByEmail(String email);
 	public void notifyPassword(User user);
+	public void changePassword(String userId, String currentPassword, String newPassword);
 }

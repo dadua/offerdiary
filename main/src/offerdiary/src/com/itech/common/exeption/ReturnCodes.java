@@ -12,4 +12,7 @@ public class ReturnCodes {
 	public static final ReturnCode UNEXPECTED_RESULT_COUNT_FROM_DB = new ReturnCode(8);
 	public static final ReturnCode OBJECT_DOES_NOT_EXIST_ANYMORE =  new ReturnCode(9);
 
+
+	public static final ReturnCode INVALID_CURRENT_PASSWORD =  new ReturnCode(100);
+
 }
