@@ -46,7 +46,7 @@ public class ProfileAction extends CommonAction {
 		userInfoVO.setAge(user.getAge());
 		userInfoVO.setCity(user.getCity());
 		userInfoVO.setEmailId(user.getEmailId());
-		if (LoginType.EMAIL.equals(user.getLoginType())) {
+		if (!LoginType.EMAIL.equals(user.getLoginType())) {
 			userInfoVO.setLinkedUser(true);
 		}
 		userInfoVO.setMobileNumber(user.getMobileNumber());
