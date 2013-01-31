@@ -77,7 +77,7 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_ACTIVATION_STATUS)
 	private ActivationStatus activationStatus = ActivationStatus.INACTIVE;
 
-	@Column(name=UserModelConstants.COL_PASSWORD)
+	@Column(name=UserModelConstants.COL_CITY)
 	private String city;
 
 	@Column(name=UserModelConstants.COL_MOBILE_NUMBER)
