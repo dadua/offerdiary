@@ -14,7 +14,6 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
-import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 import com.itech.user.vos.UserInfoVO;
 
@@ -34,28 +33,11 @@ public class ProfileAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response getUserInfo(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
-		UserInfoVO userInfoVO = getUserInfoFor(user);
+		UserInfoVO userInfoVO = UserInfoVO.getUserInfoVOFor(user);
 		Result<UserInfoVO> result = new Result<UserInfoVO>(userInfoVO);
 		Type type = new TypeToken<Result<UserInfoVO>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
-
-
-	private UserInfoVO getUserInfoFor(User user) {
-		UserInfoVO userInfoVO = new UserInfoVO();
-		userInfoVO.setAge(user.getAge());
-		userInfoVO.setCity(user.getCity());
-		userInfoVO.setEmailId(user.getEmailId());
-		if (!LoginType.EMAIL.equals(user.getLoginType())) {
-			userInfoVO.setLinkedUser(true);
-		}
-		userInfoVO.setMobileNumber(user.getMobileNumber());
-		userInfoVO.setName(user.getName());
-		userInfoVO.setNickname(user.getNickname());
-		userInfoVO.setPinCode(user.getPinCode());
-		return userInfoVO;
-	}
-
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response updateUserInfo(HttpServletRequest req, HttpServletResponse resp) {
@@ -64,22 +46,11 @@ public class ProfileAction extends CommonAction {
 		Type userInfoType = new TypeToken<UserInfoVO>() { }.getType();
 		UserInfoVO userInfoVO = gson.fromJson(userInfoJson, userInfoType);
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
-		updateUserFor(user, userInfoVO);
+		UserInfoVO.fillUserFromUserVO(user, userInfoVO);
 		getUserManager().save(user);
 		Result<String> result = new Result<String>("Successfully updated user information.");
 		Type type = new TypeToken<Result<String>>() { }.getType();
 		return new CommonBeanResponse(result, type);
-	}
-
-
-	private void updateUserFor(User user, UserInfoVO userInfoVO) {
-		user.setAge(userInfoVO.getAge());
-		user.setCity(userInfoVO.getCity());
-		user.setEmailId(userInfoVO.getEmailId());
-		user.setMobileNumber(userInfoVO.getMobileNumber());
-		user.setName(userInfoVO.getName());
-		user.setNickname(userInfoVO.getNickname());
-		user.setPinCode(userInfoVO.getPinCode());
 	}
 
 

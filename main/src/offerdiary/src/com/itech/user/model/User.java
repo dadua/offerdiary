@@ -86,6 +86,10 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_PIN_CODE)
 	private String pinCode;
 
+
+	@Column(name=UserModelConstants.COL_DOB)
+	private Date dob;
+
 	@Column(name=UserModelConstants.COL_NICKNAME)
 	private String nickname;
 
@@ -197,7 +201,13 @@ public class User extends PersistableEntity{
 		return nickname;
 	}
 	public void setNickname(String nickName) {
-		this.nickname = nickName;
+		nickname = nickName;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+	public Date getDob() {
+		return dob;
 	}
 
 

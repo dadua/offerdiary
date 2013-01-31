@@ -22,4 +22,6 @@ public class UserModelConstants {
 	public static final String COL_CITY = "CITY";
 	public static final String COL_NICKNAME = "NICKNAME";
 	public static final String COL_PIN_CODE = "PIN_CODE";
+
+	public static final String COL_DOB = "DOB";
 }
