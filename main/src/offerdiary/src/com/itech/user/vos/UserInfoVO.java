@@ -86,7 +86,9 @@ public class UserInfoVO {
 		userInfoVO.setName(user.getName());
 		userInfoVO.setNickname(user.getNickname());
 		userInfoVO.setPinCode(user.getPinCode());
-		userInfoVO.setDobMillis(user.getDob().getTime());
+		if (user.getDob()!=null) {
+			userInfoVO.setDobMillis(user.getDob().getTime());
+		}
 		return userInfoVO;
 	}
 
