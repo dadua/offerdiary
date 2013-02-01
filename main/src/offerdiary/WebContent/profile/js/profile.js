@@ -9,7 +9,24 @@ it.profile = it.profile || {};
 it.profile.view = function(){
     var _getUserInfo$ = function (userInfo) {
         var _userInfo$ = $('.user_info_template').clone();
+        userInfo = $.extend({
+            name: '',
+            age: '-',
+            dobMillis: '-',
+            city: '-',
+            emailId: '-',
+            nickName: '-',
+            mobileNumber: '-',
+            pinCode: '-'
+        }, userInfo);
         _userInfo$.removeClass('user_info_template').addClass('userInfo');
+        _userInfo$.find('.userName').html(userInfo.name);
+        _userInfo$.find('.userCity').html(userInfo.city);
+        _userInfo$.find('.userEmail').html(userInfo.emailId);
+        _userInfo$.find('.dob').html(userInfo.dobMillis);
+        _userInfo$.find('.nickName').html(userInfo.nickName);
+        _userInfo$.find('.pinCode').html(userInfo.pinCode);
+        _userInfo$.find('.mobileNumber').html(userInfo.mobileNumber);
         return _userInfo$;
     };
 
@@ -28,6 +45,8 @@ it.profile.refreshUserInfo = function() {
 };
 
 it.profile.plotUserInfo = function(userInfo) {
+    var userInfo$ = this.view.getUserInfo$(userInfo);
+    $('#profileContainer').html(userInfo$);
 
 };
 

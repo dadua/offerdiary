@@ -46,4 +46,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="hide" style="display:none">
+			<%@include file="/profile/templates/userDetails.html" %>
+		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
