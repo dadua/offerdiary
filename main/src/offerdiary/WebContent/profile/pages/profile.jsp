@@ -4,12 +4,13 @@
 	<title>Profile</title>
 	
 	
+	<script src="profile/js/profile.js"></script>
 	<script type="text/javascript">
-		var it = it || {};
 
 		$(function(){
 			$('div.tabbable ul.nav li').removeClass('active');
 			$('#profileTab').addClass('active');
+			it.profile.refreshUserInfo ();
 		});
 		
 		
@@ -39,10 +40,8 @@
 					</div>
                 </div>
                 
-				<div class="span10 content-container" id="profileContainer" >
-					<div class="container-fluid">
-						<div class="row-fluid">
-						</div>
+				<div class="span10 content-container"  >
+					<div class="container-fluid" id="profileContainer" >
 					</div>
 				</div>
 			</div>
