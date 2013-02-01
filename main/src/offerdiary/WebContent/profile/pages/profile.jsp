@@ -17,6 +17,7 @@
 	</script>
 	<style type="text/css">
 		<%@include file="/common/css/layout.css" %>
+		<%@include file="/profile/css/profile.css" %>
 	</style>
 		
 <%@include file="/common/pages/bodyBegin.jsp" %>
