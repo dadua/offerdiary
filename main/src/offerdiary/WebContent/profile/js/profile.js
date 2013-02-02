@@ -12,7 +12,7 @@ it.profile.toggler = function () {
     },
 
     _showNotificationsettings = function () {
-
+        it.profile.notification.refresh ();
     },
 
     _showPoints = function () {
@@ -30,4 +30,16 @@ it.profile.toggler = function () {
         showLinkedAccounts: _showLinkedAccounts
     };
 }();
+
+
+it.profile.addOptionHandlers = function () {
+    $('#userDetails').click(this.toggler.showUserDetails);
+    $('#notificationSettings').click(this.toggler.showNotificationsettings);
+};
+
+
+it.profile.init = function () {
+    this.toggler.showUserDetails();
+    this.addOptionHandlers();
+};
 

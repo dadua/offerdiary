@@ -89,6 +89,7 @@ it.profile.userInfo.view = function(){
 }();
 
 it.profile.userInfo.refresh = function() {
+
     $.getJSON('getUserInfo.do', function(data){
         var userInfo = data.result;
         it.profile.userInfo.plot(userInfo);
