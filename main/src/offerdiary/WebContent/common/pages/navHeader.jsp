@@ -5,9 +5,13 @@
 <style>
 div.navbar-inner-header{
 				background-color: #A4A2A2;
-				background-image: -webkit-linear-gradient(right, #333, #FFFFFF);
-				background-image: -moz-linear-gradient(right , #333, #FFFFFF);
 			}
+
+
+.topAlign {
+	margin-top: 3%;
+}
+
 a.logo-background{
 	background-image:url(images/logo_tag.png);
 	background-size: 100% 100%;
@@ -41,7 +45,7 @@ div.tile-div{
 						Object userSessionObj = request.getSession().getAttribute("user_session_key");
 								if (userSessionObj!= null) {
 					%>
-						<div class="pull-right btn-group" id="userContainer" >
+						<div class="pull-right btn-group topAlign" id="userContainer" >
 						<%
 							User user = (User) userSessionObj;
 						%>
@@ -103,7 +107,7 @@ div.tile-div{
 					<%
 					 } else {
 					 %>
-					 	<div id="actionsContainer" class="pull-right ">
+					 	<div id="actionsContainer" class="pull-right topAlign">
 					 		<a class="btn btn-info btn-large" href="login.do">Login</a>
 							<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
 						</div>

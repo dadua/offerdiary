@@ -39,19 +39,20 @@ it.profile.userInfo.view = function(){
     var _cancelHandler = function () {
         $('.editColumn').hide();
         $('.valColumn').show();
-        $('.saveCancel').hide();
+        $('.saveCancel').addClass('hide');
         $('.editBtn').show();
     };
 
     var _editHandler =  function () {
         $('.editColumn').show();
         $('.valColumn').hide();
-        $('.saveCancel').show();
+        $('.saveCancel').removeClass('hide');
         $('.editBtn').hide();
         _copyValsToEditCols();
     };
 
     var _saveHandler = function () {
+        
 
 
     };
