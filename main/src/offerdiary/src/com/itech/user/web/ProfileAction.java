@@ -48,13 +48,14 @@ public class ProfileAction extends CommonAction {
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
 		UserInfoVO.fillUserFromUserVO(user, userInfoVO);
 		getUserManager().save(user);
-		Result<String> result = new Result<String>("Successfully updated user information.");
+		Result<String> result = new Result<String>();
+		result.setMsg("Successfully updated user information.");
 		Type type = new TypeToken<Result<String>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
 
-	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response changePassword(HttpServletRequest req, HttpServletResponse resp) {
 		String currentPassword = req.getParameter(CURRENT_PASSWORD_PARAM_KEY);
 		String newPassword = req.getParameter(NEW_PASSWORD_PARAM_KEY);
