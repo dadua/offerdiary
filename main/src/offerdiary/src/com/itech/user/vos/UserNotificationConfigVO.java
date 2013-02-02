@@ -5,17 +5,17 @@ import com.itech.user.model.UserNotificationConfig;
 
 public class UserNotificationConfigVO {
 
-	private static final int DEFAULT_EXPIRY_ALERT_DAYS = 10;
+	private static final int DEFAULT_EXPIRY_ALERT_DAYS = 5;
 
 	private Long id;
 
 	private User user;
 
-	private Boolean weeklySummary;
+	private Boolean weeklySummary = Boolean.FALSE;
 
-	private Boolean promotions;
+	private Boolean promotions = Boolean.FALSE;
 
-	private Boolean offerExpiryAlert;
+	private Boolean offerExpiryAlert = Boolean.TRUE;
 
 	private Integer offerExpiryAlertDays = DEFAULT_EXPIRY_ALERT_DAYS;
 
