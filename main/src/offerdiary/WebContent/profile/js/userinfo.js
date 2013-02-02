@@ -52,8 +52,26 @@ it.profile.userInfo.view = function(){
     };
 
     var _saveHandler = function () {
-        
+        var userInfo$ = $('.userInfo'),
+            userName = userInfo$.find('.userNameText').val(),
+            userEmail = userInfo$.find('.userEmailText').val(),
+            userCity = userInfo$.find('.userCityText').val(),
+            mobileNumber = userInfo$.find('.mobileNumberText').val(),
+            pinCode = userInfo$.find('.pincodeText').val(),
+            dob = userInfo$.find('.dobText').val(),
+            nickName = userInfo$.find('.nickNameText').val();
+            userInfoVO = {  name: userName,
+                            emailId: userEmail,
+                            city: userCity,
+                            mobileNumber: mobileNumber,
+                            pinCode: pinCode,
+                            nickName: nickName
+                            //dob: dob, handle dobMillis
+            };
 
+        $.post('updateUserInfo.do', {userInfo: JSON.stringify(userInfoVO)}, function (data) {
+            it.profile.userInfo.refresh();
+        });
 
     };
 
@@ -61,6 +79,7 @@ it.profile.userInfo.view = function(){
         $('.editBtn').click(_editHandler);
         $('.saveBtn').click(_saveHandler);
         $('.cancelBtn').click(_cancelHandler);
+        _cancelHandler();
     };
 
     return {
