@@ -5,12 +5,13 @@
 	
 	
 	<script src="profile/js/profile.js"></script>
+	<script src="profile/js/userinfo.js"></script>
 	<script type="text/javascript">
 
 		$(function(){
 			$('div.tabbable ul.nav li').removeClass('active');
 			$('#profileTab').addClass('active');
-			it.profile.refreshUserInfo ();
+			it.profile.toggler.showUserDetails();
 		});
 		
 		
