@@ -6,12 +6,13 @@
 	
 	<script src="profile/js/profile.js"></script>
 	<script src="profile/js/userinfo.js"></script>
+	<script src="profile/js/notificationconfig.js"></script>
 	<script type="text/javascript">
 
 		$(function(){
 			$('div.tabbable ul.nav li').removeClass('active');
 			$('#profileTab').addClass('active');
-			it.profile.toggler.showUserDetails();
+			it.profile.init();
 		});
 		
 		
@@ -30,8 +31,8 @@
                 	<div class="container-fluid options-left-container">
 	                	<ul class="nav nav-list">
 			                <li class="nav-header">User:</li>
-							<li class="active"><a href="#">Details</a></li>
-							<li><a href="#">Notification Settings</a></li>
+							<li class="active" id="userDetails"><a href="#">Details</a></li>
+							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
 							<li class="divider"></li>
@@ -50,5 +51,6 @@
 		</div>
 		<div class="hide" style="display:none">
 			<%@include file="/profile/templates/userDetails.html" %>
+			<%@include file="/profile/templates/notificationConfig.html" %>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
