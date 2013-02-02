@@ -13,6 +13,7 @@ import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
 import com.itech.user.dao.InterestedUserSubscriptionDAO;
 import com.itech.user.dao.UserDAO;
+import com.itech.user.dao.UserNotificationConfigDAO;
 import com.itech.user.model.Gender;
 import com.itech.user.model.InterestedUserSubscription;
 import com.itech.user.model.LinkedAccount;
@@ -20,6 +21,7 @@ import com.itech.user.model.LinkedAccountType;
 import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 import com.itech.user.model.User.ActivationStatus;
+import com.itech.user.model.UserNotificationConfig;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private static final Logger logger = Logger.getLogger(UserManagerImpl.class);
@@ -28,6 +30,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private UserEventGenerator userEventGenerator;
 	private LinkedAccountManager linkedAccountManager;
 	private SocialProfileManager socialProfileManager;
+	private UserNotificationConfigDAO  userNotificationConfigDAO;
 
 	@Override
 	public User saveFbUser(FbService fbService) {
@@ -221,9 +224,30 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 
 	@Override
 	public void save(User user) {
-		getUserDAO().addOrUpdate(user);
 		User existingUser = getUserDAO().getByUserId(user.getUserId());
-		user.setId(existingUser.getId());
+		if (existingUser != null) {
+			user.setId(existingUser.getId());
+		}
+		getUserDAO().addOrUpdate(user);
+		if (existingUser == null) {
+			UserNotificationConfig userNotificationConfig = createDefaultUserNotificationConfig();
+			userNotificationConfig.setUser(user);
+			save(userNotificationConfig);
+		}
+	}
+
+	@Override
+	public void save(UserNotificationConfig userNotificationConfig) {
+		getUserNotificationConfigDAO().addOrUpdate(userNotificationConfig);
+	}
+
+	private UserNotificationConfig createDefaultUserNotificationConfig() {
+		return new UserNotificationConfig();
+	}
+
+	@Override
+	public UserNotificationConfig getUserNotificationConfigFor(User user) {
+		return getUserNotificationConfigDAO().getUserNotificationConfigFor(user);
 	}
 
 	public void setUserDAO(UserDAO userDAO) {
@@ -263,4 +287,12 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	public void setSocialProfileManager(SocialProfileManager socialProfileManager) {
 		this.socialProfileManager = socialProfileManager;
 	}
+	public UserNotificationConfigDAO getUserNotificationConfigDAO() {
+		return userNotificationConfigDAO;
+	}
+	public void setUserNotificationConfigDAO(UserNotificationConfigDAO userNotificationConfigDAO) {
+		this.userNotificationConfigDAO = userNotificationConfigDAO;
+	}
+
+
 }

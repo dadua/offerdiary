@@ -10,6 +10,7 @@
    		<property name="userEventGenerator" ref="itech.UserEventGenerator"/>
    		<property name="linkedAccountManager" ref="itech.LinkedAccountManager"/>
    		<property name="socialProfileManager" ref="itech.SocialProfileManager"/>
+   		<property name="userNotificationConfigDAO" ref="itech.UserNotificationConfigDAO"/>
 	</bean>
    	
    	
@@ -32,6 +33,9 @@
 	</bean>
 	
 	<bean name="itech.SocialProfileConnectionDAO" class="com.itech.user.dao.SocialProfileConnectionDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton">
+	</bean>
+	
+	<bean name="itech.UserNotificationConfigDAO" class="com.itech.user.dao.UserNotificationConfigDAOImpl" parent="itech.hibernateCommonDAO" scope="singleton"> 
 	</bean>
 	
 	<bean name="itech.SocialProfileManager" class="com.itech.user.manager.SocialProfileManagerImpl" parent="itech.CommonBaseManager" scope="singleton">

@@ -20,4 +20,5 @@ public class OfferWalletConstants {
 
 
 	public static final String USER_INFO_PARAM_KEY = "userInfo";
+	public static final String USER_NOTIFICATION_CONFIG_PARAM_KEY = "userNotificationConfig";
 }

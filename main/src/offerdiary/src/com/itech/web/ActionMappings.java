@@ -80,5 +80,8 @@ public class ActionMappings {
 		add(new ActionMapping("getUserInfo.do", ProfileAction.class, "getUserInfo"));
 		add(new ActionMapping("updateUserInfo.do", ProfileAction.class, "updateUserInfo"));
 		add(new ActionMapping("changePassword.do", ProfileAction.class, "changePassword"));
+		add(new ActionMapping("updateUserNotificationConfig.do", ProfileAction.class, "updateUserNotificationConfig"));
+		add(new ActionMapping("getUserNotificationConfig.do", ProfileAction.class, "getUserNotificationConfig"));
+
 	}
 }

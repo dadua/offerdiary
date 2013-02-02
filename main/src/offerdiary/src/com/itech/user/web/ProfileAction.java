@@ -15,7 +15,9 @@ import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
 import com.itech.user.model.User;
+import com.itech.user.model.UserNotificationConfig;
 import com.itech.user.vos.UserInfoVO;
+import com.itech.user.vos.UserNotificationConfigVO;
 
 public class ProfileAction extends CommonAction {
 
@@ -39,7 +41,7 @@ public class ProfileAction extends CommonAction {
 		return new CommonBeanResponse(result, type);
 	}
 
-	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response updateUserInfo(HttpServletRequest req, HttpServletResponse resp) {
 		String userInfoJson = req.getParameter(OfferWalletConstants.USER_INFO_PARAM_KEY);
 		Gson gson = new Gson();
@@ -53,6 +55,41 @@ public class ProfileAction extends CommonAction {
 		Type type = new TypeToken<Result<String>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response updateUserNotificationConfig(HttpServletRequest req, HttpServletResponse resp) {
+		String userNotificationConfigJson = req.getParameter(OfferWalletConstants.USER_NOTIFICATION_CONFIG_PARAM_KEY);
+		Gson gson = new Gson();
+		Type userNotificationConfigType = new TypeToken<UserNotificationConfigVO>() { }.getType();
+		UserNotificationConfigVO userNotificationConfigVO = gson.fromJson(userNotificationConfigJson, userNotificationConfigType);
+		UserNotificationConfig userNotificationConfig = getUserManager().getUserNotificationConfigFor(getLoggedInUser());
+		if (userNotificationConfig == null) {
+			userNotificationConfig = new UserNotificationConfig();
+			userNotificationConfig.setUser(getLoggedInUser());
+		}
+		UserNotificationConfigVO.fillUserNotificationConfigFromVO(userNotificationConfig, userNotificationConfigVO);
+		getUserManager().save(userNotificationConfig);
+		Result<String> result = new Result<String>();
+		result.setMsg("Successfully updated user notification settings.");
+		Type type = new TypeToken<Result<String>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response getUserNotificationConfig(HttpServletRequest req, HttpServletResponse resp) {
+		UserNotificationConfig userNotificationConfig = getUserManager().getUserNotificationConfigFor(getLoggedInUser());
+		if (userNotificationConfig == null) {
+			userNotificationConfig = new UserNotificationConfig();
+			userNotificationConfig.setUser(getLoggedInUser());
+		}
+		getUserManager().save(userNotificationConfig);
+
+		UserNotificationConfigVO userNotificationConfigVO = UserNotificationConfigVO.getUserNotificationConfigVoFor(userNotificationConfig);
+		Result<UserNotificationConfigVO> result = new Result<UserNotificationConfigVO>(userNotificationConfigVO);
+		Type type = new TypeToken<Result<UserNotificationConfigVO>>() { }.getType();
+		return new CommonBeanResponse(result, type);
+	}
+
 
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
