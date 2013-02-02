@@ -20,6 +20,7 @@
 			<value>com.itech.user.model.SocialProfile</value>
 			<value>com.itech.user.model.SocialProfileConnection</value>
 			<value>com.itech.user.model.InterestedUserSubscription</value>
+			<value>com.itech.user.model.UserNotificationConfig</value>
 			<value>com.itech.alert.model.AlertConfig</value>
 			<value>com.itech.alert.model.Alert</value>
 			<value>com.itech.offer.model.OfferCard</value>
