@@ -24,16 +24,16 @@ public class UserNotificationConfig {
 	private User user;
 
 	@Column(name="WEEKLY_SUMMARY")
-	private Boolean weeklySummary;
+	private Boolean weeklySummary = Boolean.FALSE;
 
 	@Column(name="PROMOTIONS")
-	private Boolean promotions;
+	private Boolean promotions =  Boolean.FALSE;
 
 	@Column(name="OFFER_EXPIRY_ALERT")
-	private Boolean offerExpiryAlert;
+	private Boolean offerExpiryAlert = Boolean.TRUE;
 
 	@Column(name="OFFER_EXPIRY_ALERT_DAYS")
-	private Integer offerExpiryAlertDays = 10;
+	private Integer offerExpiryAlertDays = 5;
 
 	public Long getId() {
 		return id;
