@@ -19,6 +19,10 @@ it.profile.toggler = function () {
 
     },
 
+    _showChangePassword = function () {
+        it.profile.password.plotChangeUI();
+    },
+
     _showLinkedAccounts = function () {
 
     };
@@ -27,7 +31,8 @@ it.profile.toggler = function () {
         showUserDetails: _showUserDetails,
         showNotificationsettings: _showNotificationsettings,
         showPoints: _showPoints,
-        showLinkedAccounts: _showLinkedAccounts
+        showLinkedAccounts: _showLinkedAccounts,
+        showChangePassword: _showChangePassword
     };
 }();
 
@@ -35,6 +40,7 @@ it.profile.toggler = function () {
 it.profile.addOptionHandlers = function () {
     $('#userDetails').click(this.toggler.showUserDetails);
     $('#notificationSettings').click(this.toggler.showNotificationsettings);
+    $('#changePasswordOption').click(this.toggler.showChangePassword);
 };
 
 
