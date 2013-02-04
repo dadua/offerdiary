@@ -7,6 +7,8 @@
 	<script src="profile/js/profile.js"></script>
 	<script src="profile/js/userinfo.js"></script>
 	<script src="profile/js/notificationconfig.js"></script>
+	<script src="profile/js/passwordchange.js"></script>
+
 	<script type="text/javascript">
 
 		$(function(){
@@ -33,6 +35,7 @@
 			                <li class="nav-header">User:</li>
 							<li class="active" id="userDetails"><a href="#">Details</a></li>
 							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
+							<li><a href="#" id="changePasswordOption">Change Password</a></li>
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
 							<li class="divider"></li>
@@ -52,5 +55,6 @@
 		<div class="hide" style="display:none">
 			<%@include file="/profile/templates/userDetails.html" %>
 			<%@include file="/profile/templates/notificationConfig.html" %>
+			<%@include file="/profile/templates/passwordChange.html" %>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
