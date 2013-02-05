@@ -98,6 +98,7 @@ public class ProfileAction extends CommonAction {
 		String newPassword = req.getParameter(NEW_PASSWORD_PARAM_KEY);
 		getUserManager().changePassword(getLoggedInUser().getUserId(), currentPassword, newPassword);
 		Result<String> result = new Result<String>("Successfully updated new password.");
+		result.setMsg("Successfully updated new password.");
 		Type type = new TypeToken<Result<String>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}

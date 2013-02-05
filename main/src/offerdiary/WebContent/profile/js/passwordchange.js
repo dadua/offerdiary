@@ -2,11 +2,6 @@ var it = it || {};
 it.profile = it.profile || {};
 it.profile.password= it.profile.password|| {};
 
-it.profile.password.change = function () {
-
-};
-
-
 it.profile.password.view = function () {
 
     var _get$ = function () {
@@ -15,8 +10,50 @@ it.profile.password.view = function () {
         return _changePassword$;
     },
 
+    _changePasswordHandler =  function () {
+
+        var changePassword$ = $('.changePassword');
+        if (changePassword$.hasClass('disabled')) {
+            return;
+        }
+        _submitChangePassword(false);
+        var currentPassword = changePassword$.find('#currentPassword').val(),
+        newPassword = changePassword$.find('#newPassword').val();
+
+        $.post('changePassword.do',
+               {currentPassword: currentPassword, newPassword: newPassword},
+               function (data) {
+                   changePassword$.find('#currentPassword').val('');
+                   changePassword$.find('#newPassword').val('');
+                   changePassword$.find('#retypedNewPassword').val('');
+               });
+    },
+
+    _submitChangePassword = function (enabled) {
+        if (enabled) {
+            $('.changePassword').find('#submitChangePassword').removeClass('disabled');
+        } else {
+            $('.changePassword').find('#submitChangePassword').addClass('disabled');
+        }
+    },
+
+    _verifyNewRetype = function () {
+        var changePassword$ = $('.changePassword'),
+            newPassword = changePassword$.find('#newPassword').val(),
+            retypedNewPassword = changePassword$.find('#retypedNewPassword').val(),
+            currentPassword = changePassword$.find('#currentPassword').val();
+
+        if (currentPassword !== '' && newPassword !== '' && retypedNewPassword === newPassword) {
+            _submitChangePassword(true);
+        } else {
+            _submitChangePassword(false);
+        }
+    }, 
+
     addHandlers = function () {
-        $('.changePassword').find('#submitChangePassword').click(it.profile.password.change);
+        var changePassword$ = $('.changePassword');
+        changePassword$.find('#submitChangePassword').click(_changePasswordHandler);
+        changePassword$.find('#currentPassword, #retypedNewPassword, #newPassword').keyup(_verifyNewRetype);
     };
 
     return {
