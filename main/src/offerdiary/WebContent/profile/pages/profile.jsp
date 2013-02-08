@@ -35,7 +35,9 @@
 			                <li class="nav-header">User:</li>
 							<li class="active" id="userDetails"><a href="#">Details</a></li>
 							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
-							<li><a href="#" id="changePasswordOption">Change Password</a></li>
+							<c:if test="${!isLinkedUser}">
+								<li><a href="#" id="changePasswordOption">Change Password</a></li>
+							</c:if>
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
 							<li class="divider"></li>

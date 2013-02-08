@@ -22,12 +22,17 @@ import com.itech.user.vos.UserNotificationConfigVO;
 public class ProfileAction extends CommonAction {
 
 
+	private static final String IS_LINKED_USER_PARAM_KEY = "isLinkedUser";
 	private static final String NEW_PASSWORD_PARAM_KEY = "newPassword";
 	private static final String CURRENT_PASSWORD_PARAM_KEY = "currentPassword";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response goToProfile(HttpServletRequest req, HttpServletResponse resp) {
+
+		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
+		UserInfoVO userInfoVO = UserInfoVO.getUserInfoVOFor(user);
+		req.setAttribute(IS_LINKED_USER_PARAM_KEY, userInfoVO.isLinkedUser());
 		return new Forward("profile/pages/profile.jsp");
 	}
 
