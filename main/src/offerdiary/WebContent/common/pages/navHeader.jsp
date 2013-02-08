@@ -86,8 +86,13 @@
 						</c:when>
 						<c:otherwise>
 						 	<div id="actionsContainer" class="pull-right topAlign">
-						 		<a class="btn btn-info btn-large" href="login.do">Login</a>
-								<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
+						 		<c:if test="${pageAttrKey!='login'}">
+							 		<a class="btn btn-info btn-large" href="login.do">Login</a>
+						 		</c:if>
+						 		
+						 		<c:if test="${pageAttrKey!='signup'}">
+									<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
+								</c:if>
 							</div>
 						</c:otherwise>
 					</c:choose>

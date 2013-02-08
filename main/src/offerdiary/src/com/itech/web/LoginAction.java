@@ -24,15 +24,19 @@ import com.itech.user.vos.UserEmailCredsVO;
 
 public class LoginAction extends CommonAction{
 
+	private static final String PAGE_ATTR_KEY = "pageAttrKey";
 	public static final String FORGOT_PASSWORD_EXECUTION_STATUS = "forgotPasswordStatus";
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute(PAGE_ATTR_KEY, "login");
 		return new Forward("user/pages/login.jsp");
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	public Response signup(HttpServletRequest req, HttpServletResponse resp) {
+
+		req.setAttribute(PAGE_ATTR_KEY, "signup");
 		return new Forward("user/pages/signup.jsp");
 	}
 
