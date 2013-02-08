@@ -12,7 +12,6 @@
 	<script type="text/javascript">
 
 		$(function(){
-			$('div.tabbable ul.nav li').removeClass('active');
 			$('#profileTab').addClass('active');
 			it.profile.init();
 		});

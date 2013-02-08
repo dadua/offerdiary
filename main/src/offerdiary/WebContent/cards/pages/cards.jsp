@@ -9,12 +9,11 @@
     <script type="text/javascript">
 
         $(function(){
+            $('#cardTab').addClass('active');
             it.card.plotAll('${myOfferCardsJsonAttrKey}');
             it.card.discoverRefreshHandler();
             it.card.setupCardFiltersHandlers();
 
-            $('div.tabbable ul.nav li').removeClass('active');
-            $('#cardTab').addClass('active');
 		});
     </script>
 
