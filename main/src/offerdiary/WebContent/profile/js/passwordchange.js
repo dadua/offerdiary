@@ -13,7 +13,8 @@ it.profile.password.view = function () {
     _changePasswordHandler =  function () {
 
         var changePassword$ = $('.changePassword');
-        if (changePassword$.hasClass('disabled')) {
+
+        if (changePassword$.find('#submitChangePassword').hasClass('disabled')) {
             return;
         }
         _submitChangePassword(false);
