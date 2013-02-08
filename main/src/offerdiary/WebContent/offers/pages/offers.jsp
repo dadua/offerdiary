@@ -8,6 +8,7 @@
     
     <script type="text/javascript">
         $(function() {
+            $('#offerTab').addClass('active');
             it.offer.addwizard.init();
             var offersJson = '${myOffersJson}',
                 offers = JSON.parse(offersJson);

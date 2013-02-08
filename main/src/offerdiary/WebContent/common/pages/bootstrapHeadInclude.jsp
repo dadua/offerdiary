@@ -10,9 +10,8 @@
 <!-- When using navbar navbar-fixed-top add padding top-->
 <style type="text/css" >
 	body {
-		padding-top: 150px;
+		padding-top: 85px;
 	}
-	
 	.center {
 		text-align: center;
 	}

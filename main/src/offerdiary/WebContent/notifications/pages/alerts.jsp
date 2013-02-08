@@ -35,9 +35,8 @@
 			};
 
 			$(function(){
-				it.wallet.addHandlers();
-				$('div.tabbable ul.nav li').removeClass('active');
 				$('#alertTab').addClass('active');
+				it.wallet.addHandlers();
 			});
 			
 			
