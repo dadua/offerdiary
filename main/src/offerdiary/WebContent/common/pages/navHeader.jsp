@@ -1,4 +1,5 @@
-
+<%@page import="org.apache.jasper.tagplugins.jstl.core.Choose"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
 <%@page import="com.itech.user.model.LoginType"%>
 <%@page import="com.itech.user.model.User"%>
@@ -41,53 +42,27 @@ div.tile-div{
 						<li>
 						</li>
 					</ul>
-					<%
-						Object userSessionObj = request.getSession().getAttribute("user_session_key");
-								if (userSessionObj!= null) {
-					%>
+					
+					<c:choose>
+						<c:when test="${userSession !=null}">
 						<div class="pull-right btn-group topAlign" id="userContainer" >
-						<%
-							User user = (User) userSessionObj;
-						%>
 						<a class="btn btn-info" href="wallet.do">
-						<%
-						if(user.getName()!=null) {
-						%>
-							<%=user.getName()%> 
-						<%
-						} else if (user.getEmailId()!=null) {
-						%>
-							<%=user.getEmailId() %>
-						<%
-						} else {
-						%>
-							<%=user.getUserId()%>
-						<%
-						}
-						%>
-						
-						<%
-						if (user.getLoginType() == LoginType.FACEBOOK) {
-						 %>
-						 <img class="tinyPic" width="20px"  height="20px" src="https://graph.facebook.com/<%=user.getUserId()%>/picture?type=square" />
-						 <%
-						} 
-						%>
-						
+							<c:choose>
+								<c:when test="${userSession.name != null}">
+									${userSession.name}
+								</c:when>
+								<c:otherwise>
+									${userSession.emailId}
+									
+								</c:otherwise>
+							</c:choose>
+							
+							<c:if test="${userSession.loginType.name == 'FACEBOOK' }" >
+								 <img class="tinyPic" width="20px"  height="20px" src="https://graph.facebook.com/${userSession.userId}/picture?type=square" />
+							</c:if>
 						</a>
-						<%
-						if (user.getLoginType() == LoginType.FACEBOOK) {
-						 %>
 						<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-						<%
-						} else {
-						%>
-						<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-						<%
-						} 
-						%>
-						
-						<span class="caret"></span>
+							<span class="caret"></span>
 						</a>
 						
 						<ul class="dropdown-menu">
@@ -104,16 +79,14 @@ div.tile-div{
 							</li>
 						</ul>
 					</div>
-					<%
-					 } else {
-					 %>
+				</c:when>
+					<c:otherwise>
 					 	<div id="actionsContainer" class="pull-right topAlign">
 					 		<a class="btn btn-info btn-large" href="login.do">Login</a>
 							<a class="btn btn-success btn-large" href="signup.do">Sign Up</a>
 						</div>
-					 <%
-					 }
-					 %>
+						</c:otherwise>
+					</c:choose>
         		</div>
       		</div>
  		</div>

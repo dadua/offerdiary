@@ -4,7 +4,7 @@ import com.itech.user.model.User;
 
 
 public class SecurityContext {
-	public static final String USER_SESSION_KEY = "user_session_key";
+	public static final String USER_SESSION_KEY = "userSession";
 	private final User user;
 
 	public SecurityContext(User user) {
