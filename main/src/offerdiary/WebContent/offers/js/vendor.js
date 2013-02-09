@@ -56,25 +56,42 @@ it.vendor.get$ = function (vendor) {
     return vendor$;
 };
 
+
+it.vendor.unSelectAllVendor = function () {
+    $('.vendorSearch').addClass('unselected').removeClass('selected').find('.selected-tick').hide();
+    if (it.offer && it.offer.addwizard) {
+        it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(false);
+    }
+};
+
+it.vendor.unSelectVendor = function (vendor$) {
+    vendor$.removeClass('selected').addClass('unselected').find('.selected-tick').hide();
+    if (it.offer && it.offer.addwizard) {
+        it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(false);
+    }
+
+};
+
+it.vendor.selectVendor = function (vendor$) {
+    it.vendor.unSelectAllVendor();
+    vendor$.removeClass('unselected').addClass('selected');
+    if(vendor$.find('.selected-tick').length === 0) {
+        vendor$.append('<a href="#" class="selected-tick">✔</a>');
+    } else {
+        vendor$.find('.selected-tick').show();
+    }
+    if (it.offer && it.offer.addwizard) {
+        it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
+    }
+};
+
 it.vendor.addHandlers = function() {
     $('.vendorSearch').popover({trigger: 'hover'}).click(function(){
         var $this = $(this);
         if ($this.hasClass('selected')) {
-            $this.removeClass('selected').addClass('unselected').find('.selected-tick').hide();
-            if (it.offer && it.offer.addwizard) {
-                it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(false);
-            }
+            it.vendor.unSelectVendor($this);
         } else {
-            $('.vendorSearch').addClass('unselected').removeClass('selected').find('.selected-tick').hide();
-            $this.removeClass('unselected').addClass('selected');
-            if($this.find('.selected-tick').length === 0) {
-                $this.append('<a href="#" class="selected-tick">✔</a>');
-            } else {
-                $this.find('.selected-tick').show();
-            }
-            if (it.offer && it.offer.addwizard) {
-                it.offer.addwizard.getVendorStep().publishOnValidationChangeCb(true);
-            }
+            it.vendor.selectVendor($this);
         }
     });
 };

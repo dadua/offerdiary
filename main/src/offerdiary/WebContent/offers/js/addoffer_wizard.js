@@ -21,7 +21,9 @@ it.offer.addwizard = function () {
         vendorStep.setPlotHtmlFromDataCb(function(data){
             //TODO: verify if this vendorVO
             if (data && data.vendor) {
-
+                it.vendor.selectVendor($('#vendorSearch_' + data.vendor.id));
+            } else {
+                it.vendor.unSelectAllVendor();
             }
         });
         var vendorStepValidator = function() {
@@ -61,8 +63,16 @@ it.offer.addwizard = function () {
         offerDetailsStep.setTitle('Benefits');
         offerDetailsStep.setHtmlTemplateSelector('#benefitDetailsTemplate');
         offerDetailsStep.setPlotHtmlFromDataCb(function(data) {
-            if (data) {
+            //TODO: This check might break edit case when data.code is undefined
+            // but data.description is available..
+            // Then the description value would be set to ''
+            if (data && data.code && data.description) {
                 //TODO: fill description etc..
+                offerDetailsStep.$('#offerDescription').val(data.description);
+                offerDetailsStep.$('#offerCode').val(data.code);
+            } else {
+                offerDetailsStep.$('#offerDescription').val('');
+                offerDetailsStep.$('#offerCode').val('');
             }
         });
         offerDetailsStep.setStepValidator(function() {
@@ -90,8 +100,13 @@ it.offer.addwizard = function () {
         remindMeStep.setHtmlTemplateSelector('#reminderDetailsTemplate');
         remindMeStep.setPlotHtmlFromDataCb(function(data) {
             var isValidated = true;
-            if (data) {
+            if (data && data.expiryDateInMillis) {
                 //TODO: fill expiry date etc to form elements in DOM..
+                remindMeStep.$('#expiryDatePicker').datepicker({
+                    inline: true,
+                    altField: '#expiryDateInput',
+                    altFormat: "d M, yy"
+                });
             }
             remindMeStep.publishOnValidationChangeCb(isValidated);
         });

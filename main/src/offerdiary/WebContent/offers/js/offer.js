@@ -86,7 +86,7 @@ it.offer.getOfferHtml = function(offer) {
     var offerTemplate$ = $('.offer_ui_template').clone().removeClass('offer_ui_template hide').attr('id', 'offer_' + offer.id);
     //Setting values from offer vo to the template..
     if (offer.sourceVendor) {
-        offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ offer.sourceVendor.logoUrl || 'defaultVendor.jpg');
+        offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ (offer.sourceVendor.logoUrl || 'defaultVendor.jpg'));
         offerTemplate$.find('.vendorName').html(offer.sourceVendor.name);
         offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl).attr('href', offer.sourceVendor.siteUrl);
     } else {
@@ -269,7 +269,10 @@ it.offer.trashOffer = function(e) {
 };
 
 it.offer.addHandlers = function () {
-    $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
+    $('#addOfferWizardBtn').click(function(){
+        it.offer.addwizard.getWizard().reInit();
+        it.offer.addwizard.getWizard().show();
+    });
     $('.offerTrash').click(it.offer.trashOffer).tooltip();
     /*
     $('.icon-trash').hover(function(e) {
