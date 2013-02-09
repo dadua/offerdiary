@@ -483,6 +483,11 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
         $('#_wizard').modal('show');
     };
 
+    var _reInit = function () {
+        _setFormData({});
+        _navigateToStepWith(0);
+    };
+
     var _title = 'Wizard';
 
     var _init = function(rootId, wizardSteps, formData) {
@@ -533,6 +538,7 @@ it.wizard.newInstance = function(pRootId, pWizardSteps, pFormData) {
         //This returns the jquery dom object of the step
         //Will be used to add validators..
         getWizardStepWithIndex$: _getWizardStepWithIndex$,
-        reInitDom: _reInitDom
+        reInitDom: _reInitDom,
+        reInit: _reInit
     };
 };

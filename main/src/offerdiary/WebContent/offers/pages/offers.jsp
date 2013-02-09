@@ -13,8 +13,6 @@
             var offersJson = '${myOffersJson}',
                 offers = JSON.parse(offersJson);
             it.offer.plotAll(offers, true);
-            $('#addOfferWizardBtn').click(it.offer.addwizard.getWizard().show);
-            $('#addOfferModalBtn').click(it.offer.clearOfferFormVals);
         });
             
     </script>
@@ -94,9 +92,9 @@
                 <div id="searchedVendors" class="row-fluid">
                     <ul class="thumbnails row-fluid" >
                         <li class="span4 vendor">
-                        <div class="vendorImage thumbnail">
-                            <img src="images/stores/defaultVendor.jpg" />
-                        </div>
+                            <div class="vendorImage thumbnail">
+                                <img src="images/stores/defaultVendor.jpg" />
+                            </div>
                         </li>
                     </ul>
                 </div>
