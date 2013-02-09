@@ -34,18 +34,23 @@
         			</a>
         			<c:if test="${userSession!=null}">
 	     				<ul class="featureTabs nav nav-tabs " style="margin-left: 25px; margin-top:30px;">
+	     					<li class="divider-vertical"></li>
 							<li id="offerTab" >
 								 <a href="offers.do" >Offers</a>
 							</li>
+							<li class="divider-vertical"></li>
 							<li id="alertTab" >
 								<a href="alerts.do" >Notifications</a>
 							</li>
+							<li class="divider-vertical"></li>
 							<li id="cardTab" >
 								<a href="cards.do" >Cards</a>
 							</li>
+							<li class="divider-vertical"></li>
 							<li id="profileTab" >
 								<a href="profile.do" >Profile</a>
 							</li>
+							<li class="divider-vertical"></li>
 						</ul>
 					</c:if>
 					<c:choose>
@@ -99,3 +104,9 @@
         		</div>
       		</div>
  		</div>
+ 		<script type="text/javascript" >
+ 			$(function(){
+	 			$('.featureTabs > .active + .divider-vertical').hide().prev().prev().hide()
+ 			});
+ 		
+ 		</script>
