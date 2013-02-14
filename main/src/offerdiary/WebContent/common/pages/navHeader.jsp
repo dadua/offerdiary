@@ -19,6 +19,10 @@
 			margin-left: 30px;
 			margin-top: 30px;
 		}
+		.tinyPic {
+			width: 19px;
+			height: 19px;
+		}
 		</style>
 		
 		<div class="navbar navbar-fixed-top">
@@ -66,7 +70,7 @@
 										</c:otherwise>
 									</c:choose>
 									<c:if test="${userSession.loginType.name == 'FACEBOOK' }" >
-										 <img class="tinyPic" width="20px"  height="20px" src="https://graph.facebook.com/${userSession.userId}/picture?type=square" />
+										 <img class="tinyPic" src="https://graph.facebook.com/${userSession.userId}/picture?type=square" />
 									</c:if>
 								</a>
 								<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
