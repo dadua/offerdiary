@@ -13,7 +13,6 @@
 		}
 		.brandImage {
 			height: 50px;
-			width: 160px;
 		}
 		
 		.featureTabs {
@@ -30,7 +29,7 @@
         				Offer Diary
         				 --%>
         				 
-        				<img src="images/logo_tag.png" class="brandImage" alt="Offer Diary" ></img>
+        				<img src="images/logo_tag.png" class="brandImage" alt="Offer Diary" />
         			</a>
         			<c:if test="${userSession!=null}">
 	     				<ul class="featureTabs nav nav-tabs " style="margin-left: 25px; margin-top:30px;">
