@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.db.SearchCriteria;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
@@ -20,6 +21,7 @@ import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
+import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
 
 public class OfferAction extends CommonAction{
@@ -28,6 +30,15 @@ public class OfferAction extends CommonAction{
 
 	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
 		return new Forward(OfferWalletConstants.INDEX_PAGE);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	public Response searchOffers(HttpServletRequest req, HttpServletResponse resp) {
+		SearchCriteria searchCriteria = getSearchCriteria(req);
+		OfferSearchResultVO offers = getOfferManager().searchOffersFor(searchCriteria);
+		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
+		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
+		return new CommonBeanResponse(result, type);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
