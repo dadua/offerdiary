@@ -6,6 +6,10 @@ public class SearchCriteria {
 	private static final int DEFAULT_PAGE_NUMBER = 1;
 	private static final int DEFAULT_RESULTS_PER_PAGE = 10;
 	private String searchString;
+	private String searchType;
+	private String q;
+	private String uniqueFilter;
+	private Boolean privateSearchOnly;
 	private Integer pageNumber = DEFAULT_PAGE_NUMBER;
 	private Integer resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
 
@@ -38,5 +42,37 @@ public class SearchCriteria {
 	}
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
+	}
+
+	public String getQ() {
+		return q;
+	}
+
+	public void setQ(String q) {
+		this.q = q;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+
+	public String getUniqueFilter() {
+		return uniqueFilter;
+	}
+
+	public void setUniqueFilter(String uniqueFilter) {
+		this.uniqueFilter = uniqueFilter;
+	}
+
+	public Boolean getPrivateSearchOnly() {
+		return privateSearchOnly;
+	}
+
+	public void setPrivateSearchOnly(Boolean privateSearchOnly) {
+		this.privateSearchOnly = privateSearchOnly;
 	}
 }

@@ -34,6 +34,7 @@ public class ActionMappings {
 		add(new ActionMapping("offers.do", OfferAction.class, "goToMyWallet"));
 		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
 		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
+		add(new ActionMapping("searchOffers.do", OfferAction.class, "searchOffers"));
 		add(new ActionMapping("getOffersOnMyCards.do", OfferAction.class, "getOffersOnMyCards"));
 		add(new ActionMapping("getOffersOnCard.do", OfferAction.class, "getOffersOnCard"));
 

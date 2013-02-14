@@ -46,6 +46,9 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name=OfferModelConstants.COL_EXPIRY)
 	private Date expiry;
 
+	@Column(name="CREATED_ON")
+	private Date createdOn = new Date(System.currentTimeMillis());
+
 	@Column(name=OfferModelConstants.COL_OFFER_CODE)
 	private String offerCode;
 
@@ -322,6 +325,16 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public boolean isFbNotification() {
 		return fbNotification;
+	}
+
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 
 }

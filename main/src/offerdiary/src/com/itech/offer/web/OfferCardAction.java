@@ -23,8 +23,6 @@ import com.itech.user.model.User;
 public class OfferCardAction extends CommonAction{
 	private static final String OFFER_CARD_JSON_KEY = "offerCardJson";
 	private static final String OFFER_CARD_JSON_ATTR_KEY = "myOfferCardsJsonAttrKey";
-	private static final int MAX_RESULT_COUNT = 10;
-	private static final String OFFER_CARD_NAME_SEARCH_KEY = "searchKey";
 	private static final String OFFER_CARD_NAME_KEY = "cardNameKey";
 	private static final String OFFER_CARD_ID_KEY = "cardIdKey";
 

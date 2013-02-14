@@ -2,9 +2,11 @@ package com.itech.offer.manager;
 
 import java.util.List;
 
+import com.itech.common.db.SearchCriteria;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferShare;
+import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
 
 public interface OfferManager {
@@ -38,5 +40,7 @@ public interface OfferManager {
 	public List<Offer> getAllOffersOnCardsForUser(User user);
 
 	public List<Offer> getAllOffersForCard(Long offerCardId);
+
+	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
 
 }
