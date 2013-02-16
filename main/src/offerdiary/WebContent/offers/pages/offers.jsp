@@ -12,7 +12,7 @@
             it.offer.addwizard.init();
             var offersJson = '${myOffersJson}',
                 offers = JSON.parse(offersJson);
-            it.offer.plotAll(offers, true);
+            it.offer.init(offers);
         });
             
     </script>
@@ -59,7 +59,7 @@
                     <div class="row-fluid">
                         <div class="form-search span5 offset6">
                             <div class="input-append">
-                                <input id="vendorQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Offers" />
+                                <input id="searchOfferQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Offers" />
                                 <button class="btn"><i class="icon-search"></i></button>
                             </div>
                         </div>

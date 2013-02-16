@@ -235,7 +235,7 @@ it.offer.addOffer = function () {
     offers = [],
     vendorId;
     offers.push(offer);
-    $.post('saveOffers.do',
+    $.post('saveOffers.do', 
            {'offers': JSON.stringify(offers)},
            function (data) {
                var ret = $.parseJSON(data);
@@ -268,6 +268,11 @@ it.offer.trashOffer = function(e) {
     });
 };
 
+
+it.offer.addOneHandlers = function () {
+    $('#searchOfferQuery').keyup(it.offer.searchOffer);
+};
+
 it.offer.addHandlers = function () {
     $('#addOfferWizardBtn').click(function(){
         it.offer.addwizard.getWizard().reInit();
@@ -296,3 +301,23 @@ it.offer.addHandlers = function () {
        */
 };
 
+it.offer.searchOffer = function () {
+    var q = $('#searchOfferQuery').val();
+    ///searchOffers.do?searchCriteria={uniqueFilter:'addedInLast7Days',q:'offerDesc'}
+
+    $.post('searchOffers.do',
+           {'searchCriteria': JSON.stringify ({q: q})},
+           function(response) {
+               var resp = $.parseJSON(response);
+               if (resp.success) {
+                   it.offer.plotAll(resp.result.offers, true);
+               } else {
+                   //TODO: Error..
+               }
+           });
+};
+
+it.offer.init = function (offers) {
+    it.offer.plotAll(offers, true);
+    it.offer.addOneHandlers();
+};
