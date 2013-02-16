@@ -44,7 +44,6 @@
                         <li class="allOffers"><a href="#">All</a></li>
                         <li class="divider"></li>
                         <li class="nav-header">Expiry in:</li>
-                        <li><a href="#"></a></li>
                         <li class="expires7daysOffers"><a href="#">Expires in 7days</a></li>
                         <li class="expires1monthOffers"><a href="#">Expires in 1 month</a></li>
                         <li class="divider"></li>
