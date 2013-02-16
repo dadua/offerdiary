@@ -22,6 +22,8 @@ import com.itech.user.vos.UserNotificationConfigVO;
 public class ProfileAction extends CommonAction {
 
 
+	private static final String OPTION_PARAM_KEY = "o";
+	private static final String OPTION_ATTR_KEY = "option";
 	private static final String IS_LINKED_USER_PARAM_KEY = "isLinkedUser";
 	private static final String NEW_PASSWORD_PARAM_KEY = "newPassword";
 	private static final String CURRENT_PASSWORD_PARAM_KEY = "currentPassword";
@@ -33,6 +35,7 @@ public class ProfileAction extends CommonAction {
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
 		UserInfoVO userInfoVO = UserInfoVO.getUserInfoVOFor(user);
 		req.setAttribute(IS_LINKED_USER_PARAM_KEY, userInfoVO.isLinkedUser());
+		req.setAttribute(OPTION_ATTR_KEY, req.getParameter(OPTION_PARAM_KEY));
 		return new Forward("profile/pages/profile.jsp");
 	}
 
