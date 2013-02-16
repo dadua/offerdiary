@@ -1,5 +1,5 @@
 package com.itech.user.model;
 
 public enum UserRole {
-	ADMIN, CONSUMER
+	OD_ADMIN, CONSUMER
 }
