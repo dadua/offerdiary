@@ -53,7 +53,10 @@ public class OfferAction extends CommonAction{
 		User loggedInUser = getLoggedInUser();
 		List<Offer> offers = new ArrayList<Offer>();
 		if (loggedInUser != null) {
-			offers = getOfferManager().getAllOffersForUser(loggedInUser);
+			SearchCriteria validOffersSearchCriteria = new SearchCriteria();
+			validOffersSearchCriteria.setUniqueFilter("valid");
+			OfferSearchResultVO validOffersVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
+			offers = validOffersVO.getOffers();
 		}
 		Gson gson = new Gson();
 		Type listOfOffersType = new TypeToken<List<Offer>>() {

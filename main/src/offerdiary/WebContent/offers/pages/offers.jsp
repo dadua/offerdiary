@@ -39,9 +39,9 @@
                 <div class="container-fluid options-left-container">
                     <ul class="nav nav-list offerFilters">
                         <li class="nav-header">Offers by:</li>
-                        <li class="active allOffers"><a href="#">All</a></li>
-                        <li class="validOffers"><a href="#">Valid</a></li>
+                        <li class="active validOffers"><a href="#">Valid</a></li>
                         <li class="expiredOffers"><a href="#">Expired</a></li>
+                        <li class="allOffers"><a href="#">All</a></li>
                         <li class="divider"></li>
                         <li class="nav-header">Expiry in:</li>
                         <li><a href="#"></a></li>
