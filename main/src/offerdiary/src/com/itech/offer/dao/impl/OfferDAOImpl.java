@@ -11,6 +11,7 @@ import org.hibernate.Query;
 import com.itech.common.CommonUtilities;
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
+import com.itech.offer.OfferSearchFilterUtil;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
@@ -19,6 +20,8 @@ import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
 
 public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements OfferDAO{
+
+	private static final int MILLIS_IN_A_DAY = 24*60*60*1000;
 
 	@Override
 	protected Class getEntityClass() {
@@ -123,8 +126,9 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			return " 1=1 ";
 		}
 
-		String whereClause = " o.description like :desc ";
+		String whereClause = " (o.description like :desc or (o.sourceVendor.name like :vendorName))  ";
 		parameterMap.put("desc", "%" + finalSearchString + "%");
+		parameterMap.put("vendorName", "%" + finalSearchString + "%");
 		return whereClause;
 	}
 
@@ -144,18 +148,21 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		}
 
 
-		if ("expiringIn7Days".equalsIgnoreCase(uniqueFilter)) {
+		if (OfferSearchFilterUtil.isExpiryFilter(uniqueFilter)) {
+			int numberOfDays = OfferSearchFilterUtil.getNumberOfDays(uniqueFilter);
 			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			parameterMap.put("next7Days", new Date(System.currentTimeMillis() + 24*60*60*1000*7));
-			return  " (o.expiry > :now and o.expiry < :next7Days)";
+			parameterMap.put("expiryDate", new Date(System.currentTimeMillis() + MILLIS_IN_A_DAY*numberOfDays));
+			return  " (o.expiry > :now and o.expiry < :expiryDate)";
 		}
 
-		if ("addedInLast7Days".equalsIgnoreCase(uniqueFilter)) {
+		if (OfferSearchFilterUtil.isCreationFilter(uniqueFilter)) {
+			int numberOfDays = OfferSearchFilterUtil.getNumberOfDays(uniqueFilter);
 			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			parameterMap.put("next7Days", new Date(System.currentTimeMillis() - 24*60*60*1000*7));
-			return  " (o.createdOn <= :now and o.createdOn > :next7Days)";
+			parameterMap.put("creationDate", new Date(System.currentTimeMillis() - MILLIS_IN_A_DAY*numberOfDays));
+			return  " (o.createdOn <= :now and o.createdOn > :creationDate)";
 		}
 		return " 1=1 ";
 	}
+
 
 }
