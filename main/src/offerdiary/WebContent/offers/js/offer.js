@@ -206,7 +206,7 @@ it.offer.saveOfferFromWizard= function (offerData) {
            function (data) {
                var ret = $.parseJSON(data);
                if (ret.success === true) {
-                   it.offer.refreshOffers ();
+                   it.offer.searchOffers();
                } else {
                    //Handle error case
                }
@@ -261,7 +261,7 @@ it.offer.trashOffer = function(e) {
         if (ret.success === true) {
             $('#'+targetId).tooltip('hide');
             $('#offer_'+offerId).remove();
-            it.offer.refreshOffers();
+            it.offer.searchOffers();
         } else {
             //Handle error case
         }
@@ -270,7 +270,11 @@ it.offer.trashOffer = function(e) {
 
 
 it.offer.addOneHandlers = function () {
-    $('#searchOfferQuery').keyup(it.offer.searchOffer);
+    $('#searchOfferQuery').keyup(it.offer.searchOffers);
+    $('.offerFilters>li').click(function() {
+        it.offer.searchOffers();
+    });
+
 };
 
 it.offer.addHandlers = function () {
@@ -301,12 +305,27 @@ it.offer.addHandlers = function () {
        */
 };
 
-it.offer.searchOffer = function () {
-    var q = $('#searchOfferQuery').val();
-    ///searchOffers.do?searchCriteria={uniqueFilter:'addedInLast7Days',q:'offerDesc'}
+it.offer.getUniqueFilter = function () {
+    var classToUniqueFilterMap = {
+        'allOffers': 'all',
+        'validOffers': 'valid',
+        'expiredOffers': 'expired',
+        'expires7daysOffers': 'expiringInNext7Days',
+        'expires1monthOffers': 'expiringInNext30Days',
+        'addedLastweekOffers': 'addedInLast7Days',
+        'addedLastmonthOffers': 'addedInLast30Days'
+    }, 
+    activeClasses = $('.offerFilters>.active').attr('class').split(' '),
+    activeClass = activeClasses[0]==='active'? activeClasses[1]: activeClasses[0];
+    return classToUniqueFilterMap[activeClass] || '';
+};
+
+it.offer.searchOffers = function () {
+    var q = $('#searchOfferQuery').val(),
+        uniqueFilter = it.offer.getUniqueFilter ();
 
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q})},
+           {'searchCriteria': JSON.stringify ({q: q, uniqueFilter: uniqueFilter})},
            function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
