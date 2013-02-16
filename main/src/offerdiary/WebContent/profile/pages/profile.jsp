@@ -8,12 +8,13 @@
 	<script src="profile/js/userinfo.js"></script>
 	<script src="profile/js/notificationconfig.js"></script>
 	<script src="profile/js/passwordchange.js"></script>
+	<script src="common/libs/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
 
 	<script type="text/javascript">
 
 		$(function(){
 			$('#profileTab').addClass('active');
-			it.profile.init();
+			it.profile.init('${option}');
 		});
 		
 		
@@ -35,7 +36,7 @@
 							<li class="active" id="userDetails"><a href="#">Details</a></li>
 							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
 							<c:if test="${!isLinkedUser}">
-								<li><a href="#" id="changePasswordOption">Change Password</a></li>
+								<li><a href="?o=changePassword" id="changePasswordOption">Change Password</a></li>
 							</c:if>
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
