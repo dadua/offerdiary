@@ -21,7 +21,7 @@ import com.itech.user.model.User;
 
 public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements OfferDAO{
 
-	private static final int MILLIS_IN_A_DAY = 24*60*60*1000;
+	private static final long MILLIS_IN_A_DAY = 24*60*60*1000;
 
 	@Override
 	protected Class getEntityClass() {
@@ -93,8 +93,8 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		parameterMap.put("user", getLoggedInUser());
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);
 		String whereClauseForSearch = getWhereClauseForFilterCriteria(searchCriteria.getSearchString(), searchCriteria.getSearchType(), searchCriteria.getQ(), parameterMap);
-		fromHql += "and" + whereClauseForFilter;
-		fromHql += "and" + whereClauseForSearch;
+		fromHql += " and" + whereClauseForFilter;
+		fromHql += " and" + whereClauseForSearch;
 
 		String resultHQL = "select o " + fromHql;
 		String resultCountHQL = "select count(*) " + fromHql;
@@ -150,15 +150,23 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 		if (OfferSearchFilterUtil.isExpiryFilter(uniqueFilter)) {
 			int numberOfDays = OfferSearchFilterUtil.getNumberOfDays(uniqueFilter);
-			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			parameterMap.put("expiryDate", new Date(System.currentTimeMillis() + MILLIS_IN_A_DAY*numberOfDays));
-			return  " (o.expiry > :now and o.expiry < :expiryDate)";
+			java.util.Date today = new java.util.Date(System.currentTimeMillis());
+			today.setHours(0);
+			today.setMinutes(0);
+			Date expiryLimit = new Date(System.currentTimeMillis() + MILLIS_IN_A_DAY*numberOfDays);
+			parameterMap.put("now", new Date(today.getTime()));
+			parameterMap.put("expiryDate", expiryLimit);
+			return  " (o.expiry >= :now and o.expiry < :expiryDate)";
 		}
 
 		if (OfferSearchFilterUtil.isCreationFilter(uniqueFilter)) {
 			int numberOfDays = OfferSearchFilterUtil.getNumberOfDays(uniqueFilter);
-			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			parameterMap.put("creationDate", new Date(System.currentTimeMillis() - MILLIS_IN_A_DAY*numberOfDays));
+			java.util.Date today = new java.util.Date(System.currentTimeMillis());
+			today.setHours(24);
+			today.setMinutes(0);
+			parameterMap.put("now", new Date(today.getTime()));
+			Date addedOn = new Date(System.currentTimeMillis() - MILLIS_IN_A_DAY*numberOfDays);
+			parameterMap.put("creationDate", addedOn);
 			return  " (o.createdOn <= :now and o.createdOn > :creationDate)";
 		}
 		return " 1=1 ";

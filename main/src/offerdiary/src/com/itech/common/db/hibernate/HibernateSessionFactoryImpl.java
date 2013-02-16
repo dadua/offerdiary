@@ -37,7 +37,6 @@ public class HibernateSessionFactoryImpl  implements HibernateSessionFactory {
 			}
 		} catch (HibernateException ex) {
 			logger.error("Error occoured while closing Hibernate session.", ex);
-			throw new RuntimeException("Error occoured while closing Hibernate session.", ex);
 		}
 
 	}

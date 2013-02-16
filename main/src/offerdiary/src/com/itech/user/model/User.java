@@ -60,7 +60,7 @@ public class User extends PersistableEntity{
 
 	@Enumerated(EnumType.STRING)
 	@Column(name=UserModelConstants.COL_USER_ROLE)
-	private final UserRole userRole = UserRole.CONSUMER;
+	private UserRole userRole = UserRole.CONSUMER;
 
 	@Column(name=UserModelConstants.COL_REGISTRATION_TIME)
 	private Date registrationTime;
@@ -208,6 +208,9 @@ public class User extends PersistableEntity{
 	}
 	public Date getDob() {
 		return dob;
+	}
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
 
 
