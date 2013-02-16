@@ -32,6 +32,13 @@ public class OfferAction extends CommonAction{
 		return new Forward(OfferWalletConstants.INDEX_PAGE);
 	}
 
+
+	/**
+	 * 
+	 * e.g. /searchOffers.do?searchCriteria={uniqueFilter:'addedInLast7Days',q:'offerDesc'}
+	 * uniqueFilter = expired, all, valid, expiringIn7Days, addedInLast7Days
+	 * 
+	 */
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	public Response searchOffers(HttpServletRequest req, HttpServletResponse resp) {
 		SearchCriteria searchCriteria = getSearchCriteria(req);
