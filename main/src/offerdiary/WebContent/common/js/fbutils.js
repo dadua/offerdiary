@@ -1,7 +1,7 @@
 var it = it|| {};
 it.fb = function () {
 
-    var lastOnServerUp = null;
+    var _lastOnServerUp = null;
 
     var _updatePageOnLogin = function(data){
         if (console) {
@@ -20,7 +20,7 @@ it.fb = function () {
 
     var _handleFbResp = function(response) {
         if (response.authResponse) {
-            _serverUpdate(response.authResponse, lastOnServerUp);
+            _serverUpdate(response.authResponse, _lastOnServerUp);
         } else {
             $('#loginToFb').removeClass('disabled');
             alert('User login failed!!');
@@ -39,6 +39,22 @@ it.fb = function () {
         });
     };
 
+    var postOnWall = function (options) {
+        options = $.extend({
+            method: 'feed',
+            redirect_uri: 'http://localhost:8080/offerdiary/',
+            link: 'http://www.offerdiary.com',
+            picture: 'http://ec2-54-245-11-4.us-west-2.compute.amazonaws.com/images/logo_tag.png',
+            name: 'Offer Diary',
+            caption: 'Never miss an offer',
+            description: '',
+            callback: function(){
+            }
+        }, options);
+
+        FB.ui(options, options.callback);
+    };
+
     var checkAndLogin = function(e) {
         if ($(this).hasClass('disabled')) {
             return;
@@ -46,7 +62,7 @@ it.fb = function () {
         $(this).addClass('disabled');
         var onServerUp = e.data.onServerUp;
         if (typeof onServerUp === 'function') {
-            lastOnServerUp = onServerUp;
+            _lastOnServerUp = onServerUp;
         }
         checkLoginStatusAndUpdateServer(function() {
             try {
@@ -63,11 +79,12 @@ it.fb = function () {
         checkAndLogin: checkAndLogin,
         setActionOnServerUp: function(func) {
             if (typeof func === 'function') {
-                lastOnServerUp = func;
+                _lastOnServerUp = func;
             } else {
                 throw {message: 'a function object has to be inputted'}; 
             }
-        }
+        },
+        postOnWall: postOnWall
     };
 }();
 
