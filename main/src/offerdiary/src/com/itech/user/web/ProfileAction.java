@@ -5,6 +5,9 @@ import java.lang.reflect.Type;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.ActionResponseAnnotation;
@@ -19,6 +22,7 @@ import com.itech.user.model.UserNotificationConfig;
 import com.itech.user.vos.UserInfoVO;
 import com.itech.user.vos.UserNotificationConfigVO;
 
+@Controller
 public class ProfileAction extends CommonAction {
 
 
@@ -30,8 +34,8 @@ public class ProfileAction extends CommonAction {
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="profile.do")
 	public Response goToProfile(HttpServletRequest req, HttpServletResponse resp) {
-
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
 		UserInfoVO userInfoVO = UserInfoVO.getUserInfoVOFor(user);
 		req.setAttribute(IS_LINKED_USER_PARAM_KEY, userInfoVO.isLinkedUser());
@@ -41,6 +45,7 @@ public class ProfileAction extends CommonAction {
 
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getUserInfo.do")
 	public Response getUserInfo(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
 		UserInfoVO userInfoVO = UserInfoVO.getUserInfoVOFor(user);
@@ -50,6 +55,7 @@ public class ProfileAction extends CommonAction {
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="updateUserInfo.do")
 	public Response updateUserInfo(HttpServletRequest req, HttpServletResponse resp) {
 		String userInfoJson = req.getParameter(OfferWalletConstants.USER_INFO_PARAM_KEY);
 		Gson gson = new Gson();
@@ -65,6 +71,7 @@ public class ProfileAction extends CommonAction {
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="updateUserNotificationConfig.do")
 	public Response updateUserNotificationConfig(HttpServletRequest req, HttpServletResponse resp) {
 		String userNotificationConfigJson = req.getParameter(OfferWalletConstants.USER_NOTIFICATION_CONFIG_PARAM_KEY);
 		Gson gson = new Gson();
@@ -84,6 +91,7 @@ public class ProfileAction extends CommonAction {
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getUserNotificationConfig.do")
 	public Response getUserNotificationConfig(HttpServletRequest req, HttpServletResponse resp) {
 		UserNotificationConfig userNotificationConfig = getUserManager().getUserNotificationConfigFor(getLoggedInUser());
 		if (userNotificationConfig == null) {
@@ -100,7 +108,9 @@ public class ProfileAction extends CommonAction {
 
 
 
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="changePassword.do")
 	public Response changePassword(HttpServletRequest req, HttpServletResponse resp) {
 		String currentPassword = req.getParameter(CURRENT_PASSWORD_PARAM_KEY);
 		String newPassword = req.getParameter(NEW_PASSWORD_PARAM_KEY);

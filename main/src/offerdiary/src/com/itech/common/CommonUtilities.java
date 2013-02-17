@@ -13,15 +13,14 @@ public class CommonUtilities {
 
 	public static String getUniqueId(String moduleName) {
 		long currentTimeMillis = System.currentTimeMillis();
-		int random = new Random(9999999).nextInt();
 		int random2 = new Random(99).nextInt();
 		int random3 = new Random(5).nextInt();
 		long timeComponent = currentTimeMillis/random2;
 		String guuid = getGUID();
 		String guidPart1 = guuid.substring(0, guuid.length()/random3);
 		String guidPart2 = guuid.substring(guuid.length()/random3);
-		String uniqueString = moduleName.hashCode() *3  + moduleName + guidPart1 + timeComponent + guidPart2 + random2 + currentTimeMillis + random;
-		return uniqueString;
+		String uniqueString = moduleName.hashCode() *3 + guidPart1 + timeComponent + guidPart2 + random2 ;
+		return uniqueString.replace("-", "");
 	}
 
 

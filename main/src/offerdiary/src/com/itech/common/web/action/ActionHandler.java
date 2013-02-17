@@ -46,7 +46,15 @@ public class ActionHandler {
 			getSecurityContextHolder().setContext(new SecurityContext(user));
 			getHibernateSessionFactory().openNewSession();
 			ActionMapping actionMapping = ActionMappings.getAction(actionName);
-			Object actionBean = actionMapping.getBeanClass().newInstance();
+			Object actionBean = null;
+			try {
+				actionBean = ServiceLocator.getInstance().getBean(actionMapping.getBeanClass());
+			} catch (Exception e) {
+				logger.warn("no bean present in services", e);
+			}
+			if (actionBean == null) {
+				actionBean = actionMapping.getBeanClass().newInstance();
+			}
 
 			executeMethod = actionMapping.getBeanClass().getMethod(actionMapping.getMethodName(),
 					HttpServletRequest.class, HttpServletResponse.class );

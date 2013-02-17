@@ -26,6 +26,8 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 
 	OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
 
+	Offer getByUniqueId(String uniqueId);
+
 
 
 }

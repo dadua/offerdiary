@@ -27,6 +27,9 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name=OfferModelConstants.COL_ID)
 	private Long id;
 
+	@Column(name="UNIQUE_ID")
+	private String uniqueId;
+
 	@Column(name=OfferModelConstants.COL_TITLE)
 	private String title;
 
@@ -67,24 +70,24 @@ public class Offer extends PersistableEntity implements Cloneable{
 	private Vendor sourceVendor;
 
 	@Column(name=OfferModelConstants.COL_IS_ONLINE_OFFER)
-	private Boolean isOnlineOffer;
+	private boolean isOnlineOffer;
 
 	@Column(name=OfferModelConstants.COL_LOCATION)
 	private String location;
 
 	@Column(name=OfferModelConstants.COL_IS_PROTOTYPE)
-	private Boolean isProtoType;
+	private boolean isProtoType;
 
 	@Column(name=OfferModelConstants.COL_EXPIRY_DATE_UTC_IN_MILLIS)
 	private long expiryDateInMillis;
 
 
 	@Column(name=OfferModelConstants.COL_EMAIL_NOTIFICATION)
-	private Boolean emailNotification;
+	private boolean emailNotification;
 
 
 	@Column(name=OfferModelConstants.COL_FB_NOTIFICATION)
-	private Boolean fbNotification;
+	private boolean fbNotification;
 
 
 	@Transient
@@ -335,6 +338,16 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
 	}
 
 }
