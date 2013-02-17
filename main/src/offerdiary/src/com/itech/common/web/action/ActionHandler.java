@@ -50,7 +50,7 @@ public class ActionHandler {
 			try {
 				actionBean = ServiceLocator.getInstance().getBean(actionMapping.getBeanClass());
 			} catch (Exception e) {
-				logger.warn("no bean present in services", e);
+				logger.warn("no bean present in services for - " + actionName, e);
 			}
 			if (actionBean == null) {
 				actionBean = actionMapping.getBeanClass().newInstance();

@@ -8,6 +8,9 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.ActionResponse;
@@ -24,6 +27,7 @@ import com.itech.fb.services.FbAdapterFactory;
 import com.itech.fb.services.FbService;
 import com.itech.user.model.User;
 
+@Controller
 public class FbLoginAction extends CommonAction{
 
 	/**
@@ -36,6 +40,7 @@ public class FbLoginAction extends CommonAction{
 	 *  3. CALLBACKURL
 	 */
 	@ActionResponseAnnotation(responseType=Redirect.class)
+	@ActionMapping(value="fbLogin.do")
 	public Response doFbUserLoginToApp (HttpServletRequest req, HttpServletResponse resp) {
 
 		String serverPath = ActionResponse.getServerPath(req, resp);
@@ -47,6 +52,7 @@ public class FbLoginAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="setFbAdapter.do")
 	public Response setFbAdapter (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -64,6 +70,7 @@ public class FbLoginAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=Redirect.class)
+	@ActionMapping(value="facebookCallbackUrl.do")
 	public Response doHandleFbUserCode (HttpServletRequest request, HttpServletResponse resp) throws UnsupportedEncodingException {
 
 		FbAdapter fbAdapter = (FbAdapter)request.getSession().getAttribute(FbConstants.FB_ADAPTER_KEY);
@@ -96,6 +103,7 @@ public class FbLoginAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="testFbAction.do")
 	public Response testFbAction(HttpServletRequest request, HttpServletResponse response) {
 		return ActionResponse.forward("testResult.jsp");
 	}
