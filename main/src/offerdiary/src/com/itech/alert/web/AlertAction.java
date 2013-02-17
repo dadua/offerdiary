@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.alert.AlertConstants;
@@ -20,12 +23,14 @@ import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.user.model.User;
 
+@Controller
 public class AlertAction extends CommonAction{
 
 	private static final String NEW_ALERT_COUNT_ATTR_KEY = "newAlertCount";
 	private static final String MY_ALERTS_ATTR_KEY = "myAlerts";
 
 	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="alerts.do")
 	public Response goToMyAlerts(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Alert> alerts = new ArrayList<Alert>();
@@ -44,6 +49,7 @@ public class AlertAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getMyAlerts.do")
 	public Response getMyAlerts (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		List<Alert> alerts = new ArrayList<Alert>();
@@ -57,6 +63,7 @@ public class AlertAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="deleteAlerts.do")
 	public Response deleteAlerts (HttpServletRequest req, HttpServletResponse resp) {
 		String alertIdsJson = req.getParameter(AlertConstants.ALERT_IDS_PARAM_KEY);
 		Gson gson = new Gson();
@@ -70,6 +77,7 @@ public class AlertAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="markAlertsRead.do")
 	public Response markAlertRead(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		getAlertManager().markAlertsRead(loggedInUser);

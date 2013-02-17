@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.web.action.ActionResponseAnnotation;
@@ -15,6 +18,7 @@ import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.model.Vendor;
 
+@Controller
 public class VendorAction extends CommonAction{
 
 	private static final String VENDOR_JSON_KEY = "vendorJson";
@@ -24,6 +28,7 @@ public class VendorAction extends CommonAction{
 	private static final String VENDOR_NAME_SEARCH_KEY = "searchKey";
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="addVendor.do")
 	public Response addVendor (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorJson = req.getParameter(VENDOR_JSON_KEY);
 		Gson gson = new Gson();
@@ -37,6 +42,7 @@ public class VendorAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="searchVendor.do")
 	public Response searchVendors (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorSearchString = req.getParameter(VENDOR_NAME_SEARCH_KEY);
 		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);
