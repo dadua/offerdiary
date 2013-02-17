@@ -71,14 +71,21 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 		Map<String, T> beans = applicationContext.getBeansOfType(clazz);
 		if (beans.size() > 1) {
 			throw new RuntimeException("More than one bean of type " + clazz + " is available." +
-			" Please try to retrive the bean by name");
+					" Please try to retrive the bean by name");
 		}
 		if (beans.isEmpty()) {
 			throw new RuntimeException("Could not find a bean of type " + clazz +
-			" Please try to retrive the bean by name");
+					" Please try to retrive the bean by name");
 		}
 		return beans.values().iterator().next();
 	}
+
+	@Override
+	public <T> Map<String, T> getBeans(Class<T> clazz) {
+		Map<String, T> beans = applicationContext.getBeansOfType(clazz);
+		return beans;
+	}
+
 
 	private Object getBeanByName(String beanName) {
 		try {
@@ -95,7 +102,7 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
-	throws BeansException {
+			throws BeansException {
 		this.applicationContext = applicationContext;
 
 	}
@@ -107,4 +114,5 @@ public class SpringServiceLocator extends ServiceLocator implements  Application
 	public HibernateSessionFactory getHibernateSessionFactory() {
 		return hibernateSessionFactory;
 	}
+
 }

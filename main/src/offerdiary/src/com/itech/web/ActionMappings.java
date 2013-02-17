@@ -8,7 +8,6 @@ import com.itech.common.web.action.ActionMapping;
 import com.itech.offer.web.OfferAction;
 import com.itech.offer.web.OfferCardAction;
 import com.itech.offer.web.VendorAction;
-import com.itech.user.web.ProfileAction;
 
 public class ActionMappings {
 	private static final Map<String, ActionMapping> actions = new HashMap<String, ActionMapping>();
@@ -35,6 +34,7 @@ public class ActionMappings {
 		add(new ActionMapping("saveOffers.do", OfferAction.class, "saveOffers"));
 		add(new ActionMapping("deleteOffers.do", OfferAction.class, "deleteOffers"));
 		add(new ActionMapping("searchOffers.do", OfferAction.class, "searchOffers"));
+		add(new ActionMapping("getOfferDetail.do", OfferAction.class, "getOfferDetail"));
 		add(new ActionMapping("getOffersOnMyCards.do", OfferAction.class, "getOffersOnMyCards"));
 		add(new ActionMapping("getOffersOnCard.do", OfferAction.class, "getOffersOnCard"));
 
@@ -75,14 +75,14 @@ public class ActionMappings {
 		add(new ActionMapping("cards.do", OfferCardAction.class, "goToMyCards"));
 		add(new ActionMapping("removeCardFromWallet.do", OfferCardAction.class, "removeCardFromWallet"));
 
-
-		//Profile actions
-		add(new ActionMapping("profile.do", ProfileAction.class, "goToProfile"));
-		add(new ActionMapping("getUserInfo.do", ProfileAction.class, "getUserInfo"));
-		add(new ActionMapping("updateUserInfo.do", ProfileAction.class, "updateUserInfo"));
-		add(new ActionMapping("changePassword.do", ProfileAction.class, "changePassword"));
-		add(new ActionMapping("updateUserNotificationConfig.do", ProfileAction.class, "updateUserNotificationConfig"));
-		add(new ActionMapping("getUserNotificationConfig.do", ProfileAction.class, "getUserNotificationConfig"));
+		//
+		//		//Profile actions
+		//		add(new ActionMapping("profile.do", ProfileAction.class, "goToProfile"));
+		//		add(new ActionMapping("getUserInfo.do", ProfileAction.class, "getUserInfo"));
+		//		add(new ActionMapping("updateUserInfo.do", ProfileAction.class, "updateUserInfo"));
+		//		add(new ActionMapping("changePassword.do", ProfileAction.class, "changePassword"));
+		//		add(new ActionMapping("updateUserNotificationConfig.do", ProfileAction.class, "updateUserNotificationConfig"));
+		//		add(new ActionMapping("getUserNotificationConfig.do", ProfileAction.class, "getUserNotificationConfig"));
 
 	}
 }

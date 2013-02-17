@@ -1,6 +1,7 @@
 package com.itech.offer.dao.impl;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.offer.vo.OfferSearchResultVO;
+import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
 
 public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements OfferDAO{
@@ -87,6 +89,14 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	}
 
 	@Override
+	public Offer getByUniqueId(String uniqueId) {
+		String hql = "select o from " + getEntityClassName() + " o where o.uniqueId=:uniqueId";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("uniqueId", uniqueId);
+		return getSingleResultFrom(query);
+	}
+
+	@Override
 	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria) {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		String fromHql = "from " + getEntityClassName() + " o, OfferUserAssoc oua  where oua.offer=o and oua.user=:user ";
@@ -110,8 +120,13 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		List<Offer> offers = getPaginatedResultFor(resultQuery, searchCriteria);
 		Long resultCount = (Long) getSingleResult(resultCountQuery);
 
+		List<OfferVO> offerVOs = new ArrayList<OfferVO>();
+		for (Offer offer : offers) {
+			OfferVO offerVO = OfferVO.getOfferVOFor(offer);
+			offerVOs.add(offerVO);
+		}
 		OfferSearchResultVO offerSearchResult = new OfferSearchResultVO();
-		offerSearchResult.setOffers(offers);
+		offerSearchResult.setOffers(offerVOs);
 		offerSearchResult.setTotalCount(resultCount);
 		offerSearchResult.setPerPageCount(searchCriteria.getResultsPerPage());
 		return offerSearchResult;
@@ -171,6 +186,8 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		}
 		return " 1=1 ";
 	}
+
+
 
 
 }

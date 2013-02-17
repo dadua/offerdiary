@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.alert.services.AlertManager;
+import com.itech.common.CommonUtilities;
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
@@ -40,10 +41,21 @@ public class CommonAction {
 
 	protected SearchCriteria getSearchCriteria(HttpServletRequest req){
 		String searchCriteriaJSON = req.getParameter(SEARCH_CRITERIA_PARAM_KEY);
+		if (CommonUtilities.isNullOrEmpty(searchCriteriaJSON)) {
+			return new SearchCriteria();
+		}
 		Gson gson = new Gson();
 		Type searchCriteriaJsonType = new TypeToken<SearchCriteria>() { }.getType();
 		SearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
 		return searchCriteria;
+	}
+
+
+	protected String getAbsoluteURL(HttpServletRequest httpRequest, String url) {
+		//TODO: add handling for production server
+		String absoluteURL = "http://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
+		absoluteURL += url;
+		return absoluteURL;
 	}
 
 	public void setSecurityContextHolder(SecurityContextHolder securityContextHolder) {

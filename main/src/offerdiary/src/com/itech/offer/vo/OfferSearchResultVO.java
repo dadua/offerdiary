@@ -2,20 +2,18 @@ package com.itech.offer.vo;
 
 import java.util.List;
 
-import com.itech.offer.model.Offer;
-
 public class OfferSearchResultVO {
-	private List<Offer> offers;
+	private List<OfferVO> offers;
 
 	private Long totalCount;
 
 	private Integer perPageCount;
 
-	public List<Offer> getOffers() {
+	public List<OfferVO> getOffers() {
 		return offers;
 	}
 
-	public void setOffers(List<Offer> offers) {
+	public void setOffers(List<OfferVO> offers) {
 		this.offers = offers;
 	}
 

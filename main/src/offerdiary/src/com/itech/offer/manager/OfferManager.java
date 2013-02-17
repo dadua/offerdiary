@@ -43,4 +43,8 @@ public interface OfferManager {
 
 	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
 
+	public void deleteByUniqueIds(List<String> offerUniqueIds);
+
+	public Offer getOfferForUnqueId(String uniqueId);
+
 }

@@ -1,5 +1,7 @@
 package com.itech.common.services;
 
+import java.util.Map;
+
 public abstract class ServiceLocator {
 	static ServiceLocator instance;
 
@@ -11,5 +13,7 @@ public abstract class ServiceLocator {
 
 	public  abstract <T> T getBean(Class<T> clazz);
 
+
+	public abstract <T> Map<String, T> getBeans(Class<T> clazz);
 
 }

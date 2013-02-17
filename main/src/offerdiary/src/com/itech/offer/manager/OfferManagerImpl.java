@@ -50,6 +50,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
 			offer.setSourceVendor(vendorFromDB);
 		}
+
+		if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
+			offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+		}
 		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
@@ -100,6 +104,19 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		}
 	}
 
+	@Override
+	public void deleteByUniqueIds(List<String> offerUniqueIds) {
+		for(String uniqueId: offerUniqueIds){
+			//TODO this has to re-factored to accommodate the sharing model arch
+			Offer offer = getOfferDAO().getByUniqueId(uniqueId);
+			List<OfferUserAssoc> offerUserAssocs = getOfferUserAssocDAO().getOfferUserAssocForOffer(offer.getId());
+			for (OfferUserAssoc offerUserAssoc : offerUserAssocs) {
+				getOfferUserAssocDAO().delete(offerUserAssoc.getId());
+			}
+			getOfferDAO().delete(offer);
+		}
+	}
+
 	private OfferUserAssoc getOfferUserAssoc(Offer offer, User user) {
 		OfferUserAssoc offerUserAssoc = new OfferUserAssoc();
 		offerUserAssoc.setOffer(offer);
@@ -113,7 +130,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		OfferShare offerShare = new OfferShare();
 		offerShare.setOffer(offer);
 		offerShare.setCreationDate(new Date(System.currentTimeMillis()));
-		offerShare.setAccessToken(CommonUtilities.getGUID());
+		offerShare.setAccessToken(CommonUtilities.getUniqueId("OFFER"));
 		getOfferShareDAO().addOrUpdate(offerShare);
 		return offerShare;
 	}
@@ -143,6 +160,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
 
 		return offerShare;
+	}
+
+	@Override
+	public Offer getOfferForUnqueId(String uniqueId) {
+		return getOfferDAO().getByUniqueId(uniqueId);
 	}
 
 
@@ -248,8 +270,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public void setOfferCardManager(OfferCardManager offerCardManager) {
 		this.offerCardManager = offerCardManager;
 	}
-
-
 
 
 }
