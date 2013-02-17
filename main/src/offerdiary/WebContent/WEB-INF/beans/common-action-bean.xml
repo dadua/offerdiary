@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+    
+    
+    <bean id="itech.ActionMappingService" class="com.itech.web.ActionMappingService">
+    
+    </bean>
+    
+    <bean id="itech.CommonAction" class="com.itech.common.web.action.CommonAction" abstract="true">
+    	<property name="alertManager" ref="itech.AlertManager"/>
+    	<property name="offerCardManager" ref="itech.offerCardManager"/>
+    	<property name="offerManager" ref="itech.offerManager"/>
+    	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>
+    	<property name="userManager" ref="itech.UserManager"/>
+    	<property name="vendorManager" ref="itech.vendorManager"/>
+    </bean>
+    
+    <bean id="itech.ProfileAction" class="com.itech.user.web.ProfileAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
+    <bean id="itech.AlertAction" class="com.itech.alert.web.AlertAction" scope="prototype" parent="itech.CommonAction">   
+    </bean>	
+    
+    <bean id="itech.OfferAction" class="com.itech.offer.web.OfferAction" scope="prototype" parent="itech.CommonAction">    
+    </bean>	
+
+    <bean id="itech.VendorAction" class="com.itech.offer.web.VendorAction" scope="prototype" parent="itech.CommonAction">    
+    </bean>	
+
+     <bean id="itech.OfferCardAction" class="com.itech.offer.web.OfferCardAction" scope="prototype" parent="itech.CommonAction">   
+    </bean>	
+    
+    <bean id="itech.FbLoginAction" class="com.itech.web.FbLoginAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
+    <bean id="itech.LoginAction" class="com.itech.web.LoginAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
+ </beans>
+    
