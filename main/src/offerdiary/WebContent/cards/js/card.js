@@ -7,8 +7,8 @@ it.card = it.card || {};
 //Utility function
 it.card.getParentCardId = function(actionElem) {
     var cardIdExtractRegex = /^card_(.*)/,
-    parentCardElem$ = $(actionElem).parent().parent(),
-    cardId = cardIdExtractRegex.exec($(parentCardElem$).attr('id'))[1];
+        parentCardElem$ = $(actionElem).parent().parent(),
+        cardId = cardIdExtractRegex.exec($(parentCardElem$).attr('id'))[1];
     return cardId;
 };
 
@@ -17,8 +17,8 @@ it.card.dismiss = function(e) {
     $(this).addClass('disable');
     e.preventDefault();
     var target = e.target,
-    cardId = it.card.getParentCardId(target),
-    card = {id:cardId};
+        cardId = it.card.getParentCardId(target),
+        card = {id:cardId};
     $.post('removeCardFromWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
         var ret = $.parseJSON(data);
         if (ret.success === true) {
@@ -31,8 +31,8 @@ it.card.dismiss = function(e) {
 
 it.card.associateWithUser = function(e) {
     var target = e.target,
-    cardId = it.card.getParentCardId(target),
-    card = {id:cardId};
+        cardId = it.card.getParentCardId(target),
+        card = {id:cardId};
     $.post('addCardToWallet.do', {'offerCardJson': JSON.stringify(card)}, function(data) {
         var ret = $.parseJSON(data);
         if (ret.success === true) {
@@ -183,7 +183,8 @@ it.card.pagination = (function () {
             $('#cardPaginationContainer').pagination(totalNoOfCards, {
                 items_per_page:9,
                 callback:handlePaginationClick,
-                num_edge_entries:1
+                num_edge_entries:1,
+                num_display_entries: 5
             });
             _lastTotalNoOfCards = totalNoOfCards;
         }
