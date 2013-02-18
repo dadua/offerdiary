@@ -56,7 +56,7 @@ public class OfferCardAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="deleteOffers.do")
+	@ActionMapping(value="getMyCards.do")
 	public Response getMyCards(HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		List<OfferCard> offerCards = getOfferCardManager().getAssociatedOfferCardFor(user);
