@@ -37,21 +37,21 @@ public class OfferVO {
 
 	private Vendor sourceVendor;
 
-	private boolean isOnlineOffer;
+	private Boolean isOnlineOffer;
 
 	private String location;
 
-	private boolean isProtoType;
+	private Boolean isProtoType;
 
 	private long expiryDateInMillis;
 
-	private boolean emailNotification;
+	private Boolean emailNotification;
 
-	private boolean fbNotification;
+	private Boolean fbNotification;
 
-	private boolean byUniqueId;
+	private Boolean byUniqueId;
 
-	private boolean byAccessCode;
+	private Boolean byAccessCode;
 
 	private String accessCode;
 
@@ -225,12 +225,12 @@ public class OfferVO {
 	}
 
 
-	public boolean getIsOnlineOffer() {
+	public Boolean getIsOnlineOffer() {
 		return isOnlineOffer;
 	}
 
 
-	public void setIsOnlineOffer(boolean isOnlineOffer) {
+	public void setIsOnlineOffer(Boolean isOnlineOffer) {
 		this.isOnlineOffer = isOnlineOffer;
 	}
 
@@ -245,12 +245,12 @@ public class OfferVO {
 	}
 
 
-	public boolean getIsProtoType() {
+	public Boolean getIsProtoType() {
 		return isProtoType;
 	}
 
 
-	public void setIsProtoType(boolean isProtoType) {
+	public void setIsProtoType(Boolean isProtoType) {
 		this.isProtoType = isProtoType;
 	}
 
@@ -265,32 +265,32 @@ public class OfferVO {
 	}
 
 
-	public boolean getEmailNotification() {
+	public Boolean getEmailNotification() {
 		return emailNotification;
 	}
 
 
-	public void setEmailNotification(boolean emailNotification) {
+	public void setEmailNotification(Boolean emailNotification) {
 		this.emailNotification = emailNotification;
 	}
 
 
-	public boolean getFbNotification() {
+	public Boolean getFbNotification() {
 		return fbNotification;
 	}
 
 
-	public void setFbNotification(boolean fbNotification) {
+	public void setFbNotification(Boolean fbNotification) {
 		this.fbNotification = fbNotification;
 	}
 
 
-	public boolean getByUniqueId() {
+	public Boolean getByUniqueId() {
 		return byUniqueId;
 	}
 
 
-	public void setByUniqueId(boolean byUniqueId) {
+	public void setByUniqueId(Boolean byUniqueId) {
 		this.byUniqueId = byUniqueId;
 	}
 
@@ -315,12 +315,12 @@ public class OfferVO {
 	}
 
 
-	public boolean getByAccessCode() {
+	public Boolean getByAccessCode() {
 		return byAccessCode;
 	}
 
 
-	public void setByAccessCode(boolean byAccessCode) {
+	public void setByAccessCode(Boolean byAccessCode) {
 		this.byAccessCode = byAccessCode;
 	}
 

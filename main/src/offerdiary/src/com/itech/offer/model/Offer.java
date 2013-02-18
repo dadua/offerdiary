@@ -70,24 +70,24 @@ public class Offer extends PersistableEntity implements Cloneable{
 	private Vendor sourceVendor;
 
 	@Column(name=OfferModelConstants.COL_IS_ONLINE_OFFER)
-	private boolean isOnlineOffer;
+	private Boolean isOnlineOffer = Boolean.TRUE;
 
 	@Column(name=OfferModelConstants.COL_LOCATION)
 	private String location;
 
 	@Column(name=OfferModelConstants.COL_IS_PROTOTYPE)
-	private boolean isProtoType;
+	private Boolean isProtoType = Boolean.FALSE;
 
 	@Column(name=OfferModelConstants.COL_EXPIRY_DATE_UTC_IN_MILLIS)
 	private long expiryDateInMillis;
 
 
 	@Column(name=OfferModelConstants.COL_EMAIL_NOTIFICATION)
-	private boolean emailNotification;
+	private Boolean emailNotification = Boolean.FALSE;
 
 
 	@Column(name=OfferModelConstants.COL_FB_NOTIFICATION)
-	private boolean fbNotification;
+	private Boolean fbNotification = Boolean.FALSE;
 
 
 	@Transient
@@ -251,11 +251,11 @@ public class Offer extends PersistableEntity implements Cloneable{
 		this.sourceVendor = sourceVendor;
 	}
 
-	public boolean isOnlineOffer() {
+	public Boolean isOnlineOffer() {
 		return isOnlineOffer;
 	}
 
-	public void setOnlineOffer(boolean isOnlineOffer) {
+	public void setOnlineOffer(Boolean isOnlineOffer) {
 		this.isOnlineOffer = isOnlineOffer;
 	}
 
@@ -267,11 +267,11 @@ public class Offer extends PersistableEntity implements Cloneable{
 		this.location = location;
 	}
 
-	public boolean isProtoType() {
+	public Boolean isProtoType() {
 		return isProtoType;
 	}
 
-	public void setProtoType(boolean isProtoType) {
+	public void setProtoType(Boolean isProtoType) {
 		this.isProtoType = isProtoType;
 	}
 
@@ -312,21 +312,21 @@ public class Offer extends PersistableEntity implements Cloneable{
 	}
 
 
-	public void setEmailNotification(boolean emailNotification) {
+	public void setEmailNotification(Boolean emailNotification) {
 		this.emailNotification = emailNotification;
 	}
 
 
-	public boolean isEmailNotification() {
+	public Boolean isEmailNotification() {
 		return emailNotification;
 	}
 
-	public void setFbNotification(boolean fbNotification) {
+	public void setFbNotification(Boolean fbNotification) {
 		this.fbNotification = fbNotification;
 	}
 
 
-	public boolean isFbNotification() {
+	public Boolean isFbNotification() {
 		return fbNotification;
 	}
 
