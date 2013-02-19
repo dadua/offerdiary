@@ -94,6 +94,7 @@ it.offer.getOfferHtml = function(offer) {
     }
     offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
+    offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);
@@ -283,6 +284,7 @@ it.offer.addHandlers = function () {
         it.offer.addwizard.getWizard().show();
     });
     $('.offerTrash').click(it.offer.trashOffer).tooltip();
+    $('.offerShare').click(it.offer.share.all).tooltip();
     /*
     $('.icon-trash').hover(function(e) {
         $(this).removeClass('icon-white');
