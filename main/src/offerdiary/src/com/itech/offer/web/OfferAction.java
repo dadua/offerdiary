@@ -57,19 +57,28 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, type);
 	}
 
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="offers.do")
+	public Response goToOffers(HttpServletRequest req, HttpServletResponse resp) {
+		return goToMyWallet(req, resp);
+	}
+
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="wallet.do")
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
+		List<OfferVO> offers = new ArrayList<OfferVO>();
 		if (loggedInUser != null) {
 			SearchCriteria validOffersSearchCriteria = new SearchCriteria();
 			validOffersSearchCriteria.setUniqueFilter("valid");
 			OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
-			offerSearchResultVO.getOffers();
+			offers = offerSearchResultVO.getOffers();
 			Gson gson = new Gson();
-			Type listOfOffersType = new TypeToken<OfferSearchResultVO>() {
+			Type listOfOffersType = new TypeToken<List<OfferVO>>() {
 			}.getType();
-			String offersJson = gson.toJson(offerSearchResultVO, listOfOffersType);
+			String offersJson = gson.toJson(offers, listOfOffersType);
 			req.setAttribute(MY_OFFERS_JSON_ATTR_KEY, StringEscapeUtils.escapeJavaScript(offersJson));
 		}
 		return new Forward(OfferWalletConstants.WALLET_PAGE);
