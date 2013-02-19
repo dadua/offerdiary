@@ -14,3 +14,7 @@ it.offer.share.email = function () {
 
 };
 
+it.offer.share.all = function () {
+    $('.share_offer_template').modal('show');
+};
+

@@ -5,6 +5,7 @@
     <script src="offers/js/addoffer_wizard.js" > </script>
     <script src="offers/js/vendor.js" > </script>
     <script src="offers/js/offer.js" > </script>
+    <script src="offers/js/share_offers.js" > </script>
     
     <script type="text/javascript">
         $(function() {
@@ -80,6 +81,7 @@
     <div id="addOfferWizardRoot"></div>
     <div id="templates" class="hide">
         <%@include file="/offers/templates/eachOfferTemplate.html" %>
+        <%@include file="/offers/templates/shareOfferTemplate.html" %>
         <div id="vendorSelectionTemplate">
             <div class="container-fluid" >
                 <div class="form-search row-fluid">
