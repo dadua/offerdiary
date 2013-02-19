@@ -25,6 +25,7 @@ import com.itech.offer.OfferWalletConstants;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.OfferSearchResultVO;
+import com.itech.offer.vo.OfferShareVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
 
@@ -182,9 +183,11 @@ public class OfferAction extends CommonAction{
 			offerShare = getOfferManager().createOfferShare(offer);
 		}
 		String shareOfferUrl = OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + offerShare.getAccessToken();
-		String getAbsoluteUrl = getAbsoluteURL(req, shareOfferUrl);
-		Result<String> result = new Result<String>(getAbsoluteUrl);
-		Type resultStringType = new TypeToken<Result<String>>() {
+		String absoluteSharedURL = getAbsoluteURL(req, shareOfferUrl);
+		OfferShareVO offerShareVO = OfferShareVO.getOfferShareVOFor(offerShare);
+		offerShareVO.setSharedURL(absoluteSharedURL);
+		Result<OfferShareVO> result = new Result<OfferShareVO>(offerShareVO);
+		Type resultStringType = new TypeToken<Result<OfferShareVO>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}

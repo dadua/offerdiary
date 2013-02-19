@@ -58,7 +58,15 @@ public class OfferShare extends PersistableEntity{
 
 	@Override
 	public boolean isTransient() {
-		return id == null;
+		return getId() == null;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

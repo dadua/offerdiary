@@ -53,6 +53,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 		if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 			offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+			offer.setPublicId(CommonUtilities.getUniqueId("OFFER"));
 		}
 		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
@@ -127,6 +128,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public OfferShare createOfferShare(Offer offer) {
+		OfferShare existingOfferShare = getOfferShareDAO().getOfferShareFor(offer);
+		if (existingOfferShare != null) {
+			return existingOfferShare;
+		}
 		OfferShare offerShare = new OfferShare();
 		offerShare.setOffer(offer);
 		offerShare.setCreationDate(new Date(System.currentTimeMillis()));
