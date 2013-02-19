@@ -13,6 +13,8 @@ public class OfferVO {
 
 	private String uniqueId;
 
+	private String publicId;
+
 	private String title;
 
 	private String description;
@@ -322,6 +324,16 @@ public class OfferVO {
 
 	public void setByAccessCode(Boolean byAccessCode) {
 		this.byAccessCode = byAccessCode;
+	}
+
+
+	public String getPublicId() {
+		return publicId;
+	}
+
+
+	public void setPublicId(String publicId) {
+		this.publicId = publicId;
 	}
 
 }

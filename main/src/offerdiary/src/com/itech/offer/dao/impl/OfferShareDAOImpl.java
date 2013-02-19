@@ -6,6 +6,7 @@ import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferShareDAO;
+import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 
 public class OfferShareDAOImpl extends HibernateCommonBaseDAO<OfferShare> implements
@@ -23,6 +24,14 @@ OfferShareDAO {
 		query.setParameter("accessToken", accessToken);
 		List<OfferShare> offerShares = query.list();
 		return (offerShares.size() == 0? null : offerShares.get(0));
+	}
+
+	@Override
+	public OfferShare getOfferShareFor(Offer offer) {
+		String hql = "select os from " + getEntityClassName() + " os where os.offer=:offer";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offer", offer);
+		return getSingleResultFrom(query);
 	}
 
 
