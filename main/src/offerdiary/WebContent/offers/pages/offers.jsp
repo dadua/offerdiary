@@ -14,6 +14,7 @@
             var offersJson = '${myOffersJson}',
                 offers = JSON.parse(offersJson);
             it.offer.init(offers);
+            it.offer.share.init();
         });
             
     </script>

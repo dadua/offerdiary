@@ -3,19 +3,43 @@ it.offer = it.offer || {};
 it.offer.share = it.offer.share || {};
 
 it.offer.share.addHandlers = function () {
-    $('.share_offer_template').find('emailShareOpt').click(function(){
-    });
-    $('.share_offer_template').find('fbShareOpt').click(function(){
-    });
+    var share_offer$ = $('.share_offer_template');
+    share_offer$.find('.emailShareOpt').click(it.offer.share.toggleToMailOpt);
+    share_offer$.find('.fbShareOpt').click(it.offer.share.toggleToFbOpt);
+    share_offer$.find('.shareEmails').keyup(it.offer.share.toggleShareBtnOnValidEmail);
 };
 
+it.offer.share.checkEmailAndToggle = function () {
+    var share_offer$ = $('.share_offer_template'),
+        emailVal = share_offer$.find('.shareEmails').val(),
+        validEmailRegex = /.+@.+\..+/;
 
-it.offer.share.toggleToFbOpt = function (resp) {
-
+    if (validEmailRegex.test(emailVal)) {
+        share_offer$.find('.shareOfferBtn').removeClass('disabled');
+    } else {
+        share_offer$.find('.shareOfferBtn').addClass('disabled');
+    }
 };
 
-it.offer.share.toggleToMailOpt= function (resp) {
+it.offer.share.toggleShareBtnOnValidEmail = function () {
+    var share_offer$ = $('.share_offer_template');
+    if (share_offer$.find('.emailShareOpt').hasClass('active')) {
+        this.checkEmailAndToggle();
+    } else {
+        share_offer$.find('.shareOfferBtn').removeClass('disabled');
+    }
+};
 
+it.offer.share.toggleToMailOpt= function (e) {
+    var share_offer$ = $('.share_offer_template');
+    share_offer$.find('.shareEmailContent').show();
+    it.offer.share.checkEmailAndToggle();
+};
+
+it.offer.share.toggleToFbOpt = function (e) {
+    var share_offer$ = $('.share_offer_template');
+    share_offer$.find('.shareEmailContent').hide();
+    share_offer$.find('.shareOfferBtn').removeClass('disabled');
 };
 
 it.offer.share.show = function (resp) {
@@ -47,3 +71,11 @@ it.offer.share.all = function (e) {
     });
 };
 
+it.offer.share.resetFormVals = function() {
+
+
+};
+
+it.offer.share.init = function () {
+    it.offer.share.addHandlers();
+};
