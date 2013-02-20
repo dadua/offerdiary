@@ -2,8 +2,24 @@ var it = it || {};
 it.offer = it.offer || {};
 it.offer.share = it.offer.share || {};
 
+it.offer.share.addHandlers = function () {
+    $('.share_offer_template').find('emailShareOpt').click(function(){
+    });
+    $('.share_offer_template').find('fbShareOpt').click(function(){
+    });
+};
+
+
+it.offer.share.toggleToFbOpt = function (resp) {
+
+};
+
+it.offer.share.toggleToMailOpt= function (resp) {
+
+};
+
 it.offer.share.show = function (resp) {
-    $('.share_offer_template').find('.sharedUrl').val(resp.sharedURL).focus();
+    $('.share_offer_template').find('.sharedUrl').val(resp.sharedURL).click(function(){this.select();});
     $('.share_offer_template').modal('show');
 };
 
