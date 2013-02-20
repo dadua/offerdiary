@@ -5,14 +5,9 @@
     </div>
     <div class="modal-body container-fluid">
         <h5>
-            Share link:
+            Share link (Anyone with the link can access the offer):
         </h5>
         <input class="uneditable-input sharedUrl input-block-level" style="background-color: #FFFFFF" type="text" readonly />
-        <div class="row-fluid">
-            <div class="alert alert-info span9">
-                Anyone with the link can <strong>access the offer!</strong>
-            </div>
-        </div>
         <div class="shareOptions">
             <div class="">
                 <h5 class="shareText">
@@ -29,10 +24,20 @@
             </div>
             <br/>
             
-            <div class="shareEmailContent">
-                <input type="text" class="shareEmails" placeholder="Enter Email addresses" />
+            <div class="form ">
+                <div class="control-group shareEmailContent">
+                    <label for="" class="control-label">Email:</label>
+                    <div class=" controls">
+                        <input type="text" class="shareEmails input-xlarge" placeholder="Enter Email addresses" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="" class="control-label">Message:</label>
+                    <div class="controls">
+                        <textarea class="shareMessage emailShare fbShare span5" placeholder="Add a Message" rows="2" ></textarea>
+                    </div>
+                </div>
             </div>
-            <textarea class="shareMessage emailShare fbShare span3" placeholder="Add a message" rows="3" ></textarea>
         </div>
     </div>
     <div class="modal-footer">

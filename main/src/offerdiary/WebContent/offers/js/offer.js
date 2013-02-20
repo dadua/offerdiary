@@ -284,7 +284,7 @@ it.offer.addHandlers = function () {
         it.offer.addwizard.getWizard().show();
     });
     $('.offerTrash').click(it.offer.trashOffer).tooltip();
-    $('.offerShare').click(it.offer.share.all).tooltip();
+    $('.offerShare').click(it.offer.share.show).tooltip();
     /*
     $('.icon-trash').hover(function(e) {
         $(this).removeClass('icon-white');
