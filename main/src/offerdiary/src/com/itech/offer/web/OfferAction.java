@@ -24,6 +24,7 @@ import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
+import com.itech.offer.vo.FBPostVO;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferShareVO;
 import com.itech.offer.vo.OfferVO;
@@ -182,14 +183,29 @@ public class OfferAction extends CommonAction{
 			Offer offer = getOfferManager().getOfferForUnqueId(uniqueId);
 			offerShare = getOfferManager().createOfferShare(offer);
 		}
-		String shareOfferUrl = OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + offerShare.getAccessToken();
-		String absoluteSharedURL = getAbsoluteURL(req, shareOfferUrl);
+
 		OfferShareVO offerShareVO = OfferShareVO.getOfferShareVOFor(offerShare);
-		offerShareVO.setSharedURL(absoluteSharedURL);
+		setSharingDetails(offerShareVO, req);
 		Result<OfferShareVO> result = new Result<OfferShareVO>(offerShareVO);
 		Type resultStringType = new TypeToken<Result<OfferShareVO>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	private void setSharingDetails(OfferShareVO offerShareVO, HttpServletRequest req) {
+		String shareOfferUrl = OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + offerShareVO.getAccessToken();
+		String absoluteSharedURL = getAbsoluteURL(req, shareOfferUrl);
+		offerShareVO.setSharedURL(absoluteSharedURL);
+		FBPostVO fbPostVO = new FBPostVO();
+		fbPostVO.setCaption("Www.offerdiary.com");
+		fbPostVO.setDescription(offerShareVO.getOffer().getDescription() + " (Shared via Offer Diary)");
+		fbPostVO.setLink(absoluteSharedURL);
+		fbPostVO.setPictureURL("");
+		fbPostVO.setName("Offer From - " + offerShareVO.getOffer().getSourceVendor().getName());
+		fbPostVO.setRedirectURI(getAbsoluteURL(req, ""));
+		offerShareVO.setFbPost(fbPostVO);
+
 	}
 
 }
