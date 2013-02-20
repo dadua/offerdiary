@@ -24,7 +24,7 @@ it.offer.share.checkEmailAndToggle = function () {
 it.offer.share.toggleShareBtnOnValidEmail = function () {
     var share_offer$ = $('.share_offer_template');
     if (share_offer$.find('.emailShareOpt').hasClass('active')) {
-        this.checkEmailAndToggle();
+        it.offer.share.checkEmailAndToggle();
     } else {
         share_offer$.find('.shareOfferBtn').removeClass('disabled');
     }
