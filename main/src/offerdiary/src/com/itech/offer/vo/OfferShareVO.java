@@ -15,6 +15,8 @@ public class OfferShareVO {
 
 	private String sharedURL;
 
+	private FBPostVO fbPost;
+
 
 	public static OfferShareVO getOfferShareVOFor(OfferShare offerShare) {
 		OfferShareVO offerShareVO = new OfferShareVO();
@@ -63,6 +65,14 @@ public class OfferShareVO {
 
 	public void setSharedURL(String sharedURL) {
 		this.sharedURL = sharedURL;
+	}
+
+	public FBPostVO getFbPost() {
+		return fbPost;
+	}
+
+	public void setFbPost(FBPostVO fbPost) {
+		this.fbPost = fbPost;
 	}
 
 
