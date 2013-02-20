@@ -1,10 +1,39 @@
-<div class="share_offer_template modal fade">
+<div class="share_offer_template modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Share Offer</h3>
+        <h4>Share Offer</h4>
     </div>
-    <div class="modal-body">
-        <p>Will have the share URL.. and the options to mail, FB post on wall..</p>
+    <div class="modal-body container-fluid">
+        <h5>
+            Share link:
+        </h5>
+        <input class="uneditable-input sharedUrl input-block-level" type="text" />
+        <div class="row-fluid">
+            <div class="alert alert-info span9">
+                The offer is accessible to anyone with the link above!
+            </div>
+        </div>
+        <div class="shareOptions">
+            <div class="">
+                <h5 class="shareText">
+                    Share offer link via:
+                </h5>
+                 <div class="btn-group" data-toggle="buttons-radio" >
+                    <a class="btn emailShare emailShareOpt btn-primary active" href="#">
+                        Mail
+                    </a>
+                    <a class="btn fbShare fbShareOpt btn-primary" href="#">
+                        Facebook
+                    </a>
+                </div>
+            </div>
+            <br/>
+           
+            <div class="shareContent">
+                <input type="text" class="shareEmails" placeholder="Enter Email addresses" />
+            </div>
+            <textarea class="shareMessage emailShare fbShare span3" placeholder="Add a message" rows="3" ></textarea>
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn">Close</a>
