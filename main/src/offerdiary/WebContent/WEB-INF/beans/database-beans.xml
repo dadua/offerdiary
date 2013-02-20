@@ -25,6 +25,7 @@
 			<value>com.itech.alert.model.Alert</value>
 			<value>com.itech.offer.model.OfferCard</value>
 			<value>com.itech.offer.model.Offer</value>
+			<value>com.itech.offer.model.OfferShare</value>
 			<value>com.itech.offer.model.Vendor</value>
 			<value>com.itech.offer.model.OfferOfferCardAssoc</value>
 			<value>com.itech.offer.model.OfferCardUserAssoc</value>

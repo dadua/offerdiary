@@ -79,9 +79,9 @@
 
 
     <div id="addOfferWizardRoot"></div>
+	<%@include file="/offers/templates/shareOfferTemplate.html" %>
     <div id="templates" class="hide">
         <%@include file="/offers/templates/eachOfferTemplate.html" %>
-        <%@include file="/offers/templates/shareOfferTemplate.html" %>
         <div id="vendorSelectionTemplate">
             <div class="container-fluid" >
                 <div class="form-search row-fluid">
