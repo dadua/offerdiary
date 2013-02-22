@@ -71,7 +71,7 @@
                         <div id="offerOnCardContainer" class="container-fluid offerOnCard hide">
                         </div>
                         <div class="container-fluid">
-	                        <div id="cardPaginationContainer" class="row-fluid span5 offset7">
+	                        <div id="cardPaginationContainer" class="row-fluid span6 offset6">
 		                    </div>
 	                    </div>
                         
