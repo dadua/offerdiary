@@ -9,9 +9,13 @@ it.offersoncard.hide = function () {
     $('.offerOnCard').hide();
 };
 
-it.offersoncard.getCardId = function (target) {
+it.offersoncard.getCardName = function (offersOnCardLabelTarget) {
+    return $(offersOnCardLabelTarget).parent().find('.cardName').html();
+};
+
+it.offersoncard.getCardId = function (offersOnCardLabelTarget) {
     var cardIdExtractRegex = /^offersOnCardLabel_(.*)/,
-    cardId = cardIdExtractRegex.exec($(target).attr('id'))[1];
+    cardId = cardIdExtractRegex.exec($(offersOnCardLabelTarget).attr('id'))[1];
     return cardId;
 };
 
@@ -28,7 +32,6 @@ it.offersoncard.plotOffers = function (offers) {
 
 };
 
-
 it.offersoncard.getFilterCardId = function (target) {
     var cardIdExtractRegex = /^offersOnCardFilters_(.*)/,
         cardId = cardIdExtractRegex.exec($(target).parent().attr('id'))[1];
@@ -41,11 +44,23 @@ it.offersoncard.filterClickHandler = function (e) {
 
     it.offersoncard.plotAllOffersForCard(cardId);
     it.card.toggler.showOffersOnCard();
+    //it.offersoncard.scrollTopTo();
 };
 
 
+it.offersoncard.plotFilterActive = function (cardId) {
+    var cardFiltersList$ = $('#cardsFilters .nav-list');
+    cardFiltersList$.find('li>a').parent().removeClass('active');
+    cardFiltersList$.find('#offersOnCardFilters_'+ cardId).addClass('active');
+};
+
 it.offersoncard.plotFilter = function (myCard) {
-    $('#cardsFilters .nav-list').append('<li class="offersOnCardFilters" id="offersOnCardFilters_'+ myCard.id + '"><a href="#">'+myCard.name + '</a></li>');
+    var cardFiltersList$ = $('#cardsFilters .nav-list');
+    if (cardFiltersList$.find('#offersOnCardFilters_'+myCard.id).size() === 0) {
+        cardFiltersList$.append('<li class="offersOnCardFilters active" id="offersOnCardFilters_'+ myCard.id + '"><a href="#">'+myCard.name + '</a></li>');
+        it.offersoncard.setFilterClickHandler();
+    }
+    it.offersoncard.plotFilterActive(myCard.id);
 };
 
 it.offersoncard.plotFilters = function (mycards){
@@ -53,6 +68,25 @@ it.offersoncard.plotFilters = function (mycards){
         var card = mycards[i];
         this.plotFilter(card);
     }
+};
+
+it.offersoncard.removeFilter = function (cardId) {
+    $('.offersOnCardFilters').filter(function(){
+        var cardIdExtractRegex = /^offersOnCardFilters_(.*)/,
+            cardId = cardIdExtractRegex.exec($(this).attr('id'))[1];
+        if (iCardId === cardId) {
+            return true;
+        } else {
+            return false;
+        }
+    }).remove();
+
+};
+
+it.offersoncard.setFilterClickHandler = function () {
+    $('body').off('click', '.offersOnCardFilters', it.offersoncard.filterClickHandler);
+    $('body').on('click', '.offersOnCardFilters', it.offersoncard.filterClickHandler);
+    it.bsextends.filters.reInitClickHandler();
 };
 
 it.offersoncard.plotAllOffersForCard = function (cardId) {
@@ -67,19 +101,21 @@ it.offersoncard.plotAllOffersForCard = function (cardId) {
 };
 
 it.offersoncard.plotOffersForCard = function (e) {
-    var target = e.target,
-        cardId = it.offersoncard.getCardId(target);
+    var offersOnCardLabelTarget = e.target,
+        cardId = it.offersoncard.getCardId(offersOnCardLabelTarget),
+        cardName = it.offersoncard.getCardName(offersOnCardLabelTarget);
+
+    it.offersoncard.plotFilter({id:cardId, name: cardName});
     it.offersoncard.plotAllOffersForCard(cardId);
     it.card.toggler.showOffersOnCard();
 };
 
-it.offersoncard.setFilterClickHandler = function () {
-    $('.offersOnCardFilters').off('click', '.offersOnCardFilters', it.offersoncard.filterClickHandler);
-    $('.offersOnCardFilters').click(it.offersoncard.filterClickHandler);
+it.offersoncard.scrollTopTo = function () {
+    //Have to account for the default body margin given..
+    $('html, body').animate({scrollTop:$('#offerOnCardContainer').position().top}, 'slow');
 };
 
 it.offersoncard.addHandlers = function () {
     $('.offersOnCardLabel').click (it.offersoncard.plotOffersForCard);
     it.offersoncard.setFilterClickHandler();
-    it.bsextends.filters.reInitClickHandler();
 };
