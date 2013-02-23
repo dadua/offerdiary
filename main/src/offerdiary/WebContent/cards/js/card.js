@@ -23,6 +23,7 @@ it.card.dismiss = function(e) {
         var ret = $.parseJSON(data);
         if (ret.success === true) {
             it.card.refreshAll();
+            //it.offersoncard.removeFilter(cardId);
         } else {
             //Handle error case
         }
@@ -115,7 +116,6 @@ it.card.plotCards = function(containerElemSelector, cards, options) {
     });
 
     if (settings.my) {
-        it.offersoncard.plotFilters(cards);
         this.addMyCardHandlers ();
     } else {
         this.addAddableCardHandlers ();
