@@ -196,7 +196,7 @@ public class OfferAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="shareOfferViaEmail.do")
 	/**
-	 * Param- dataToShare = { mailSHare:true, accessToken:'shareId', message:'messageByUser', emailIds:'mailIds by user'}
+	 * Param- dataToShare = { mailShare:true, accessToken:'shareId', message:'messageByUser', emailIds:'mailIds by user'}
 	 * 
 	 */
 	public Response shareOfferViaEmail(HttpServletRequest req, HttpServletResponse resp) {

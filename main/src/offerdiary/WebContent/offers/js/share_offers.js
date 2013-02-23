@@ -39,7 +39,18 @@ it.offer.share.checkEmailAndToggle = function () {
         emailVal = share_offer$.find('.shareEmails').val(),
         validEmailRegex = /.+@.+\..+/;
 
-    if (validEmailRegex.test(emailVal)) {
+    var emails = emailVal.split(','),
+        isValidated = true;
+    for (var i=0; i< emails.length;i++) {
+        var email = emails[i];
+        if (validEmailRegex.test(email)) {
+            isValidated = true;
+        } else {
+            isValidated = false;
+            break;
+        }
+    }
+    if (isValidated) {
         share_offer$.find('.shareOfferBtn').removeClass('disabled');
     } else {
         share_offer$.find('.shareOfferBtn').addClass('disabled');
