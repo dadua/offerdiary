@@ -33,9 +33,9 @@ public class ShareOfferNotificationEmail extends Email{
 		String offerShareLink = shareOfferActionVO.getShareOfferURL();
 
 		//TODO add html in share_offer_email_template.html and replace data here
-		doc.select("friendName").first().append(user.getName());
-		doc.select("vendor").first().append(offerShare.getOffer().getSourceVendor().getName());
-		doc.select("offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">Here is the offer</a>");
+		doc.select("#friendName").first().append(user.getName());
+		doc.select("#vendor").first().append(offerShare.getOffer().getSourceVendor().getName());
+		doc.select("#offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">Here is the offer</a>");
 
 		return doc.toString();
 	}
@@ -54,7 +54,7 @@ public class ShareOfferNotificationEmail extends Email{
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_SHARE_SUBJECT;
+		subject = DEFAULT_SHARE_SUBJECT;
 
 	}
 
@@ -66,6 +66,11 @@ public class ShareOfferNotificationEmail extends Email{
 	@Override
 	public String getToAddress() {
 		return shareOfferActionVO.getEmailIds();
+	}
+
+	@Override
+	public String getSubject() {
+		return DEFAULT_SHARE_SUBJECT;
 	}
 
 }
