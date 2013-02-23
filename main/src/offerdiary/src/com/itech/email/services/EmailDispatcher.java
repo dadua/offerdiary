@@ -24,7 +24,7 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 			try{
 				getHibernateSessionFactory().openNewSession();
 				List<EmailMessages> emailMessages =  getEmailManager().getAllPendingEmailMessages();
-				if(null != emailMessages && !emailMessages.isEmpty()){
+				if((null != emailMessages) && !emailMessages.isEmpty()){
 					markEmailMessagesPickedInProgress(emailMessages);
 					getHibernateSessionFactory().commitCurrentTransaction();
 					sendEmail(emailMessages);
@@ -59,16 +59,20 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 
 	private void sendEmail(List<EmailMessages> emailMessages) {
 		for(EmailMessages emailMessage: emailMessages){
-			String fromAddress = emailMessage.getFromAddress();
-			String toAddress = emailMessage.getToAddress();
-			String subject = emailMessage.getSubject();
-			String messageContent = emailMessage.getMessageContent();
-			List<String> attachements=null;
-			emailMessage.updateTryCount();
-			boolean emailSend  =getEmailSender().sendEmail(fromAddress, toAddress, subject, messageContent, attachements);
-			if(emailSend){
-				getEmailManager().deleteEmailMessages(emailMessage);
-				getHibernateSessionFactory().commitCurrentTransaction();
+			try {
+				String fromAddress = emailMessage.getFromAddress();
+				String toAddress = emailMessage.getToAddress();
+				String subject = emailMessage.getSubject();
+				String messageContent = emailMessage.getMessageContent();
+				List<String> attachements=null;
+				emailMessage.updateTryCount();
+				boolean emailSend  =getEmailSender().sendEmail(fromAddress, toAddress, subject, messageContent, attachements);
+				if(emailSend){
+					getEmailManager().deleteEmailMessages(emailMessage);
+					getHibernateSessionFactory().commitCurrentTransaction();
+				}
+			} catch (Exception e) {
+				logger.error("Failed to send email:"+emailMessage, e);
 			}
 		}
 	}
@@ -81,8 +85,9 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 
 	@Override
 	public boolean handles(Event event) {
-		if (EmailEvent.class.isAssignableFrom(event.getClass()))
+		if (EmailEvent.class.isAssignableFrom(event.getClass())) {
 			return true;
+		}
 		return false;
 	}
 
