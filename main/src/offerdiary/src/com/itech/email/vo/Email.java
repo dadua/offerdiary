@@ -12,11 +12,13 @@ public abstract class Email {
 	protected List<String> attachments;
 	protected EmailType emailType;
 	protected static final String defaultSenderEmailAddress="support@offerdiary.com";
-	
+
 	public enum EmailType{
-		NEW_USER_REGISTRATION_EMAIL, NEW_USER_SUBSCRIPTION_EMAIL,  OFFER_EXPIRY_NOTIFICATION_EMAIL, OFFER_SUMMARY_NOTIFICATION_EMAIL, PASSWORD_RECOVERY_EMAIL
+		NEW_USER_REGISTRATION_EMAIL, NEW_USER_SUBSCRIPTION_EMAIL,  OFFER_EXPIRY_NOTIFICATION_EMAIL, OFFER_SUMMARY_NOTIFICATION_EMAIL, PASSWORD_RECOVERY_EMAIL,
+		SHARE_OFFER_EMAIL, INVITE_USER_EMAIL
+
 	}
-	
+
 	public Email(){
 		generateEmailHTMLTemplate();
 	}
@@ -34,15 +36,15 @@ public abstract class Email {
 		setAttachments(fileAttachementList);
 	}
 
-	// to be performed by the sub classes 
+	// to be performed by the sub classes
 	public abstract String getMailContent() ;
 	protected abstract void generateEmailHTMLTemplate();
 	public abstract void setContentInMessageHTML(EmailContentParam content);
 	public abstract void setSubject();
 	public abstract EmailType getEmailType();
-	
-	
-	
+
+
+
 	public String getSenderAddress() {
 		return senderAddress;
 	}

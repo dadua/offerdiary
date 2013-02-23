@@ -29,6 +29,7 @@ import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferShareVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
+import com.itech.user.vos.ShareOfferActionVO;
 
 @Controller
 public class OfferAction extends CommonAction{
@@ -192,9 +193,32 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="shareOfferViaEmail.do")
+	/**
+	 * Param- dataToShare = { mailSHare:true, accessToken:'shareId', message:'messageByUser', emailIds:'mailIds by user'}
+	 * 
+	 */
+	public Response shareOfferViaEmail(HttpServletRequest req, HttpServletResponse resp) {
+		String shareOfferActionVOJson = req.getParameter(OfferWalletConstants.SHARE_OFFER_ACTION_PARAM_KEY);
+		Gson gson = new Gson();
+		Type offersType = new TypeToken<ShareOfferActionVO>() { }.getType();
+		ShareOfferActionVO shareOfferActionVO = gson.fromJson(shareOfferActionVOJson, offersType);
+		String shareOfferUrl = OfferWalletConstants.getSharedOfferURL(shareOfferActionVO.getAccessToken());
+		String absoluteSharedURL = getAbsoluteURL(req, shareOfferUrl);
+		shareOfferActionVO.setMailShare(true);
+		shareOfferActionVO.setShareOfferURL(absoluteSharedURL);
+		getOfferManager().shareOffer(shareOfferActionVO);
+		Result<String> result = new Result<String>("Mail sent to provided emails");
+		Type resultStringType = new TypeToken<Result<OfferShareVO>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
 
 	private void setSharingDetails(OfferShareVO offerShareVO, HttpServletRequest req) {
-		String shareOfferUrl = OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + offerShareVO.getAccessToken();
+		String shareOfferUrl = OfferWalletConstants.getSharedOfferURL(offerShareVO.getAccessToken());
 		String absoluteSharedURL = getAbsoluteURL(req, shareOfferUrl);
 		offerShareVO.setSharedURL(absoluteSharedURL);
 		FBPostVO fbPostVO = new FBPostVO();

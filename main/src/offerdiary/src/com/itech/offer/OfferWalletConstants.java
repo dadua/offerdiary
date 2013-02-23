@@ -16,11 +16,15 @@ public class OfferWalletConstants {
 	public static final String GET_SHARED_OFFER_PAGE = "sharedOffer.jsp";
 	public static final String SHARED_OFFER_ACCESS_CODE_PARAM_KEY = "accessCcode";
 	public static final String GET_SHARED_OFFER_SHARE_URL_PREFIX = "/getSharedOffer.do?accessCode=";
+	public static String getSharedOfferURL(String accessToken) {
+		return OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + accessToken;
+	}
 
 
 	public static final String SHARED_OFFER_ATTR_KEY = "offer";
 	public static final String SHARED_OFFER_URL_ATTR_KEY = "sharedOfferUrl";
 	public static final String SHARED_OFFER_ID_ATTR_KEY = "id";
+	public static final String SHARE_OFFER_ACTION_PARAM_KEY = "shareOfferAction";
 
 
 	public static final String OFFER_CARD_ID_PARAM_KEY = "cardIdKey";

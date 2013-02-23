@@ -13,6 +13,7 @@
 		<property name="offerEventGenerator" ref="itech.OfferEventGenerator"/>
 		<property name="offerOfferCardAssocDAO" ref="itech.offerOfferCardAssocDAO"/>
 		<property name="offerCardManager" ref="itech.offerCardManager"/>
+		<property name="emailManager" ref="itech.emailManager"/>
 	</bean>
 
 	
