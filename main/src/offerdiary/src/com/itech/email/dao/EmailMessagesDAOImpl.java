@@ -13,9 +13,10 @@ public class EmailMessagesDAOImpl extends HibernateCommonBaseDAO<EmailMessages> 
 
 	@Override
 	public List<EmailMessages> getAllPendingEmailMessages() {
-		String hql = "from " + getEntityClassName() + " where status =:status";
+		String hql = "from " + getEntityClassName() + " where status =:pending and status=:inprogress";
 		Query query = getSession().createQuery(hql);
-		query.setParameter("status", EmailStatus.PENDING);
+		query.setParameter("pending", EmailStatus.PENDING);
+		query.setParameter("inprogress", EmailStatus.INPROGRESS);
 		List list = query.list();
 		return list;
 	}
