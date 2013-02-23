@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 public class CommonUtilities {
+	public static final long MILLIS_IN_A_DAY = 24*60*60*1000;
 
 	public static String getGUID() {
 		UUID uuid = UUID.randomUUID();

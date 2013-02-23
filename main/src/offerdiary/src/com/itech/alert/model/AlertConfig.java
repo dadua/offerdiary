@@ -9,9 +9,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
+import com.itech.offer.model.OfferUserAssocModelConstants;
+import com.itech.user.model.User;
 
 
 @Entity
@@ -39,6 +43,9 @@ public class AlertConfig extends PersistableEntity{
 	@Column(name=AlertConfigModelConstant.COL_TRIGGER_TIME)
 	private Date triggerTime;
 
+	@Column(name="TRIGGER_EXPIRY_TIME")
+	private Date triggerExpiryTime;
+
 	@Column(name=AlertConfigModelConstant.COL_CREATION_TIME)
 	private Date creationTime;
 
@@ -56,6 +63,10 @@ public class AlertConfig extends PersistableEntity{
 
 	@Column(name=AlertConfigModelConstant.COL_PERSIST_ALERT_IN_DB)
 	private boolean persistAlertInDB;
+
+	@ManyToOne
+	@JoinColumn(name=OfferUserAssocModelConstants.COL_USER_ID)
+	private User user;
 
 
 	public AlertConfig() {
@@ -145,6 +156,22 @@ public class AlertConfig extends PersistableEntity{
 
 	public boolean isPersistAlertInDB() {
 		return persistAlertInDB;
+	}
+
+	public Date getTriggerExpiryTime() {
+		return triggerExpiryTime;
+	}
+
+	public void setTriggerExpiryTime(Date triggerExpiryTime) {
+		this.triggerExpiryTime = triggerExpiryTime;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
