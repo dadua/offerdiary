@@ -6,7 +6,7 @@ it.offer.share = function () {
     if (share_offer$.find('.shareOfferBtn').hasClass('disabled')) {
         return;
     }
-    if (share_offer$.find('.emailShareOpt').hasClass('.active')) {
+    if (share_offer$.find('.emailShareOpt').hasClass('active')) {
         it.offer.share.email();
     } else {
         it.offer.share.fb();
@@ -98,7 +98,18 @@ it.offer.share.fb = function () {
 };
 
 it.offer.share.email = function () {
-
+    var share_offer$ = $('.share_offer_template'),
+        message = share_offer$.find('.shareMessage').val(),
+        emailIds = share_offer$.find('.shareEmails').val(),
+        shareOfferVO = it.offer.share.vo.get(),
+        shareOfferActionVO = {
+            mailShare: true,
+            accessToken: shareOfferVO.accessToken,
+            message: message,
+            emailIds: emailIds
+        };
+    $.post('shareOfferViaEmail.do', {shareOfferAction:JSON.stringify(shareOfferActionVO)}, function () {
+    });
 };
 
 it.offer.share.show = function (e) {

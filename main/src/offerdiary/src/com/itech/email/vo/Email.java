@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Email {
 
-	protected String senderAddress;
+	protected String senderAddress = defaultSenderEmailAddress;
 	protected String toAddress;
 	protected String subject;
 	protected EmailContent emailContent;

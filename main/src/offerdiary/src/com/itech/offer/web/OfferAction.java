@@ -210,7 +210,7 @@ public class OfferAction extends CommonAction{
 		shareOfferActionVO.setShareOfferURL(absoluteSharedURL);
 		getOfferManager().shareOffer(shareOfferActionVO);
 		Result<String> result = new Result<String>("Mail sent to provided emails");
-		Type resultStringType = new TypeToken<Result<OfferShareVO>>() {
+		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
