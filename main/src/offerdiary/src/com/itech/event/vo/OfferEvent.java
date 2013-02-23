@@ -1,6 +1,7 @@
 package com.itech.event.vo;
 
 import com.itech.offer.model.Offer;
+import com.itech.user.model.User;
 
 public class OfferEvent extends Event{
 	public enum OfferEventType {
@@ -9,9 +10,11 @@ public class OfferEvent extends Event{
 
 	private OfferEventType offerEventType;
 	private Offer offer;
+	private User user;
 
-	public OfferEvent(OfferEventType offerEventType, Offer offer) {
+	public OfferEvent(OfferEventType offerEventType, Offer offer, User user) {
 		super();
+		this.user = user;
 		this.setOfferEventType(offerEventType);
 		this.setOffer(offer);
 	}
@@ -30,5 +33,13 @@ public class OfferEvent extends Event{
 
 	public void setOfferEventType(OfferEventType offerEventType) {
 		this.offerEventType = offerEventType;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

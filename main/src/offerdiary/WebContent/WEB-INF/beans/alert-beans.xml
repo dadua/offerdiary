@@ -67,10 +67,12 @@
 	<bean id="itech.handler.offerAlerthandler" class="com.itech.alert.handler.OfferAlertHandler">
 		<property name="emailManager" ref="itech.emailManager"/>
 		<property name="userManager" ref="itech.UserManager"/>
+		<property name="offerManager" ref="itech.offerManager"/>
 	</bean>
 	
 	<bean id="itech.OfferAlertGenerator" class="com.itech.alert.services.OfferAlertGenerator">
 		<property name="offerManager" ref="itech.offerManager"/>
+		<property name="userManager" ref="itech.UserManager"/>
 	</bean>  	
 	
 </beans>

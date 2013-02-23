@@ -62,7 +62,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
 		if (offer.getExpiry() != null) {
-			getOfferEventGenerator().offerCreated(offer);
+			getOfferEventGenerator().offerCreated(offer, getLoggedInUser());
 		}
 	}
 
@@ -119,7 +119,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			}
 
 			OfferShare offerShare = getOfferShareDAO().getOfferShareFor(offer);
-			getOfferShareDAO().delete(offerShare);
+			if (offerShare != null) {
+				getOfferShareDAO().delete(offerShare);
+			}
 			getOfferDAO().delete(offer);
 		}
 	}

@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.itech.common.db.PersistableEntity;
 import com.itech.user.model.User;
@@ -22,7 +21,7 @@ import com.itech.user.model.User;
 public class Alert extends PersistableEntity{
 
 	public enum AlertStatus {
-		NEW, READ;
+		NEW, READ ;
 	}
 
 	@Id
@@ -53,11 +52,10 @@ public class Alert extends PersistableEntity{
 	@Column(name=AlertModelConstant.COL_MESSAGE)
 	private String message;
 
+
 	@Column(name=AlertModelConstant.COL_HTML_MESSAGE)
 	private String messageHTML;
 
-	@Transient
-	private AlertConfig alertConfig;
 
 	public Alert(User user, String dataType, long dataId, AlertStatus alertStatus,
 			Date creationTime, String message, String messageHTML) {
@@ -150,13 +148,4 @@ public class Alert extends PersistableEntity{
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public void setAlertConfig(AlertConfig alertConfig) {
-		this.alertConfig = alertConfig;
-	}
-
-	public AlertConfig getAlertConfig() {
-		return alertConfig;
-	}
-
 }

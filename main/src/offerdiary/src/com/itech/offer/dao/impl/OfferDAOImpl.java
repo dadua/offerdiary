@@ -23,8 +23,6 @@ import com.itech.user.model.User;
 
 public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements OfferDAO{
 
-	private static final long MILLIS_IN_A_DAY = 24*60*60*1000;
-
 	@Override
 	protected Class getEntityClass() {
 		return Offer.class;
@@ -168,7 +166,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			java.util.Date today = new java.util.Date(System.currentTimeMillis());
 			today.setHours(0);
 			today.setMinutes(0);
-			Date expiryLimit = new Date(System.currentTimeMillis() + MILLIS_IN_A_DAY*numberOfDays);
+			Date expiryLimit = new Date(System.currentTimeMillis() + CommonUtilities.MILLIS_IN_A_DAY*numberOfDays);
 			parameterMap.put("now", new Date(today.getTime()));
 			parameterMap.put("expiryDate", expiryLimit);
 			return  " (o.expiry >= :now and o.expiry < :expiryDate)";
@@ -180,7 +178,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			today.setHours(24);
 			today.setMinutes(0);
 			parameterMap.put("now", new Date(today.getTime()));
-			Date addedOn = new Date(System.currentTimeMillis() - MILLIS_IN_A_DAY*numberOfDays);
+			Date addedOn = new Date(System.currentTimeMillis() - CommonUtilities.MILLIS_IN_A_DAY*numberOfDays);
 			parameterMap.put("creationDate", addedOn);
 			return  " (o.createdOn <= :now and o.createdOn > :creationDate)";
 		}

@@ -6,16 +6,17 @@ import java.sql.Date;
 import com.itech.alert.model.AlertConfig;
 import com.itech.alert.model.AlertDataTypes;
 import com.itech.alert.services.AlertConfigManager;
+import com.itech.common.CommonUtilities;
+import com.itech.config.ProjectConfigs;
 import com.itech.event.services.EventHandler;
 import com.itech.event.vo.Event;
 import com.itech.event.vo.OfferEvent;
 import com.itech.event.vo.OfferEvent.OfferEventType;
-import com.itech.offer.vo.NotifyVO;
+import com.itech.user.model.UserRole;
 
 public class OfferEventHandler implements EventHandler {
 
 	private static final String OFFER_EXPIRY_ALERT = "OFFER_EXPIRY_ALERT";
-	private static final int DEFAULT_TRIGGER_TIME = 30000;
 	private AlertConfigManager alertConfigManager;
 
 	@Override
@@ -31,10 +32,13 @@ public class OfferEventHandler implements EventHandler {
 	}
 
 	private void handleOfferCreated(OfferEvent offerEvent) {
+		if (offerEvent.getUser() == null || UserRole.OD_ADMIN.equals(offerEvent.getUser().getUserRole())) {
+			return;
+		}
 		AlertConfig alertConfig = createAlertConfigFor(offerEvent);
 		alertConfig.setPersistAlertInDB(true);
 		alertConfig.setAlertType(OFFER_EXPIRY_ALERT);
-		if (alertConfig.getTriggerTime().before(new Date(System.currentTimeMillis()))) {
+		if (offerEvent.getOffer().getExpiry().before(new Date(System.currentTimeMillis()))) {
 			return;
 		}
 		alertConfigManager.save(alertConfig);
@@ -50,22 +54,24 @@ public class OfferEventHandler implements EventHandler {
 
 	private AlertConfig createAlertConfigFor(OfferEvent offerEvent) {
 		AlertConfig alertConfig = new AlertConfig();
+		alertConfig.setUser(offerEvent.getUser());
 		alertConfig.setCreationTime(new Date(System.currentTimeMillis()));
 		alertConfig.setDataType(AlertDataTypes.OFFER.toString());
 		alertConfig.setDataId(offerEvent.getOffer().getId());
 		Date triggerTime = calculateTriggerTime(offerEvent);
 		alertConfig.setTriggerTime(triggerTime);
 		alertConfig.setStatus(AlertConfig.ActivationStatus.ACTIVE);
-		NotifyVO notifyVO = offerEvent.getOffer().getNotifyVO();
-		if (notifyVO != null) {
-			alertConfig.setFbNotification(notifyVO.getFbNotify());
-			alertConfig.setEmailNotification(notifyVO.getEmailNotify());
-		}
+		//NotifyVO notifyVO = offerEvent.getOffer().getNotifyVO();
+		//TODO handle on the basis of per offer notification settings.
+		alertConfig.setFbNotification(true);
+		alertConfig.setEmailNotification(true);
+		alertConfig.setTriggerExpiryTime(offerEvent.getOffer().getExpiry());
 		return alertConfig;
 	}
 
 	private Date calculateTriggerTime(OfferEvent offerEvent) {
-		long triggerTimeInMillies = offerEvent.getOffer().getExpiryDateInMillis()- DEFAULT_TRIGGER_TIME;
+		long triggerTimeInMillies = offerEvent.getOffer().getExpiryDateInMillis() - CommonUtilities.MILLIS_IN_A_DAY *
+				ProjectConfigs.defaultOfferNotificationTriggerTimeInDays.get();
 		Date triggerTime = new Date(triggerTimeInMillies);
 		return triggerTime;
 	}
