@@ -2,13 +2,10 @@ package com.itech.email.vo;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
-import com.itech.email.vo.Email.EmailType;
 
 public class NewUserRegistrationEmail extends Email{
 
@@ -21,7 +18,7 @@ public class NewUserRegistrationEmail extends Email{
 	public NewUserRegistrationEmail(){
 		super();
 	}
-	
+
 	public NewUserRegistrationEmail(EmailContentParam contentParam, String toEmailId,List<String> fileAttachementList){
 		this(contentParam, toEmailId);
 		setAttachments(fileAttachementList);
@@ -58,7 +55,7 @@ public class NewUserRegistrationEmail extends Email{
 	public void setContentInMessageHTML(EmailContentParam content) {
 		setContentParams(content);
 		setParamsInHtml();
-		setRegistrationEmailHTML(getDocHTML().toString());		
+		setRegistrationEmailHTML(getDocHTML().toString());
 	}
 
 	private void setParamsInHtml() {
@@ -72,9 +69,9 @@ public class NewUserRegistrationEmail extends Email{
 
 	private void setContentParams(EmailContentParam content) {
 		if(null != getDocHTML()){
-			String name = content.getPARAM_MAP().get(EmailContentParam.NEW_USER_REG_PARAM_NAME); 
+			String name = content.getPARAM_MAP().get(EmailContentParam.NEW_USER_REG_PARAM_NAME);
 			if( name != null){
-					getDefaultEmailContent().setName(name);
+				getDefaultEmailContent().setName(name);
 			}
 		}
 	}
@@ -89,7 +86,7 @@ public class NewUserRegistrationEmail extends Email{
 		return EmailType.NEW_USER_REGISTRATION_EMAIL;
 	}
 
-	
+
 	public static String getDefaultRegistrationSubject() {
 		return DEFAULT_REGISTRATION_SUBJECT;
 	}

@@ -8,6 +8,7 @@ import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
+import com.itech.user.vos.ShareOfferActionVO;
 
 public interface OfferManager {
 
@@ -46,5 +47,7 @@ public interface OfferManager {
 	public void deleteByUniqueIds(List<String> offerUniqueIds);
 
 	public Offer getOfferForUnqueId(String uniqueId);
+
+	public void shareOffer(ShareOfferActionVO shareOfferActionVO);
 
 }

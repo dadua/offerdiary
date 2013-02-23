@@ -11,6 +11,7 @@
    		<property name="linkedAccountManager" ref="itech.LinkedAccountManager"/>
    		<property name="socialProfileManager" ref="itech.SocialProfileManager"/>
    		<property name="userNotificationConfigDAO" ref="itech.UserNotificationConfigDAO"/>
+   		
 	</bean>
    	
    	

@@ -9,6 +9,8 @@ import org.apache.log4j.Logger;
 import com.itech.common.CommonUtilities;
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.services.CommonBaseManager;
+import com.itech.email.services.EmailManager;
+import com.itech.email.vo.ShareOfferNotificationEmail;
 import com.itech.event.offer.OfferEventGenerator;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.dao.OfferOfferCardAssocDAO;
@@ -22,6 +24,7 @@ import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
+import com.itech.user.vos.ShareOfferActionVO;
 
 
 public class OfferManagerImpl extends CommonBaseManager implements OfferManager {
@@ -34,6 +37,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private OfferEventGenerator offerEventGenerator;
 	private OfferOfferCardAssocDAO offerOfferCardAssocDAO;
 	private OfferCardManager offerCardManager;
+	private EmailManager emailManager;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -113,6 +117,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			for (OfferUserAssoc offerUserAssoc : offerUserAssocs) {
 				getOfferUserAssocDAO().delete(offerUserAssoc.getId());
 			}
+
+			OfferShare offerShare = getOfferShareDAO().getOfferShareFor(offer);
+			getOfferShareDAO().delete(offerShare);
 			getOfferDAO().delete(offer);
 		}
 	}
@@ -210,6 +217,15 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		return getOfferDAO().getAllOffersForCard(offerCard);
 	}
 
+	@Override
+	public void shareOffer(ShareOfferActionVO shareOfferActionVO) {
+		if (shareOfferActionVO.isMailShare()) {
+			OfferShare offerShare = getOfferShareFor(shareOfferActionVO.getAccessToken());
+			ShareOfferNotificationEmail shareOfferNotificationEmail = new ShareOfferNotificationEmail(shareOfferActionVO, offerShare, getLoggedInUser());
+			emailManager.sendEmailAsync(shareOfferNotificationEmail);
+		}
+	}
+
 
 	public OfferDAO getOfferDAO() {
 		return offerDAO;
@@ -273,6 +289,16 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	public void setOfferCardManager(OfferCardManager offerCardManager) {
 		this.offerCardManager = offerCardManager;
+	}
+
+
+	public EmailManager getEmailManager() {
+		return emailManager;
+	}
+
+
+	public void setEmailManager(EmailManager emailManager) {
+		this.emailManager = emailManager;
 	}
 
 
