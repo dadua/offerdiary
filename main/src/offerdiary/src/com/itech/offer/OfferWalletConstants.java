@@ -10,10 +10,10 @@ public class OfferWalletConstants {
 
 	public static final String OFFER_ID_PARAM_KEY = "id";
 	public static final String OFFER_PARAM_KEY = "offer";
-	public static final String GET_OFFER_DETAIL_PAGE = "offerDetail.jsp";
+	public static final String GET_OFFER_DETAIL_PAGE = "offers/pages/offerDetail.jsp";
 
 
-	public static final String GET_SHARED_OFFER_PAGE = "sharedOffer.jsp";
+	public static final String GET_SHARED_OFFER_PAGE = "offers/pages/sharedOffer.jsp";
 	public static final String SHARED_OFFER_ACCESS_CODE_PARAM_KEY = "accessCcode";
 	public static final String GET_SHARED_OFFER_SHARE_URL_PREFIX = "/getSharedOffer.do?accessCode=";
 	public static String getSharedOfferURL(String accessToken) {
