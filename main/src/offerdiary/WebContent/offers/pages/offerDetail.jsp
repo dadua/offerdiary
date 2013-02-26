@@ -31,7 +31,8 @@
         <div class="row">
             <div class="content-container"  >
                 <div class="container-fluid">
-                    <div class="row-fluid bluishText largeTitleFontSize">
+                    <div class="row-fluid bluishText largeTitleFontSize offset1">
+                    
                     	<strong>
                     	Offer Detail
                     	</strong>
