@@ -46,7 +46,7 @@ it.offer.detail.trashOffer = function(e) {
         if (ret.success === true) {
             $('#'+targetId).tooltip('hide');
             $('#offer_'+offerId).remove();
-            it.offer.searchOffers();
+            $('<form action="wallet.do" method="get"></form>').appendTo('body').submit();
         } else {
             //Handle error case
         }
@@ -59,7 +59,7 @@ it.offer.detail.addOneHandlers = function () {
 };
 
 it.offer.detail.addHandlers = function () {
-    $('.offerTrash').click(it.offer.trashOffer).tooltip();
+    $('.offerTrash').click(it.offer.detail.trashOffer).tooltip();
     $('.offerShare').click(it.offer.share.show).tooltip();
     $('.offerDetail').tooltip();
 };
@@ -68,6 +68,6 @@ it.offer.detail.init = function (offers) {
     it.offer.detail.plot(offers);
     it.offer.detail.addOneHandlers();
     it.offer.detail.addHandlers();
-   //it.offer.share.init();
+    it.offer.share.init();
 };
 
