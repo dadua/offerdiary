@@ -39,6 +39,8 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/getPassword.do");
 		bypassUrls.add("/verifyEmail.do");
 		bypassUrls.add("/gotPassword.do");
+		bypassUrls.add("/getSharedOffer.do");
+		bypassUrls.add("/sharedOffer.jsp");
 	}
 
 	@Override
@@ -70,7 +72,7 @@ public class LoginFilter implements Filter {
 			}
 		} else {
 			String redirectURL = (String) httpRequest.getSession().getAttribute("redirectURL");
-			if (redirectURL != null && redirectURL.length() != 0) {
+			if ((redirectURL != null) && (redirectURL.length() != 0)) {
 				httpRequest.getSession().setAttribute("redirectURL", null);
 				httpResponse.sendRedirect(redirectURL.substring(1));
 				logger.debug("redirected to : " + redirectURL);

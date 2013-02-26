@@ -162,6 +162,10 @@ public class OfferAction extends CommonAction{
 		sharedOffer.setUniqueId(accessToken);
 		sharedOffer.setAccessCode(accessToken);
 		req.setAttribute(OfferWalletConstants.SHARED_OFFER_ATTR_KEY, sharedOffer);
+		Gson gson = new Gson();
+		String offerVOJson = gson.toJson(sharedOffer, OfferVO.class);
+		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
+				StringEscapeUtils.escapeJavaScript(offerVOJson));
 		return new Forward(OfferWalletConstants.GET_SHARED_OFFER_PAGE);
 	}
 

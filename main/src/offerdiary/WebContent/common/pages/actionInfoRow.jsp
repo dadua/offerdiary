@@ -5,7 +5,7 @@
 
     <br/>
 
-    <div id="actionInfoRow" class="span6 offset3 alert alert-info invisible">
+    <div id="actionInfoRow" class="span6 offset3 alert alert-success invisible">
         <button type="button" class="hideAlert close" >×</button>
         <div id="alertMessage">
 
