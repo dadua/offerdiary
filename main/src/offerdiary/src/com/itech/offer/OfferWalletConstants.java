@@ -15,7 +15,7 @@ public class OfferWalletConstants {
 
 
 	public static final String GET_SHARED_OFFER_PAGE = "offers/pages/sharedOffer.jsp";
-	public static final String SHARED_OFFER_ACCESS_CODE_PARAM_KEY = "accessCcode";
+	public static final String SHARED_OFFER_ACCESS_CODE_PARAM_KEY = "accessCode";
 	public static final String GET_SHARED_OFFER_SHARE_URL_PREFIX = "/getSharedOffer.do?accessCode=";
 	public static String getSharedOfferURL(String accessToken) {
 		return OfferWalletConstants.GET_SHARED_OFFER_SHARE_URL_PREFIX + accessToken;

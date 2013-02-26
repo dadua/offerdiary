@@ -42,10 +42,12 @@
 								 <a href="offers.do" >Offers</a>
 							</li>
 							<li class="divider-vertical"></li>
+							<%--
 							<li id="alertTab" >
 								<a href="alerts.do" >Notifications</a>
 							</li>
 							<li class="divider-vertical"></li>
+							 --%>
 							<li id="cardTab" >
 								<a href="cards.do" >Cards</a>
 							</li>
