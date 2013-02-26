@@ -170,7 +170,12 @@ public class OfferAction extends CommonAction{
 	public Response getOfferDetail (HttpServletRequest req, HttpServletResponse resp) {
 		String uniqueId = req.getParameter(OfferWalletConstants.OFFER_ID_PARAM_KEY);
 		Offer offer = getOfferManager().getOfferForUnqueId(uniqueId);
+		OfferVO offerVO = OfferVO.getOfferVOFor(offer);
+		Gson gson = new Gson();
+		String offerVOJson = gson.toJson(offerVO, OfferVO.class);
 		req.setAttribute(OfferWalletConstants.OFFER_PARAM_KEY, offer);
+		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
+				StringEscapeUtils.escapeJavaScript(offerVOJson));
 		return new Forward(OfferWalletConstants.GET_OFFER_DETAIL_PAGE);
 	}
 
