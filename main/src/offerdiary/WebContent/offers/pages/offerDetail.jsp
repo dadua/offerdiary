@@ -1,16 +1,16 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
     <script src="offers/js/offer.js" > </script>
+    <script src="offers/js/offerdetail.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
     
     <script type="text/javascript">
         $(function() {
-            /*
-            var offersJson = '${myOffersJson}',
-                offers = JSON.parse(offersJson);
-            it.offer.init(offers);
-            it.offer.share.init();
-            */
+            
+            var offerJson = '${offerJson}',
+            	offer = JSON.parse(offerJson);
+
+            it.offer.detail.init(offer);
         });
             
     </script>
@@ -31,8 +31,12 @@
         <div class="row">
             <div class="content-container"  >
                 <div class="container-fluid">
-                    <div class="row-fluid">
+                    <div class="row-fluid bluishText largeTitleFontSize">
+                    	<strong>
+                    	Offer Detail
+                    	</strong>
                     </div>
+                    <br/>
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
                         </div>
@@ -43,5 +47,8 @@
     </div>
 
 
-	<%@include file="/offers/templates/shareOfferTemplate.html" %>
+    <%@include file="/offers/templates/shareOfferTemplate.html" %>
+    <div class="templates hide" >
+        <%@include file="/offers/templates/offerDetailTemplate.html" %>
+    </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>

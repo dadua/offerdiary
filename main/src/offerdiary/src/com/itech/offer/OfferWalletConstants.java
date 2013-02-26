@@ -10,6 +10,7 @@ public class OfferWalletConstants {
 
 	public static final String OFFER_ID_PARAM_KEY = "id";
 	public static final String OFFER_PARAM_KEY = "offer";
+	public static final String OFFER_VO_PARAM_KEY = "offerJson";
 	public static final String GET_OFFER_DETAIL_PAGE = "offers/pages/offerDetail.jsp";
 
 
