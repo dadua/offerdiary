@@ -19,6 +19,10 @@
     
             <%@include file="/common/css/layout.css" %>
             <%@include file="/offers/css/offer.css" %>
+            .largeTitleFontSize {
+			    font-size: 1.4em;
+			}
+            
 
     </style>
 
@@ -32,11 +36,11 @@
             <div class="content-container"  >
                 <div class="container-fluid">
                     <div class="row-fluid bluishText largeTitleFontSize offset1">
-                    
                     	<strong>
                     	Offer Detail
                     	</strong>
                     </div>
+                    <hr class="offset1 span8" />
                     <br/>
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
