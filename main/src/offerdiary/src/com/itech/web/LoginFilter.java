@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.itech.common.CommonUtilities;
 import com.itech.common.security.SecurityContext;
 import com.itech.user.model.User;
 
@@ -57,7 +58,12 @@ public class LoginFilter implements Filter {
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
 			if (!isBypass(reqUrl)) {
-				httpRequest.getSession().setAttribute("redirectURL", reqUrl);
+				String queryString = httpRequest.getQueryString();
+				String redirectURL  = reqUrl;
+				if (CommonUtilities.isNotEmpty(queryString)) {
+					redirectURL  +="?"+queryString;
+				}
+				httpRequest.getSession().setAttribute("redirectURL", redirectURL);
 				httpResponse.sendRedirect("login.do");
 				logger.debug("redirected to home: " + reqUrl);
 				return;
