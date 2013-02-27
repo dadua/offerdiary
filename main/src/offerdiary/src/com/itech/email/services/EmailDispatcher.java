@@ -23,6 +23,7 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 		while(true){
 			try{
 				getHibernateSessionFactory().openNewSession();
+				//TODO: Fetch data in batches
 				List<EmailMessages> emailMessages =  getEmailManager().getAllPendingEmailMessages();
 				if((null != emailMessages) && !emailMessages.isEmpty()){
 					markEmailMessagesPickedInProgress(emailMessages);
@@ -30,17 +31,18 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 					sendEmail(emailMessages);
 					markEmailInProgresAsPending();
 					getHibernateSessionFactory().commitCurrentTransaction();
-				}else{
-					synchronized (this) {
-						try {
-							this.wait(60000l);
-						} catch (InterruptedException e) {
-							logger.error("Email dispatcher thread interuptted ", e);
-						}
+				}
+			} catch (Exception e) {
+				logger.error("Dispatch failed:" , e);
+			} finally{
+				getHibernateSessionFactory().closeCurrentSession();
+				synchronized (this) {
+					try {
+						this.wait(60000l);
+					} catch (InterruptedException e) {
+						logger.error("Email dispatcher thread interuptted ", e);
 					}
 				}
-			}finally{
-				getHibernateSessionFactory().closeCurrentSession();
 			}
 		}
 	}
