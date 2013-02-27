@@ -136,6 +136,22 @@ public class OfferAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="addSharedOfferToWallet.do")
+	public Response addSharedOfferToWallet (HttpServletRequest req, HttpServletResponse resp) {
+		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
+		Offer newOffer = null;
+		if (accessToken != null) {
+			newOffer = getOfferManager().copySharedOffer(accessToken);
+		}
+		OfferVO sharedOffer = OfferVO.getOfferVOFor(newOffer);
+		Gson gson = new Gson();
+		String offerVOJson = gson.toJson(sharedOffer, OfferVO.class);
+		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
+				StringEscapeUtils.escapeJavaScript(offerVOJson));
+		return new Forward(OfferWalletConstants.WALLET_PAGE);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteOffers.do")
 	public Response deleteOffers (HttpServletRequest req, HttpServletResponse resp) {
 		String offersJson = req.getParameter(OfferWalletConstants.OFFER_IDS_PARAM_KEY);
@@ -192,6 +208,23 @@ public class OfferAction extends CommonAction{
 		if (CommonUtilities.isNotEmpty(uniqueId)) {
 			Offer offer = getOfferManager().getOfferForUnqueId(uniqueId);
 			offerShare = getOfferManager().createOfferShare(offer);
+		}
+
+		OfferShareVO offerShareVO = OfferShareVO.getOfferShareVOFor(offerShare);
+		setSharingDetails(offerShareVO, req);
+		Result<OfferShareVO> result = new Result<OfferShareVO>(offerShareVO);
+		Type resultStringType = new TypeToken<Result<OfferShareVO>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="reShareOffer.do")
+	public Response reShareOffer(HttpServletRequest req, HttpServletResponse resp) {
+		String accessCode = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
+		OfferShare offerShare = null;
+		if (CommonUtilities.isNotEmpty(accessCode)) {
+			offerShare = getOfferManager().getOfferShareFor(accessCode);
 		}
 
 		OfferShareVO offerShareVO = OfferShareVO.getOfferShareVOFor(offerShare);
