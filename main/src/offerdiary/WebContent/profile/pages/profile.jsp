@@ -31,8 +31,16 @@
 			<div class="row">
 				<div class="span2" >
                 	<div class="container-fluid options-left-container">
+                		<div class="img-polaroid">
+                		<%--
+                			<img src="https://graph.facebook.com/alok.id/picture?type=large" />
+                			<img id="profilePic" src="images/profile/male.jpg" width="200" height="200" />
+                			<img id="profilePic" src="images/profile/female.jpg" width="200" height="200" />
+                			 --%>
+                			<img id="profilePic" src="${userInfo.profileImgUrl}" width="200" height="200" />
+                		</div>
+                		
 	                	<ul class="nav nav-list">
-			                <li class="nav-header">User:</li>
 							<li class="active" id="userDetails"><a href="#">Details</a></li>
 							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
 							<c:if test="${!isLinkedUser}">

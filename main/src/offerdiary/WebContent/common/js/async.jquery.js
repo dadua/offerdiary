@@ -53,7 +53,7 @@
         respMsg = _getResponseMsg(resp);
 
         if (typeof respMsg === 'string') {
-            it.actionInfo.showActionMsg(respMsg);
+            it.actionInfo.showSuccessActionMsg(respMsg);
         }
     };
 
