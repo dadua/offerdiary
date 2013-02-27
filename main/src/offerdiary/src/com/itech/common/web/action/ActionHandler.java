@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Transaction;
 
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.db.hibernate.HibernateSessionFactory;
@@ -41,10 +42,12 @@ public class ActionHandler {
 	private static Response executeAction( String actionName, HttpServletRequest request,
 			HttpServletResponse response ) throws Exception {
 		Method executeMethod = null;
+		Transaction transaction = null;
 		try {
 			User user = (User) request.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 			getSecurityContextHolder().setContext(new SecurityContext(user));
 			getHibernateSessionFactory().openNewSession();
+			transaction = getHibernateSessionFactory().getCurrentSession().beginTransaction();
 			ActionMapping actionMapping = ActionMappings.getAction(actionName);
 			Object actionBean = null;
 			try {
@@ -59,7 +62,7 @@ public class ActionHandler {
 			executeMethod = actionMapping.getBeanClass().getMethod(actionMapping.getMethodName(),
 					HttpServletRequest.class, HttpServletResponse.class );
 			Response responseAction = (Response) executeMethod.invoke(actionBean, request, response);
-			getHibernateSessionFactory().getCurrentSession().flush();
+			transaction.commit();
 			return responseAction;
 
 		} catch (Exception ex) {
@@ -92,6 +95,13 @@ public class ActionHandler {
 
 		} finally {
 			getHibernateSessionFactory().closeCurrentSession();
+			if (transaction !=null && transaction.isActive()) {
+				try{
+					transaction.rollback();
+				} catch (Exception e) {
+					logger.error("Failed to rollback transaction", e);
+				}
+			}
 		}
 
 	}
