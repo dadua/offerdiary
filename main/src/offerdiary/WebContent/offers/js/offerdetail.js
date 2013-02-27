@@ -6,12 +6,12 @@ it.offer.detail.getOfferHtml = function(offer) {
 
     var offerTemplate$ = $('.offer_detail_ui_template').clone().removeClass('offer_detail_ui_template hide').attr('id', 'offer_' + offer.id);
     //Setting values from offer vo to the template..
-    if (offer.sourceVendor) {
-        offerTemplate$.find('.sourceVendor-logoUrl').attr('alt', offer.sourceVendor.name).attr('src', 'images/stores/'+ (offer.sourceVendor.logoUrl || 'defaultVendor.jpg'));
-        offerTemplate$.find('.vendorName').html(offer.sourceVendor.name);
-        offerTemplate$.find('.vendorUrl').html(offer.sourceVendor.siteUrl).attr('href', offer.sourceVendor.siteUrl);
+    if (offer.targetVendor) {
+        offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ (offer.targetVendor.logoUrl || 'defaultVendor.jpg'));
+        offerTemplate$.find('.vendorName').html(offer.targetVendor.name);
+        offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
     } else {
-        offerTemplate$.find('.sourceVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
+        offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
     offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);

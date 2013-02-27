@@ -2,6 +2,7 @@ package com.itech.user.vos;
 
 import java.sql.Date;
 
+import com.itech.user.model.Gender;
 import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 
@@ -16,6 +17,7 @@ public class UserInfoVO {
 	private String mobileNumber;
 	private String pinCode;
 	private boolean isLinkedUser;
+	private String profileImgUrl;
 
 	public String getName() {
 		return name;
@@ -81,7 +83,23 @@ public class UserInfoVO {
 		userInfoVO.setEmailId(user.getEmailId());
 		if (!LoginType.EMAIL.equals(user.getLoginType())) {
 			userInfoVO.setLinkedUser(true);
+			if (LoginType.FACEBOOK.equals(user.getLoginType())) {
+				userInfoVO.setProfileImgUrl("https://graph.facebook.com/" +  user.getUserId() + "/picture?type=large");
+			}
+
 		}
+
+		if (LoginType.EMAIL.equals(user.getLoginType())){
+			if (Gender.UNKNOWN.equals(user.getGender())) {
+				userInfoVO.setProfileImgUrl("images/profile/batman.jpg");
+			} else if (Gender.M.equals(user.getGender())){
+				userInfoVO.setProfileImgUrl("images/profile/male.jpg");
+			} else {
+				userInfoVO.setProfileImgUrl("images/profile/female.jpg");
+			}
+
+		}
+
 		userInfoVO.setMobileNumber(user.getMobileNumber());
 		userInfoVO.setName(user.getName());
 		userInfoVO.setNickname(user.getNickname());
@@ -104,6 +122,14 @@ public class UserInfoVO {
 		user.setName(userInfoVO.getName());
 		user.setNickname(userInfoVO.getNickname());
 		user.setPinCode(userInfoVO.getPinCode());
+	}
+
+	public void setProfileImgUrl(String profileImgUrl) {
+		this.profileImgUrl = profileImgUrl;
+	}
+
+	public String getProfileImgUrl() {
+		return profileImgUrl;
 	}
 
 
