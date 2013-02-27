@@ -135,7 +135,7 @@ public class OfferAction extends CommonAction{
 		return new CommonBeanResponse(result, resultOffersType);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="addSharedOfferToWallet.do")
 	public Response addSharedOfferToWallet (HttpServletRequest req, HttpServletResponse resp) {
 		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
