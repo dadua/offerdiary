@@ -92,7 +92,11 @@ it.offer.getOfferHtml = function(offer) {
     } else {
         offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
-    offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
+    if (offer.expiryDateInMillis!== 0) {
+        offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
+    } else {
+        offerTemplate$.find('.expiryDate').hide();
+    }
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
     offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.uniqueId);
