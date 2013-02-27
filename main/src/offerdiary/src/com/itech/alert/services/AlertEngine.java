@@ -43,7 +43,8 @@ public class AlertEngine implements Initialize, Runnable{
 					for (AlertGenerator alertGenerator : alertGenerators) {
 						if (alertGenerator.handles(alertConfig)) {
 							try {
-								if (alertConfig.getTriggerExpiryTime().before(new Date(System.currentTimeMillis()))) {
+								if (alertConfig.getTriggerExpiryTime() == null ||
+										alertConfig.getTriggerExpiryTime().before(new Date(System.currentTimeMillis()))) {
 									getAlertConfigManager().delete(alertConfig);
 									continue;
 								}
