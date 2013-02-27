@@ -235,7 +235,7 @@ public class OfferAction extends CommonAction{
 		fbPostVO.setDescription(offerShareVO.getOffer().getDescription() + " (Shared via Offer Diary)");
 		fbPostVO.setLink(absoluteSharedURL);
 		fbPostVO.setPictureURL("");
-		fbPostVO.setName("Offer From - " + offerShareVO.getOffer().getSourceVendor().getName());
+		fbPostVO.setName("Offer From - " + offerShareVO.getOffer().getTargetVendor().getName());
 		fbPostVO.setRedirectURI(getAbsoluteURL(req, ""));
 		offerShareVO.setFbPost(fbPostVO);
 
