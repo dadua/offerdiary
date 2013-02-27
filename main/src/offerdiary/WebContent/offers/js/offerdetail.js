@@ -2,7 +2,7 @@ var it = it || {};
 it.offer = it.offer || {};
 it.offer.detail = it.offer.detail || {};
 
-it.offer.detail.getOfferHtml = function(offer) {
+it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
 
     var offerTemplate$ = $('.offer_detail_ui_template').clone().removeClass('offer_detail_ui_template hide').attr('id', 'offer_' + offer.id);
     //Setting values from offer vo to the template..
@@ -13,10 +13,19 @@ it.offer.detail.getOfferHtml = function(offer) {
     } else {
         offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
-    offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
-    offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
+    if (offer.expiryDateInMillis !== 0) {
+        offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
+    } else {
+        offerTemplate$.find('.expiryDate').hide();
+    }
+    if (isSharedOffer) {
+        offerTemplate$.find('.offerTrash').hide();
+        offerTemplate$.find('.offerAdd').parent().attr('href', 'addSharedOfferToWallet.do?accessCode=' + offer.id);
+    } else {
+        offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
+        offerTemplate$.find('.offerAdd').hide();
+    }
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
-    offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.uniqueId);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);
@@ -29,8 +38,8 @@ it.offer.detail.view = function () {
 }();
 
 
-it.offer.detail.plot = function (offer) {
-    var offer$ = this.getOfferHtml(offer);
+it.offer.detail.plot = function (offer, isSharedOffer) {
+    var offer$ = this.getOfferHtml(offer, isSharedOffer);
     $('#offerContainerFluid').html(offer$);
 };
 
@@ -58,16 +67,38 @@ it.offer.detail.addOneHandlers = function () {
 
 };
 
-it.offer.detail.addHandlers = function () {
+it.offer.detail.showShare= function (e) {
+    
+    var target = e.target,
+        targetId = target.id,
+        offerIdExtractRegex = /^offerShare_(.*)/,
+        offerId = offerIdExtractRegex.exec(targetId)[1];
+
+    $.get('reShareOffer.do', {accessCode: offerId}, function(response){
+        var resp = $.parseJSON(response);
+        if (resp.success) {
+            it.offer.share.plot(resp.result);
+        } else {
+            //TODO: Handle error
+        }
+    });
+};
+
+it.offer.detail.addHandlers = function (isSharedOffer) {
     $('.offerTrash').click(it.offer.detail.trashOffer).tooltip();
-    $('.offerShare').click(it.offer.share.show).tooltip();
+    if (isSharedOffer === true) {
+        $('.offerShare').click(it.offer.detail.showShare).tooltip();
+    } else {
+        $('.offerShare').click(it.offer.share.show).tooltip();
+    }
+    $('.offerAdd').tooltip();
     $('.offerDetail').tooltip();
 };
 
-it.offer.detail.init = function (offers) {
-    it.offer.detail.plot(offers);
+it.offer.detail.init = function (offers, isSharedOffer) {
+    it.offer.detail.plot(offers, isSharedOffer);
     it.offer.detail.addOneHandlers();
-    it.offer.detail.addHandlers();
+    it.offer.detail.addHandlers(isSharedOffer);
     it.offer.share.init();
 };
 

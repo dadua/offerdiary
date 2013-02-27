@@ -41,6 +41,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/gotPassword.do");
 		bypassUrls.add("/getSharedOffer.do");
 		bypassUrls.add("/sharedOffer.jsp");
+		bypassUrls.add("/reShareOffer.do");
 	}
 
 	@Override
