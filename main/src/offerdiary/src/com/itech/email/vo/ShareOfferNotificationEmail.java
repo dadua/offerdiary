@@ -35,7 +35,7 @@ public class ShareOfferNotificationEmail extends Email{
 		//TODO add html in share_offer_email_template.html and replace data here
 		doc.select("#friendName").first().append(user.getName());
 		doc.select("#offerDetail").first().append(offerDescription);
-		doc.select("#vendor").first().append(offerShare.getOffer().getSourceVendor().getName());
+		doc.select("#vendor").first().append(offerShare.getOffer().getTargetVendor().getName());
 		doc.select("#offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">Here is the offer</a>");
 
 		return doc.toString();

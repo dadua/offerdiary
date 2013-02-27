@@ -139,7 +139,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			return " 1=1 ";
 		}
 
-		String whereClause = " (o.description like :desc or (o.sourceVendor.name like :vendorName))  ";
+		String whereClause = " (o.description like :desc or (o.targetVendor.name like :vendorName))  ";
 		parameterMap.put("desc", "%" + finalSearchString + "%");
 		parameterMap.put("vendorName", "%" + finalSearchString + "%");
 		return whereClause;
