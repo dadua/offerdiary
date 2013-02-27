@@ -19,6 +19,7 @@ import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
+import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
@@ -34,6 +35,7 @@ import com.itech.user.vos.ShareOfferActionVO;
 @Controller
 public class OfferAction extends CommonAction{
 
+	private static final String IS_SHARED_OFFER_PARAM_KEY = "isSharedOffer";
 	private static final String MY_OFFERS_JSON_ATTR_KEY = "myOffersJson";
 
 
@@ -143,12 +145,7 @@ public class OfferAction extends CommonAction{
 		if (accessToken != null) {
 			newOffer = getOfferManager().copySharedOffer(accessToken);
 		}
-		OfferVO sharedOffer = OfferVO.getOfferVOFor(newOffer);
-		Gson gson = new Gson();
-		String offerVOJson = gson.toJson(sharedOffer, OfferVO.class);
-		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
-				StringEscapeUtils.escapeJavaScript(offerVOJson));
-		return new Forward(OfferWalletConstants.WALLET_PAGE);
+		return new Redirect("wallet.do");
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -180,6 +177,7 @@ public class OfferAction extends CommonAction{
 		req.setAttribute(OfferWalletConstants.SHARED_OFFER_ATTR_KEY, sharedOffer);
 		Gson gson = new Gson();
 		String offerVOJson = gson.toJson(sharedOffer, OfferVO.class);
+		req.setAttribute(IS_SHARED_OFFER_PARAM_KEY, true);
 		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
 				StringEscapeUtils.escapeJavaScript(offerVOJson));
 		return new Forward(OfferWalletConstants.GET_SHARED_OFFER_PAGE);

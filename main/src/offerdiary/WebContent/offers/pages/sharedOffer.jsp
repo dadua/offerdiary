@@ -10,7 +10,7 @@
             var offerJson = '${offerJson}',
             	offer = JSON.parse(offerJson);
 
-            it.offer.detail.init(offer);
+            it.offer.detail.init(offer, ${isSharedOffer});
         });
             
     </script>
