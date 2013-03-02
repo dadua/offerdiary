@@ -15,6 +15,8 @@ This page has dependency on fbInitAboveBodyEnd.jsp for fb-root div
 				cookie : true, 
 				xfbml : true
 			});
+                        $('#loginToFb').removeClass('disabled');
+                        
 	    } catch (e) {
 		    <%-- Ignoring FB load fails,
 		    This check would help if we load FB in an async way --%>
