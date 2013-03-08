@@ -41,8 +41,8 @@
                 		</div>
                 		
 	                	<ul class="nav nav-list">
-							<li class="active" id="userDetails"><a href="#">Details</a></li>
-							<li><a href="#" id="notificationSettings">Notification Settings</a></li>
+							<li class="" ><a id="userDetails" href="?o=details">Details</a></li>
+							<li><a href="?o=notificationSettings" id="notificationSettings">Notification Settings</a></li>
 							<c:if test="${!isLinkedUser}">
 								<li><a href="?o=changePassword" id="changePasswordOption">Change Password</a></li>
 							</c:if>
