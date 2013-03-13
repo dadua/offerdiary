@@ -35,20 +35,17 @@ it.profile.toggler = function () {
 
     _changePasswordHandler = function (e) {
         e.preventDefault();
-        History.pushState(null, 'Change Password', '?o=changePassword');
-        _showChangePassword();
+        History.pushState({opt:'changePassword'}, 'Change Password', '?o=changePassword');
     },
 
     _changeDetailsHandler = function (e) {
         e.preventDefault();
-        History.pushState(null, 'Details', '?o=details');
-        _showUserDetails();
+        History.pushState({opt: 'details'}, 'Details', '?o=details');
     },
 
     _changeNotificationSettingsHandler = function (e) {
         e.preventDefault();
-        History.pushState(null, 'Notification Settings', '?o=notificationSettings');
-        _showNotificationsettings();
+        History.pushState({opt: 'notificationSettings'}, 'Notification Settings', '?o=notificationSettings');
     },
 
     _showLinkedAccounts = function () {
@@ -70,8 +67,11 @@ it.profile.toggler = function () {
 
 it.profile.addHistoryHandlers = function () {
     History.Adapter.bind(window,'statechange',function(){
-        var state = History.getState(); 
-        //History.log(State.data, State.title, State.url);
+        var state = History.getState(),
+            opt = state.data.opt;
+
+        //History.log(state.data, state.title, state.url);
+        it.profile.toggleBasedOnOpt(opt);
     });
 };
 
@@ -82,6 +82,15 @@ it.profile.addOptionHandlers = function () {
     $('#changePasswordOption').click(this.toggler.changePasswordHandler);
 };
 
+it.profile.toggleBasedOnOpt = function(opt) {
+    if (opt === 'changePassword') {
+        this.toggler.showChangePassword();
+    } else if (opt === 'notificationSettings') {
+        this.toggler.showNotificationsettings();
+    } else {
+        this.toggler.showUserDetails();
+    }
+};
 
 it.profile.init = function (opt) {
     if (opt === 'changePassword') {
