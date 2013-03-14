@@ -32,7 +32,6 @@ it.profile.userInfo.view = function(){
             var this$ = $(this), 
                 val = this$.parent().find('.valColumn').html();
             this$.find('input').val(val); 
-            this$.find('.uneditable-input').html(val); 
         });
 
     };
