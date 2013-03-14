@@ -32,6 +32,7 @@ it.profile.userInfo.view = function(){
             var this$ = $(this), 
                 val = this$.parent().find('.valColumn').html();
             this$.find('input').val(val); 
+            this$.find('.uneditable-input').html(val); 
         });
 
     };
@@ -54,7 +55,7 @@ it.profile.userInfo.view = function(){
     var _saveHandler = function () {
         var userInfo$ = $('.userInfo'),
             userName = userInfo$.find('.userNameText').val(),
-            userEmail = userInfo$.find('.userEmailText').val(),
+            userEmail = userInfo$.find('.userEmailText').html(),
             userCity = userInfo$.find('.userCityText').val(),
             mobileNumber = userInfo$.find('.mobileNumberText').val(),
             pinCode = userInfo$.find('.pincodeText').val(),
