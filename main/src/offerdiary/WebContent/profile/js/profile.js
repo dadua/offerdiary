@@ -93,13 +93,7 @@ it.profile.toggleBasedOnOpt = function(opt) {
 };
 
 it.profile.init = function (opt) {
-    if (opt === 'changePassword') {
-        this.toggler.showChangePassword();
-    } else if (opt === 'notificationSettings') {
-        this.toggler.showNotificationsettings();
-    } else {
-        this.toggler.showUserDetails();
-    }
+    this.toggleBasedOnOpt(opt);
     this.addOptionHandlers();
     it.profile.addHistoryHandlers();
 };
