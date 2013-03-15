@@ -20,7 +20,7 @@ it.profile.notification.view = function () {
         return _notificationConfig$;
     };
 
-    var _saveHandler = function () {
+    var _saveHandler = function (e) {
         var notificationConfig$ = $('.notificationConfig'),
             weeklySummary = notificationConfig$.find('.weeklySummaryCbox').prop('checked'),
             promotions = notificationConfig$.find('.promotionsCbox').prop('checked'),
@@ -59,14 +59,15 @@ it.profile.notification.view = function () {
 
     };
 
-    var _cancelHandler = function () {
+    var _cancelHandler = function (e) {
         $('.editColumn').hide();
         $('.valColumn').show();
         $('.saveCancel').addClass('hide');
         $('.editBtn').show();
+
     };
 
-    var _editHandler =  function () {
+    var _editHandler =  function (e) {
         $('.editColumn').show();
         $('.valColumn').hide();
         $('.saveCancel').removeClass('hide');
