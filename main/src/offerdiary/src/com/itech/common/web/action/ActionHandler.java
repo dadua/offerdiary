@@ -65,7 +65,8 @@ public class ActionHandler {
 			transaction.commit();
 			return responseAction;
 
-		} catch (Exception ex) {
+		} catch (Exception invocationExceptio) {
+			Exception ex = (Exception) invocationExceptio.getCause();
 			logException(ex, executeMethod);
 			if (executeMethod == null) {
 				throw ex;
