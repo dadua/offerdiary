@@ -38,6 +38,7 @@ public class ActionMappingService implements Initialize {
 
 	}
 
+
 	private boolean isController(Class clazz) {
 		boolean isController = clazz.isAnnotationPresent(Controller.class);
 		return isController;
