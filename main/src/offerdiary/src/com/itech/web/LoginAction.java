@@ -28,6 +28,7 @@ import com.itech.user.vos.UserEmailCredsVO;
 @Controller
 public class LoginAction extends CommonAction{
 
+	private static final String SIGN_UP_FAILED_JSP = "user/pages/signUpFailed.jsp";
 	private static final String PAGE_ATTR_KEY = "pageAttrKey";
 	public static final String FORGOT_PASSWORD_EXECUTION_STATUS = "forgotPasswordStatus";
 
@@ -122,7 +123,7 @@ public class LoginAction extends CommonAction{
 			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
 
 			if (user == null ) {
-				return emailDoesntExist();
+				return invalidPasswordResponse();
 			}
 
 			if((userEmailCredsVO.getPassword() !=null) && userEmailCredsVO.getPassword().equals(user.getPassword())){
@@ -185,14 +186,18 @@ public class LoginAction extends CommonAction{
 			user = getUserManager().getByEmail(email);
 			if((user != null) && (user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
 					|| user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString()))){
-				return new Forward("signUpFailed.jsp");
-			}else if((user != null) && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
+				return new Forward(SIGN_UP_FAILED_JSP);
+			}
+
+			if((user != null) && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
 				user.setLoginType(LoginType.MULTI);
 				user.setPassword(password);
 				getUserManager().save(user);
-			}else if(null == user){
-				user = getUserManager().saveEmailUser(name, email, password);
+			} else 	if(null != user){
+				return new Forward(SIGN_UP_FAILED_JSP);
 			}
+
+			user = getUserManager().saveEmailUser(name, email, password);
 			updateLoggedInUser(req, user);
 		}
 		return new Redirect("wallet.do");
