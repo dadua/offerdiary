@@ -12,7 +12,7 @@ public class Result <T> {
 	private ReturnCode returnCode = ReturnCodes.SUCCESS;
 	private T result = null;
 	private String msg = null;
-	private boolean success;
+	private boolean success = true;
 
 	public Result(ReturnCode returnCode, T result, String msg) {
 		super();
