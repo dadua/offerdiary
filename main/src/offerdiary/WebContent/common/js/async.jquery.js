@@ -53,7 +53,12 @@
         respMsg = _getResponseMsg(resp);
 
         if (typeof respMsg === 'string') {
-            it.actionInfo.showSuccessActionMsg(respMsg);
+        	if (resp.success === false) {
+        		it.actionInfo.showErrorActionMsg(respMsg);
+        	} else {
+        		it.actionInfo.showSuccessActionMsg(respMsg);	
+        	}
+            
         }
     };
 
