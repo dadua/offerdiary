@@ -43,6 +43,13 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		if (existingUser != null) {
 			return existingUser;
 		}
+
+		User existingEmailUser = getUserDAO().getByEmail(user.getEmailId());
+		if (existingEmailUser != null) {
+			updateExistingUser(existingEmailUser, user);
+			user = existingEmailUser;
+		}
+
 		save(user);
 		LinkedAccount fbLinkedAccount = createFbLinkedAccountFor(fbProfile, user);
 		fbLinkedAccount.setUsedForLogin(Boolean.TRUE);
@@ -50,6 +57,15 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		getSocialProfileManager().syncFbSocialProfilesFor(fbService, user);
 		getUserEventGenerator().newUserAdded(user);
 		return user;
+	}
+	private void updateExistingUser(User existingUser, User user) {
+		existingUser.setUserId(user.getUserId());
+		existingUser.setGender(user.getGender());
+		existingUser.setName(user.getName());
+		user.setEmailId(user.getEmailId());
+		existingUser.setLanguage(user.getLanguage());
+		existingUser.setLoginType(LoginType.MULTI);
+
 	}
 	private LinkedAccount createFbLinkedAccountFor(FbProfile fbProfile, User user) {
 		LinkedAccount existingLinkedAccount = getLinkedAccountManager().getLinkedAccountFor(fbProfile.getId(), LinkedAccountType.FACEBOOK);

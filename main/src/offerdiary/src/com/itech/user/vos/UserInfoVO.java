@@ -17,6 +17,7 @@ public class UserInfoVO {
 	private String mobileNumber;
 	private String pinCode;
 	private boolean isLinkedUser;
+	private boolean emailLoginAllowed;
 	private String profileImgUrl;
 
 	public String getName() {
@@ -83,10 +84,14 @@ public class UserInfoVO {
 		userInfoVO.setEmailId(user.getEmailId());
 		if (!LoginType.EMAIL.equals(user.getLoginType())) {
 			userInfoVO.setLinkedUser(true);
-			if (LoginType.FACEBOOK.equals(user.getLoginType())) {
+			if (LoginType.FACEBOOK.equals(user.getLoginType()) || LoginType.MULTI.equals(user.getLoginType()) ) {
 				userInfoVO.setProfileImgUrl("https://graph.facebook.com/" +  user.getUserId() + "/picture?type=large");
 			}
 
+		}
+
+		if (LoginType.EMAIL.equals(user.getLoginType()) || LoginType.MULTI.equals(user.getLoginType())) {
+			userInfoVO.setEmailLoginAllowed(true);
 		}
 
 		if (LoginType.EMAIL.equals(user.getLoginType())){
@@ -130,6 +135,12 @@ public class UserInfoVO {
 
 	public String getProfileImgUrl() {
 		return profileImgUrl;
+	}
+	public boolean isEmailLoginAllowed() {
+		return emailLoginAllowed;
+	}
+	public void setEmailLoginAllowed(boolean emailLoginAllowed) {
+		this.emailLoginAllowed = emailLoginAllowed;
 	}
 
 
