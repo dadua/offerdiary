@@ -50,4 +50,6 @@ public interface OfferManager {
 
 	public void shareOffer(ShareOfferActionVO shareOfferActionVO);
 
+	public void addOfferFromCardToUser(String offerId, User loggedInUser);
+
 }

@@ -193,7 +193,11 @@ public class LoginAction extends CommonAction{
 				user.setLoginType(LoginType.MULTI);
 				user.setPassword(password);
 				getUserManager().save(user);
-			} else 	if(null != user){
+				updateLoggedInUser(req, user);
+				return new Redirect("wallet.do");
+			}
+
+			if(null != user){
 				return new Forward(SIGN_UP_FAILED_JSP);
 			}
 

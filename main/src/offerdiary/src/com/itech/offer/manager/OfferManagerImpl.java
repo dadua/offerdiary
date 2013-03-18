@@ -228,6 +228,21 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		}
 	}
 
+	@Override
+	public void addOfferFromCardToUser(String offerId, User user) {
+		try {
+			Offer copiedOffer = null;
+			Offer offer = getOfferForUnqueId(offerId);
+			copiedOffer = offer.clone();
+			copiedOffer.setId(null);
+			addOfferForUser(offer , user);
+		} catch (CloneNotSupportedException e) {
+			logger.error("Error in cloning the offer", e);
+			throw new RuntimeException("Error in cloning the offer", e);
+		}
+
+	}
+
 
 	public OfferDAO getOfferDAO() {
 		return offerDAO;
@@ -302,6 +317,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public void setEmailManager(EmailManager emailManager) {
 		this.emailManager = emailManager;
 	}
+
+
 
 
 }

@@ -126,15 +126,12 @@ public class OfferAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="saveOffers.do")
 	public Response saveOffers (HttpServletRequest req, HttpServletResponse resp) {
-		String offersJson = req.getParameter(OfferWalletConstants.OFFER_LIST_PARAM_KEY);
-		Gson gson = new Gson();
-		Type offersType = new TypeToken<List<Offer>>() { }.getType();
-		List<Offer> offers = gson.fromJson(offersJson, offersType);
-		getOfferManager().addOffersForUser(offers, getLoggedInUser());
-		Result<List<Offer>> result = new Result<List<Offer>>(offers);
-		Type resultOffersType = new TypeToken<Result<List<Offer>>>() {
+		String offerId = req.getParameter(OfferWalletConstants.OFFER_ID_PARAM_KEY);
+		getOfferManager().addOfferFromCardToUser(offerId, getLoggedInUser());
+		Result<String> result = new Result<String>("Offer successfully  added to your wallet");
+		Type resultType = new TypeToken<Result<String>>() {
 		}.getType();
-		return new CommonBeanResponse(result, resultOffersType);
+		return new CommonBeanResponse(result, resultType);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -147,6 +144,19 @@ public class OfferAction extends CommonAction{
 		}
 		return new Redirect("wallet.do");
 	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="addOfferFromCardToWallet.do")
+	public Response addOfferFromCardToWallet (HttpServletRequest req, HttpServletResponse resp) {
+		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
+		Offer newOffer = null;
+		if (accessToken != null) {
+			newOffer = getOfferManager().copySharedOffer(accessToken);
+		}
+		return new Redirect("wallet.do");
+	}
+
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteOffers.do")
