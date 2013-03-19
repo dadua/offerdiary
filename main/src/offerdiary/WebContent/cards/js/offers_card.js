@@ -19,16 +19,35 @@ it.offersoncard.getCardId = function (offersOnCardLabelTarget) {
     return cardId;
 };
 
+it.offersoncard.getOfferHtml = function (offer) {
+	var offer$ = it.offer.getOfferHtml(offer);
+	offer$.find('.offerFromCardAction').removeClass('hide');
+	offer$.find('.trashOfferAction').addClass('hide');
+	return offer$;
+};
+
+
+it.offersoncard.addOfferToWallet = function() {
+	
+};
+
+it.offersoncard.addOfferHandlers = function() {
+    $('.offerShare').click(it.offer.share.show);
+    $('.offerAction').tooltip();
+    $('.offerAddToWallet').click(it.offersoncard.addOfferToWallet);
+    
+};
+
 it.offersoncard.plotOffers = function (offers) {
     var offers$ = [];
 
     for (var i=0; i< offers.length; i++) {
-        offers$.push(it.offer.getOfferHtml(offers[i]));
+        offers$.push(it.offersoncard.getOfferHtml(offers[i]));
     }
 
     $('#offerOnCardContainer').rowFluidAdder({ items$: offers$,
                                             itemRowContainerTemplate$: '<ul class="thumbnails row-fluid"></ul>' });
-    //it.offer.addHandlers();
+    it.offersoncard.addOfferHandlers();
 
 };
 
@@ -93,7 +112,7 @@ it.offersoncard.plotAllOffersForCard = function (cardId) {
 
     $.getJSON('getOffersOnCard.do', {cardIdKey: cardId}, function (resp) {
         if (resp.success) {
-            it.offersoncard.plotOffers(resp.result);
+            it.offersoncard.plotOffers(resp.result.offers);
         } else {
             //TODO: Error case
         }

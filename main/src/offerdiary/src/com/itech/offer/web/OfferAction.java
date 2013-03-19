@@ -106,7 +106,7 @@ public class OfferAction extends CommonAction{
 			offers = null;
 		}
 		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
-		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
+		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
@@ -118,7 +118,7 @@ public class OfferAction extends CommonAction{
 		OfferSearchResultVO offers = getOfferManager().getAllOffersForCard(cardId);
 		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
 		result.setMsg("Got offers on cards");
-		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
+		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
