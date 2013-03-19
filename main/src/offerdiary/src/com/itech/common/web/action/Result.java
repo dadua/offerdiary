@@ -42,6 +42,7 @@ public class Result <T> {
 
 	public void setReturnCode(final ReturnCode returnCode) {
 		this.returnCode = returnCode;
+		this.success = this.returnCode.equals(ReturnCodes.SUCCESS);
 	}
 
 	public T getResult() {

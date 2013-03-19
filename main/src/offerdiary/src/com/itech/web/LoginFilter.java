@@ -43,6 +43,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/sharedOffer.jsp");
 		bypassUrls.add("/reShareOffer.do");
 		bypassUrls.add("/user/pages/signUpFailed.jsp");
+		bypassUrls.add("/authorizationFailureJsonResponse.do");
 	}
 
 	@Override
@@ -62,6 +63,11 @@ public class LoginFilter implements Filter {
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
 			if (!isBypass(reqUrl)) {
+				String headerForJsonCheck = httpRequest.getHeader("x-requested-with");
+				if ("XMLHttpRequest".equalsIgnoreCase(headerForJsonCheck)) {
+					httpRequest.getRequestDispatcher("/authorizationFailureJsonResponse.do").forward(req, resp);
+					return;
+				}
 				String queryString = httpRequest.getQueryString();
 				String redirectURL  = reqUrl;
 				if (CommonUtilities.isNotEmpty(queryString)) {
