@@ -45,6 +45,13 @@
         return resp.msg;
     };
 
+
+    var _loginFailedHandler = function (resp) {
+        it.actionInfo.showErrorActionMsg("Not logged in..");
+        var currentLoc = window.location.href;
+        $('<form action="'+currentLoc+'" method="get"></form>').appendTo('body').submit();
+    };
+
     /**
      * Handle the error display case.. 
      */
@@ -52,13 +59,17 @@
         var resp = _getResponse (xhr),
         respMsg = _getResponseMsg(resp);
 
+         if (resp.returnCode.code === 101) {
+             _loginFailedHandler(resp);
+             return;
+         }
+
         if (typeof respMsg === 'string') {
-        	if (resp.success === false) {
-        		it.actionInfo.showErrorActionMsg(respMsg);
-        	} else {
-        		it.actionInfo.showSuccessActionMsg(respMsg);	
-        	}
-            
+            if (resp.success === false) {
+                it.actionInfo.showErrorActionMsg(respMsg);
+            } else {
+                it.actionInfo.showSuccessActionMsg(respMsg);	
+            }
         }
     };
 
