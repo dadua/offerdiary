@@ -32,6 +32,19 @@ public class LoginAction extends CommonAction{
 	private static final String PAGE_ATTR_KEY = "pageAttrKey";
 	public static final String FORGOT_PASSWORD_EXECUTION_STATUS = "forgotPasswordStatus";
 
+
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="authorizationFailureJsonResponse.do")
+	public Response authorizationFailureJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
+		Result<String> result = new Result<String>("User is not logged in.");
+		result.setReturnCode(ReturnCodes.AUTHENTICATION_FAILURE);
+		Type resultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultType);
+	}
+
+
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="login.do")
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {

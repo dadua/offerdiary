@@ -14,5 +14,6 @@ public class ReturnCodes {
 
 
 	public static final ReturnCode INVALID_CURRENT_PASSWORD =  new ReturnCode(100);
+	public static final ReturnCode AUTHENTICATION_FAILURE  =  new ReturnCode(101);
 
 }
