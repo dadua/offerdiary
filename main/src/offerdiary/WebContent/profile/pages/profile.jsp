@@ -46,12 +46,14 @@
 							<c:if test="${!emailLoginAllowed}">
 								<li><a href="?o=changePassword" id="changePasswordOption">Change Password</a></li>
 							</c:if>
+							<%--
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
 							<li class="divider"></li>
 							<li class="nav-header">Friends:</li>
 							<li><a href="#">Shared</a></li>
 							<li><a href="#">Blocked</a></li>
+							 --%>
 						</ul>
 					</div>
                 </div>
