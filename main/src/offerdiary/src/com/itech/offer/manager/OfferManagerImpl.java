@@ -23,6 +23,7 @@ import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
 import com.itech.offer.vo.OfferSearchResultVO;
+import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
 import com.itech.user.vos.ShareOfferActionVO;
 
@@ -209,15 +210,45 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	public List<Offer> getAllOffersOnCardsForUser(User user) {
-		return getOfferDAO().getAllOffersOnCardsForUser(user);
+	public OfferSearchResultVO getAllOffersOnCardsForUser(User user) {
+		List<Offer> offers = getOfferDAO().getAllOffersOnCardsForUser(user);
+		fetchAndFillOfferRelationshipWithUser(offers, user);
+		return convertToSearchResultVO(offers);
+	}
+
+
+	private OfferSearchResultVO convertToSearchResultVO(List<Offer> offers) {
+		List<OfferVO> offerVOs = new ArrayList<OfferVO>();
+		for (Offer offer : offers) {
+			OfferVO offerVO = OfferVO.getOfferVOFor(offer);
+			offerVOs.add(offerVO);
+		}
+		OfferSearchResultVO offerSearchResult = new OfferSearchResultVO();
+		offerSearchResult.setOffers(offerVOs);
+		offerSearchResult.setTotalCount(Long.valueOf(offerVOs.size()));
+		offerSearchResult.setPerPageCount(Integer.valueOf(offerVOs.size()));
+		return offerSearchResult;
 	}
 
 	@Override
-	public List<Offer> getAllOffersForCard(Long offerCardId) {
+	public OfferSearchResultVO getAllOffersForCard(Long offerCardId) {
 		OfferCard offerCard = getOfferCardManager().getOfferCardFor(offerCardId);
-		return getOfferDAO().getAllOffersForCard(offerCard);
+		List<Offer> offers = getOfferDAO().getAllOffersForCard(offerCard);
+		fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
+
+		return convertToSearchResultVO(offers);
 	}
+
+	@Override
+	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
+		List<Offer> filteredOffers = getOfferDAO().getOffersAssociatedWithUser(offers, user);
+		for (Offer offer : filteredOffers) {
+			offer.setAssociatedWithLoggedInUser(true);
+			offers.remove(offer);
+			offers.add(offer);
+		}
+	}
+
 
 	@Override
 	public void shareOffer(ShareOfferActionVO shareOfferActionVO) {

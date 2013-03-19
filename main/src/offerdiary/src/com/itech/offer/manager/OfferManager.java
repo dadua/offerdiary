@@ -38,9 +38,9 @@ public interface OfferManager {
 
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard);
 
-	public List<Offer> getAllOffersOnCardsForUser(User user);
+	public OfferSearchResultVO getAllOffersOnCardsForUser(User user);
 
-	public List<Offer> getAllOffersForCard(Long offerCardId);
+	public OfferSearchResultVO getAllOffersForCard(Long offerCardId);
 
 	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
 
@@ -51,5 +51,7 @@ public interface OfferManager {
 	public void shareOffer(ShareOfferActionVO shareOfferActionVO);
 
 	public void addOfferFromCardToUser(String offerId, User loggedInUser);
+
+	void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user);
 
 }

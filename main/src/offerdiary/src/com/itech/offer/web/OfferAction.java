@@ -99,13 +99,13 @@ public class OfferAction extends CommonAction{
 	@ActionMapping(value="getOffersOnMyCards.do")
 	public Response getOffersOnMyCards (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
-		List<Offer> offers = new ArrayList<Offer>();
+		OfferSearchResultVO offers = null;
 		if (loggedInUser != null) {
 			offers = getOfferManager().getAllOffersOnCardsForUser(loggedInUser);
 		} else {
-			offers = new ArrayList<Offer>();
+			offers = null;
 		}
-		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
 		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
@@ -115,8 +115,8 @@ public class OfferAction extends CommonAction{
 	public Response getOffersOnCard (HttpServletRequest req, HttpServletResponse resp) {
 		String offerCardId = req.getParameter(OfferWalletConstants.OFFER_CARD_ID_PARAM_KEY);
 		Long cardId = Long.parseLong(offerCardId);
-		List<Offer> offers = getOfferManager().getAllOffersForCard(cardId);
-		Result<List<Offer>> result = new Result<List<Offer>>(offers);
+		OfferSearchResultVO offers = getOfferManager().getAllOffersForCard(cardId);
+		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
 		result.setMsg("Got offers on cards");
 		Type type = new TypeToken<Result<List<Offer>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
