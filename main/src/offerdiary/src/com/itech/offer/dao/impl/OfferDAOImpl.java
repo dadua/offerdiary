@@ -185,6 +185,17 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		return " 1=1 ";
 	}
 
+	@Override
+	public List<Offer> getOffersAssociatedWithUser(List<Offer> offers,
+			User user) {
+		String hql = "select distinct o from " + getEntityClassName() + " o, OfferUserAssoc oua  where oua.offer=o and oua.user=:user and o in (:offers)";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("user", user);
+		query.setParameter("offers", offers);
+		List list = query.list();
+		return list;
+	}
+
 
 
 

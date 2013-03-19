@@ -59,6 +59,8 @@ public class OfferVO {
 
 	private String sharedURL;
 
+	private boolean associatedWithLoggedInUser;
+
 	public static OfferVO getOfferVOFor(Offer offer) {
 		OfferVO offerVO = new OfferVO();
 		offerVO.setId(offer.getUniqueId());
@@ -78,6 +80,7 @@ public class OfferVO {
 		offerVO.setTermsAndConditions(offer.getTermsAndConditions());
 		offerVO.setTitle(offer.getTitle());
 		offerVO.setUniqueId(offer.getUniqueId());
+		offerVO.setAssociatedWithLoggedInUser(offer.isAssociatedWithLoggedInUser());
 		return offerVO;
 	}
 
@@ -334,6 +337,16 @@ public class OfferVO {
 
 	public void setPublicId(String publicId) {
 		this.publicId = publicId;
+	}
+
+
+	public boolean isAssociatedWithLoggedInUser() {
+		return associatedWithLoggedInUser;
+	}
+
+
+	public void setAssociatedWithLoggedInUser(boolean associatedWithLoggedInUser) {
+		this.associatedWithLoggedInUser = associatedWithLoggedInUser;
 	}
 
 }
