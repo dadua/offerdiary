@@ -60,6 +60,7 @@ it.offersoncard.addOfferToWallet = function(e) {
 
 it.offersoncard.addOfferHandlers = function() {
     $('.offerShare').click(it.offer.share.show);
+    $('.offerDetail').click(it.offer.detail.show);
     $('.offerAction').tooltip();
     $('.offerAddToWallet').click(it.offersoncard.addOfferToWallet);
     

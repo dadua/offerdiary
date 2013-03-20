@@ -5,6 +5,7 @@
     <script src="offers/js/addoffer_wizard.js" > </script>
     <script src="offers/js/vendor.js" > </script>
     <script src="offers/js/offer.js" > </script>
+    <script src="offers/js/offerdetail.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
     
     <script type="text/javascript">

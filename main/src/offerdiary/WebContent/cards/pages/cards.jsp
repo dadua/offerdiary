@@ -4,6 +4,7 @@
     <script src="offers/js/offer.js" > </script>
     <script src="cards/js/offers_card.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
+    <script src="offers/js/offerdetail.js" > </script>
     <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
     <script src="common/libs/jquery-pagination/jquery.pagination.js" charset="UTF-8"> </script>
 
