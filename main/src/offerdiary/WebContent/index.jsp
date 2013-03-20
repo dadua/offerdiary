@@ -64,6 +64,10 @@
     .carousel-caption .btn {
       margin-top: 10px;
     }
+    
+    .someMargin {
+    	margin: 12px;
+    }
 
 
     
@@ -117,84 +121,28 @@ Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
 	
 		<div class="container">
 			<div class="row">
-				<div class="span2 offset2" >
-					<div class="hero-unit tile-div">
-						<img src="images/tile_1.png" >
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div" >
-						<img src="images/tile_2_cart.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img src="images/tile_gift_pack.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img src="images/tile_piggy_bank.png">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2 offset2">
-					<div class="hero-unit tile-div">
-						<img src="images/tile_arrow.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-						<img src="images/tile_gift.png">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-					</div>
-				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2 offset2">
-					<div class="hero-unit tile-div">
-					</div>
+				<div class="span4" >
+					<img src="images/icons/policycatalog.png" class="img-polaroid img-rounded" style="height: 240px;">
 				</div>
 				<div class="span4 ">
-					<div class="hero-unit tile-div">
-					</div>
+					<img src="images/icons/tagcatalog.png" class="img-polaroid img-rounded" style="height: 240px;">
 				</div>
-				<div class="span2 ">
-					<div class="hero-unit tile-div">
-					</div>
+				<div class="span4 ">
+					<img src="images/icons/HipsPolicyMigration.png" class="img-polaroid img-rounded" style="height: 240px;">
 				</div>
 			</div>
+			<br>
+			<br>
 			<div class="row">
-				<div class="span3 offset2">
+				<div class="span3 offset3 thumbnail">
 					<img src="images/app_stores.png">
 				</div>
-				<div class="span4 ">
-					<img  src="images/launch.jpg">
-					<div class="control-group">
-						<div style="float:left">
-							<input id="email" type="text" class="input-xlarge input-center" name="email" placeholder="Email"></input>
-						</div>
-						<div>	
-							<div class="row">
-								<button id="newEmailSubscription" class="btn btn-info" href="#">Go</button>
-							</div>
-							<div class="row">
-								<div id="onEmailSuccess" class="hide alert alert-success span4" >
-									<button class="close" >×</button>
-									Thanks for your interest! We'll keep you posted.
-								</div> 
-							</div>
-						</div>
+				<div class="thumbnail span3 feedbackFb">
+					<div class="someMargin">
+					Drop in your thoughts at: <a target="_blank" href="https://www.facebook.com/offerdiary">facebook.com/offerdiary</a>
 					</div>
 				</div>
 			</div>
+				
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
