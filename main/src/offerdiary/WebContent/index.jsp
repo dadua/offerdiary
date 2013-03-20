@@ -68,6 +68,10 @@
     .someMargin {
     	margin: 12px;
     }
+    
+    body {
+		padding-top: 75px;
+	}
 
 
     

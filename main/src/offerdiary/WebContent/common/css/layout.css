@@ -2,6 +2,11 @@ body {
 	color: #808080;
 }
 
+body {
+	/*BS Accounts*/
+	padding-top: 85px;
+}
+
 .options-left-container {
 	 background-color: #FFFFFF;
 	 border-radius: 6px 6px 6px 6px;
