@@ -18,6 +18,7 @@
 				text-transform: normal;
 				line-height: 1.6em;
 			}
+			<%@include file="/common/css/layout.css" %>
 		</style>
 <%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
