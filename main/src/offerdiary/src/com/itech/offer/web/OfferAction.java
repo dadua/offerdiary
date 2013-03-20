@@ -155,6 +155,7 @@ public class OfferAction extends CommonAction{
 		String offerId = req.getParameter(OfferWalletConstants.OFFER_ID_PARAM_KEY);
 		getOfferManager().addOfferFromCardToUser(offerId, getLoggedInUser());
 		Result<String> result = new Result<String>("Offer successfully  added to your wallet");
+		result.setMsg("Offer successfully  added to your wallet");
 		Type resultType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultType);

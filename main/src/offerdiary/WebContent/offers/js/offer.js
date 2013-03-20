@@ -99,7 +99,7 @@ it.offer.getOfferHtml = function(offer) {
     }
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
-    offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.uniqueId);
+    offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);

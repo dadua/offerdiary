@@ -20,15 +20,42 @@ it.offersoncard.getCardId = function (offersOnCardLabelTarget) {
 };
 
 it.offersoncard.getOfferHtml = function (offer) {
-	var offer$ = it.offer.getOfferHtml(offer);
-	offer$.find('.offerFromCardAction').removeClass('hide');
-	offer$.find('.trashOfferAction').addClass('hide');
-	return offer$;
+    var offer$ = it.offer.getOfferHtml(offer);
+    offer$.find('.offerFromCardAction').removeClass('hide');
+    offer$.find('.trashOfferAction').addClass('hide');
+    offer$.find('.offerAddToWallet').attr('id', 'offerAddToWallet_'+offer.id);
+    if (offer.associatedWithCurrentUser) {
+        it.offersoncard.markAddedToWallet(offer$);
+    }
+    return offer$;
+};
+
+it.offersoncard.getOffer$ = function (offerId) {
+    var offer$ = $('#offer_'+offerId);
+    return offer$;
+};
+
+it.offersoncard.markAddedToWallet = function (offer$) {
+    //TODO: Make this offer checked..
+    //Probably add a popover
+    offer$.find('.offerFromCardAction').addClass('hide');
+    offer$.find('.offerAddedToWalletAction').removeClass('hide').tooltip('show');
 };
 
 
-it.offersoncard.addOfferToWallet = function() {
-	
+it.offersoncard.addOfferToWallet = function(e) {
+    var target = e.target,
+        targetId = target.id,
+        offerIdExtractRegex = /^offerAddToWallet_(.*)/,
+        offerId = offerIdExtractRegex.exec(targetId)[1];
+
+    $.post('addOfferFromCardToWallet.do', {id: offerId}, function (respStr) {
+        var resp = $.parseJSON(respStr);
+        if (resp.success) {
+            var offer$ = it.offersoncard.getOffer$(offerId);
+            it.offersoncard.markAddedToWallet (offer$);
+        } 
+    });
 };
 
 it.offersoncard.addOfferHandlers = function() {
