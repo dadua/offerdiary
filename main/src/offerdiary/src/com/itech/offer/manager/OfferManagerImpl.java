@@ -186,6 +186,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
 		for (Offer offer : offers) {
+			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
+				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+			}
 			Vendor existingVendor = getVendorManager().getVendorByName(offer.getTargetVendor().getName());
 			if (existingVendor == null) {
 				getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
