@@ -77,6 +77,7 @@
 				text-transform: normal;
 				line-height: 1.6em;
 			}
+			<%@include file="/common/css/layout.css" %>
 		</style>
 	</head>
 	<body>

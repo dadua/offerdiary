@@ -93,6 +93,7 @@
 				padding-left:10%;
 				padding-right:10%;
 			}
+			<%@include file="/common/css/layout.css" %>
 		</style>
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
