@@ -37,6 +37,13 @@ it.offer.detail.view = function () {
 
 }();
 
+it.offer.detail.show = function (e) {
+    var target = e.target,
+        targetId = target.id,
+        offerIdExtractRegex = /offerDetail_(.*)/,
+        offerId = offerIdExtractRegex.exec(targetId)[1];
+    $('<form action="getOfferDetail.do" method="get"><input type="hidden" name="id" value="'+offerId+'"></input></form>').appendTo('body').submit();
+};
 
 it.offer.detail.plot = function (offer, isSharedOffer) {
     var offer$ = this.getOfferHtml(offer, isSharedOffer);

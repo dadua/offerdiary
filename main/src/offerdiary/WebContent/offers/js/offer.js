@@ -99,7 +99,8 @@ it.offer.getOfferHtml = function(offer) {
     }
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
-    offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);
+    //offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);
+    offerTemplate$.find('.offerDetail').attr('id', 'offerDetail_' + offer.id);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     offerTemplate$.find('.offerDesc').html(offer.description);
@@ -290,6 +291,7 @@ it.offer.addHandlers = function () {
     });
     $('.offerTrash').click(it.offer.trashOffer);
     $('.offerShare').click(it.offer.share.show);
+    $('.offerDetail').click(it.offer.detail.show);
     $('.offerAction').tooltip();
     
     /*
