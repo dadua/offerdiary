@@ -84,10 +84,10 @@
         </div>
 
     </div>
+    <%@include file="/offers/templates/shareOfferTemplate.html" %>
     <div class="templates hide" style="display:none">
         <%@include file="/cards/templates/eachCardTemplate.html" %>
         <%@include file="/offers/templates/eachOfferTemplate.html" %>
-        <%@include file="/offers/templates/shareOfferTemplate.html" %>
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
 	
