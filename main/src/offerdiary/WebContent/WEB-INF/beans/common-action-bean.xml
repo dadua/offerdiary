@@ -39,5 +39,8 @@
     <bean id="itech.LoginAction" class="com.itech.web.LoginAction" scope="prototype" parent="itech.CommonAction">
     </bean>	
     
+    <bean id="itech.HomeAction" class="com.itech.web.HomeAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
  </beans>
     
