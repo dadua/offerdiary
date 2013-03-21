@@ -16,10 +16,10 @@
                     <a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>Blog</a>
                     </li>
                     <li>
-                    <a href="#" class="footerLink"><i class="icon-comment icon-white"></i>Terms</a>
+                    <a href="tnc.do" class="footerLink"><i class="icon-comment icon-white"></i>Terms</a>
                     </li>
                     <li>
-                    <a href="#" class="footerLink"><i class="icon-folder-close icon-white"></i>Privacy</a>
+                    <a href="privacy.do" class="footerLink"><i class="icon-folder-close icon-white"></i>Privacy</a>
                     </li>
                 </ul>
             </div>
