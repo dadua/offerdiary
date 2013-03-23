@@ -165,18 +165,14 @@ it.offersoncard.pagination = function () {
         return false;
     };
 
-    var _lastTotalNoOfOffersOnCards = 0;
 
     var _init = function (totalNoOfCards) {
-        if (totalNoOfCards !== _lastTotalNoOfOffersOnCards) {
-            $('#offerOnCardPaginationContainer').pagination(totalNoOfCards, {
-                items_per_page:10,
-                callback:handlePaginationClick,
-                num_edge_entries:1,
-                num_display_entries: 5
-            });
-            _lastTotalNoOfOffersOnCards = totalNoOfCards;
-        }
+        $('#offerOnCardPaginationContainer').pagination(totalNoOfCards, {
+            items_per_page:10,
+            callback:handlePaginationClick,
+            num_edge_entries:1,
+            num_display_entries: 5
+        });
     };
 
     var _getTotalNoOfOffers = function (cardId) {
