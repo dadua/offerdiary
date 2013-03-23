@@ -298,8 +298,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
-		List<Offer> filteredOffers = getOfferDAO().getOffersAssociatedWithUser(offers, user);
-		for (Offer offer : filteredOffers) {
+		List<OfferUserAssoc> filteredOffers = getOfferDAO().getOffersAssociatedWithUser(offers, user);
+		for (OfferUserAssoc offerUserAssoc : filteredOffers) {
+			Offer offer = offerUserAssoc.getOffer();
 			offer.setAssociatedWithLoggedInUser(true);
 			int positionOfOffer = offers.indexOf(offer);
 			offers.remove(positionOfOffer);

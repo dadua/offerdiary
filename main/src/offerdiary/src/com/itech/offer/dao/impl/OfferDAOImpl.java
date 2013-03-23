@@ -15,6 +15,7 @@ import com.itech.offer.OfferSearchFilterUtil;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
+import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
@@ -102,7 +103,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			fromHql.append(", OfferUserAssoc oua where oua.offer=o and oua.user=:user ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append( " where ");
+			fromHql.append( " where 1=1 ");
 		}
 
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);
@@ -221,23 +222,24 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	}
 
 	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
-		List<Offer> filteredOffers = getOffersAssociatedWithUser(offers, user);
-		for (Offer offer : filteredOffers) {
-			offer.setAssociatedWithLoggedInUser(true);
-			int positionOfOffer = offers.indexOf(offer);
+		List<OfferUserAssoc> filteredOffers = getOffersAssociatedWithUser(offers, user);
+		for (OfferUserAssoc offerUserAssoc : filteredOffers) {
+			Offer offerFromAssoc = offerUserAssoc.getOffer();
+			offerUserAssoc.getOffer().setAssociatedWithLoggedInUser(true);
+			int positionOfOffer = offers.indexOf(offerFromAssoc);
 			offers.remove(positionOfOffer);
-			offers.add(positionOfOffer, offer);
+			offers.add(positionOfOffer, offerFromAssoc);
 		}
 	}
 
 
 	@Override
-	public List<Offer> getOffersAssociatedWithUser(List<Offer> offers,
+	public List<OfferUserAssoc> getOffersAssociatedWithUser(List<Offer> offers,
 			User user) {
 		if (offers.size() == 0) {
-			return new ArrayList<Offer>();
+			return new ArrayList<OfferUserAssoc>();
 		}
-		String hql = "select distinct o from " + getEntityClassName() + " o, OfferUserAssoc oua  where oua.offer=o and oua.user=:user and o in (:offers)";
+		String hql = "select distinct oua from " + getEntityClassName() + " o, OfferUserAssoc oua  where oua.offer=o and oua.user=:user and o in (:offers)";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("user", user);
 		query.setParameterList("offers", offers);
