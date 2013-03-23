@@ -8,4 +8,6 @@ public interface OfferOfferCardAssocDAO extends CommonBaseDAO<OfferOfferCardAsso
 
 	void removeOffersForCard(OfferCard offerCard);
 
+	OfferOfferCardAssoc getOfferAssocFor(OfferCard offerCard, String offerDescription, String targetVendorName);
+
 }

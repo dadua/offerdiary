@@ -22,6 +22,7 @@ import com.itech.offer.model.OfferOfferCardAssoc;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
+import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
@@ -42,25 +43,32 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
-		if ((offer.getExpiry() == null) && (offer.getExpiryDateInMillis() !=0)) {
-			offer.setExpiry(new Date(offer.getExpiryDateInMillis()));
-		}
-		if (offer.getNotifyVO() != null) {
-			offer.setFbNotification(offer.getNotifyVO().getFbNotify());
-			offer.setEmailNotification(offer.getNotifyVO().getEmailNotify());
-		}
-		Vendor targetVendor = offer.getTargetVendor();
-		if (targetVendor != null) {
-			Long vendorId = targetVendor.getId();
-			Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
-			offer.setTargetVendor(vendorFromDB);
+		if (offer.isTransient()) {
+			if ((offer.getExpiry() == null) && (offer.getExpiryDateInMillis() !=0)) {
+				offer.setExpiry(new Date(offer.getExpiryDateInMillis()));
+			}
+			if (offer.getNotifyVO() != null) {
+				offer.setFbNotification(offer.getNotifyVO().getFbNotify());
+				offer.setEmailNotification(offer.getNotifyVO().getEmailNotify());
+			}
+			Vendor targetVendor = offer.getTargetVendor();
+			if (targetVendor != null) {
+				Long vendorId = targetVendor.getId();
+				Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
+				offer.setTargetVendor(vendorFromDB);
+			}
+
+			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
+				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+			}
 		}
 
-		if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
-			offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
-		}
-		offerDAO.addOrUpdate(offer);
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
+
+		if (offer.isTransient()) {
+			offerDAO.addOrUpdate(offer);
+		}
+
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
 		if (offer.getExpiry() != null) {
 			getOfferEventGenerator().offerCreated(offer, getLoggedInUser());
@@ -75,8 +83,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 
 	@Override
-	public Offer getById(long dataId) {
-		return offerDAO.getById(dataId);
+	public Offer getById(long offerId) {
+		return offerDAO.getById(offerId);
 	}
 
 	@Override
@@ -110,7 +118,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	public void deleteByUniqueIds(List<String> offerUniqueIds) {
+	public void removeOffersFromWallet(List<String> offerUniqueIds) {
 		for(String uniqueId: offerUniqueIds){
 			//TODO this has to re-factored to accommodate the sharing model arch
 			Offer offer = getOfferDAO().getByUniqueId(uniqueId);
@@ -132,6 +140,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		offerUserAssoc.setOffer(offer);
 		offerUserAssoc.setUser(user);
 		offerUserAssoc.setOriginalUser(user);
+		if (offer.isTransient()) {
+			offerUserAssoc.setOwnershipType(OfferOwnershipType.CREATOR);
+		} else {
+			offerUserAssoc.setOwnershipType(OfferOwnershipType.BOOKMARKED);
+		}
 		return offerUserAssoc;
 	}
 
@@ -150,7 +163,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	public Offer copySharedOffer(String accessToken) {
+	public Offer addSharedOfferToWallet(String accessToken) {
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
 		Offer copiedOffer = null;
 		try {
@@ -186,6 +199,19 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
 		for (Offer offer : offers) {
+			OfferOfferCardAssoc existingOfferCardAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(offerCard, offer.getDescription(), offer.getTargetVendor().getName());
+			Offer existingOffer = existingOfferCardAssoc.getOffer();
+			if (existingOfferCardAssoc != null) {
+				Date newExpiryDate = offer.getExpiry();
+				Date existingExpiryDate = existingOffer.getExpiry();
+
+				if (newExpiryDate == null || newExpiryDate.equals(existingExpiryDate)) {
+					continue;
+				}
+				existingOffer.setExpiry(newExpiryDate);
+				getOfferDAO().addOrUpdate(existingOffer);
+				continue;
+			}
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
@@ -195,6 +221,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			} else {
 				offer.setTargetVendor(existingVendor);
 			}
+
+
 			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
 			assoc.setOffer(offer);
 			assoc.setOfferCard(offerCard);
@@ -264,17 +292,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public void addOfferFromCardToUser(String offerId, User user) {
-		try {
-			Offer copiedOffer = null;
-			Offer offer = getOfferForUnqueId(offerId);
-			copiedOffer = offer.clone();
-			copiedOffer.setId(null);
-			addOfferForUser(offer , user);
-		} catch (CloneNotSupportedException e) {
-			logger.error("Error in cloning the offer", e);
-			throw new RuntimeException("Error in cloning the offer", e);
-		}
-
+		Offer offer = getOfferForUnqueId(offerId);
+		addOfferForUser(offer , user);
 	}
 
 

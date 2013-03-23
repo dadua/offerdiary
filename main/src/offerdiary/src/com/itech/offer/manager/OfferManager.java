@@ -30,7 +30,7 @@ public interface OfferManager {
 
 	public OfferShare getOfferShareFor(String accessToken);
 
-	public Offer copySharedOffer(String accessToken);
+	public Offer addSharedOfferToWallet(String accessToken);
 
 	public Offer getOfferFor(Long offerId);
 
@@ -44,7 +44,7 @@ public interface OfferManager {
 
 	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
 
-	public void deleteByUniqueIds(List<String> offerUniqueIds);
+	public void removeOffersFromWallet(List<String> offerUniqueIds);
 
 	public Offer getOfferForUnqueId(String uniqueId);
 

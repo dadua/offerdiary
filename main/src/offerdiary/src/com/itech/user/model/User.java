@@ -213,5 +213,8 @@ public class User extends PersistableEntity{
 		this.userRole = userRole;
 	}
 
+	public boolean isODAdmin() {
+		return UserRole.OD_ADMIN.equals(getUserRole());
+	}
 
 }
