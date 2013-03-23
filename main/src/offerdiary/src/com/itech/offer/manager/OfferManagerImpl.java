@@ -23,8 +23,11 @@ import com.itech.offer.model.OfferShare;
 import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.OfferOwnershipType;
+import com.itech.offer.model.enums.OfferSharingType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
+import com.itech.sdk.annotations.AllowedFromUserActions;
+import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
 import com.itech.user.vos.ShareOfferActionVO;
 
@@ -40,6 +43,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	private OfferOfferCardAssocDAO offerOfferCardAssocDAO;
 	private OfferCardManager offerCardManager;
 	private EmailManager emailManager;
+	private UserManager userManager;
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
@@ -118,20 +122,42 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
+	@AllowedFromUserActions
 	public void removeOffersFromWallet(List<String> offerUniqueIds) {
-		for(String uniqueId: offerUniqueIds){
-			//TODO this has to re-factored to accommodate the sharing model arch
-			Offer offer = getOfferDAO().getByUniqueId(uniqueId);
-			List<OfferUserAssoc> offerUserAssocs = getOfferUserAssocDAO().getOfferUserAssocForOffer(offer.getId());
-			for (OfferUserAssoc offerUserAssoc : offerUserAssocs) {
-				getOfferUserAssocDAO().delete(offerUserAssoc.getId());
+		List<Offer> offers = getOfferDAO().getByUniqueId(offerUniqueIds);
+		for(Offer offer: offers){
+			OfferUserAssoc offerUserAssocWithLoggedInUser = getOfferUserAssocDAO().getAssocFor(offer, getLoggedInUser());
+			if (!OfferOwnershipType.CREATOR.equals(offerUserAssocWithLoggedInUser.getOfferSharingType())) {
+				getOfferUserAssocDAO().delete(offerUserAssocWithLoggedInUser);
+				continue;
 			}
 
-			OfferShare offerShare = getOfferShareDAO().getOfferShareFor(offer);
-			if (offerShare != null) {
-				getOfferShareDAO().delete(offerShare);
+			List<OfferUserAssoc> offerUserAssocs = getOfferUserAssocDAO().getOfferUserAssocForOffer(offer.getId());
+
+			//If offer is associated with loggedin user only.
+			if (offerUserAssocs.size() <= 1) {
+				OfferShare offerShare = getOfferShareDAO().getOfferShareFor(offer);
+				if (offerShare != null) {
+					getOfferShareDAO().delete(offerShare);
+				}
+				for (OfferUserAssoc offerUserAssoc : offerUserAssocs) {
+					getOfferUserAssocDAO().delete(offerUserAssoc.getId());
+				}
+				getOfferDAO().delete(offer);
+				continue;
 			}
-			getOfferDAO().delete(offer);
+
+
+			User odAdminUser = getUserManager().getODAdminUser();
+			OfferUserAssoc offerUserAssocWithODAdmin = new OfferUserAssoc();
+			offerUserAssocWithODAdmin.setOffer(offer);
+			offerUserAssocWithODAdmin.setOfferSharingType(OfferSharingType.PUBLIC);
+			offerUserAssocWithODAdmin.setOwnershipType(OfferOwnershipType.CREATOR);
+			offerUserAssocWithODAdmin.setOriginalUser(getLoggedInUser());
+			offerUserAssocWithODAdmin.setUser(odAdminUser);
+
+			getOfferUserAssocDAO().delete(offerUserAssocWithLoggedInUser);
+			getOfferUserAssocDAO().addOrUpdate(offerUserAssocWithODAdmin);
 		}
 	}
 
@@ -165,16 +191,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	@Override
 	public Offer addSharedOfferToWallet(String accessToken) {
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
-		Offer copiedOffer = null;
-		try {
-			copiedOffer = offerShare.getOffer().clone();
-			copiedOffer.setId(null);
-			addOfferForUser(copiedOffer, getLoggedInUser());
-			return copiedOffer;
-		} catch (CloneNotSupportedException e) {
-			logger.error("Error in cloning the offer", e);
-			throw new RuntimeException("Error in cloning the offer", e);
-		}
+		Offer offer = offerShare.getOffer();
+		addOfferForUser(offer, getLoggedInUser());
+		return offer;
 	}
 
 	@Override
@@ -198,13 +217,14 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	@Override
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
+		List<Offer> existingOffers = new ArrayList<Offer>();
 		for (Offer offer : offers) {
 			OfferOfferCardAssoc existingOfferCardAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(offerCard, offer.getDescription(), offer.getTargetVendor().getName());
 			if (existingOfferCardAssoc != null) {
 				Offer existingOffer = existingOfferCardAssoc.getOffer();
 				Date newExpiryDate = offer.getExpiry();
 				Date existingExpiryDate = existingOffer.getExpiry();
-
+				existingOffers.add(offer);
 				if (newExpiryDate == null || newExpiryDate.equals(existingExpiryDate)) {
 					continue;
 				}
@@ -228,6 +248,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			assoc.setOfferCard(offerCard);
 			assocs.add(assoc);
 		}
+		offers.removeAll(existingOffers);
 		getOfferDAO().addOrUpdate(offers);
 		getOfferOfferCardAssocDAO().addOrUpdate(assocs);
 		return true;
@@ -370,6 +391,16 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	public void setEmailManager(EmailManager emailManager) {
 		this.emailManager = emailManager;
+	}
+
+
+	public UserManager getUserManager() {
+		return userManager;
+	}
+
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 

@@ -30,6 +30,8 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 
 	List<Offer> getOffersAssociatedWithUser(List<Offer> offers, User user);
 
+	List<Offer> getByUniqueId(List<String> offerUniqueIds);
+
 
 
 }
