@@ -83,7 +83,6 @@
 	<body>
 		<%@include file="/common/pages/navHeader.jsp" %>
 		<div class="container" >
-	    	<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
 				<c:choose>
 					<c:when test="${requestScope.forgotPasswordStatus=='false'}">
