@@ -106,6 +106,7 @@ public class OfferAction extends CommonAction{
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getOffersOnMyCards.do")
+	@Deprecated
 	public Response getOffersOnMyCards (HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		OfferSearchResultVO offers = null;
@@ -121,6 +122,7 @@ public class OfferAction extends CommonAction{
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getOffersOnCard.do")
+	@Deprecated
 	public Response getOffersOnCard (HttpServletRequest req, HttpServletResponse resp) {
 		String offerCardId = req.getParameter(OfferWalletConstants.OFFER_CARD_ID_PARAM_KEY);
 		Long cardId = Long.parseLong(offerCardId);
