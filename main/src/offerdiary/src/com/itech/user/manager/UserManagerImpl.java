@@ -8,6 +8,7 @@ import com.itech.common.CommonUtilities;
 import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.services.CommonBaseManager;
+import com.itech.common.services.Initialize;
 import com.itech.event.user.UserEventGenerator;
 import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
@@ -22,8 +23,12 @@ import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 import com.itech.user.model.User.ActivationStatus;
 import com.itech.user.model.UserNotificationConfig;
+import com.itech.user.model.UserRole;
 
-public class UserManagerImpl extends CommonBaseManager implements UserManager {
+public class UserManagerImpl extends CommonBaseManager implements UserManager, Initialize {
+	private static final String OD_ADMIN_NAME = "odadmin";
+	private static final String OD_ADMIN_PASSWORD = "odadmin@123";
+	private static final String OD_ADMIN_EMAIL_ID = "admin@offerdiary.com";
 	private static final Logger logger = Logger.getLogger(UserManagerImpl.class);
 	private UserDAO userDAO;
 	private InterestedUserSubscriptionDAO intUserSubscriptionDAO;
@@ -31,6 +36,42 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	private LinkedAccountManager linkedAccountManager;
 	private SocialProfileManager socialProfileManager;
 	private UserNotificationConfigDAO  userNotificationConfigDAO;
+	private final User odAdmin = null;
+
+	@Override
+	public void init() {
+		String odAdminName = OD_ADMIN_NAME;
+		String odAdminPassword = OD_ADMIN_PASSWORD;
+		String odAdminEmail = OD_ADMIN_EMAIL_ID;
+		User odAdminUser = getUserDAO().getByEmail(odAdminEmail);
+		if (odAdminUser == null) {
+			odAdminUser = saveEmailUser(odAdminName, odAdminEmail, odAdminPassword, UserRole.OD_ADMIN);
+			UserNotificationConfig userNotificationConfigForOdAdmin = getUserNotificationConfigFor(odAdminUser);
+			userNotificationConfigForOdAdmin.switchOffAllAlerts();
+			getUserNotificationConfigDAO().addOrUpdate(userNotificationConfigForOdAdmin);
+		}
+	}
+
+	@Override
+	public User getODAdminUser() {
+		return getUserDAO().getByEmail(OD_ADMIN_EMAIL_ID);
+	}
+
+	private User saveEmailUser(String name, String email,
+			String password, UserRole userRole) {
+		User user = new User();
+		user.setLoginType(LoginType.EMAIL);
+		user.setUserId(email);
+		user.setEmailId(email);
+		user.setPassword(password);
+		user.setName(name);
+		user.setUserRole(userRole);
+		user.setRegistrationTime((new Date(System.currentTimeMillis())));
+		save(user);
+		getUserEventGenerator().newUserAdded(user);
+		return user;
+	}
+
 
 	@Override
 	public User saveFbUser(FbService fbService) {
@@ -58,6 +99,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 		getUserEventGenerator().newUserAdded(user);
 		return user;
 	}
+
 	private void updateExistingUser(User existingUser, User user) {
 		existingUser.setUserId(user.getUserId());
 		existingUser.setGender(user.getGender());
@@ -131,100 +173,8 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 
 	@Override
 	public User saveEmailUser(String name, String email, String password) {
-		User user = new User();
-		user.setLoginType(LoginType.EMAIL);
-		user.setUserId(email);
-		user.setEmailId(email);
-		user.setPassword(password);
-		user.setName(name);
-		user.setRegistrationTime((new Date(System.currentTimeMillis())));
-		save(user);
-		getUserEventGenerator().newUserAdded(user);
-		return user;
+		return saveEmailUser(name, email, password, UserRole.CONSUMER);
 	}
-
-	//	@Override
-	//	public void syncFbUserFreinds(FbService fbService) {
-	//		FbProfile fbProfile = fbService.getUserProfile();
-	//		User user = getUserDAO().getUserByFbId(fbProfile.getId());
-	//		if (user == null) {
-	//			logger.warn("Non existing user can not be synced, fbuserid: " + user.getUserId());
-	//		}
-	//		List<User> existingUserFriends = new ArrayList<User>();
-	//		List<User> nonExistingUserFriends = new ArrayList<User>();
-	//		List<FbProfile> friendProfiles = fbService.getFriendProfiles();
-	//		for (FbProfile friendProfile : friendProfiles) {
-	//			User existingUser = getUserDAO().getUserByFbId(friendProfile.getId());
-	//			if (existingUser != null) {
-	//				existingUserFriends.add(existingUser);
-	//			} else {
-	//				User newUser = convertToUserProfile(friendProfile);
-	//				nonExistingUserFriends.add(newUser);
-	//			}
-	//		}
-	//		getUserDAO().addOrUpdate(nonExistingUserFriends);
-	//		existingUserFriends.addAll(nonExistingUserFriends);
-	//		addUserConnections(user, existingUserFriends);
-	//	}
-	//
-
-	//	private void addUserConnections(User existingUser, List<User> friends) {
-	//		for (User userFriend : friends) {
-	//			UserConnection existingUserConnection = getUserConnectionDao().getUserConnectionFor(existingUser.getId(), userFriend.getId());
-	//			if (existingUserConnection != null) {
-	//				continue;
-	//			}
-	//			UserConnection userConnection = new UserConnection();
-	//			userConnection.setUser1(existingUser);
-	//			userConnection.setUser2(userFriend);
-	//			userConnection.setConnectionType(UserConnectionType.FACEBOOK);
-	//			getUserConnectionDao().addOrUpdate(userConnection);
-	//		}
-	//	}
-	//
-	//	@Override
-	//	public User addUserProfileFrom(FbService fbService) {
-	//		FbProfile fbProfile = fbService.getUserProfile();
-	//		User user = convertToUserProfile(fbProfile);
-	//		user.setActivationStatus(User.ActivationStatus.ACTIVE);
-	//		User existingUser = getUserByLoginId(user.getLoginId());
-	//		if (existingUser != null) {
-	//			if (User.ActivationStatus.INACTIVE.equals(existingUser.getActivationStatus())) {
-	//				existingUser.setActivationStatus(User.ActivationStatus.ACTIVE);
-	//				userDao.addOrUpdate(existingUser);
-	//				syncUserFreinds(fbService);
-	//			}
-	//			return existingUser;
-	//		}
-	//
-	//		userDao.addOrUpdate(user);
-	//
-	//		syncUserFreinds(fbService);
-	//		return user;
-	//
-	//	}
-	//
-	//	@Override
-	//	public List<User> getAllConnectedActiveUsersFor(long userId) {
-	//		List<UserConnection> listOfConnections = getUserConnectionDao().getUserConnectionsFor(userId);
-	//		List<Long> userIds = new ArrayList<Long>();
-	//		Set<User> activeConnectedUsers = new HashSet<User>();
-	//
-	//		for(UserConnection userConnection : listOfConnections){
-	//			if(userConnection.getUser1().getId() != userId && ActivationStatus.ACTIVE.equals(userConnection.getUser1().getActivationStatus())){
-	//				activeConnectedUsers.add(userConnection.getUser1());
-	//				userIds.add(userConnection.getUser1().getId());
-	//			}else if(userConnection.getUser2().getId() != userId && ActivationStatus.ACTIVE.equals(userConnection.getUser2().getActivationStatus())){
-	//				activeConnectedUsers.add(userConnection.getUser2());
-	//				userIds.add(userConnection.getUser2().getId());
-	//			}
-	//		}
-	//		List<User> connectedUsers = new ArrayList<User>(activeConnectedUsers);
-	//		setInstalledAppCountsInUsers(connectedUsers, userIds);
-	//		return connectedUsers;
-	//	}
-	//
-	//
 
 	@Override
 	public User getById(long id) {
@@ -309,6 +259,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager {
 	public void setUserNotificationConfigDAO(UserNotificationConfigDAO userNotificationConfigDAO) {
 		this.userNotificationConfigDAO = userNotificationConfigDAO;
 	}
+
 
 
 }

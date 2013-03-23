@@ -83,6 +83,12 @@ public class UserNotificationConfig {
 		this.offerExpiryAlertDays = offerExpiryAlertDays;
 	}
 
+	public void switchOffAllAlerts() {
+		weeklySummary = Boolean.FALSE;
+		promotions =  Boolean.FALSE;
+		offerExpiryAlert = Boolean.FALSE;
+	}
+
 
 
 }

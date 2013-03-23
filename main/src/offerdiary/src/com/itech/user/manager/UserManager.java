@@ -5,6 +5,7 @@ import com.itech.user.model.User;
 import com.itech.user.model.UserNotificationConfig;
 
 public interface UserManager {
+	public User getODAdminUser();
 	public void save(User user);
 	public User getByUserId(String userId);
 	public User getById(long id);

@@ -23,4 +23,16 @@ OfferOfferCardAssocDAO {
 		int rowsAffected = query.executeUpdate();
 	}
 
+	@Override
+	public OfferOfferCardAssoc getOfferAssocFor(OfferCard offerCard, String offerDescription,
+			String targetVendorName) {
+		String hql = "select oca from " + getEntityClassName() + " oca where oca.offerCard=:offerCard and oca.offer.description=:description and oca.offer.targetVendor.name=:targetVendorName";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offerCard", offerCard);
+		query.setParameter("description", offerDescription);
+		query.setParameter("targetVendorName", targetVendorName);
+		return getSingleResultFrom(query);
+
+	}
+
 }

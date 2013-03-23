@@ -143,7 +143,7 @@ public class OfferAction extends CommonAction{
 		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
 		Offer newOffer = null;
 		if (accessToken != null) {
-			newOffer = getOfferManager().copySharedOffer(accessToken);
+			newOffer = getOfferManager().addSharedOfferToWallet(accessToken);
 		}
 		return new Redirect("wallet.do");
 	}
@@ -164,13 +164,13 @@ public class OfferAction extends CommonAction{
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteOffers.do")
-	public Response deleteOffers (HttpServletRequest req, HttpServletResponse resp) {
+	public Response removeOffersFromWallet (HttpServletRequest req, HttpServletResponse resp) {
 		String offersJson = req.getParameter(OfferWalletConstants.OFFER_IDS_PARAM_KEY);
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<String>>() { }.getType();
 		List<String> offerUniqueIds = gson.fromJson(offersJson, type);
-		getOfferManager().deleteByUniqueIds(offerUniqueIds);
-		Result<String> result = new Result<String>("Successfully Deleted the offers");
+		getOfferManager().removeOffersFromWallet(offerUniqueIds);
+		Result<String> result = new Result<String>("Successfully removed the offers from wallet");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
