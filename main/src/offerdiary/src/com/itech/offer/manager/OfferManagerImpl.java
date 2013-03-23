@@ -200,8 +200,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
 		for (Offer offer : offers) {
 			OfferOfferCardAssoc existingOfferCardAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(offerCard, offer.getDescription(), offer.getTargetVendor().getName());
-			Offer existingOffer = existingOfferCardAssoc.getOffer();
 			if (existingOfferCardAssoc != null) {
+				Offer existingOffer = existingOfferCardAssoc.getOffer();
 				Date newExpiryDate = offer.getExpiry();
 				Date existingExpiryDate = existingOffer.getExpiry();
 
@@ -275,8 +275,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		List<Offer> filteredOffers = getOfferDAO().getOffersAssociatedWithUser(offers, user);
 		for (Offer offer : filteredOffers) {
 			offer.setAssociatedWithLoggedInUser(true);
-			offers.remove(offer);
-			offers.add(offer);
+			int positionOfOffer = offers.indexOf(offer);
+			offers.remove(positionOfOffer);
+			offers.add(positionOfOffer, offer);
 		}
 	}
 
