@@ -29,7 +29,6 @@
     <title>Offers</title>
     
 <%@include file="/common/pages/bodyBegin.jsp" %>
-
     <div class="container" >
         <div class="row">
             <div class="content-container"  >
@@ -55,4 +54,5 @@
     <div class="templates hide" >
         <%@include file="/offers/templates/offerDetailTemplate.html" %>
     </div>
+
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
