@@ -15,8 +15,7 @@ This page has dependency on fbInitAboveBodyEnd.jsp for fb-root div
 				cookie : true, 
 				xfbml : true
 			});
-                        $('#loginToFb').removeClass('disabled');
-                        
+			$('#loginToFb').removeClass('disabled');
 	    } catch (e) {
 		    <%-- Ignoring FB load fails,
 		    This check would help if we load FB in an async way --%>
@@ -33,7 +32,7 @@ This page has dependency on fbInitAboveBodyEnd.jsp for fb-root div
 	     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
 	     if (d.getElementById(id)) {return;}
 	     js = d.createElement('script'); js.id = id; js.async = true;
-	     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+	     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js#xfbml=1&appId=187105271327076";
 	     ref.parentNode.insertBefore(js, ref);
 	   }(document, /*debug*/ false));
 </script>

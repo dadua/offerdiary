@@ -159,6 +159,7 @@ public class RedWineCardsParser {
 	}
 
 	public static void main(String[] args){
+
 		//RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
 		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
 		//System.out.println(readDataFromFile);
