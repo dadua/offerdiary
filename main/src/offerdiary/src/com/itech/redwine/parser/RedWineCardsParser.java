@@ -96,7 +96,7 @@ public class RedWineCardsParser {
 			rWCard.setCardName(cardLinkElement.text());
 			rWCard.setCardUrl(cardLinkElement.attr("href"));
 			rWCard.setCardElement(cardElement);
-			//setOtherCardDetails(rWCard);
+			setOtherCardDetails(rWCard);
 			//getAllOffersForCurrentCard(rWCard);
 			System.out.println(rWCard);
 			redWineCards.add(rWCard);
@@ -104,6 +104,10 @@ public class RedWineCardsParser {
 		return redWineCards;
 	}
 
+	/**
+	 * Sets cardType, imgSource, offersOnCardCount by parsing the card detail page
+	 * @param rWCard
+	 */
 	public static void setOtherCardDetails(RedWineCard rWCard) {
 		int countOfOffers = getCountOfOffers(rWCard);
 		rWCard.setOffersCount(countOfOffers);
@@ -152,17 +156,34 @@ public class RedWineCardsParser {
 				RedWineOffer rOffer = new RedWineOffer();
 				rOffer.setMerchantName(offerElement.child(0).text());
 				rOffer.setDescription(offerElement.child(1).text());
+				rOffer.setExpiryDate(offerElement.getElementsByTag("dt").get(0).text());
 				redWineOffers.add(rOffer);
 			}
 		}
 		return redWineOffers;
 	}
 
+	public static void getAllCardsWithOfferFilledForPage(int pageNo) {
+		List<RedWineCard> redWineCardsWithNoOfferFilled = getRedWineCardsForPage(pageNo);
+		for (RedWineCard redWineCard : redWineCardsWithNoOfferFilled) {
+			String cardNumber = RedWineParserUtil.getIdFromCard(redWineCard.getCardUrl());
+			List<RedWineOffer> allOffersForCard = getAllOffersForCard(cardNumber, 1000);
+			redWineCard.setOffers(allOffersForCard);
+		}
+
+
+	}
+
 	public static void main(String[] args){
 
+		getAllCardsWithOfferFilledForPage(1);
 		//RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
 		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
 		//System.out.println(readDataFromFile);
+		//parseRedWineForCards(0);
+
+		//printGetRedWineOffers("d:\\test.json");
+
 		//		List<RedWineCard> redwineCards = RedWineCardsParser.readRedWineRecordsFromFile("resources\\redanar\\cards-minimal.json");
 		//		List<RedWineCard> iciciCards = filterCardsWithName("ICICI",  redwineCards);
 		//		RedWineCardsParser.writeRedWineCardsWithOffers(iciciCards,
