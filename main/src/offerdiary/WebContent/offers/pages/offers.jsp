@@ -40,7 +40,7 @@
             <div class="span2" >
                 <div class="container-fluid options-left-container">
                     <ul class="nav nav-list offerFilters">
-                        <li class="nav-header">Offers by:</li>
+                        <li class="nav-header">My Offers:</li>
                         <li class="active validOffers"><a href="#">Valid</a></li>
                         <li class="expiredOffers"><a href="#">Expired</a></li>
                         <li class="allOffers"><a href="#">All</a></li>
@@ -49,7 +49,7 @@
                         <li class="expires7daysOffers"><a href="#">Expires in 7days</a></li>
                         <li class="expires1monthOffers"><a href="#">Expires in 1 month</a></li>
                         <li class="divider"></li>
-                        <li class="nav-header">Addition time based:</li>
+                        <li class="nav-header">Added in:</li>
                         <li class="addedLastweekOffers"><a href="#">Added in the last week</a></li>
                         <li class="addedLastmonthOffers"><a href="#">Added in the last month</a></li>
                     </ul>

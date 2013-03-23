@@ -22,7 +22,7 @@ A non float version inside a container
         <div id="alertMessage">
         </div>
     </div>
-    <div class="" id="loadingActionRow">
+    <div class="hide" id="loadingActionRow">
         <img src="images/loading/loadingAnimation.gif" class="span2 offset9">
     </div>
 </div>
