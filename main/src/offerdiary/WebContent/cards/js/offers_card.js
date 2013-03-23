@@ -24,7 +24,7 @@ it.offersoncard.getOfferHtml = function (offer) {
     offer$.find('.offerFromCardAction').removeClass('hide');
     offer$.find('.trashOfferAction').addClass('hide');
     offer$.find('.offerAddToWallet').attr('id', 'offerAddToWallet_'+offer.id);
-    if (offer.associatedWithCurrentUser) {
+    if (offer.associatedWithLoggedInUser) {
         it.offersoncard.markAddedToWallet(offer$);
     }
     return offer$;
@@ -39,7 +39,7 @@ it.offersoncard.markAddedToWallet = function (offer$) {
     //TODO: Make this offer checked..
     //Probably add a popover
     offer$.find('.offerFromCardAction').addClass('hide');
-    offer$.find('.offerAddedToWalletAction').removeClass('hide').tooltip('show');
+    offer$.find('.offerAddedToWalletAction').removeClass('hide');
 };
 
 
