@@ -51,6 +51,16 @@ public class OfferAction extends CommonAction{
 	 * e.g. /searchOffers.do?searchCriteria={uniqueFilter:'addedInLast7Days',q:'offerDesc'}
 	 * uniqueFilter = expired, all, valid, expiringInNext7Days, addedInLast7Days
 	 * 
+	 * for OffersOnMyCard
+	 * privateSearchOnly=false
+	 * cardOffersOnly=true
+	 * offersOnMyCardsOnly=true
+	 * 
+	 * 
+	 * for offersOnSpecificCard
+	 * privateSearchOnly=false
+	 * cardOffersOnly=true
+	 * 
 	 */
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="searchOffers.do")
