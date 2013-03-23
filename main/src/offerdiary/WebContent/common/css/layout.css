@@ -12,6 +12,9 @@ body {
 	 border-radius: 6px 6px 6px 6px;
 	 padding: 0;
 	 border: 1px solid #DDDDDD;
+	 position: fixed;
+	 width: 190px;
+	 top: 190px;
 }
 
 .content-container {
