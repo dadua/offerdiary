@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.hibernate.Query;
 
@@ -97,33 +96,30 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	@Override
 	public OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria) {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		String fromHql = "from " + getEntityClassName() + " o ";
+		StringBuilder fromHql = new StringBuilder().append("from " + getEntityClassName() + " o ");
 
 		if (searchCriteria.getPrivateSearchOnly()) {
-			fromHql+= ", OfferUserAssoc oua where oua.offer=o and oua.user=:user ";
+			fromHql.append(", OfferUserAssoc oua where oua.offer=o and oua.user=:user ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql+= " where ";
+			fromHql.append( " where ");
 		}
 
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);
 		String whereClauseForSearch = getWhereClauseForFilterCriteria(searchCriteria.getSearchString(), searchCriteria.getSearchType(), searchCriteria.getQ(), parameterMap);
 		String whereCluseForOfferCardSpecificSearch = getWhereCluseForOfferCardSpecificSearch(searchCriteria, parameterMap);
 
-		fromHql += " and" + whereClauseForFilter;
-		fromHql += " and" + whereClauseForSearch;
-		fromHql += " and" + whereCluseForOfferCardSpecificSearch;
+		fromHql.append(" and" + whereClauseForFilter);
+		fromHql.append(" and" + whereClauseForSearch);
+		fromHql.append(" and" + whereCluseForOfferCardSpecificSearch);
 
-		String resultHQL = "select o " + fromHql;
-		String resultCountHQL = "select count(*) " + fromHql;
+		String resultHQL = "select o " + fromHql.toString();
+		String resultCountHQL = "select count(*) " + fromHql.toString();
 		Query resultQuery = getSession().createQuery(resultHQL);
 		Query resultCountQuery = getSession().createQuery(resultCountHQL);
 
-		for (Entry<String, Object> param : parameterMap.entrySet()) {
-			resultQuery.setParameter(param.getKey(), param.getValue());
-			resultCountQuery.setParameter(param.getKey(), param.getValue());
-		}
-
+		setParamsToQuery(resultQuery, parameterMap);
+		setParamsToQuery(resultCountQuery, parameterMap);
 
 		List<Offer> offers = getPaginatedResultFor(resultQuery, searchCriteria);
 		fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
