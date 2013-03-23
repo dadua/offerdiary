@@ -13,4 +13,6 @@ public interface OfferUserAssocDAO extends CommonBaseDAO<OfferUserAssoc> {
 
 	User getOfferOwner(Offer offer);
 
+	OfferUserAssoc getAssocFor(Offer offer, User user);
+
 }

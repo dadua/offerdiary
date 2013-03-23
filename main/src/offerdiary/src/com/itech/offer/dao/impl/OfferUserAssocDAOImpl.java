@@ -8,6 +8,7 @@ import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.user.model.User;
 
 public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc> implements OfferUserAssocDAO{
@@ -28,13 +29,23 @@ public class OfferUserAssocDAOImpl extends HibernateCommonBaseDAO<OfferUserAssoc
 
 	@Override
 	public User getOfferOwner(Offer offer) {
-		String hql="from "+getEntityClassName()+" where offer =:offer ";
+		String hql="from "+getEntityClassName()+" where offer =:offer and ownershipType=:ownerShipType ";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("offer", offer);
-		List<OfferUserAssoc> offerUserAssocList = query.list();
-		if(!offerUserAssocList.isEmpty()){
-			return offerUserAssocList.get(0).getUser();
-		}
-		return null;
+		query.setParameter("ownerShipType", OfferOwnershipType.CREATOR);
+		OfferUserAssoc assoc = (OfferUserAssoc) getSingleResult(query);
+		User owner = assoc.getUser();
+		return owner;
+	}
+
+	@Override
+	public OfferUserAssoc getAssocFor(Offer offer, User user) {
+		String hql="from "+getEntityClassName()+" where offer =:offer and user=:user ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offer", offer);
+		query.setParameter("user", user);
+		OfferUserAssoc assoc = (OfferUserAssoc) getSingleResult(query);
+		return assoc;
+
 	}
 }
