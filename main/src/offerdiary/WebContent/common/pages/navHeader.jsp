@@ -108,6 +108,7 @@
 					</c:choose>
         		</div>
       		</div>
+       		<%@include file="/common/pages/actionInfoRow.jsp" %>
  		</div>
  		<script type="text/javascript" >
  			$(function(){

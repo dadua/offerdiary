@@ -26,7 +26,7 @@ it.actionInfo = function () {
 
     var _init = function () {
         $(_view.getActionMsgRowSel()).find('.hideAlert').click(function () {
-            $(this).parent().addClass('invisible');
+            $(this).parent().addClass('hide');
         });
     },
     _getAlertClassForLogLevel = function (logLevel) {
@@ -41,16 +41,16 @@ it.actionInfo = function () {
             hideIntervalSeconds = DEFAULT_HIDE_INTERVAL_MILLIS;
         }
 
-        $(_view.getActionMsgRowSel()).removeClass('invisible');
+        $(_view.getActionMsgRowSel()).removeClass('hide');
         var alertClassToAdd = _getAlertClassForLogLevel(logLevel);
         if (alertClassToAdd === null) {
-            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass('invisible', hideIntervalSeconds);
+            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass('hide', hideIntervalSeconds);
         } else {
-            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass(alertClassToAdd).addClass('invisible', hideIntervalSeconds);
+            $(_view.getActionMsgDivSel()).html(msg).parent().removeClass('alert-error alert-info alert-success').addClass(alertClassToAdd).addClass('hide', hideIntervalSeconds);
         }
     },
     _hideActionMsg = function () {
-        $(_view.getActionMsgRowSel()).addClass('invisible');
+        $(_view.getActionMsgRowSel()).addClass('hide');
     };
 
     _init();
@@ -58,10 +58,10 @@ it.actionInfo = function () {
     return {
         init: _init,
         showLoading: function () {
-            $(_view.getLoadingRowSel()).removeClass('invisible');
+            $(_view.getLoadingRowSel()).removeClass('hide');
         },
         hideLoading: function () {
-            $(_view.getLoadingRowSel()).addClass('invisible');
+            $(_view.getLoadingRowSel()).addClass('hide');
         },
         showActionMsg: function(msg, logLevel, hideIntervalSeconds) {
             _showActionMsg(msg, logLevel, hideIntervalSeconds);

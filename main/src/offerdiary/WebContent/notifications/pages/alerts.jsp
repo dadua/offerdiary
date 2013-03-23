@@ -50,7 +50,6 @@
 		</style>
 <%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
-	    	<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<%@include file="/common/pages/featureTabsRow.jsp" %>
 			<div class="row">
 				<div class="span2" >

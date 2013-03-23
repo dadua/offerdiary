@@ -31,7 +31,6 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
     <div class="container" >
-    	<%@include file="/common/pages/actionInfoRow.jsp" %>
         <div class="row">
             <div class="content-container"  >
                 <div class="container-fluid">

@@ -98,7 +98,6 @@
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
-			<%@include file="/common/pages/actionInfoRow.jsp" %>
 			<div class="row-fluid">
 				<div class="span6 offset3">
 					<div class="row">
