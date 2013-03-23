@@ -134,7 +134,8 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		OfferSearchResultVO offerSearchResult = new OfferSearchResultVO();
 		offerSearchResult.setOffers(offerVOs);
 		offerSearchResult.setTotalCount(resultCount);
-		offerSearchResult.setPerPageCount(searchCriteria.getResultsPerPage());
+		offerSearchResult.setResultsPerPage(searchCriteria.getResultsPerPage());
+		offerSearchResult.setPageNumber(searchCriteria.getPageNumber());
 		return offerSearchResult;
 	}
 
