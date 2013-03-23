@@ -25,6 +25,7 @@ it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
         offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
         offerTemplate$.find('.offerAdd').hide();
     }
+    offerTemplate$.find("#oDfferdFbComment").attr('href', window.location.href);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
 
     offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
