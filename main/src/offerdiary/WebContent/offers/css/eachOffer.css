@@ -35,4 +35,7 @@
             .offer-icon {
             	min-height: 0;
             }
+            .offerAction {
+            	cursor: pointer;
+            }
             
