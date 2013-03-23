@@ -2,7 +2,7 @@ package com.itech.offer.manager;
 
 import java.util.List;
 
-import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferShare;
@@ -30,7 +30,7 @@ public interface OfferManager {
 
 	public OfferShare getOfferShareFor(String accessToken);
 
-	public Offer addSharedOfferToWallet(String accessToken);
+	Offer addSharedOfferToWallet(String accessToken, User loggedInUser);
 
 	public Offer getOfferFor(Long offerId);
 
@@ -42,16 +42,15 @@ public interface OfferManager {
 
 	public OfferSearchResultVO getAllOffersForCard(Long offerCardId);
 
-	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
-
-	public void removeOffersFromWallet(List<String> offerUniqueIds);
-
 	public Offer getOfferForUnqueId(String uniqueId);
 
 	public void shareOffer(ShareOfferActionVO shareOfferActionVO);
 
 	public void addOfferFromCardToUser(String offerId, User loggedInUser);
 
-	void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user);
+	void removeOffersFromWallet(List<String> offerUniqueIds, User loggedInUser);
+
+	OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria);
+
 
 }

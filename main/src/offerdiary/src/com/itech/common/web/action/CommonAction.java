@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.alert.services.AlertManager;
 import com.itech.common.CommonUtilities;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.common.db.SearchCriteria;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
@@ -22,6 +23,7 @@ import com.itech.user.model.User;
 
 public class CommonAction {
 	private static final String SEARCH_CRITERIA_PARAM_KEY = "searchCriteria";
+	private static final String SEARCH_CRITERIA_TYPE_PARAM_KEY = "searchCriteriaType"; //offer, card etc
 	private SecurityManager securityManager;
 	private SecurityContextHolder securityContextHolder;
 	private UserManager userManager;
@@ -41,13 +43,25 @@ public class CommonAction {
 
 	protected SearchCriteria getSearchCriteria(HttpServletRequest req){
 		String searchCriteriaJSON = req.getParameter(SEARCH_CRITERIA_PARAM_KEY);
+		String searchCriteriaType= req.getParameter(SEARCH_CRITERIA_TYPE_PARAM_KEY);
+		if ( "offer".equalsIgnoreCase(searchCriteriaType))  {
+			if (CommonUtilities.isNullOrEmpty(searchCriteriaJSON)) {
+				return new OfferSearchCriteria();
+			}
+			Gson gson = new Gson();
+			Type searchCriteriaJsonType = new TypeToken<OfferSearchCriteria>() { }.getType();
+			OfferSearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
+			return searchCriteria;
+		}
+
 		if (CommonUtilities.isNullOrEmpty(searchCriteriaJSON)) {
-			return new SearchCriteria();
+			return new OfferSearchCriteria();
 		}
 		Gson gson = new Gson();
-		Type searchCriteriaJsonType = new TypeToken<SearchCriteria>() { }.getType();
-		SearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
+		Type searchCriteriaJsonType = new TypeToken<OfferSearchCriteria>() { }.getType();
+		OfferSearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
 		return searchCriteria;
+
 	}
 
 

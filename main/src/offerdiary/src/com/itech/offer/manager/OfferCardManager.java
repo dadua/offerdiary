@@ -10,9 +10,6 @@ import com.itech.offer.vo.OfferCardVO;
 import com.itech.user.model.User;
 
 public interface OfferCardManager {
-	public List<OfferCard> getOfferCardsFor(String searchString, int maxResults);
-
-	public List<OfferCard> getOfferCardsFor(String searchString, int maxResults, boolean excludeAssociatedCard);
 
 	public Map<Long, OfferCardUserAssoc> getAssociationsFor(List<OfferCard> offerCards);
 

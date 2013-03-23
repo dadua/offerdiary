@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.itech.common.CommonUtilities;
-import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.ShareOfferNotificationEmail;
@@ -79,14 +79,15 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 		offerUserAssocDAO.addOrUpdate(offerUserAssoc);
 		if (offer.getExpiry() != null) {
-			getOfferEventGenerator().offerCreated(offer, getLoggedInUser());
+			getOfferEventGenerator().offerCreated(offer, user);
 		}
 	}
 
 
 	@Override
-	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria) {
-		return getOfferDAO().searchOffersFor(searchCriteria);
+	public OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria) {
+		OfferSearchResultVO offerSearchResultVO = getOfferDAO().searchOffersFor(searchCriteria);
+		return offerSearchResultVO;
 	}
 
 
@@ -104,6 +105,24 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public List<Offer> getAllUnexpiredOffersForUser(User user) {
 		return offerDAO.getAllUnexpiredOffersForUser(user);
 	}
+
+	@Override
+	public Offer getOfferFor(Long offerId) {
+		return getOfferDAO().getById(offerId);
+	}
+
+	@Override
+	public OfferShare getOfferShareFor(String accessToken) {
+		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
+
+		return offerShare;
+	}
+
+	@Override
+	public Offer getOfferForUnqueId(String uniqueId) {
+		return getOfferDAO().getByUniqueId(uniqueId);
+	}
+
 
 	@Override
 	public void addOffersForUser(List<Offer> offers, User user) {
@@ -126,10 +145,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	public void removeOffersFromWallet(List<String> offerUniqueIds) {
+	public void removeOffersFromWallet(List<String> offerUniqueIds, User loggedInUser) {
 		List<Offer> offers = getOfferDAO().getByUniqueId(offerUniqueIds);
 		for(Offer offer: offers){
-			OfferUserAssoc offerUserAssocWithLoggedInUser = getOfferUserAssocDAO().getAssocFor(offer, getLoggedInUser());
+			OfferUserAssoc offerUserAssocWithLoggedInUser = getOfferUserAssocDAO().getAssocFor(offer, loggedInUser);
 			if (!OfferOwnershipType.CREATOR.equals(offerUserAssocWithLoggedInUser.getOwnershipType())) {
 				getOfferUserAssocDAO().delete(offerUserAssocWithLoggedInUser);
 				continue;
@@ -138,7 +157,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			List<OfferUserAssoc> offerUserAssocs = getOfferUserAssocDAO().getOfferUserAssocForOffer(offer.getId());
 
 			//If offer is associated with loggedin user only.
-			if (offerUserAssocs.size() <= 1 || getLoggedInUser().isODAdmin()) {
+			if (offerUserAssocs.size() <= 1 || loggedInUser.isODAdmin()) {
 				OfferShare offerShare = getOfferShareDAO().getOfferShareFor(offer);
 				if (offerShare != null) {
 					getOfferShareDAO().delete(offerShare);
@@ -156,7 +175,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			offerUserAssocWithODAdmin.setOffer(offer);
 			offerUserAssocWithODAdmin.setOfferSharingType(OfferSharingType.PUBLIC);
 			offerUserAssocWithODAdmin.setOwnershipType(OfferOwnershipType.CREATOR);
-			offerUserAssocWithODAdmin.setOriginalUser(getLoggedInUser());
+			offerUserAssocWithODAdmin.setOriginalUser(loggedInUser);
 			offerUserAssocWithODAdmin.setUser(odAdminUser);
 
 			getOfferUserAssocDAO().delete(offerUserAssocWithLoggedInUser);
@@ -192,28 +211,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	public Offer addSharedOfferToWallet(String accessToken) {
+	public Offer addSharedOfferToWallet(String accessToken, User loggedInUser) {
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
 		Offer offer = offerShare.getOffer();
-		addOfferForUser(offer, getLoggedInUser());
+		addOfferForUser(offer, loggedInUser);
 		return offer;
-	}
-
-	@Override
-	public Offer getOfferFor(Long offerId) {
-		return getOfferDAO().getById(offerId);
-	}
-
-	@Override
-	public OfferShare getOfferShareFor(String accessToken) {
-		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
-
-		return offerShare;
-	}
-
-	@Override
-	public Offer getOfferForUnqueId(String uniqueId) {
-		return getOfferDAO().getByUniqueId(uniqueId);
 	}
 
 
@@ -259,6 +261,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public boolean removeOffersForCard(OfferCard offerCard) {
+		//TODO fix this by removing offers using remove offers from wallet with user a odAdmin.
 		getOfferOfferCardAssocDAO().removeOffersForCard(offerCard);
 		getOfferDAO().removeOffersForCard(offerCard);
 		return true;
@@ -294,7 +297,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		return convertToSearchResultVO(offers);
 	}
 
-	@Override
 	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
 		List<Offer> filteredOffers = getOfferDAO().getOffersAssociatedWithUser(offers, user);
 		for (Offer offer : filteredOffers) {
@@ -405,7 +407,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
-
 
 
 

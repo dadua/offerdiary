@@ -28,20 +28,6 @@ OfferCardManager {
 		return getOfferCardDAO().getByName(cardName);
 	}
 
-	@Override
-	public List<OfferCard> getOfferCardsFor(String searchString, int maxResults) {
-		List<OfferCard> offerCards = getOfferCardDAO().getOfferCardsFor(searchString, maxResults);
-		Map<Long, OfferCardUserAssoc> cardUserAssocs = getAssociationsFor(offerCards);
-		for (OfferCard offerCard : offerCards) {
-			OfferCardUserAssoc cardUserAssoc = cardUserAssocs.get(offerCard.getId());
-			if (cardUserAssoc != null) {
-				offerCard.setAssociatedWithCurrentUser(true);
-			}
-		}
-		return offerCards;
-	}
-
-
 
 	@Override
 	public OfferCard saveOrUpdateOfferCard(OfferCard offerCard) {
@@ -89,12 +75,6 @@ OfferCardManager {
 	public Map<Long, OfferCardUserAssoc> getAssociationsFor(
 			List<OfferCard> offerCards) {
 		return getOfferCardUserAssocDAO().getAssociationsFor(offerCards);
-	}
-
-	@Override
-	public List<OfferCard> getOfferCardsFor(String searchString,
-			int maxResults, boolean excludeAssociatedCard) {
-		return getOfferCardDAO().getOfferCardsFor(searchString, maxResults, excludeAssociatedCard);
 	}
 
 	@Override

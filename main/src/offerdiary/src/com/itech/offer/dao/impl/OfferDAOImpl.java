@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import org.hibernate.Query;
 
 import com.itech.common.CommonUtilities;
-import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.OfferSearchFilterUtil;
 import com.itech.offer.dao.OfferDAO;
@@ -95,14 +95,24 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	}
 
 	@Override
-	public OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria) {
+	public OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria) {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		String fromHql = "from " + getEntityClassName() + " o, OfferUserAssoc oua  where oua.offer=o and oua.user=:user ";
-		parameterMap.put("user", getLoggedInUser());
+		String fromHql = "from " + getEntityClassName() + " o ";
+
+		if (searchCriteria.getPrivateSearchOnly()) {
+			fromHql+= ", OfferUserAssoc oua where oua.offer=o and oua.user=:user ";
+			parameterMap.put("user", getLoggedInUser());
+		} else {
+			fromHql+= " where ";
+		}
+
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);
 		String whereClauseForSearch = getWhereClauseForFilterCriteria(searchCriteria.getSearchString(), searchCriteria.getSearchType(), searchCriteria.getQ(), parameterMap);
+		String whereCluseForOfferCardSpecificSearch = getWhereCluseForOfferCardSpecificSearch(searchCriteria, parameterMap);
+
 		fromHql += " and" + whereClauseForFilter;
 		fromHql += " and" + whereClauseForSearch;
+		fromHql += " and" + whereCluseForOfferCardSpecificSearch;
 
 		String resultHQL = "select o " + fromHql;
 		String resultCountHQL = "select count(*) " + fromHql;
@@ -116,6 +126,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 
 		List<Offer> offers = getPaginatedResultFor(resultQuery, searchCriteria);
+		fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
 		Long resultCount = (Long) getSingleResult(resultCountQuery);
 
 		List<OfferVO> offerVOs = new ArrayList<OfferVO>();
@@ -128,6 +139,34 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		offerSearchResult.setTotalCount(resultCount);
 		offerSearchResult.setPerPageCount(searchCriteria.getResultsPerPage());
 		return offerSearchResult;
+	}
+
+	private String getWhereCluseForOfferCardSpecificSearch(
+			OfferSearchCriteria searchCriteria, Map<String, Object> parameterMap) {
+		String whereClause = "";
+		if (searchCriteria.isCardOffersOnly()) {
+			whereClause = " exists (select 1 from OfferOfferCardAssoc ooca ";
+			if (searchCriteria.isOffersOnMyCardsOnly()) {
+				whereClause += ", OfferCardUserAssoc ocua where ocua.user=:user and ooca.offerCard = ocua.offerCard " +
+						" and ooca.offer = o";
+				parameterMap.put("user", getLoggedInUser());
+			} else {
+				whereClause += " where ooca.offer = o ";
+			}
+
+
+			if (CommonUtilities.isNotEmpty(searchCriteria.getCardId())) {
+				Long cardId = Long.parseLong(searchCriteria.getCardId());
+				parameterMap.put("cardId", cardId);
+				whereClause += " and ooca.offerCard.id =:cardId";
+			}
+			whereClause += " )";
+
+			return whereClause;
+		} else {
+			return " 1=1 ";
+		}
+
 	}
 
 	private String getWhereClauseForFilterCriteria(String searchString,
@@ -184,6 +223,17 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		}
 		return " 1=1 ";
 	}
+
+	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
+		List<Offer> filteredOffers = getOffersAssociatedWithUser(offers, user);
+		for (Offer offer : filteredOffers) {
+			offer.setAssociatedWithLoggedInUser(true);
+			int positionOfOffer = offers.indexOf(offer);
+			offers.remove(positionOfOffer);
+			offers.add(positionOfOffer, offer);
+		}
+	}
+
 
 	@Override
 	public List<Offer> getOffersAssociatedWithUser(List<Offer> offers,
