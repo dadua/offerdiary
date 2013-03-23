@@ -136,32 +136,36 @@ it.offersoncard.setFilterClickHandler = function () {
     it.bsextends.filters.reInitClickHandler();
 };
 
+it.offersoncard.state = function () {
+    var _lastClickedCardId = null;
+    return {
+        getLastClickedCardId: function () {
+            return _lastClickedCardId;
+        },
+        setLastClickedCardId: function(lastClickedCardId) {
+            _lastClickedCardId = lastClickedCardId;
+        }
+    };
+}();
+
 it.offersoncard.plotAllOffersForCard = function (cardId) {
+
+    if (typeof cardId !== 'string') {
+        cardId = it.offersoncard.state.getLastClickedCardId();
+    }
 
     var q = $('#searchOffersOnCards').val();
 
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, offersOnMyCardsOnly: true, privateSearchOnly: false, cardOffersOnly: true})},
+           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, privateSearchOnly: false, cardOffersOnly: true})},
            function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
-                   //it.offer.plotAll(resp.result.offers, true);
                    it.offersoncard.plotOffers(resp.result.offers);
                } else {
                    //TODO: Error..
                }
            });
-
-           /*
-    $.getJSON('getOffersOnCard.do', {cardIdKey: cardId}, function (resp) {
-
-        if (resp.success) {
-            it.offersoncard.plotOffers(resp.result.offers);
-        } else {
-            //TODO: Error case
-        }
-    });
-   */
 };
 
 it.offersoncard.plotOffersForCard = function (e) {
@@ -169,6 +173,7 @@ it.offersoncard.plotOffersForCard = function (e) {
         cardId = it.offersoncard.getCardId(offersOnCardLabelTarget),
         cardName = it.offersoncard.getCardName(offersOnCardLabelTarget);
 
+    it.offersoncard.state.setLastClickedCardId(cardId);
     it.offersoncard.plotFilter({id:cardId, name: cardName});
     it.offersoncard.plotAllOffersForCard(cardId);
     it.card.toggler.showOffersOnCard();
@@ -182,4 +187,5 @@ it.offersoncard.scrollTopTo = function () {
 it.offersoncard.addHandlers = function () {
     $('.offersOnCardLabel').click (it.offersoncard.plotOffersForCard);
     it.offersoncard.setFilterClickHandler();
+    $('#searchOffersOnCards').keyup(it.offersoncard.plotAllOffersForCard);
 };
