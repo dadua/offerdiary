@@ -284,7 +284,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		OfferSearchResultVO offerSearchResult = new OfferSearchResultVO();
 		offerSearchResult.setOffers(offerVOs);
 		offerSearchResult.setTotalCount(Long.valueOf(offerVOs.size()));
-		offerSearchResult.setPerPageCount(Integer.valueOf(offerVOs.size()));
+		offerSearchResult.setResultsPerPage(Integer.valueOf(offerVOs.size()));
 		return offerSearchResult;
 	}
 
