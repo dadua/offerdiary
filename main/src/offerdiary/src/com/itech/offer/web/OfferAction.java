@@ -60,6 +60,7 @@ public class OfferAction extends CommonAction{
 	 * for offersOnSpecificCard
 	 * privateSearchOnly=false
 	 * cardOffersOnly=true
+	 * cardId=id of card
 	 * 
 	 */
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

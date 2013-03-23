@@ -216,7 +216,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			parameterMap.put("now", new Date(today.getTime()));
 			Date addedOn = new Date(System.currentTimeMillis() - CommonUtilities.MILLIS_IN_A_DAY*numberOfDays);
 			parameterMap.put("creationDate", addedOn);
-			return  " (o.createdOn <= :now and o.createdOn > :creationDate)";
+			return  " (oua.createdOn <= :now and oua.createdOn > :creationDate)";
 		}
 		return " 1=1 ";
 	}
