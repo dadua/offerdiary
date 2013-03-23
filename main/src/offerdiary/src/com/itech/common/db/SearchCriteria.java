@@ -9,7 +9,7 @@ public class SearchCriteria {
 	private String searchType;
 	private String q;
 	private String uniqueFilter;
-	private Boolean privateSearchOnly;
+	private Boolean privateSearchOnly = Boolean.TRUE;
 	private Integer pageNumber = DEFAULT_PAGE_NUMBER;
 	private Integer resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
 

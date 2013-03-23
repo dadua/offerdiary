@@ -3,7 +3,7 @@ package com.itech.offer.dao;
 import java.util.List;
 
 import com.itech.common.db.CommonBaseDAO;
-import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.enums.OfferType;
@@ -24,13 +24,13 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 
 	List<Offer> getAllOffersForCard(OfferCard offerCard);
 
-	OfferSearchResultVO searchOffersFor(SearchCriteria searchCriteria);
-
 	Offer getByUniqueId(String uniqueId);
 
 	List<Offer> getOffersAssociatedWithUser(List<Offer> offers, User user);
 
 	List<Offer> getByUniqueId(List<String> offerUniqueIds);
+
+	OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria);
 
 
 

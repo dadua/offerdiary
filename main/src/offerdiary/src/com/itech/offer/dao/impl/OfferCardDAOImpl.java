@@ -17,40 +17,6 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		return OfferCard.class;
 	}
 
-	@Override
-	public List<OfferCard> getOfferCardsFor(String searchString, int maxResults) {
-		String hql = "from " + getEntityClassName() + " where  name like :cardName order by name";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("cardName", "%" + searchString + "%");
-		if (maxResults != 0) {
-			query.setMaxResults(maxResults);
-		}
-		List<OfferCard> list = query.list();
-		return list;
-	}
-
-
-	@Override
-	public List<OfferCard> getOfferCardsFor(String searchString,
-			int maxResults, boolean excludeAssociatedCard) {
-		String hql = "select oc from " + getEntityClassName() + " oc " +
-		" where  oc.name like :cardName ";
-		if (excludeAssociatedCard) {
-			hql += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
-		}
-		hql += " order by name";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("cardName", "%" + searchString + "%");
-		if (excludeAssociatedCard) {
-			query.setParameter("user", getLoggedInUser());
-		}
-		if (maxResults != 0) {
-			query.setMaxResults(maxResults);
-		}
-		List<OfferCard> list = query.list();
-		return list;
-	}
-
 
 	@Override
 	public Long getTotalOfferCardCount(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
@@ -84,7 +50,7 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 
 	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard) {
 		String whereClause = " from " + getEntityClassName() + " oc " +
-		" where  oc.name like :cardName ";
+				" where  oc.name like :cardName ";
 		if (excludeAssociatedCard) {
 			whereClause += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
 		}

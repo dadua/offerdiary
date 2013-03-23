@@ -14,7 +14,7 @@ import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.CommonUtilities;
-import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.OfferSearchCriteria;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
@@ -55,13 +55,12 @@ public class OfferAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="searchOffers.do")
 	public Response searchOffers(HttpServletRequest req, HttpServletResponse resp) {
-		SearchCriteria searchCriteria = getSearchCriteria(req);
+		OfferSearchCriteria searchCriteria = (OfferSearchCriteria) getSearchCriteria(req);
 		OfferSearchResultVO offers = getOfferManager().searchOffersFor(searchCriteria);
 		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
 		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
-
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -76,7 +75,7 @@ public class OfferAction extends CommonAction{
 		User loggedInUser = getLoggedInUser();
 		List<OfferVO> offers = new ArrayList<OfferVO>();
 		if (loggedInUser != null) {
-			SearchCriteria validOffersSearchCriteria = new SearchCriteria();
+			OfferSearchCriteria validOffersSearchCriteria = new OfferSearchCriteria();
 			validOffersSearchCriteria.setUniqueFilter("valid");
 			OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
 			offers = offerSearchResultVO.getOffers();
@@ -143,7 +142,7 @@ public class OfferAction extends CommonAction{
 		String accessToken = req.getParameter(OfferWalletConstants.SHARED_OFFER_ACCESS_CODE_PARAM_KEY);
 		Offer newOffer = null;
 		if (accessToken != null) {
-			newOffer = getOfferManager().addSharedOfferToWallet(accessToken);
+			newOffer = getOfferManager().addSharedOfferToWallet(accessToken, getLoggedInUser());
 		}
 		return new Redirect("wallet.do");
 	}
@@ -169,7 +168,7 @@ public class OfferAction extends CommonAction{
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<String>>() { }.getType();
 		List<String> offerUniqueIds = gson.fromJson(offersJson, type);
-		getOfferManager().removeOffersFromWallet(offerUniqueIds);
+		getOfferManager().removeOffersFromWallet(offerUniqueIds, getLoggedInUser());
 		Result<String> result = new Result<String>("Successfully removed the offers from wallet");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
