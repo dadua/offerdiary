@@ -65,10 +65,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
-		}
-		OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
-		if (existingUserAssoc != null) {
-			return;
+		} else {
+			OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
+			if (existingUserAssoc != null) {
+				return;
+			}
 		}
 
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
