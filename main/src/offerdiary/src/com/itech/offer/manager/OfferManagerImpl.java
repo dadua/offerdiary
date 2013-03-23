@@ -26,7 +26,6 @@ import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferSharingType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
-import com.itech.sdk.annotations.AllowedFromUserActions;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
 import com.itech.user.vos.ShareOfferActionVO;
@@ -47,6 +46,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public void addOfferForUser(Offer offer, User user) {
+
 		if (offer.isTransient()) {
 			if ((offer.getExpiry() == null) && (offer.getExpiryDateInMillis() !=0)) {
 				offer.setExpiry(new Date(offer.getExpiryDateInMillis()));
@@ -66,9 +66,12 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
 		}
+		OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
+		if (existingUserAssoc != null) {
+			return;
+		}
 
 		OfferUserAssoc offerUserAssoc = getOfferUserAssoc(offer,user);
-
 		if (offer.isTransient()) {
 			offerDAO.addOrUpdate(offer);
 		}
@@ -122,7 +125,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	}
 
 	@Override
-	@AllowedFromUserActions
 	public void removeOffersFromWallet(List<String> offerUniqueIds) {
 		List<Offer> offers = getOfferDAO().getByUniqueId(offerUniqueIds);
 		for(Offer offer: offers){
