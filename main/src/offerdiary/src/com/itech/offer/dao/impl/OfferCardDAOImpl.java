@@ -1,11 +1,12 @@
 package com.itech.offer.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 
 import com.itech.common.db.SearchCriteria;
-import com.itech.common.db.TokenizedWhereClauseResult;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferCardDAO;
 import com.itech.offer.model.OfferCard;
@@ -23,13 +24,13 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 	public Long getTotalOfferCardCount(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
 
 		String searchString = searchCriteria.getSearchString();
-		TokenizedWhereClauseResult tokenizedCardSearchWhereClause = getTokenizedSearchWhereClause("oc.name", searchString);
-		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard, tokenizedCardSearchWhereClause.getTokenizedWhereClause());
-		Query countQuery = getSession().createQuery("select count(*) " + whereClause);
-		setTokenizedParamsToQuery(countQuery, tokenizedCardSearchWhereClause);
-		if (excludeAssociatedCard) {
-			countQuery.setParameter("user", getLoggedInUser());
-		}
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		String whereClauseForOfferCards = getWhereClauseForOfferCards(excludeAssociatedCard, searchCriteria, paramMap);
+		String countHql = "select count(*) " + whereClauseForOfferCards;
+
+		Query countQuery = getSession().createQuery(countHql);
+		setParamsToQuery(countQuery, paramMap);
+
 		Object singleResult = getSingleResult(countQuery);
 		return (Long) singleResult;
 	}
@@ -37,28 +38,27 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 	@Override
 	public List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
 		String searchString = searchCriteria.getSearchString();
-		TokenizedWhereClauseResult tokenizedCardSearchWhereClause = getTokenizedSearchWhereClause("oc.name", searchString);
-		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard, tokenizedCardSearchWhereClause.getTokenizedWhereClause());
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		String whereClauseForOfferCards = getWhereClauseForOfferCards(excludeAssociatedCard, searchCriteria, paramMap);
 
-		String hql = "select oc " + whereClause;
+		String hql = "select oc " + whereClauseForOfferCards;
 
 		Query query = getSession().createQuery(hql);
-		setTokenizedParamsToQuery(query, tokenizedCardSearchWhereClause);
-
-		if (excludeAssociatedCard) {
-			query.setParameter("user", getLoggedInUser());
-		}
+		setParamsToQuery(query, paramMap);
 
 		List<OfferCard> list = getPaginatedResultFor(query, searchCriteria);
 		return list;
 	}
 
-	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard, String tokenizedSearchClauseFragment) {
+	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard, SearchCriteria searchCriteria, Map<String, Object> paramMap) {
+		String tokenizedCardSearchWhereClause = getTokenizedSearchWhereClause("oc.name", searchCriteria.getSearchString(), paramMap);
 		String whereClause = " from " + getEntityClassName() + " oc " +
-		" where " + tokenizedSearchClauseFragment;
+				" where " + tokenizedCardSearchWhereClause;
 		if (excludeAssociatedCard) {
 			whereClause += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
+			paramMap.put("user", getLoggedInUser());
 		}
+
 		whereClause += " order by name";
 		return whereClause;
 	}

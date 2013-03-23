@@ -1,14 +1,16 @@
 package com.itech.common.db.hibernate;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.itech.common.CommonUtilities;
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.common.db.SearchCriteria;
-import com.itech.common.db.TokenizedWhereClauseResult;
 import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.security.SecurityManager;
@@ -16,6 +18,7 @@ import com.itech.user.model.User;
 
 public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 
+	public static final String TRUE_CLAUSE = " 1=1 ";
 	private HibernateSessionFactory hibernateSessionFactory;
 	private SecurityManager securityManager;
 
@@ -74,29 +77,35 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 	 * @param fullyQualifiedcolumnNameToSearchFor
 	 * @param searchQuery
 	 */
-	protected TokenizedWhereClauseResult getTokenizedSearchWhereClause(String fullyQualifiedcolumnNameToSearchFor, String searchQuery) {
+	protected String getTokenizedSearchWhereClause(String fullyQualifiedcolumnNameToSearchFor, String searchQuery, Map<String, Object> paramMap) {
+
+		if (CommonUtilities.isNullOrEmpty(searchQuery)) {
+			return TRUE_CLAUSE;
+		}
+
 		String[] searchTokens = searchQuery.split(" ");
-		String columnNamelikeStr = fullyQualifiedcolumnNameToSearchFor + " like ";
-		TokenizedWhereClauseResult tokenizedWhereClauseResult = new TokenizedWhereClauseResult();
-		StringBuffer sb = new StringBuffer();
+		String columnNamelikeStr = " " + fullyQualifiedcolumnNameToSearchFor + " like ";
+		StringBuilder whereClause = new StringBuilder();
 
 		for (int i = 0; i < searchTokens.length; i++) {
-			sb.append(columnNamelikeStr);
+			whereClause.append(columnNamelikeStr);
 			String tokenName = "token" + i;
-			sb.append(":" + tokenName);
+			whereClause.append(":" + tokenName);
 			if (i != searchTokens.length -1) {
-				sb.append(" and ");
+				whereClause.append(" and ");
 			}
-			tokenizedWhereClauseResult.getTokenNameValueMap().put(tokenName, searchTokens[i]);
+			paramMap.put(tokenName, "%" + searchTokens[i] + "%");
 		}
-		tokenizedWhereClauseResult.setTokenizedWhereClause(sb.toString());
-		return tokenizedWhereClauseResult;
+		return whereClause.toString();
 	}
 
-	protected void setTokenizedParamsToQuery(Query query, TokenizedWhereClauseResult tokenizedWhereClauseResult) {
-		Map<String, String> tokenNameValueMap = tokenizedWhereClauseResult.getTokenNameValueMap();
-		for (String tokenName: tokenNameValueMap.keySet()) {
-			query.setParameter(tokenName, "%" + tokenNameValueMap.get(tokenName) + "%");
+	protected void setParamsToQuery(Query query,  Map<String, Object> paramMap) {
+		for (Entry<String, Object> param : paramMap.entrySet()) {
+			if (param.getValue() != null && param.getValue() instanceof Collection) {
+				query.setParameterList(param.getKey(), (Collection) param.getValue());
+			} else {
+				query.setParameter(param.getKey(), param.getValue());
+			}
 		}
 	}
 
