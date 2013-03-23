@@ -69,12 +69,19 @@
                         <div id="cardsContainer" class="container-fluid discoverCards">
                         
                         </div>
+                        <div class="container-fluid discoverCards">
+                            <div id="cardPaginationContainer" class="row-fluid span6 offset6">
+                            </div>
+                        </div>
+                       
+                        
                         <div id="offerOnCardContainer" class="container-fluid offerOnCard hide">
                         </div>
-                        <div class="container-fluid">
-	                        <div id="cardPaginationContainer" class="row-fluid span6 offset6">
-		                    </div>
-	                    </div>
+                        <div class="container-fluid offerOnCard hide">
+                            <div id="offerOnCardPaginationContainer" class="row-fluid span6 offset6">
+                            </div>
+                        </div>
+                        
                         
                     </div>
                     

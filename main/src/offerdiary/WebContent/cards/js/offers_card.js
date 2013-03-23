@@ -137,28 +137,90 @@ it.offersoncard.setFilterClickHandler = function () {
 };
 
 it.offersoncard.state = function () {
-    var _lastClickedCardId = null;
+    var _lastClickedCardId = null,
+        _offerPageNo = 1;
     return {
         getLastClickedCardId: function () {
             return _lastClickedCardId;
         },
         setLastClickedCardId: function(lastClickedCardId) {
             _lastClickedCardId = lastClickedCardId;
+        },
+        getOfferPageNo: function () {
+            return _offerPageNo;
+        },
+        setOfferPageNo: function (offerPageNo) {
+            _offerPageNo = offerPageNo;
+        },
+        resetOfferPageNo: function () {
+            _offerPageNo = 1;
         }
     };
 }();
 
-it.offersoncard.plotAllOffersForCard = function (cardId) {
+it.offersoncard.pagination = function () {
+    
+    var handlePaginationClick = function (new_page_index) {
+        it.offersoncard.plotAllOffersForCard(null, new_page_index+1);
+        return false;
+    };
+
+    var _lastTotalNoOfOffersOnCards = 0;
+
+    var _init = function (totalNoOfCards) {
+        if (totalNoOfCards !== _lastTotalNoOfOffersOnCards) {
+            $('#offerOnCardPaginationContainer').pagination(totalNoOfCards, {
+                items_per_page:10,
+                callback:handlePaginationClick,
+                num_edge_entries:1,
+                num_display_entries: 5
+            });
+            _lastTotalNoOfOffersOnCards = totalNoOfCards;
+        }
+    };
+
+    var _getTotalNoOfOffers = function (cardId) {
+            var q = $('#searchOffersOnCards').val();
+
+            $.post('searchOffers.do',
+                   {'searchCriteria': JSON.stringify ({q: q,
+                                                      cardId: cardId,
+                                                      privateSearchOnly: false,
+                                                      cardOffersOnly: true})
+                   }, function(response) {
+                       var resp = $.parseJSON(response);
+                       if (resp.success) {
+                           _init(resp.result.totalCount);
+                       } else {
+                           //TODO: Error..
+                       }
+                   });
+
+
+    };
+
+    return {
+        initForCardWithId: _getTotalNoOfOffers
+    };
+
+ 
+}();
+
+it.offersoncard.plotAllOffersForCard = function (cardId, pageNo) {
 
     if (typeof cardId !== 'string') {
         cardId = it.offersoncard.state.getLastClickedCardId();
     }
 
     var q = $('#searchOffersOnCards').val();
+    pageNo = pageNo || 1;
 
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, privateSearchOnly: false, cardOffersOnly: true})},
-           function(response) {
+           {'searchCriteria': JSON.stringify ({q: q,
+                                              cardId: cardId,
+                                              privateSearchOnly: false,
+                                              cardOffersOnly: true,
+                                              pageNumber: pageNo })}, function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
                    it.offersoncard.plotOffers(resp.result.offers);
@@ -174,8 +236,10 @@ it.offersoncard.plotOffersForCard = function (e) {
         cardName = it.offersoncard.getCardName(offersOnCardLabelTarget);
 
     it.offersoncard.state.setLastClickedCardId(cardId);
+    it.offersoncard.state.resetOfferPageNo();
     it.offersoncard.plotFilter({id:cardId, name: cardName});
-    it.offersoncard.plotAllOffersForCard(cardId);
+    it.offersoncard.pagination.initForCardWithId(cardId);
+    //it.offersoncard.plotAllOffersForCard(cardId);
     it.card.toggler.showOffersOnCard();
 };
 
