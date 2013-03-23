@@ -93,6 +93,7 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Transient
 	private NotifyVO notifyVO;
 
+	@Transient
 	private boolean associatedWithLoggedInUser;
 
 	public Long getDaysToExpire() {

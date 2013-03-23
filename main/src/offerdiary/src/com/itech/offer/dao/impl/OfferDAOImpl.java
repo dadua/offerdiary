@@ -157,7 +157,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 		if ("valid".equalsIgnoreCase(uniqueFilter)) {
 			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			return  " o.expiry > :now ";
+			return  " (o.expiry > :now or o.expiry is null) ";
 		}
 
 
