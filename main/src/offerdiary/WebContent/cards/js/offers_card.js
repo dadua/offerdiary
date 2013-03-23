@@ -141,7 +141,7 @@ it.offersoncard.plotAllOffersForCard = function (cardId) {
     var q = $('#searchOffersOnCards').val();
 
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, offersOnMyCardsOnly: true, privateSearchOnly: false})},
+           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, offersOnMyCardsOnly: true, privateSearchOnly: false, cardOffersOnly: true})},
            function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
