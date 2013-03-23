@@ -1,12 +1,14 @@
 package com.itech.common.db.hibernate;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.TokenizedWhereClauseResult;
 import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.security.SecurityManager;
@@ -61,6 +63,43 @@ public abstract class HibernateCommonBaseDAO <T> implements CommonBaseDAO<T> {
 		Query query = getSession().createQuery(hql);
 		return query.list();
 	}
+
+
+	/**
+	 * e.g. For a fullyQualifiedcolumnNameToSearchFor = "tv.name" of a Table
+	 * and a spaceSeparatedSearchQuery = "token1 token2 token3"
+	 * the method returns the where clause=
+	 * tv.name like :token1 and tv.name like :token2 and tv.name like :token3
+	 * and the nameValue pair map wrapped in a TokenizedWhereClauseResult object
+	 * @param fullyQualifiedcolumnNameToSearchFor
+	 * @param searchQuery
+	 */
+	protected TokenizedWhereClauseResult getTokenizedSearchWhereClause(String fullyQualifiedcolumnNameToSearchFor, String searchQuery) {
+		String[] searchTokens = searchQuery.split(" ");
+		String columnNamelikeStr = fullyQualifiedcolumnNameToSearchFor + " like ";
+		TokenizedWhereClauseResult tokenizedWhereClauseResult = new TokenizedWhereClauseResult();
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < searchTokens.length; i++) {
+			sb.append(columnNamelikeStr);
+			String tokenName = "token" + i;
+			sb.append(":" + tokenName);
+			if (i != searchTokens.length -1) {
+				sb.append(" and ");
+			}
+			tokenizedWhereClauseResult.getTokenNameValueMap().put(tokenName, searchTokens[i]);
+		}
+		tokenizedWhereClauseResult.setTokenizedWhereClause(sb.toString());
+		return tokenizedWhereClauseResult;
+	}
+
+	protected void setTokenizedParamsToQuery(Query query, TokenizedWhereClauseResult tokenizedWhereClauseResult) {
+		Map<String, String> tokenNameValueMap = tokenizedWhereClauseResult.getTokenNameValueMap();
+		for (String tokenName: tokenNameValueMap.keySet()) {
+			query.setParameter(tokenName, "%" + tokenNameValueMap.get(tokenName) + "%");
+		}
+	}
+
 
 	protected List getPaginatedResultFor(Query query, int pageNumber, int numberOfRecordsPerPage) {
 		int startIndex = (pageNumber -1 ) * numberOfRecordsPerPage;

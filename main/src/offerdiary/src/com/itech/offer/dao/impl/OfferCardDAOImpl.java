@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.SearchCriteria;
+import com.itech.common.db.TokenizedWhereClauseResult;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferCardDAO;
 import com.itech.offer.model.OfferCard;
@@ -21,9 +22,11 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 	@Override
 	public Long getTotalOfferCardCount(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
 
-		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard);
+		String searchString = searchCriteria.getSearchString();
+		TokenizedWhereClauseResult tokenizedCardSearchWhereClause = getTokenizedSearchWhereClause("oc.name", searchString);
+		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard, tokenizedCardSearchWhereClause.getTokenizedWhereClause());
 		Query countQuery = getSession().createQuery("select count(*) " + whereClause);
-		countQuery.setParameter("cardName", "%" + searchCriteria.getSearchString() + "%");
+		setTokenizedParamsToQuery(countQuery, tokenizedCardSearchWhereClause);
 		if (excludeAssociatedCard) {
 			countQuery.setParameter("user", getLoggedInUser());
 		}
@@ -34,12 +37,14 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 	@Override
 	public List<OfferCard> getOfferCardsFor(SearchCriteria searchCriteria, boolean excludeAssociatedCard) {
 		String searchString = searchCriteria.getSearchString();
-		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard);
+		TokenizedWhereClauseResult tokenizedCardSearchWhereClause = getTokenizedSearchWhereClause("oc.name", searchString);
+		String whereClause = getWhereClauseForOfferCards(excludeAssociatedCard, tokenizedCardSearchWhereClause.getTokenizedWhereClause());
 
 		String hql = "select oc " + whereClause;
 
 		Query query = getSession().createQuery(hql);
-		query.setParameter("cardName", "%" + searchString + "%");
+		setTokenizedParamsToQuery(query, tokenizedCardSearchWhereClause);
+
 		if (excludeAssociatedCard) {
 			query.setParameter("user", getLoggedInUser());
 		}
@@ -48,9 +53,9 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		return list;
 	}
 
-	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard) {
+	private String getWhereClauseForOfferCards(boolean excludeAssociatedCard, String tokenizedSearchClauseFragment) {
 		String whereClause = " from " + getEntityClassName() + " oc " +
-				" where  oc.name like :cardName ";
+		" where " + tokenizedSearchClauseFragment;
 		if (excludeAssociatedCard) {
 			whereClause += " and oc not in (select ocua.offerCard from OfferCardUserAssoc ocua where ocua.user=:user)";
 		}
