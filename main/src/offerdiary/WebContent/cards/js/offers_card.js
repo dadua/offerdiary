@@ -138,13 +138,30 @@ it.offersoncard.setFilterClickHandler = function () {
 
 it.offersoncard.plotAllOffersForCard = function (cardId) {
 
+    var q = $('#searchOffersOnCards').val();
+
+    $.post('searchOffers.do',
+           {'searchCriteria': JSON.stringify ({q: q, cardId: cardId, offersOnMyCardsOnly: true, privateSearchOnly: false})},
+           function(response) {
+               var resp = $.parseJSON(response);
+               if (resp.success) {
+                   //it.offer.plotAll(resp.result.offers, true);
+                   it.offersoncard.plotOffers(resp.result.offers);
+               } else {
+                   //TODO: Error..
+               }
+           });
+
+           /*
     $.getJSON('getOffersOnCard.do', {cardIdKey: cardId}, function (resp) {
+
         if (resp.success) {
             it.offersoncard.plotOffers(resp.result.offers);
         } else {
             //TODO: Error case
         }
     });
+   */
 };
 
 it.offersoncard.plotOffersForCard = function (e) {
