@@ -1,5 +1,7 @@
 package com.itech.offer.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,6 +47,9 @@ public class OfferUserAssoc extends PersistableEntity{
 	@Column(name=OfferUserAssocModelConstants.COL_OFFER_SHARING_TYPE)
 	private OfferSharingType offerSharingType = OfferSharingType.PRIVATE;
 
+	@Column(name="CREATED_ON")
+	private Date createdOn = new Date(System.currentTimeMillis());
+
 	public Offer getOffer() {
 		return offer;
 	}
@@ -84,5 +89,11 @@ public class OfferUserAssoc extends PersistableEntity{
 	}
 	public Long getId() {
 		return id;
+	}
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
 	}
 }
