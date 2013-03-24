@@ -59,11 +59,17 @@
             <div class="span10 content-container"  >
                 <div class="container-fluid">
                     <div class="row-fluid">
-                        <div class="form-search span5 offset6">
-                            <div class="input-append">
-                                <input id="searchOfferQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Offers" />
-                                <button class="btn"><i class="icon-search"></i></button>
-                            </div>
+                    	<div class="span6">
+	                    	<h3 class="bluishText">My Offers</h3>
+                    	</div>
+                    	<div class="span5">
+	                        <br/>
+	                        <div class="form-search">
+	                            <div class="input-append">
+	                                <input id="searchOfferQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Offers" />
+	                                <button class="btn"><i class="icon-search"></i></button>
+	                            </div>
+	                        </div>
                         </div>
                     </div>
                     <br>
