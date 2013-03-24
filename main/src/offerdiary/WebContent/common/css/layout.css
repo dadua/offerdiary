@@ -5,6 +5,11 @@ body {
 body {
 	/*BS Accounts*/
 	padding-top: 165px;
+	font-family: 'Open Sans', 'lucida sans unicode', 'lucida grande', 'Trebuchet MS', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input, button, select, textarea {
+    font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .options-left-container {
