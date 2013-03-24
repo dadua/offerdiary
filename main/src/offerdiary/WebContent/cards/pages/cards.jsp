@@ -15,6 +15,7 @@
             it.card.plotAll('${myOfferCardsJsonAttrKey}');
             it.card.discoverRefreshHandler();
             it.card.setupCardFiltersHandlers();
+            it.offer.share.init();
 
 		});
     </script>
