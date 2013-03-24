@@ -69,11 +69,14 @@
     	margin: 12px;
     }
     
-    body {
+   
+
+    
+    <%@include file="/common/css/layout.css" %>
+
+	 body {
 		padding-top: 75px;
 	}
-
-
     
 	</style>
 		
