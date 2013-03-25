@@ -14,8 +14,11 @@ import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.OfferSearchFilterUtil;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.OfferCard;
+import com.itech.offer.model.OfferOfferCardAssoc;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
@@ -124,6 +127,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 		List<Offer> offers = getPaginatedResultFor(resultQuery, searchCriteria);
 		fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
+		updateSourceInfoInOffers(offers, getLoggedInUser());
 		Long resultCount = (Long) getSingleResult(resultCountQuery);
 
 		List<OfferVO> offerVOs = new ArrayList<OfferVO>();
@@ -222,15 +226,42 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		return " 1=1 ";
 	}
 
-	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
+	private void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
 		List<OfferUserAssoc> filteredOffers = getOffersAssociatedWithUser(offers, user);
 		for (OfferUserAssoc offerUserAssoc : filteredOffers) {
 			Offer offerFromAssoc = offerUserAssoc.getOffer();
+			if (OfferOwnershipType.CREATOR.equals(offerUserAssoc.getOwnershipType())) {
+				offerFromAssoc.setSourceType(OfferSourceType.USER);
+			}
 			offerUserAssoc.getOffer().setAssociatedWithLoggedInUser(true);
 			int positionOfOffer = offers.indexOf(offerFromAssoc);
 			offers.remove(positionOfOffer);
 			offers.add(positionOfOffer, offerFromAssoc);
 		}
+	}
+
+	private void updateSourceInfoInOffers(List<Offer> offers, User user) {
+		List<OfferOfferCardAssoc> filteredOffers = getOfferCardAssocBy(offers);
+		for (OfferOfferCardAssoc offerCardAssoc :  filteredOffers) {
+			Offer offerFromAssoc = offerCardAssoc.getOffer();
+			offerFromAssoc.setSource(offerCardAssoc.getOfferCard().getName());
+			offerFromAssoc.setSourceType(OfferSourceType.CARD);
+			int positionOfOffer = offers.indexOf(offerFromAssoc);
+			offers.remove(positionOfOffer);
+			offers.add(positionOfOffer, offerFromAssoc);
+		}
+
+	}
+
+	public List<OfferOfferCardAssoc> getOfferCardAssocBy(List<Offer> offers) {
+		if (offers.size() == 0) {
+			return new ArrayList<OfferOfferCardAssoc>();
+		}
+		String hql = "select oca from " + getEntityClassName() + " o, OfferOfferCardAssoc oca  where oca.offer=o and o in (:offers)";
+		Query query = getSession().createQuery(hql);
+		query.setParameterList("offers", offers);
+		List list = query.list();
+		return query.list();
 	}
 
 

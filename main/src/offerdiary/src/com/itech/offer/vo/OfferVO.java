@@ -3,6 +3,7 @@ package com.itech.offer.vo;
 import java.sql.Date;
 
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.DiscountType;
 import com.itech.offer.model.enums.OfferType;
@@ -61,6 +62,11 @@ public class OfferVO {
 
 	private boolean associatedWithLoggedInUser;
 
+	private OfferSourceType sourceType;
+
+	private String source;
+
+
 	public static OfferVO getOfferVOFor(Offer offer) {
 		OfferVO offerVO = new OfferVO();
 		offerVO.setId(offer.getUniqueId());
@@ -81,6 +87,8 @@ public class OfferVO {
 		offerVO.setTitle(offer.getTitle());
 		offerVO.setUniqueId(offer.getUniqueId());
 		offerVO.setAssociatedWithLoggedInUser(offer.isAssociatedWithLoggedInUser());
+		offerVO.setSourceType(offer.getSourceType());
+		offerVO.setSource(offer.getSource());
 		return offerVO;
 	}
 
@@ -347,6 +355,26 @@ public class OfferVO {
 
 	public void setAssociatedWithLoggedInUser(boolean associatedWithLoggedInUser) {
 		this.associatedWithLoggedInUser = associatedWithLoggedInUser;
+	}
+
+
+	public OfferSourceType getSourceType() {
+		return sourceType;
+	}
+
+
+	public void setSourceType(OfferSourceType sourceType) {
+		this.sourceType = sourceType;
+	}
+
+
+	public String getSource() {
+		return source;
+	}
+
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }
