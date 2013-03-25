@@ -73,9 +73,8 @@
 
     
     <%@include file="/common/css/layout.css" %>
-
 	 body {
-		padding-top: 75px;
+		padding-top: 73px;
 	}
     
 	</style>
