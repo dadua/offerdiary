@@ -7,7 +7,9 @@ public class OfferSearchResultVO {
 
 	private Long totalCount;
 
-	private Integer perPageCount;
+	private Integer resultsPerPage;
+
+	private Integer pageNumber;
 
 	public List<OfferVO> getOffers() {
 		return offers;
@@ -25,11 +27,19 @@ public class OfferSearchResultVO {
 		this.totalCount = totalCount;
 	}
 
-	public Integer getPerPageCount() {
-		return perPageCount;
+	public Integer getResultsPerPage() {
+		return resultsPerPage;
 	}
 
-	public void setPerPageCount(Integer perPageCount) {
-		this.perPageCount = perPageCount;
+	public void setResultsPerPage(Integer perPageCount) {
+		this.resultsPerPage = perPageCount;
+	}
+
+	public Integer getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(Integer pageNumber) {
+		this.pageNumber = pageNumber;
 	}
 }

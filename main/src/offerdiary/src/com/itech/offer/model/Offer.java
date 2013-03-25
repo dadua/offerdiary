@@ -96,6 +96,17 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Transient
 	private boolean associatedWithLoggedInUser;
 
+	@Transient
+	private OfferSourceType sourceType;
+
+	@Transient
+	private String source;
+
+	public enum OfferSourceType {
+		CARD, COUPON_SITE, USER
+	}
+
+
 	public Long getDaysToExpire() {
 		Long timeMillis = System.currentTimeMillis();
 		Long expiryTime = getExpiry().getTime();
@@ -393,6 +404,26 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setAssociatedWithLoggedInUser(boolean associatedWithLoggedInUser) {
 		this.associatedWithLoggedInUser = associatedWithLoggedInUser;
+	}
+
+
+	public OfferSourceType getSourceType() {
+		return sourceType;
+	}
+
+
+	public void setSourceType(OfferSourceType sourceType) {
+		this.sourceType = sourceType;
+	}
+
+
+	public String getSource() {
+		return source;
+	}
+
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 
 }
