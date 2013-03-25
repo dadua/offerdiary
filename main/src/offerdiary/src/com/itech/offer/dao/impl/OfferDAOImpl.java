@@ -127,7 +127,6 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 		List<Offer> offers = getPaginatedResultFor(resultQuery, searchCriteria);
 		fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
-		updateSourceInfoInOffers(offers, getLoggedInUser());
 		Long resultCount = (Long) getSingleResult(resultCountQuery);
 
 		List<OfferVO> offerVOs = new ArrayList<OfferVO>();
@@ -226,32 +225,35 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		return " 1=1 ";
 	}
 
-	private void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
+	@Override
+	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
 		List<OfferUserAssoc> filteredOffers = getOffersAssociatedWithUser(offers, user);
 		for (OfferUserAssoc offerUserAssoc : filteredOffers) {
 			Offer offerFromAssoc = offerUserAssoc.getOffer();
-			if (OfferOwnershipType.CREATOR.equals(offerUserAssoc.getOwnershipType())) {
-				offerFromAssoc.setSourceType(OfferSourceType.USER);
+			for (Offer offer : offers) {
+				if (offer.equals(offerFromAssoc)) {
+					if (OfferOwnershipType.CREATOR.equals(offerUserAssoc.getOwnershipType())) {
+						offer.setSourceType(OfferSourceType.USER);
+					}
+					offer.setAssociatedWithLoggedInUser(true);
+				}
 			}
-			offerUserAssoc.getOffer().setAssociatedWithLoggedInUser(true);
-			int positionOfOffer = offers.indexOf(offerFromAssoc);
-			offers.remove(positionOfOffer);
-			offers.add(positionOfOffer, offerFromAssoc);
+		}
+
+		List<OfferOfferCardAssoc> filteredByCardOffers = getOfferCardAssocBy(offers);
+		for (OfferOfferCardAssoc offerCardAssoc :  filteredByCardOffers) {
+
+			for (Offer offer : offers) {
+				if (offer.equals(offerCardAssoc)) {
+					Offer offerFromAssoc = offerCardAssoc.getOffer();
+					offerFromAssoc.setSource(offerCardAssoc.getOfferCard().getName());
+					offerFromAssoc.setSourceType(OfferSourceType.CARD);
+				}
+			}
 		}
 	}
 
-	private void updateSourceInfoInOffers(List<Offer> offers, User user) {
-		List<OfferOfferCardAssoc> filteredOffers = getOfferCardAssocBy(offers);
-		for (OfferOfferCardAssoc offerCardAssoc :  filteredOffers) {
-			Offer offerFromAssoc = offerCardAssoc.getOffer();
-			offerFromAssoc.setSource(offerCardAssoc.getOfferCard().getName());
-			offerFromAssoc.setSourceType(OfferSourceType.CARD);
-			int positionOfOffer = offers.indexOf(offerFromAssoc);
-			offers.remove(positionOfOffer);
-			offers.add(positionOfOffer, offerFromAssoc);
-		}
 
-	}
 
 	public List<OfferOfferCardAssoc> getOfferCardAssocBy(List<Offer> offers) {
 		if (offers.size() == 0) {

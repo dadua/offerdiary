@@ -33,6 +33,9 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 
 	OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria);
 
+	void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user);
+
+
 
 
 }

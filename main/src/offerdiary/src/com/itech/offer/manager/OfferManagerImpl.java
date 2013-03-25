@@ -114,13 +114,19 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	@Override
 	public OfferShare getOfferShareFor(String accessToken) {
 		OfferShare offerShare = getOfferShareDAO().getOfferShareFor(accessToken);
-
+		ArrayList<Offer> offers = new ArrayList<Offer>();
+		offers.add(offerShare.getOffer());
+		getOfferDAO().fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
 		return offerShare;
 	}
 
 	@Override
 	public Offer getOfferForUnqueId(String uniqueId) {
-		return getOfferDAO().getByUniqueId(uniqueId);
+		Offer offer = getOfferDAO().getByUniqueId(uniqueId);
+		ArrayList<Offer> offers = new ArrayList<Offer>();
+		offers.add(offer);
+		getOfferDAO().fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
+		return offer;
 	}
 
 
