@@ -1,5 +1,6 @@
 .pagination {
             font-size: 80%;
+            float: right;
         }
         
 .pagination a {

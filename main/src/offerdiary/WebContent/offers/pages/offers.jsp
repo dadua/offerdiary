@@ -7,14 +7,14 @@
     <script src="offers/js/offer.js" > </script>
     <script src="offers/js/offerdetail.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
+    <script src="common/libs/jquery-pagination/jquery.pagination.js" charset="UTF-8"> </script>
     
     <script type="text/javascript">
         $(function() {
             $('#offerTab').addClass('active');
             it.offer.addwizard.init();
-            var offersJson = '${myOffersJson}',
-                offers = JSON.parse(offersJson);
-            it.offer.init(offers);
+            var myValidOffersCount = ${myValidOffersCount};
+            it.offer.init(myValidOffersCount);
             it.offer.share.init();
         });
             
@@ -27,6 +27,8 @@
             <%@include file="/offers/css/vendor.css" %>
             <%@include file="/offers/css/offer.css" %>
             <%@include file="/offers/css/eachOffer.css" %>
+            <%@include file="/common/libs/jquery-pagination/pagination.css" %>
+            
 
     </style>
 
@@ -78,7 +80,13 @@
                         <div id="offerContainerFluid" class="container-fluid">
                             <%@include file="/offers/templates/addOfferTemplate.html" %>
                         </div>
+                        <div class="container-fluid">
+	                        <div id="offerPaginationContainer" class="row-fluid span6 offset6">
+	                        </div>
+	                    </div>
                     </div>
+                    
+
                 </div>
             </div>
         </div>

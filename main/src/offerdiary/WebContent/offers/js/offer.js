@@ -331,12 +331,17 @@ it.offer.getUniqueFilter = function () {
     return classToUniqueFilterMap[activeClass] || '';
 };
 
-it.offer.searchOffers = function () {
+it.offer.searchOffers = function (pageNo, isPaginationClick) {
+    if (!isPaginationClick) {
+        return it.offer.pagination.reInit();
+    }
     var q = $('#searchOfferQuery').val(),
         uniqueFilter = it.offer.getUniqueFilter ();
 
+    pageNo = pageNo || 1;
+
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q, uniqueFilter: uniqueFilter})},
+           {'searchCriteria': JSON.stringify ({q: q, uniqueFilter: uniqueFilter, pageNumber: pageNo, resultsPerPage: 7})},
            function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
@@ -347,7 +352,49 @@ it.offer.searchOffers = function () {
            });
 };
 
-it.offer.init = function (offers) {
-    it.offer.plotAll(offers, true);
+it.offer.init = function (validOfferCount) {
+    it.offer.pagination.init(validOfferCount);
     it.offer.addOneHandlers();
 };
+
+
+it.offer.pagination = function () {
+    
+    var handlePaginationClick = function (new_page_index) {
+        it.offer.searchOffers(new_page_index+1, true);
+        return false;
+    };
+
+    var _init = function (totalNoOfCards) {
+        $('#offerPaginationContainer').pagination(totalNoOfCards, {
+            items_per_page:7,
+            callback:handlePaginationClick,
+            num_edge_entries:1,
+            num_display_entries: 5
+        });
+    };
+
+    var _getTotalNoOfOffers = function () {
+        var q = $('#searchOfferQuery').val(),
+            uniqueFilter = it.offer.getUniqueFilter ();
+
+        $.post('searchOffers.do',
+               {'searchCriteria': JSON.stringify ({q: q, uniqueFilter: uniqueFilter})},
+               function(response) {
+                       var resp = $.parseJSON(response);
+                       if (resp.success) {
+                           _init(resp.result.totalCount);
+                       } else {
+                           //TODO: Error..
+                       }
+                   });
+
+
+    };
+
+    return {
+        reInit: _getTotalNoOfOffers,
+        init: _init
+    };
+}();
+

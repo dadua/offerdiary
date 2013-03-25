@@ -1,7 +1,6 @@
 package com.itech.offer.web;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ import com.itech.user.vos.ShareOfferActionVO;
 public class OfferAction extends CommonAction{
 
 	private static final String IS_SHARED_OFFER_PARAM_KEY = "isSharedOffer";
-	private static final String MY_OFFERS_JSON_ATTR_KEY = "myOffersJson";
+	private static final String MY_VALID_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -84,17 +83,11 @@ public class OfferAction extends CommonAction{
 	@ActionMapping(value="wallet.do")
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
-		List<OfferVO> offers = new ArrayList<OfferVO>();
 		if (loggedInUser != null) {
 			OfferSearchCriteria validOffersSearchCriteria = new OfferSearchCriteria();
 			validOffersSearchCriteria.setUniqueFilter("valid");
 			OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
-			offers = offerSearchResultVO.getOffers();
-			Gson gson = new Gson();
-			Type listOfOffersType = new TypeToken<List<OfferVO>>() {
-			}.getType();
-			String offersJson = gson.toJson(offers, listOfOffersType);
-			req.setAttribute(MY_OFFERS_JSON_ATTR_KEY, StringEscapeUtils.escapeJavaScript(offersJson));
+			req.setAttribute(MY_VALID_OFFERS_COUNT_ATTR_KEY, offerSearchResultVO.getTotalCount());
 		}
 		return new Forward(OfferWalletConstants.WALLET_PAGE);
 	}
