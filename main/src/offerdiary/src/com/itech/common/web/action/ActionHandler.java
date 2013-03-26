@@ -17,6 +17,7 @@ import com.itech.common.exeption.ReturnCode;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.exeption.ValidationException;
 import com.itech.common.resource.Resource;
+import com.itech.common.security.Authorization;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
@@ -61,6 +62,13 @@ public class ActionHandler {
 
 			executeMethod = actionMapping.getBeanClass().getMethod(actionMapping.getMethodName(),
 					HttpServletRequest.class, HttpServletResponse.class );
+			Authorization authorization = actionBean.getClass().getAnnotation(Authorization.class);
+			if (authorization != null) {
+				if (!authorization.userRole().equals(user.getUserRole())) {
+					ActionResponseAnnotation actionResponseAnnotation = executeMethod.getAnnotation(ActionResponseAnnotation.class);
+					return prepareErrorPageResponse(actionResponseAnnotation, ReturnCodes.AUTHORIZATION_FAILURE, request);
+				}
+			}
 			Response responseAction = (Response) executeMethod.invoke(actionBean, request, response);
 			transaction.commit();
 			return responseAction;
@@ -89,7 +97,7 @@ public class ActionHandler {
 			}
 
 			if (Forward.class.isAssignableFrom(responseType) || Redirect.class.isAssignableFrom(responseType)) {
-				return prepareErrorPageResponse(executeMethod, actionResponseAnnotation, returnCode, request);
+				return prepareErrorPageResponse(actionResponseAnnotation, returnCode, request);
 			}
 
 			throw ex;
@@ -124,10 +132,10 @@ public class ActionHandler {
 
 	}
 
-	private static ActionResponse prepareErrorPageResponse(Method method, ActionResponseAnnotation actionResponseAnnotation, ReturnCode returnCode, HttpServletRequest request) {
+	private static ActionResponse prepareErrorPageResponse(ActionResponseAnnotation actionResponseAnnotation, ReturnCode returnCode, HttpServletRequest request) {
 		String message = getMsg(getResource(), SERVER_LOCAL, returnCode.getDisplayKey());
 		request.setAttribute(URLConstants.COMMON_ERROR_MESSAGE_ATTR_NAME, message);
-		if (ActionResponseAnnotation.FULL_PAGE == actionResponseAnnotation.errorPageType()) {
+		if (actionResponseAnnotation == null || ActionResponseAnnotation.FULL_PAGE == actionResponseAnnotation.errorPageType()) {
 			return ActionResponse.forward( URLConstants.COMMON_ERROR_PAGE);
 		} else {
 			return ActionResponse.forward( URLConstants.COMMON_ERROR_INCLUDE_PAGE);
