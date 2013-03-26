@@ -9,7 +9,7 @@ it.vendor.view = it.vendor.view || {};
 //This object has all the html related data and methods
 it.vendor.view = function () {
     var threeVendorsContainerHtml = '<ul class="thumbnails currentSearchedVendors row-fluid"></ul>';
-    var vendorHtml = '<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/defaultVendor.jpg" /></div></li>',
+    var vendorHtml = '<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/defaultVendor.jpg" /></div><div class="vendorNameVal hide"></div></li>',
     vendorSearchContainerId = 'searchedVendors',
     containerId$;
     return {
@@ -31,10 +31,13 @@ it.vendor.view = function () {
 it.vendor.setImage = function (vendor, vendor$) {
     if (vendor.logoUrl) {
         vendor$.find('img').attr('src', 'images/stores/' + vendor.logoUrl).error(function(){
+
             $(this).attr('src', 'images/stores/defaultVendor.jpg');
+            $(this).parent().parent().find('.vendorNameVal').html(vendor.name).removeClass('hide');
         });
 
     } else {
+        vendor$.find('.vendorNameVal').html(vendor.name).removeClass('hide');
         //TODO: No Image found..
         //Have to put the vendor.name string to
         //the right of the trimmed down image..
