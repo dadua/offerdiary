@@ -31,3 +31,15 @@
                 color: white;
                 text-decoration: none;
             }
+            
+.vendorSearch {
+	position: relative;
+}
+
+.vendorNameVal {
+	position: absolute;
+	left: 5%;
+	top: 10%;
+	color: #0088CC;
+	
+}
