@@ -4,6 +4,6 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
      	   
-
+    <bean id="itech.adminAction" class="com.itech.admin.web.AdminAction" scope="prototype" parent="itech.CommonAction"/> 	   
 	
 </beans>

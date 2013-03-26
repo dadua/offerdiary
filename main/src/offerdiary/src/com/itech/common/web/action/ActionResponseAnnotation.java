@@ -19,7 +19,7 @@ public @interface ActionResponseAnnotation {
 	 */
 	public Class responseType();
 
-	public int errorPageType() default INCLUDED_PAGE;
+	public int errorPageType() default FULL_PAGE;
 
 	public static final int INCLUDED_PAGE = 0;
 
