@@ -62,13 +62,23 @@ public class ActionHandler {
 
 			executeMethod = actionMapping.getBeanClass().getMethod(actionMapping.getMethodName(),
 					HttpServletRequest.class, HttpServletResponse.class );
-			Authorization authorization = actionBean.getClass().getAnnotation(Authorization.class);
-			if (authorization != null) {
-				if (!authorization.userRole().equals(user.getUserRole())) {
+			Authorization classLevelAuthorization = actionBean.getClass().getAnnotation(Authorization.class);
+			if (classLevelAuthorization != null) {
+				if (!classLevelAuthorization.userRole().equals(user.getUserRole())) {
 					ActionResponseAnnotation actionResponseAnnotation = executeMethod.getAnnotation(ActionResponseAnnotation.class);
 					return prepareErrorPageResponse(actionResponseAnnotation, ReturnCodes.AUTHORIZATION_FAILURE, request);
 				}
 			}
+
+			Authorization methodLevelAuthorization = executeMethod.getAnnotation(Authorization.class);
+			if (methodLevelAuthorization != null) {
+				if (!methodLevelAuthorization.userRole().equals(user.getUserRole())) {
+					ActionResponseAnnotation actionResponseAnnotation = executeMethod.getAnnotation(ActionResponseAnnotation.class);
+					return prepareErrorPageResponse(actionResponseAnnotation, ReturnCodes.AUTHORIZATION_FAILURE, request);
+				}
+			}
+
+
 			Response responseAction = (Response) executeMethod.invoke(actionBean, request, response);
 			transaction.commit();
 			return responseAction;
