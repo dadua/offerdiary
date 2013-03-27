@@ -97,6 +97,10 @@ it.offer.getOfferHtml = function(offer) {
     } else {
         offerTemplate$.find('.expiryDate').hide();
     }
+
+    if (typeof offer.source === 'string') {
+        offerTemplate$.find('.offerSourceContainer').removeClass('hide').find('.offerSourceVal').html(offer.source);
+    }
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
     //offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);

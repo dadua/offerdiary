@@ -63,7 +63,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	@Override
 	public void removeOffersForCard(OfferCard offerCard) {
 		String hql = "delete from " + getEntityClassName() + " o where exists " +
-				" (select 1 from OfferOfferCardAssoc oca where oca.offer=o and oca.offerCard=:offerCard";
+		" (select 1 from OfferOfferCardAssoc oca where oca.offer=o and oca.offerCard=:offerCard";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("offerCard", offerCard);
 		int rowsAffected = query.executeUpdate();
@@ -72,7 +72,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	@Override
 	public List<Offer> getAllOffersOnCardsForUser(User user) {
 		String hql = "select o from " + getEntityClassName() + " o, OfferOfferCardAssoc oca, OfferCardUserAssoc ocua " +
-				" where oca.offer=o and oca.offerCard=ocua.offerCard and ocua.user=:user";
+		" where oca.offer=o and oca.offerCard=ocua.offerCard and ocua.user=:user";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("user", user);
 		List list = query.list();
@@ -82,7 +82,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 	@Override
 	public List<Offer> getAllOffersForCard(OfferCard offerCard) {
 		String hql = "select o from " + getEntityClassName() + " o, OfferOfferCardAssoc oca " +
-				" where oca.offer=o and oca.offerCard=:offerCard";
+		" where oca.offer=o and oca.offerCard=:offerCard";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("offerCard", offerCard);
 		List list = query.list();
@@ -149,7 +149,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			whereClause = " exists (select 1 from OfferOfferCardAssoc ooca ";
 			if (searchCriteria.isOffersOnMyCardsOnly()) {
 				whereClause += ", OfferCardUserAssoc ocua where ocua.user=:user and ooca.offerCard = ocua.offerCard " +
-						" and ooca.offer = o";
+				" and ooca.offer = o";
 				parameterMap.put("user", getLoggedInUser());
 			} else {
 				whereClause += " where ooca.offer = o ";
@@ -244,10 +244,10 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		for (OfferOfferCardAssoc offerCardAssoc :  filteredByCardOffers) {
 
 			for (Offer offer : offers) {
-				if (offer.equals(offerCardAssoc)) {
-					Offer offerFromAssoc = offerCardAssoc.getOffer();
-					offerFromAssoc.setSource(offerCardAssoc.getOfferCard().getName());
-					offerFromAssoc.setSourceType(OfferSourceType.CARD);
+				Offer offerFromAssoc = offerCardAssoc.getOffer();
+				if (offer.equals(offerFromAssoc)) {
+					offer.setSource(offerCardAssoc.getOfferCard().getName());
+					offer.setSourceType(OfferSourceType.CARD);
 				}
 			}
 		}
