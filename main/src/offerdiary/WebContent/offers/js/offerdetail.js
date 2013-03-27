@@ -25,6 +25,10 @@ it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
         offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
         offerTemplate$.find('.offerAdd').hide();
     }
+    
+    if (typeof offer.source === 'string') {
+        offerTemplate$.find('.offerSourceContainer').removeClass('hide').find('.offerSourceVal').html(offer.source);
+    }
     offerTemplate$.find("#oDfferdFbComment").attr('href', window.location.href);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
 
