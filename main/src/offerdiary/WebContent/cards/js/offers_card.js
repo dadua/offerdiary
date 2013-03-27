@@ -36,8 +36,6 @@ it.offersoncard.getOffer$ = function (offerId) {
 };
 
 it.offersoncard.markAddedToWallet = function (offer$) {
-    //TODO: Make this offer checked..
-    //Probably add a popover
     offer$.find('.offerFromCardAction').addClass('hide');
     offer$.find('.offerAddedToWalletAction').removeClass('hide');
 };
@@ -138,7 +136,8 @@ it.offersoncard.setFilterClickHandler = function () {
 
 it.offersoncard.state = function () {
     var _lastClickedCardId = null,
-        _offerPageNo = 1;
+        _offerPageNo = 1,
+        ALL_MY_CARDS_ID = '-1';
     return {
         getLastClickedCardId: function () {
             return _lastClickedCardId;
@@ -154,14 +153,27 @@ it.offersoncard.state = function () {
         },
         resetOfferPageNo: function () {
             _offerPageNo = 1;
+        },
+        getAllMyCardsId: function () {
+            return ALL_MY_CARDS_ID;
         }
     };
 }();
 
+
+it.offersoncard.allOffersOnMyCardsFilter = function () {
+    var allMyCardsId = it.offersoncard.state.getAllMyCardsId();
+    it.offersoncard.state.setLastClickedCardId(allMyCardsId);
+    it.offersoncard.pagination.initForCardWithId(allMyCardsId);
+    it.card.toggler.showOffersOnCard();
+};
+
 it.offersoncard.pagination = function () {
     
     var handlePaginationClick = function (new_page_index) {
-        it.offersoncard.plotAllOffersForCard(null, new_page_index+1);
+        it.offersoncard.plotAllOffersForCard(
+            it.offersoncard.state.getLastClickedCardId(),
+            new_page_index+1);
         return false;
     };
 
@@ -176,21 +188,28 @@ it.offersoncard.pagination = function () {
     };
 
     var _getTotalNoOfOffers = function (cardId) {
-            var q = $('#searchOffersOnCards').val();
+        var q = $('#searchOffersOnCards').val(),
+            searchCriteria = {
+                q: q,
+                privateSearchOnly: false,
+                cardOffersOnly: true
+            };
+        if (cardId !== it.offersoncard.state.getAllMyCardsId()){
+            searchCriteria.cardId  = cardId;
+        } else {
+            searchCriteria.offersOnMyCardsOnly=true;
+        }
 
-            $.post('searchOffers.do',
-                   {'searchCriteria': JSON.stringify ({q: q,
-                                                      cardId: cardId,
-                                                      privateSearchOnly: false,
-                                                      cardOffersOnly: true})
-                   }, function(response) {
-                       var resp = $.parseJSON(response);
-                       if (resp.success) {
-                           _init(resp.result.totalCount);
-                       } else {
-                           //TODO: Error..
-                       }
-                   });
+        $.post('searchOffers.do',
+               {'searchCriteria': JSON.stringify (searchCriteria)
+               }, function(response) {
+                   var resp = $.parseJSON(response);
+                   if (resp.success) {
+                       _init(resp.result.totalCount);
+                   } else {
+                       //TODO: Error..
+                   }
+               });
 
 
     };
@@ -202,21 +221,31 @@ it.offersoncard.pagination = function () {
  
 }();
 
+//it.offersoncard.getSearchCriteria = function
+
 it.offersoncard.plotAllOffersForCard = function (cardId, pageNo) {
+
+    pageNo = pageNo || 1;
+    var q = $('#searchOffersOnCards').val(),
+        searchCriteria = {
+            q: q,
+            privateSearchOnly: false,
+            cardOffersOnly: true,
+            pageNumber: pageNo
+        };
 
     if (typeof cardId !== 'string') {
         cardId = it.offersoncard.state.getLastClickedCardId();
     }
 
-    var q = $('#searchOffersOnCards').val();
-    pageNo = pageNo || 1;
+    if (cardId !== it.offersoncard.state.getAllMyCardsId()) {
+        searchCriteria.cardId = cardId;
+    } else {
+        searchCriteria.offersOnMyCardsOnly=true;
+    }
 
     $.post('searchOffers.do',
-           {'searchCriteria': JSON.stringify ({q: q,
-                                              cardId: cardId,
-                                              privateSearchOnly: false,
-                                              cardOffersOnly: true,
-                                              pageNumber: pageNo })}, function(response) {
+           {'searchCriteria': JSON.stringify (searchCriteria)}, function(response) {
                var resp = $.parseJSON(response);
                if (resp.success) {
                    it.offersoncard.plotOffers(resp.result.offers);
@@ -235,7 +264,6 @@ it.offersoncard.plotOffersForCard = function (e) {
     it.offersoncard.state.resetOfferPageNo();
     it.offersoncard.plotFilter({id:cardId, name: cardName});
     it.offersoncard.pagination.initForCardWithId(cardId);
-    //it.offersoncard.plotAllOffersForCard(cardId);
     it.card.toggler.showOffersOnCard();
 };
 
@@ -248,4 +276,5 @@ it.offersoncard.addHandlers = function () {
     $('.offersOnCardLabel').click (it.offersoncard.plotOffersForCard);
     it.offersoncard.setFilterClickHandler();
     $('#searchOffersOnCards').keyup(it.offersoncard.plotAllOffersForCard);
+    $('.allOffersOnMyCards').click(it.offersoncard.allOffersOnMyCardsFilter);
 };
