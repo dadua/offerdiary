@@ -5,19 +5,7 @@ it.offer.detail = it.offer.detail || {};
 it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
 
     var offerTemplate$ = $('.offer_detail_ui_template').clone().removeClass('offer_detail_ui_template hide').attr('id', 'offer_' + offer.id);
-    //Setting values from offer vo to the template..
-    if (offer.targetVendor) {
-        offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ (offer.targetVendor.logoUrl || 'defaultVendor.jpg'));
-        offerTemplate$.find('.vendorName').html(offer.targetVendor.name);
-        offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
-    } else {
-        offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
-    }
-    if (offer.expiryDateInMillis !== 0) {
-        offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
-    } else {
-        offerTemplate$.find('.expiryDate').hide();
-    }
+    offerTemplate$ = it.offer.setOfferDataToOffer$(offer, offerTemplate$);
     if (isSharedOffer) {
         offerTemplate$.find('.offerTrash').hide();
         offerTemplate$.find('.offerAdd').parent().attr('href', 'addSharedOfferToWallet.do?accessCode=' + offer.id);
@@ -26,14 +14,8 @@ it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
         offerTemplate$.find('.offerAdd').hide();
     }
     
-    if (typeof offer.source === 'string') {
-        offerTemplate$.find('.offerSourceContainer').removeClass('hide').find('.offerSourceVal').html(offer.source);
-    }
     offerTemplate$.find("#oDfferdFbComment").attr('href', window.location.href);
-    offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
 
-    offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
-    offerTemplate$.find('.offerDesc').html(offer.description);
     return offerTemplate$;
 };
 

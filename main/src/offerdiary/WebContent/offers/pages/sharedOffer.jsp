@@ -18,6 +18,7 @@
     <style type="text/css">
     
             <%@include file="/common/css/layout.css" %>
+            <%@include file="/offers/css/eachOffer.css" %>
             <%@include file="/offers/css/offer.css" %>
             .largeTitleFontSize {
 			    font-size: 1.4em;
