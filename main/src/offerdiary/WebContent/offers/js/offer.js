@@ -81,9 +81,7 @@ it.offer.getCompactFormattedTimeToExpire = function(timeToExpireString) {
 };
 
 
-it.offer.getOfferHtml = function(offer) {
-
-    var offerTemplate$ = $('.offer_ui_template').clone().removeClass('offer_ui_template hide').attr('id', 'offer_' + offer.id);
+it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     //Setting values from offer vo to the template..
     if (offer.targetVendor) {
         offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ (offer.targetVendor.logoUrl || 'defaultVendor.jpg'));
@@ -106,9 +104,20 @@ it.offer.getOfferHtml = function(offer) {
     //offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);
     offerTemplate$.find('.offerDetail').attr('id', 'offerDetail_' + offer.id);
 
-    offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
+    if (typeof offer.offerCode === 'string') {
+        offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
+    } else {
+        offerTemplate$.find('.offerCode').addClass('hide');
+    }
     offerTemplate$.find('.offerDesc').html(offer.description);
     return offerTemplate$;
+	
+};
+
+it.offer.getOfferHtml = function(offer) {
+
+    var offerTemplate$ = $('.offer_ui_template').clone().removeClass('offer_ui_template hide').attr('id', 'offer_' + offer.id);
+    return it.offer.setOfferDataToOffer$(offer, offerTemplate$);
 };
 
 
