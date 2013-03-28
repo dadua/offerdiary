@@ -101,10 +101,9 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     }
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
-    //offerTemplate$.find('.offerDetail').parent().attr('href', 'getOfferDetail.do?id=' + offer.id);
     offerTemplate$.find('.offerDetail').attr('id', 'offerDetail_' + offer.id);
 
-    if (typeof offer.offerCode === 'string') {
+    if (typeof offer.offerCode === 'string' && offer.offerCode !== '') {
         offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     } else {
         offerTemplate$.find('.offerCode').addClass('hide');
