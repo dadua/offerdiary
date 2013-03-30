@@ -40,8 +40,9 @@
 			}
 			
 			.footerLink{
-				color: #234;
-				font-size: .88em;
+				color: #777777;
+				background-color: #FAFAFA;
+				font-size: .8em;
 			}
 			.tab-text{
 				font-family: verdana;
