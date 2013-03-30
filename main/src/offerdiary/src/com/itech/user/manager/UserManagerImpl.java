@@ -12,6 +12,8 @@ import com.itech.common.services.Initialize;
 import com.itech.event.user.UserEventGenerator;
 import com.itech.fb.model.FbProfile;
 import com.itech.fb.services.FbService;
+import com.itech.offer.job.ItechJob;
+import com.itech.offer.job.ItechJobManager;
 import com.itech.user.dao.InterestedUserSubscriptionDAO;
 import com.itech.user.dao.UserDAO;
 import com.itech.user.dao.UserNotificationConfigDAO;
@@ -46,6 +48,7 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		User odAdminUser = getUserDAO().getByEmail(odAdminEmail);
 		if (odAdminUser == null) {
 			odAdminUser = saveEmailUser(odAdminName, odAdminEmail, odAdminPassword, UserRole.OD_ADMIN);
+			odAdminUser.setEmailVarified(true);
 			UserNotificationConfig userNotificationConfigForOdAdmin = getUserNotificationConfigFor(odAdminUser);
 			userNotificationConfigForOdAdmin.switchOffAllAlerts();
 			getUserNotificationConfigDAO().addOrUpdate(userNotificationConfigForOdAdmin);
@@ -67,6 +70,8 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		user.setName(name);
 		user.setUserRole(userRole);
 		user.setRegistrationTime((new Date(System.currentTimeMillis())));
+		String emailVarficationAccessCode = CommonUtilities.getUniqueId("USER");
+		user.setEmailVarficationAccessCode(emailVarficationAccessCode);
 		save(user);
 		getUserEventGenerator().newUserAdded(user);
 		return user;
@@ -80,6 +85,9 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		user.setLoginType(LoginType.FACEBOOK);
 		user.setActivationStatus(ActivationStatus.ACTIVE);
 		user.setRegistrationTime((new Date(System.currentTimeMillis())));
+		String emailVarficationAccessCode = CommonUtilities.getUniqueId("USER");
+		user.setEmailVarficationAccessCode(emailVarficationAccessCode);
+
 		User existingUser = getUserDAO().getByUserId(user.getUserId());
 		if (existingUser != null) {
 			return existingUser;
@@ -95,9 +103,14 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		LinkedAccount fbLinkedAccount = createFbLinkedAccountFor(fbProfile, user);
 		fbLinkedAccount.setUsedForLogin(Boolean.TRUE);
 		getLinkedAccountManager().saveOrUpdate(fbLinkedAccount);
-		getSocialProfileManager().syncFbSocialProfilesFor(fbService, user);
+		createFbSyncTaskFor(user, fbService);
 		getUserEventGenerator().newUserAdded(user);
 		return user;
+	}
+
+	private void createFbSyncTaskFor(User user, FbService fbService) {
+		ItechJob job = new FbUserSyncJob(fbService, user);
+		ItechJobManager.addJob(job, "FB_SYNC_" + user.getUserId());
 	}
 
 	private void updateExistingUser(User existingUser, User user) {
@@ -216,6 +229,11 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		return getUserNotificationConfigDAO().getUserNotificationConfigFor(user);
 	}
 
+	@Override
+	public User getUserForEmailVarificationCode(String emailVarificationCode) {
+		return getUserDAO().getUserForEmailVarificationCode(emailVarificationCode);
+	}
+
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
@@ -259,7 +277,6 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 	public void setUserNotificationConfigDAO(UserNotificationConfigDAO userNotificationConfigDAO) {
 		this.userNotificationConfigDAO = userNotificationConfigDAO;
 	}
-
 
 
 }

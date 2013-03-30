@@ -9,4 +9,6 @@ public interface UserDAO extends CommonBaseDAO<User>{
 
 	public User getByEmail(String email);
 
+	public User getUserForEmailVarificationCode(String emailVarificationCode);
+
 }

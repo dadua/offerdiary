@@ -19,6 +19,7 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
+import com.itech.common.web.action.URLConstants;
 import com.itech.fb.model.FbCreds;
 import com.itech.fb.services.FbService;
 import com.itech.user.model.LoginType;
@@ -237,4 +238,28 @@ public class LoginAction extends CommonAction{
 		updateLoggedInUser(req, null);
 		return new Redirect("");
 	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="varifyEmail.do")
+	public Response varifyEmail(HttpServletRequest req, HttpServletResponse resp){
+		String message = "";
+		String emailVarificationCode = req.getParameter("code");
+		User user = getUserManager().getUserForEmailVarificationCode(emailVarificationCode);
+		if (user == null) {
+			message = "Invalid Email varification request";
+		}
+
+		if (user.isEmailVarified()) {
+			message = "Email Varification already completed";
+		} else {
+			user.setEmailVarified(true);
+			getUserManager().save(user);
+			message = "Your Email Varified successfully";
+		}
+
+		req.setAttribute(URLConstants.COMMON_ERROR_MESSAGE_ATTR_NAME, message);
+		return new Forward("common/pages/message_page.jsp");
+	}
+
 }

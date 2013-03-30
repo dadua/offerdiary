@@ -36,6 +36,9 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name=OfferModelConstants.COL_DESCRPTION)
 	private String description;
 
+	@Column(name="offer_link")
+	private String offerLink;
+
 	@Column(name=OfferModelConstants.COL_TERMS_N_CONDITIONS)
 	private String termsAndConditions;
 
@@ -424,6 +427,16 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+
+	public String getOfferLink() {
+		return offerLink;
+	}
+
+
+	public void setOfferLink(String offerLink) {
+		this.offerLink = offerLink;
 	}
 
 }
