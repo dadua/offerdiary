@@ -37,7 +37,7 @@ public class ShareOfferNotificationEmail extends Email{
 		doc.select("#friendName").first().append(user.getName());
 		doc.select("#offerDetail").first().append(offerDescription);
 		doc.select("#vendor").first().append(offerShare.getOffer().getTargetVendor().getName());
-		doc.select("#offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">Here is the offer</a>");
+		doc.select("#offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">View offer on OfferDiary</a>");
 
 		return doc.toString();
 	}
