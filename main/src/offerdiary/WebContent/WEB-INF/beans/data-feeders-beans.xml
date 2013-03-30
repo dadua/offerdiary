@@ -5,16 +5,22 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
 
 	<bean id="itech.redanarOfferEngine" class="com.itech.redwine.parser.RedWineOfferEngine">
-		<property name="offerCardManager" ref="itech.offerCardManager"/>
-		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
-		<property name="offerManager" ref="itech.offerManager"/>
+		<property name="redWineSyncJob" ref="itech.redWineSyncJob"/>
 	</bean>
 	
 	<bean id="itech.scotchWorldEngine" class="com.itech.scotchworld.parser.ScotchWorldEngine">
-		<property name="vendorManager" ref="itech.vendorManager"/>
-		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="vendorSyncJob" ref="itech.vendorSyncJob"/>
 	</bean>
 	
-
+	<bean id="itech.redWineSyncJob" class="com.itech.redwine.parser.RedWineSyncJob" scope="prototype"> 
+		<property name="offerCardManager" ref="itech.offerCardManager"/>
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="offerManager" ref="itech.offerManager"/>	
+	</bean>
+	
+	<bean id="itech.vendorSyncJob" class="com.itech.scotchworld.parser.VendorSyncJob" scope="prototype">
+		<property name="vendorManager" ref="itech.vendorManager"/>
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>	
+	</bean>
 		
 </beans>

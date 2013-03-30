@@ -113,7 +113,6 @@ public class ActionHandler {
 			throw ex;
 
 		} finally {
-			getHibernateSessionFactory().closeCurrentSession();
 			if (transaction !=null && transaction.isActive()) {
 				try{
 					transaction.rollback();
@@ -121,6 +120,7 @@ public class ActionHandler {
 					logger.error("Failed to rollback transaction", e);
 				}
 			}
+			getHibernateSessionFactory().closeCurrentSession();
 		}
 
 	}
