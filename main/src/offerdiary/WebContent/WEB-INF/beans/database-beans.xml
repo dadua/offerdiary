@@ -13,27 +13,12 @@
 		 
   <bean id="itech.SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="itech.DataSource" />
-		<property name="annotatedClasses">
-		<list>
-			<value>com.itech.user.model.User</value>
-			<value>com.itech.user.model.LinkedAccount</value>
-			<value>com.itech.user.model.SocialProfile</value>
-			<value>com.itech.user.model.SocialProfileConnection</value>
-			<value>com.itech.user.model.InterestedUserSubscription</value>
-			<value>com.itech.user.model.UserNotificationConfig</value>
-			<value>com.itech.alert.model.AlertConfig</value>
-			<value>com.itech.alert.model.Alert</value>
-			<value>com.itech.offer.model.OfferCard</value>
-			<value>com.itech.offer.model.Offer</value>
-			<value>com.itech.offer.model.OfferShare</value>
-			<value>com.itech.offer.model.Vendor</value>
-			<value>com.itech.offer.model.OfferOfferCardAssoc</value>
-			<value>com.itech.offer.model.OfferCardUserAssoc</value>
-			<value>com.itech.offer.model.OfferUserAssoc</value>
-			<value>com.itech.config.model.Config</value>
-			<value>com.itech.email.model.EmailMessages</value>
-		</list>
+		<property name="packagesToScan">
+		     <list>
+		        <value>com.itech</value>
+		     </list>		
 		</property>
+
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>

@@ -4,6 +4,10 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
      	   
-    <bean id="itech.adminAction" class="com.itech.admin.web.AdminAction" scope="prototype" parent="itech.CommonAction"/> 	   
+    <bean id="itech.adminAction" class="com.itech.admin.web.AdminAction" scope="prototype" parent="itech.CommonAction">
+    	<property name="backGroundTasksService" ref="com.itech.offer.job.ItechBackGroundTasksService"/>
+    </bean> 	   
+    <bean class="com.itech.offer.job.ItechBackGroundTasksService">
+    </bean>
 	
 </beans>

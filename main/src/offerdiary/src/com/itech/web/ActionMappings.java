@@ -2,6 +2,7 @@ package com.itech.web;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.itech.common.web.action.ActionMapping;
 
@@ -13,6 +14,10 @@ public class ActionMappings {
 
 	public static ActionMapping getAction(String uri) {
 		return actions.get(uri);
+	}
+
+	public static Set<String> getActions() {
+		return actions.keySet();
 	}
 
 	static {
