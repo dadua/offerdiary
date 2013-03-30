@@ -21,6 +21,7 @@ public class OfferExpiryNotificationEmail extends Email{
 		this.alert = alert;
 		this.offer = offer;
 		this.user = user;
+		setSubject();
 	}
 
 	@Override
@@ -30,9 +31,8 @@ public class OfferExpiryNotificationEmail extends Email{
 		doc.select(EmailContent.SELECT_NAME).first().append(user.getName());
 		doc.select(EmailContent.SELECT_SALUTATION).first().append("Dear ");
 		String offerURL = "www.offerdiary.com";//TODO fix offer detail link
-		doc.select("#friendName").first().append(user.getName());
-		doc.select("#offerDescription").first().append(offer.getDescription());
-		doc.select("#offerCode").first().append(offer.getOfferCode());
+		doc.select("#offerDetail").first().append(offer.getDescription());
+		//doc.select("#offerCode").first().append(offer.getOfferCode());
 		doc.select("#vendor").first().append(offer.getTargetVendor().getName());
 		doc.select("#offerLink").first().append("<a href=\"" + offerURL + "\" target=\"_blank\" style=\"color:#0088CC;\">Here is the offer</a>");
 		long numberOfDays = (offer.getExpiryDateInMillis() - System.currentTimeMillis()) / CommonUtilities.MILLIS_IN_A_DAY;
@@ -70,6 +70,6 @@ public class OfferExpiryNotificationEmail extends Email{
 
 	@Override
 	public String getSubject() {
-		return DEFAULT_NOTIFICATION_SUBJECT;
+		return DEFAULT_NOTIFICATION_SUBJECT + offer.getTargetVendor().getName();
 	}
 }
