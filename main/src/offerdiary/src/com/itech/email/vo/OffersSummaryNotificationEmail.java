@@ -2,18 +2,12 @@ package com.itech.email.vo;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import com.itech.common.CommonFileUtilities;
-import com.itech.email.vo.Email.EmailType;
 
 public class OffersSummaryNotificationEmail extends Email{
 
-	
-	private static final String DEFAULT_SUMMARY_NOTIFICATION_SUBJECT="OfferDo Offer Summary Notification";
+
+	private static final String DEFAULT_SUMMARY_NOTIFICATION_SUBJECT="OfferDiary Summary Notification";
 	private String OFFER_SUMMARY_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
 	private Document docHTML = null;
@@ -64,19 +58,19 @@ public class OffersSummaryNotificationEmail extends Email{
 	@Override
 	protected void generateEmailHTMLTemplate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setContentInMessageHTML(EmailContentParam content) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSubject() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

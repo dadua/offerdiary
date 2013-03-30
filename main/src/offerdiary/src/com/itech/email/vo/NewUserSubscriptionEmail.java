@@ -2,7 +2,6 @@ package com.itech.email.vo;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -10,17 +9,17 @@ import com.itech.common.CommonFileUtilities;
 
 public class NewUserSubscriptionEmail extends Email{
 
-	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDo Subscription !";
+	private static final String DEFAULT_SUBSCRIPTION_SUBJECT="OfferDiary Subscription !";
 	private String SUBSCRIPTION_EMAIL_HTML;
-	private EmailContent defaultEmailContent ; 
+	private EmailContent defaultEmailContent ;
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
 	private Document docHTML = null;
 
-	
+
 	public NewUserSubscriptionEmail(){
 		super();
 	}
-	
+
 	public NewUserSubscriptionEmail(EmailContentParam contentParam,String toEmailId){
 		super(contentParam, toEmailId);
 	}
@@ -48,7 +47,7 @@ public class NewUserSubscriptionEmail extends Email{
 		content.setSalutation("Dear");
 		content.setName("Subscriber");
 		content.setPara1("Thank you for signing up for OfferDiary closed beta. You have taken the first step to manage your offers"+
-		"and loyalty credits effectively. We are working out to bring the best offer management solution to you with OfferDiary and"+
+				"and loyalty credits effectively. We are working out to bring the best offer management solution to you with OfferDiary and"+
 		"will send you a sign up invitation soon!");
 		content.setPara2("Wait for it... We are sure, you are going to love it! ");
 		setDefaultEmailContent(content);
@@ -67,16 +66,16 @@ public class NewUserSubscriptionEmail extends Email{
 		doc.select(EmailContent.SELECT_NAME).first().append(getDefaultEmailContent().getName());
 		doc.select(EmailContent.SELECT_SALUTATION).first().append(getDefaultEmailContent().getSalutation());
 		doc.select(EmailContent.SELECT_PARA1).first().append(getDefaultEmailContent().getPara1());
-		doc.select(EmailContent.SELECT_PARA2).first().append(getDefaultEmailContent().getPara2());	
+		doc.select(EmailContent.SELECT_PARA2).first().append(getDefaultEmailContent().getPara2());
 	}
 
 	private void setContentParams(EmailContentParam content) {
-		
+
 	}
 
 	@Override
 	public void setSubject() {
-		this.subject = DEFAULT_SUBSCRIPTION_SUBJECT;
+		subject = DEFAULT_SUBSCRIPTION_SUBJECT;
 	}
 
 	@Override
@@ -84,8 +83,8 @@ public class NewUserSubscriptionEmail extends Email{
 		return EmailType.NEW_USER_SUBSCRIPTION_EMAIL;
 	}
 
-	
-	
+
+
 	public static String getDefaultSubscriptionSubject() {
 		return DEFAULT_SUBSCRIPTION_SUBJECT;
 	}
