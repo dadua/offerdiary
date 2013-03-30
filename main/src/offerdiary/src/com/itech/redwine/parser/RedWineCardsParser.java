@@ -176,8 +176,8 @@ public class RedWineCardsParser {
 
 	public static void main(String[] args){
 
-		getAllCardsWithOfferFilledForPage(1);
-		//RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
+		//getAllCardsWithOfferFilledForPage(1);
+
 		//String readDataFromFile = CommonFileUtilities.readDataFromFile("c:\\data\redanarcards.txt", false);
 		//System.out.println(readDataFromFile);
 		//parseRedWineForCards(0);
@@ -189,8 +189,9 @@ public class RedWineCardsParser {
 		//		RedWineCardsParser.writeRedWineCardsWithOffers(iciciCards,
 		//				RedWineCardsParser.REDANAR_CARDDATA_WITH_OFFERS_JSON_FILE_OUT);
 
-		String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
-		List<RedWineCard> cardsWithOffer = readRedWineCardsWithOfferFile(cardsWithOffersSourceFileName);
+		//String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
+		//List<RedWineCard> cardsWithOffer = readRedWineCardsWithOfferFile(cardsWithOffersSourceFileName);
+		RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
 	}
 
 

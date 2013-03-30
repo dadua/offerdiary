@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.itech.common.CommonFileUtilities;
+import com.itech.common.CommonUtilities;
 import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
 import com.itech.offer.manager.VendorManager;
@@ -27,6 +28,7 @@ public class VendorSyncJob extends BaseItechJob{
 	private static final Logger logger = Logger.getLogger(VendorSyncJob.class);
 
 	private  void syncVendors() {
+		String[] affiliateUrls = CommonFileUtilities.getResourceFileAsLines("resources\\couponduniya\\affiliate_site_urls.properties");
 		String vendorJsonData = CommonFileUtilities.getResourceFileAsString("resources\\couponduniya\\stores-minimal.json");
 		Gson gson = new Gson();
 		Type vendorJsonType = new TypeToken<List<ScotchWorldStore>>() { }.getType();
@@ -35,9 +37,12 @@ public class VendorSyncJob extends BaseItechJob{
 			if (scotchWorldStore.getStoreName() == null) {
 				continue;
 			}
+			checkAndUpdateVendorUrl(scotchWorldStore, affiliateUrls);
 			Vendor vendor = getVendorFrom(scotchWorldStore);
 			Vendor existingVendor = getVendorManager().getVendorByName(vendor.getName());
 			if (existingVendor != null) {
+				existingVendor.setSiteUrl(scotchWorldStore.getStoreURL());
+				getVendorManager().saveOrUpdateVendor(existingVendor);
 				logger.warn("Vendor already exists for name - " + vendor.getName());
 				continue;
 			}
@@ -45,6 +50,34 @@ public class VendorSyncJob extends BaseItechJob{
 		}
 
 	}
+
+	private void checkAndUpdateVendorUrl(ScotchWorldStore scotchWorldStore,
+			String[] affiliateUrls) {
+		String storeURL = scotchWorldStore.getStoreURL();
+		String storeName = scotchWorldStore.getStoreName();
+		if (CommonUtilities.isNullOrEmpty(storeURL)) {
+			return;
+		}
+		boolean fixStoreUrl = false;
+		for (String affiliateUrl : affiliateUrls) {
+			if (storeURL.contains(affiliateUrl) || storeURL.equals("http://") || storeURL.equals("https:/")) {
+				fixStoreUrl = true;
+				break;
+			}
+		}
+
+		if (fixStoreUrl) {
+			String newUrl = "";
+			if (storeName.endsWith(".com") || storeName.endsWith(".com")) {
+				newUrl = "www." + storeName;
+			} else {
+				newUrl = "www." + storeName.replace(" ", "") + ".com";
+			}
+			logger.info("for vendor: " + storeName + ", URL replaced from: " + storeURL + "  to: " + newUrl);
+			scotchWorldStore.setStoreURL(newUrl);
+		}
+	}
+
 
 	private Vendor getVendorFrom(ScotchWorldStore scotchWorldStore) {
 		Vendor vendor = new Vendor();
