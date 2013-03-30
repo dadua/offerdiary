@@ -49,11 +49,15 @@ it.profile.userInfo.view = function(){
         $('.saveCancel').removeClass('hide');
         $('.editBtn').hide();
         _copyValsToEditCols();
+        it.profile.userInfo.validation.userDetailsNotEmptyHandler();
     };
 
     var _saveHandler = function () {
-        var userInfo$ = $('.userInfo'),
-            userName = userInfo$.find('.userNameText').val(),
+        var userInfo$ = $('.userInfo');
+        if (userInfo$.find('.saveBtn').hasClass('disabled')) {
+            return;
+        }
+        var userName = userInfo$.find('.userNameText').val(),
             userEmail = userInfo$.find('.userEmailText').html(),
             userCity = userInfo$.find('.userCityText').val(),
             mobileNumber = userInfo$.find('.mobileNumberText').val(),
@@ -79,6 +83,7 @@ it.profile.userInfo.view = function(){
         $('.editBtn').click(_editHandler);
         $('.saveBtn').click(_saveHandler);
         $('.cancelBtn').click(_cancelHandler);
+        it.profile.userInfo.validation.addHandlers();
         _cancelHandler();
     };
 
@@ -95,6 +100,40 @@ it.profile.userInfo.refresh = function() {
         it.profile.userInfo.plot(userInfo);
     });
 };
+
+it.profile.userInfo.validation = function () {
+    var _isTextInputEmpty = function (inputText$) {
+        var textVal = inputText$.val();
+        if (textVal === '') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    var _userDetailsNotEmptyHandler = function () {
+
+        var userInfo$ = $('.userInfo'),
+            userName$ = userInfo$.find('.userNameText');
+        if (_isTextInputEmpty(userName$)) {
+            userName$.parent().parent().addClass('error').find('.help-block').removeClass('hide');
+            userInfo$.find('.saveBtn').addClass('disabled');
+        } else {
+            userName$.parent().parent().removeClass('error').find('.help-block').addClass('hide');
+            userInfo$.find('.saveBtn').removeClass('disabled');
+        }
+    };
+
+    var addHandlers = function () {
+        var userInfo$ = $('.userInfo');
+        userInfo$.find('.userNameText').keyup(_userDetailsNotEmptyHandler);
+    };
+
+    return {
+        addHandlers: addHandlers,
+        userDetailsNotEmptyHandler: _userDetailsNotEmptyHandler
+    };
+}();
 
 it.profile.userInfo.plot = function(userInfo) {
     var userInfo$ = this.view.get$(userInfo);
