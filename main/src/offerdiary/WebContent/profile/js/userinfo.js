@@ -58,7 +58,7 @@ it.profile.userInfo.view = function(){
             return;
         }
         var userName = userInfo$.find('.userNameText').val(),
-            userEmail = userInfo$.find('.userEmailText').html(),
+            userEmail = userInfo$.find('.userEmailText').val(),
             userCity = userInfo$.find('.userCityText').val(),
             mobileNumber = userInfo$.find('.mobileNumberText').val(),
             pinCode = userInfo$.find('.pincodeText').val(),

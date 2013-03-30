@@ -5,7 +5,7 @@
                 &nbsp;
             </div>
             <div class="span6" >
-                <ul class="nav nav-pills footerLink">
+                <ul class="nav nav-pills">
                     <li>
                     <a href="home.do" class="footerLink"><i class="icon-home icon-white"></i>Home</a>
                     </li>
