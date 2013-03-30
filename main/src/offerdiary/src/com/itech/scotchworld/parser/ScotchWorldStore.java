@@ -5,6 +5,7 @@ public class ScotchWorldStore {
 	private String description;
 	private String imageSrc;
 	private String storeURL;
+	private String affiliateUrl;
 
 	@Override
 	public String toString(){
@@ -33,5 +34,11 @@ public class ScotchWorldStore {
 	}
 	public void setStoreURL(String storeURL) {
 		this.storeURL = storeURL;
+	}
+	public String getAffiliateUrl() {
+		return affiliateUrl;
+	}
+	public void setAffiliateUrl(String affiliateUrl) {
+		this.affiliateUrl = affiliateUrl;
 	}
 }

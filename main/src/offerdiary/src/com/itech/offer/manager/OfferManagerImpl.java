@@ -60,6 +60,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			if (targetVendor != null) {
 				Long vendorId = targetVendor.getId();
 				Vendor vendorFromDB = getVendorManager().getVendorFor(vendorId);
+				if (vendorFromDB == null) {
+					vendorFromDB = createVendorForUser(targetVendor, user);
+				}
 				offer.setTargetVendor(vendorFromDB);
 			}
 
@@ -82,6 +85,14 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		if (offer.getExpiry() != null) {
 			getOfferEventGenerator().offerCreated(offer, user);
 		}
+	}
+
+
+	private Vendor createVendorForUser(Vendor vendor, User user) {
+		vendor.setOwner(user);
+		vendor.setVendorType(VendorType.USER_DEFINED);
+		getVendorManager().saveOrUpdateVendor(vendor);
+		return vendor;
 	}
 
 
