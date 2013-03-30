@@ -13,6 +13,7 @@ import com.itech.event.vo.EmailEvent;
 import com.itech.event.vo.Event;
 
 public class EmailDispatcher implements Initialize, Runnable, EventHandler{
+	private static final Integer MAX_TRY_COUNT = 20;
 	private final Logger logger = Logger.getLogger(EmailDispatcher.class);
 	private HibernateSessionFactory hibernateSessionFactory;
 	private EmailManager emailManager;
@@ -75,6 +76,10 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 				}
 			} catch (Exception e) {
 				logger.error("Failed to send email:"+emailMessage, e);
+				if (emailMessage.getTryCount() >= MAX_TRY_COUNT) {
+					getEmailManager().deleteEmailMessages(emailMessage);
+					getHibernateSessionFactory().commitCurrentTransaction();
+				}
 			}
 		}
 	}
