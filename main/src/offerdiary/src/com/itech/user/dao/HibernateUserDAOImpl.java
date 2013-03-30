@@ -27,4 +27,12 @@ public class HibernateUserDAOImpl extends HibernateCommonBaseDAO<User> implement
 		query.setParameter("emailId", email);
 		return getSingleResultFrom(query);
 	}
+
+	@Override
+	public User getUserForEmailVarificationCode(String emailVarificationCode) {
+		String hql = "from " + getEntityClassName() + " where emailVarficationAccessCode = :emailVarficationAccessCode";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("emailVarficationAccessCode", emailVarificationCode);
+		return getSingleResultFrom(query);
+	}
 }

@@ -46,6 +46,9 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/reShareOffer.do");
 		bypassUrls.add("/user/pages/signUpFailed.jsp");
 		bypassUrls.add("/authorizationFailureJsonResponse.do");
+
+		bypassUrls.add("/common/pages/message_page.jsp");
+		bypassUrls.add("/varifyEmail.do");
 	}
 
 	@Override

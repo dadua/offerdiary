@@ -21,4 +21,5 @@ public interface UserManager {
 	//User notifications
 	public UserNotificationConfig getUserNotificationConfigFor(User user);
 	public void save(UserNotificationConfig userNotificationConfig);
+	public User getUserForEmailVarificationCode(String emailVarificationCode);
 }

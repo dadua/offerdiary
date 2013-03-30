@@ -5,6 +5,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.itech.common.db.hibernate.HibernateSessionFactory;
+import com.itech.common.services.ServiceLocator;
 import com.itech.offer.job.JobStatus.JobStatusEnum;
 
 public abstract class BaseItechJob implements ItechJob {
@@ -87,6 +88,9 @@ public abstract class BaseItechJob implements ItechJob {
 	}
 
 	public HibernateSessionFactory getHibernateSessionFactory() {
+		if (hibernateSessionFactory == null) {
+			hibernateSessionFactory = ServiceLocator.getInstance().getBean(HibernateSessionFactory.class);
+		}
 		return hibernateSessionFactory;
 	}
 

@@ -68,6 +68,12 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME)
 	private Date notifyPasswordTime;
 
+	@Column(name="IS_EMAIL_VARIFIED")
+	private boolean emailVarified;
+
+	@Column(name="EMAIL_VARIFICATION_CODE")
+	private String emailVarficationAccessCode;
+
 
 	public enum ActivationStatus {
 		ACTIVE, INACTIVE;
@@ -215,6 +221,18 @@ public class User extends PersistableEntity{
 
 	public boolean isODAdmin() {
 		return UserRole.OD_ADMIN.equals(getUserRole());
+	}
+	public boolean isEmailVarified() {
+		return emailVarified;
+	}
+	public void setEmailVarified(boolean emailVarified) {
+		this.emailVarified = emailVarified;
+	}
+	public String getEmailVarficationAccessCode() {
+		return emailVarficationAccessCode;
+	}
+	public void setEmailVarficationAccessCode(String emailVarficationAccessCode) {
+		this.emailVarficationAccessCode = emailVarficationAccessCode;
 	}
 
 }
