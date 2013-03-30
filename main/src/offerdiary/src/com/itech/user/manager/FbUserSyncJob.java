@@ -25,13 +25,13 @@ public class FbUserSyncJob extends BaseItechJob {
 
 	@Override
 	protected void doJobTask() {
-		try {
-			Thread.sleep(INITIAL_DELAY);
-		} catch (InterruptedException e) {
-			logger.error("Error while waiting of fb sync task for user:" + user.getName(), e);
-		}
 		this.user = getUserManager().getByUserId(user.getUserId());
 		getSocialProfileManager().syncFbSocialProfilesFor(fbService, user);
+	}
+
+	@Override
+	protected long getInitialDelay() {
+		return INITIAL_DELAY;
 	}
 
 	public SocialProfileManager getSocialProfileManager() {

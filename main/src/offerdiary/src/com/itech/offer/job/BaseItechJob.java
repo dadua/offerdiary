@@ -18,6 +18,11 @@ public abstract class BaseItechJob implements ItechJob {
 
 	@Override
 	public void doJob() {
+		try {
+			Thread.sleep(getInitialDelay());
+		} catch (InterruptedException e) {
+			logger.error("Error while waiting for task", e);
+		}
 		Transaction transaction = null;
 		try {
 			getHibernateSessionFactory().openNewSession();
@@ -37,6 +42,10 @@ public abstract class BaseItechJob implements ItechJob {
 			getHibernateSessionFactory().closeCurrentSession();
 			finished = true;
 		}
+	}
+
+	protected long getInitialDelay() {
+		return 0;
 	}
 
 	protected abstract void doJobTask();
