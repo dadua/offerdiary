@@ -30,7 +30,7 @@ public class OfferExpiryNotificationEmail extends Email{
 		doc.select(EmailContent.SELECT_SUBHEADING).first().append("Welcome to OfferDiary !");
 		doc.select(EmailContent.SELECT_NAME).first().append(user.getName());
 		doc.select(EmailContent.SELECT_SALUTATION).first().append("Dear ");
-		String offerURL = "www.offerdiary.com";//TODO fix offer detail link
+		String offerURL = "http://www.offerdiary.com/getOfferDetail.do?id=" + offer.getUniqueId();//TODO fix offer detail link
 		doc.select("#offerDetail").first().append(offer.getDescription());
 		//doc.select("#offerCode").first().append(offer.getOfferCode());
 		doc.select("#vendor").first().append(offer.getTargetVendor().getName());
