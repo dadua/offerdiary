@@ -49,6 +49,7 @@
     var _loginFailedHandler = function (resp) {
         it.actionInfo.showErrorActionMsg("Not logged in..");
         var currentLoc = window.location.href;
+        currentLoc = currentLoc.match(/(^[^#]*)/)[0];
         $('<form action="'+currentLoc+'" method="get"></form>').appendTo('body').submit();
     };
 

@@ -28,13 +28,11 @@ public class CommonFileUtilities {
 			InputStream in = CommonFileUtilities.class.getClassLoader().getResourceAsStream(resourceFilename);
 			InputStreamReader is = new InputStreamReader(in);
 			BufferedReader br = new BufferedReader(is);
-			String read = br.readLine();
-			String asString = read;
-			while(read != null) {
-				read =  br.readLine();
-				asString = asString + read;
+			String read = null;
+			String asString = "";
+			while((read = br.readLine())!= null) {
+				asString += read;
 			}
-			System.out.println(read);
 			return asString;
 		}catch (Exception e) {
 			throw new RuntimeException("error inreading data from file", e);
@@ -46,7 +44,7 @@ public class CommonFileUtilities {
 		for (Map.Entry<String, String> entry : imageNameSrcMap.entrySet()) {
 			String nameOfImage =  entry.getKey();
 			String imageSrc=  entry.getValue();
-			if(null == imageSrc || null == nameOfImage || imageSrc.isEmpty() || nameOfImage.isEmpty()){
+			if((null == imageSrc) || (null == nameOfImage) || imageSrc.isEmpty() || nameOfImage.isEmpty()){
 				continue;
 			}
 			try{

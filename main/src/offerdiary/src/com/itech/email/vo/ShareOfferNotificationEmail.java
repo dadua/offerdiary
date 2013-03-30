@@ -9,6 +9,7 @@ import com.itech.user.model.User;
 import com.itech.user.vos.ShareOfferActionVO;
 
 public class ShareOfferNotificationEmail extends Email{
+
 	private static final String DEFAULT_SHARE_SUBJECT="Your friend shared a offer for you via Offer Diary";
 	private static final String EMAIL_CONTENT_FILE ="resources\\share_offer_email_template.html";
 
