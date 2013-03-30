@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -34,6 +36,22 @@ public class CommonFileUtilities {
 				asString += read;
 			}
 			return asString;
+		}catch (Exception e) {
+			throw new RuntimeException("error inreading data from file", e);
+		}
+	}
+
+	public static String[] getResourceFileAsLines(String resourceFilename) {
+		try {
+			List<String> lines = new ArrayList<String>();
+			InputStream in = CommonFileUtilities.class.getClassLoader().getResourceAsStream(resourceFilename);
+			InputStreamReader is = new InputStreamReader(in);
+			BufferedReader br = new BufferedReader(is);
+			String read = null;
+			while((read = br.readLine())!= null) {
+				lines.add(read);
+			}
+			return lines.toArray(new String[] {});
 		}catch (Exception e) {
 			throw new RuntimeException("error inreading data from file", e);
 		}

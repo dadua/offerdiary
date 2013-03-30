@@ -24,6 +24,7 @@ import com.itech.offer.model.OfferUserAssoc;
 import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferSharingType;
+import com.itech.offer.model.enums.VendorType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.manager.UserManager;
@@ -248,6 +249,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			}
 			Vendor existingVendor = getVendorManager().getVendorByName(offer.getTargetVendor().getName());
 			if (existingVendor == null) {
+				offer.getTargetVendor().setVendorType(VendorType.VIA_CARD);
 				getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
 			} else {
 				offer.setTargetVendor(existingVendor);
