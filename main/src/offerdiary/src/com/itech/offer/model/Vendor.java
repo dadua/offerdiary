@@ -36,6 +36,10 @@ public class Vendor extends PersistableEntity{
 	@Type(type="text")
 	private String siteUrl;
 
+	@Column(name="SITE_AFFILIATE_URL")
+	@Type(type="text")
+	private String affiliateUrl;
+
 
 	//Image URL on our our server
 	@Column(name=VendorModelContants.COL_LOGO_URL)
@@ -165,6 +169,14 @@ public class Vendor extends PersistableEntity{
 
 	public User getOwner() {
 		return owner;
+	}
+
+	public String getAffiliateUrl() {
+		return affiliateUrl;
+	}
+
+	public void setAffiliateUrl(String affiliateUrl) {
+		this.affiliateUrl = affiliateUrl;
 	}
 
 }

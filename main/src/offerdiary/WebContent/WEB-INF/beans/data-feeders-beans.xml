@@ -21,6 +21,7 @@
 	<bean id="itech.vendorSyncJob" class="com.itech.scotchworld.parser.VendorSyncJob" scope="prototype">
 		<property name="vendorManager" ref="itech.vendorManager"/>
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>	
+		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
 		
 </beans>
