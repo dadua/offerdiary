@@ -10,7 +10,7 @@ This page has dependency on fbInitAboveBodyEnd.jsp for fb-root div
 	    <%-- init the FB JS SDK --%>
 	     try {
 			FB.init({
-				appId : '187105271327076', 
+				appId : '${fbAppId}', 
 				status : true,
 				cookie : true, 
 				xfbml : true

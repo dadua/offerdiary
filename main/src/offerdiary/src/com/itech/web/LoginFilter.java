@@ -101,11 +101,7 @@ public class LoginFilter implements Filter {
 			}
 		}
 
-
-		boolean loginSuccess = true;
-		if (loginSuccess ) {
-			filterChain.doFilter(req, resp);
-		}
+		filterChain.doFilter(req, resp);
 	}
 
 	private static void setFbDetails(HttpServletRequest request) {
