@@ -10,6 +10,7 @@
 	<property name="dist.home" location="${build.home}/release"/>
 	<property name="dist.web.home" location="${build.home}/release/${product.war.name}"/>
 	<property name="src" location="${product.src.path}"/>
+	<property name="itech.config" location="${src}/config.properties"/>
 
 	<path id="classpath">
 	    <fileset dir="${contrib.home}" includes="*.jar"/>
@@ -17,7 +18,12 @@
 	    <fileset dir="${lib}" includes="*.jar"/>
 	    <pathelement path="${compile.home}/classes"/>
 	</path>
-	
+	<target name="init">
+		<delete file="src/config.properties" />
+		<copy file="${itech.config}.temp" tofile="${itech.config}" />
+		<replace file="${itech.config}" token="SERVER_MODE" value="${servermode}" />
+		<replace file="${itech.config}" token="DEFAULT_SERVER_URL" value="${defaultserverurl}" />
+	</target>		
 	<target name="compile-init">
 		<delete dir="${build.home}"/>
 		<mkdir dir="${build.home}" />
@@ -26,7 +32,7 @@
 		<mkdir dir="${dist.web.home}" />
 	</target>
 
-	<target name="setupeclipse" description="sets up the .classpath file required for autoloading of eclipse project" depends="cleanupsetup">
+	<target name="setupeclipse" description="sets up the .classpath file required for autoloading of eclipse project" depends="init,cleanupsetup">
 		<echo message="Setting up .classpath and properties files for the eclipse project." />
 		<copy file=".classpath.temp" tofile=".classpath" />
 		<replace file=".classpath" token="$contrib.home" value="${contrib.home}" />
@@ -38,7 +44,7 @@
 		<delete file=".classpath" />
 	</target>
 
-	<target name="compile" description="compile classes" depends="compile-init">
+	<target name="compile" description="compile classes" depends="init,compile-init">
 		<echo message="Compiling java classes"/>		
 		<javac srcdir="${src}" destdir="${compile.home}/classes" fork="yes" includes="**/*.*" memoryMaximumSize="128m" debug="on" deprecation="on">
 			<classpath refid="classpath"/>
