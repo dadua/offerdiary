@@ -63,6 +63,9 @@ public class LoginFilter implements Filter {
 			FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) req;
 		HttpServletResponse httpResponse = (HttpServletResponse) resp;
+
+		setFbDetails(httpRequest);
+
 		String reqUrl = httpRequest.getServletPath();
 		logger.debug(reqUrl);
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
@@ -104,6 +107,11 @@ public class LoginFilter implements Filter {
 			filterChain.doFilter(req, resp);
 		}
 	}
+
+	private static void setFbDetails(HttpServletRequest request) {
+		request.setAttribute(WebConstatnts.FB_APP_ID_ATTRIBUTE_KEY, FbConstants.getFbAppId());
+	}
+
 
 	private boolean isBypass(String reqUrl) {
 		for (String bypassUrl : bypassUrls) {
