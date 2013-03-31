@@ -1,7 +1,6 @@
 package com.itech.email.services;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,12 +62,7 @@ public class EmailSenderImpl implements EmailSender {
 	private List<File> getAttachementsAsFile(List<String> attachmentFileNames) {
 		List<File> files = new ArrayList<File>();
 		for(String fileName: attachmentFileNames){
-			try {
-				files.add(CommonFileUtilities.getResourceFileAsFile(fileName));
-			} catch (URISyntaxException e) {
-				logger.debug("File could not be obtained from attachement name "+ fileName);
-				e.printStackTrace();
-			}
+			files.add(CommonFileUtilities.getResourceFileAsFile(fileName, false));
 		}
 		return files;
 	}

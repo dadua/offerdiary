@@ -39,8 +39,8 @@ public class RedWineSyncJob  extends BaseItechJob{
 		logger.info("initializing redwine data");
 		String sourceFileName = "resources\\redanar\\cards-minimal.json";
 		String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
-		List<RedWineCard> redWineCards = RedWineCardsParser.readRedWineRecordsFromFile(sourceFileName);
-		List<RedWineCard> redWineCardsWithOffers = RedWineCardsParser.readRedWineCardsWithOfferFile(cardsWithOffersSourceFileName);
+		List<RedWineCard> redWineCards = RedWineCardsParser.readRedWineRecordsFromFile(sourceFileName, false);
+		List<RedWineCard> redWineCardsWithOffers = RedWineCardsParser.readRedWineRecordsFromFile(cardsWithOffersSourceFileName, false);
 		Map<String, OfferCard> redwineCardToODCardMap =  new HashMap<String, OfferCard>();
 		for (RedWineCard redWineCard : redWineCards) {
 			synchronized (this) {

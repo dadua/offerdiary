@@ -3,6 +3,7 @@ package com.itech.common;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,11 +24,21 @@ import com.itech.common.util.FileUtil;
 public class CommonFileUtilities {
 
 	private static final int CHAR_BUFFER_SIZE = 5000;
-	private static Logger logger = Logger.getLogger(FileUtil.class);
+	private static Logger logger = Logger.getLogger(CommonFileUtilities.class);
 
 	public static String getResourceFileAsString(String resourceFilename) {
+		return getResourceFileAsString(resourceFilename, false);
+	}
+
+	public static String getResourceFileAsString(String sourceFileName,
+			boolean isAbsoluteUrl) {
+		InputStream in = null;
 		try {
-			InputStream in = CommonFileUtilities.class.getClassLoader().getResourceAsStream(resourceFilename);
+			if (isAbsoluteUrl) {
+				in = new FileInputStream(sourceFileName);
+			} else {
+				in = CommonFileUtilities.class.getClassLoader().getResourceAsStream(sourceFileName);
+			}
 			InputStreamReader is = new InputStreamReader(in);
 			BufferedReader br = new BufferedReader(is);
 			String read = null;
@@ -38,6 +49,14 @@ public class CommonFileUtilities {
 			return asString;
 		}catch (Exception e) {
 			throw new RuntimeException("error inreading data from file", e);
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					logger.error("error in closing file stream", e);
+				}
+			}
 		}
 	}
 
@@ -77,10 +96,17 @@ public class CommonFileUtilities {
 		}
 	}
 
-	public static File getResourceFileAsFile(String resourceFilename) throws URISyntaxException{
+	public static File getResourceFileAsFile(String resourceFilename, boolean isAbsoluteUrl) {
+		if (isAbsoluteUrl) {
+			return new File(resourceFilename);
+		}
 		URL url = CommonFileUtilities.class.getClassLoader().getResource(resourceFilename);
 		File file = null;
-		file = new File(url.toURI());
+		try {
+			file = new File(url.toURI());
+		} catch (URISyntaxException e) {
+			logger.error("invalid file",  e);
+		}
 		return file;
 	}
 
@@ -148,5 +174,6 @@ public class CommonFileUtilities {
 		String readDataFromFile = FileUtil.readDataFromFile("c:\\data\\redanarcards.txt");
 		System.out.println(readDataFromFile);
 	}
+
 
 }
