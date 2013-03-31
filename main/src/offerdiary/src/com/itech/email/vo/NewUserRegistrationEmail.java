@@ -1,11 +1,11 @@
 package com.itech.email.vo;
 
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.user.model.User;
+import com.itech.web.WebConstatnts;
 
 public class NewUserRegistrationEmail extends Email {
 
@@ -14,22 +14,23 @@ public class NewUserRegistrationEmail extends Email {
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
 	private EmailContent defaultEmailContent;
 	private Document docHTML = null;
+	private final User user;
 
-	public NewUserRegistrationEmail(){
+	public NewUserRegistrationEmail(User user){
 		super();
+		this.user = user;
 	}
 
-	public NewUserRegistrationEmail(EmailContentParam contentParam, String toEmailId,List<String> fileAttachementList){
-		this(contentParam, toEmailId);
-		setAttachments(fileAttachementList);
-	}
 
-	public NewUserRegistrationEmail(EmailContentParam contentParam, String toEmailId){
+	public NewUserRegistrationEmail(User user, EmailContentParam contentParam, String toEmailId){
 		super(contentParam, toEmailId);
+		this.user = user;
 	}
 
 	@Override
 	public String getMailContent() {
+		String emailVarificationLink = WebConstatnts.getVarifyEmailPageBaseURL() + user.getEmailVarficationAccessCode();
+		//TODO to activate your account please varify your email address
 		return getRegistrationEmailHTML();
 	}
 
@@ -45,7 +46,7 @@ public class NewUserRegistrationEmail extends Email {
 		content.setSalutation("Dear");
 		content.setName("User");
 		content.setPara1("Thank you for signing up for OfferDiary. With offerdiary you'd be able to add offers and receive " +
-		"timely notifications. You can share your offers with your friends and spread the word.");
+				"timely notifications. You can share your offers with your friends and spread the word.");
 		//You can import you facebook offers " +
 		//"to OfferDiary for easy management");
 		content.setPara2("With OfferDiary you'd be able to do so much more with your offers. keep exploring !");
