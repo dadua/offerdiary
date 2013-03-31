@@ -1,5 +1,9 @@
 package com.itech.redwine.parser;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,13 +51,13 @@ public class RedWineSyncJob  extends BaseItechJob{
 		Map<String, OfferCard> redwineCardToODCardMap =  new HashMap<String, OfferCard>();
 		for (RedWineCard redWineCard : redWineCards) {
 			synchronized (this) {
-				if (this.stopped) {
+				if (stopped) {
 					break;
 				}
 			}
 
 			synchronized (this) {
-				if (this.paused) {
+				if (paused) {
 					try {
 						this.wait();
 					} catch (InterruptedException e) {
@@ -93,9 +97,45 @@ public class RedWineSyncJob  extends BaseItechJob{
 			offer.setDescription(redWineOffer.getDescription());
 			Vendor vendor = getVendorFrom(redWineOffer);
 			offer.setTargetVendor(vendor);
+			Date expiry = getExpiryFrom(redWineOffer.getExpiryDate());
+			offer.setExpiry(expiry);
 			offers.add(offer);
 		}
 		return offers;
+	}
+
+	/**
+	 * Converts into date from string having the following format:
+	 * Expiry: Mar 31, 2013
+	 * @param expiryDateStr
+	 * @return
+	 */
+	private Date getExpiryFrom(String expiryDateStr) {
+
+		if ((expiryDateStr == null) || (expiryDateStr.indexOf("Expiry: ") == -1)) {
+			return null;
+		}
+		String expiryDate = expiryDateStr.substring("Expiry: ".length());
+		DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+		try {
+			java.util.Date parsedDate = dateFormat.parse(expiryDate);
+			long epochtimeUTCInMillis = parsedDate.getTime();
+			Date date = new Date(epochtimeUTCInMillis);
+			return date;
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static void main(String[] args) {
+		RedWineSyncJob redWineSyncJob = new RedWineSyncJob();
+		Date expiryFrom = redWineSyncJob.getExpiryFrom("Expiry: Apr 31, 2013");
+		System.out.println(expiryFrom);
+		expiryFrom = redWineSyncJob.getExpiryFrom(null);
+		expiryFrom = redWineSyncJob.getExpiryFrom("");
+		System.out.println(expiryFrom);
 	}
 
 	private Vendor getVendorFrom(RedWineOffer redWineOffer) {
@@ -154,7 +194,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 	@Override
 	public void stop() {
 		synchronized (this) {
-			this.stopped = true;
+			stopped = true;
 			this.notifyAll();
 		}
 	}
@@ -162,7 +202,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 	@Override
 	public void pause() {
 		synchronized (this) {
-			this.paused = true;
+			paused = true;
 			this.notifyAll();
 		}
 	}
@@ -170,7 +210,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 	@Override
 	public void resume() {
 		synchronized (this) {
-			this.paused = false;
+			paused = false;
 			this.notifyAll();
 		}
 	}
