@@ -179,4 +179,12 @@ public class Vendor extends PersistableEntity{
 		this.affiliateUrl = affiliateUrl;
 	}
 
+	@Override
+	public String toString() {
+		return "Vendor [name=" + name + ", address=" + address + ", siteUrl="
+				+ siteUrl + ", affiliateUrl=" + affiliateUrl + ", logoUrl="
+				+ logoUrl + ", city=" + city + ", vendorType=" + vendorType
+				+ ", owner=" + owner + "]";
+	}
+
 }

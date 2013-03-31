@@ -2,7 +2,7 @@ package com.itech.redwine.parser;
 
 import com.itech.common.test.CommonTestUtil;
 
-public class TestRedWIneParserUtil extends CommonTestUtil{
+public class TestRedWineParserUtil extends CommonTestUtil{
 
 	@Override
 	protected void setUp() throws Exception {

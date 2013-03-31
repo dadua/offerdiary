@@ -30,6 +30,7 @@ import com.itech.user.manager.UserManager;
 @Scope("prototype")
 public class VendorSyncJob extends BaseItechJob{
 
+	private static final String SITE_URL_PREFIX = "www.";
 	private static final String VENDOR_JSON_FILE_PATH = "resources\\couponduniya\\stores-minimal.json";
 	private static final String VENDOR_TO_AFFILIATE_URL_MAPPINGS = "resources\\couponduniya\\vendor_to_aff_urls.properties";
 
@@ -59,13 +60,19 @@ public class VendorSyncJob extends BaseItechJob{
 			checkAndUpdateVendorUrl(scotchWorldStore);
 			updateAffiliateURL(scotchWorldStore);
 			Vendor vendor = getVendorFrom(scotchWorldStore);
-			Vendor existingVendor = getVendorManager().getVendorByName(vendor.getName());
+			logger.info("Processing for vendor: " + vendor);
+			Vendor existingVendor = getVendorManager().getVendorForVendorDetail(vendor);
+			logger.info("Processing for vendor: " + vendor + " with existing vendor: " + existingVendor);
 			if (existingVendor != null) {
 				existingVendor.setSiteUrl(vendor.getSiteUrl());
 				if (CommonUtilities.isNotEmpty(vendor.getAffiliateUrl())) {
 					existingVendor.setAffiliateUrl(vendor.getAffiliateUrl());
 				}
+				existingVendor.setName(vendor.getName());
+				existingVendor.setDescription(vendor.getDescription());
 				existingVendor.setOwner(vendor.getOwner());
+				existingVendor.setVendorType(VendorType.GLOBAL);
+				existingVendor.setLogoUrl(vendor.getLogoUrl());
 				getVendorManager().saveOrUpdateVendor(existingVendor);
 				logger.warn("Vendor already exists for name - " + vendor.getName());
 				continue;
@@ -126,9 +133,9 @@ public class VendorSyncJob extends BaseItechJob{
 		if (fixStoreUrl) {
 			String newUrl = "";
 			if (storeName.endsWith(".com") || storeName.endsWith(".com")) {
-				newUrl = "http://www." + storeName.toLowerCase();
+				newUrl =  SITE_URL_PREFIX + storeName.toLowerCase();
 			} else {
-				newUrl = "http://www." + storeName.replace(" ", "").toLowerCase() + ".com";
+				newUrl =  SITE_URL_PREFIX + storeName.replace(" ", "").toLowerCase() + ".com";
 			}
 			logger.info("for vendor: " + storeName + ", URL replaced from: " + storeURL + "  to: " + newUrl);
 			scotchWorldStore.setStoreURL(newUrl);

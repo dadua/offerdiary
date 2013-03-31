@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 
+import com.itech.common.CommonUtilities;
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.VendorDAO;
 import com.itech.offer.model.Vendor;
@@ -35,6 +36,34 @@ public class VendorDAOImpl extends HibernateCommonBaseDAO<Vendor> implements Ven
 		query.setParameter("vendorType", VendorType.GLOBAL);
 		query.setParameter("vendorName", name);
 		return (Vendor) getSingleResult(query, true);
+	}
+
+	@Override
+	public Vendor getVendorForVendorDetail(Vendor vendor) {
+		String hqlByName = "from " + getEntityClassName() + " where (vendorType=:vendorType) and ( " +
+				" name =:vendorName ) order by name";
+		Query queryByName = getSession().createQuery(hqlByName);
+
+		queryByName.setParameter("vendorType", VendorType.GLOBAL);
+		queryByName.setParameter("vendorName", vendor.getName());
+		Vendor vendorFromDB = (Vendor) getSingleResult(queryByName, true);
+
+		if (vendorFromDB != null) {
+			return vendorFromDB;
+		}
+		if (CommonUtilities.isNotEmpty(vendor.getSiteUrl())) {
+			String hqlBySiteUrl = "from " + getEntityClassName() + " where (vendorType=:vendorType) and ( " +
+					" siteUrl like :siteUrl ) order by name";
+			Query queryBySiteUrl = getSession().createQuery(hqlBySiteUrl);
+
+			queryBySiteUrl.setParameter("vendorType", VendorType.GLOBAL);
+			queryBySiteUrl.setParameter("siteUrl", "%" + vendor.getSiteUrl());
+			List list = queryBySiteUrl.list();
+			if(list.size() == 1) {
+				list.get(0);
+			}
+		}
+		return null;
 	}
 
 

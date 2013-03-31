@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.itech.common.CommonUtilities;
 import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
 import com.itech.offer.job.JobStatus;
@@ -74,7 +75,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 		getHibernateSessionFactory().commitCurrentTransaction();
 
 		for (RedWineCard redWineCard : redWineCards) {
-			RedWineCard redWineCardWithOffers = RedWineCardsParser.readRedWineRecordsForCardId(redWineCard.getCardId(), false);
+			RedWineCard redWineCardWithOffers = RedWineCardsParser.readRedWineRecordsForCardId(redWineCard.getCardId(), REDANAR_CARDS_WITH_OFFERS_BASE_DIR, false);
 			if (redWineCardWithOffers == null) {
 				continue;
 			}
@@ -90,13 +91,33 @@ public class RedWineSyncJob  extends BaseItechJob{
 		for (RedWineOffer redWineOffer : redWineOffers) {
 			Offer offer = new Offer();
 			offer.setDescription(redWineOffer.getDescription());
-			Vendor vendor = new Vendor();
-			vendor.setName(redWineOffer.getMerchantName());
-			vendor.setVendorType(VendorType.GLOBAL);
+			Vendor vendor = getVendorFrom(redWineOffer);
 			offer.setTargetVendor(vendor);
 			offers.add(offer);
 		}
 		return offers;
+	}
+
+	private Vendor getVendorFrom(RedWineOffer redWineOffer) {
+		String merchantName = redWineOffer.getMerchantName();
+		String vendorUrl = null;
+		String vendorName = merchantName;
+		if (CommonUtilities.isNullOrEmpty(merchantName)) {
+			return null;
+		}
+
+		if (merchantName.endsWith(".com") || merchantName.endsWith(".in") || merchantName.endsWith(".org") || merchantName.endsWith(".co.in")) {
+			vendorUrl = "www." + merchantName.toLowerCase();
+			String[] strings = merchantName.split("\\.");
+			vendorName = strings[0];
+		}
+
+		Vendor vendor = new Vendor();
+		vendor.setName(vendorName);
+		vendor.setSiteUrl(vendorUrl);
+		vendor.setVendorType(VendorType.GLOBAL);
+		vendor.setVendorType(VendorType.VIA_CARD);
+		return vendor;
 	}
 
 	private OfferCard getOfferCardFrom(RedWineCard redWineCard) {

@@ -9,5 +9,6 @@ public interface VendorManager {
 	public Vendor saveOrUpdateVendor(Vendor vendor);
 	public Vendor getVendorFor(Long vendorId);
 	public Vendor getVendorByName(String name);
+	public Vendor getVendorForVendorDetail(Vendor vendor);
 
 }

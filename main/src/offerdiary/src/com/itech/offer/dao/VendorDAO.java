@@ -10,4 +10,6 @@ public interface VendorDAO extends CommonBaseDAO<Vendor>{
 
 	public Vendor getVendorByName(String name);
 
+	public Vendor getVendorForVendorDetail(Vendor vendor);
+
 }
