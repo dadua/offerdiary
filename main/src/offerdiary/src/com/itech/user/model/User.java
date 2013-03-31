@@ -69,7 +69,7 @@ public class User extends PersistableEntity{
 	private Date notifyPasswordTime;
 
 	@Column(name="IS_EMAIL_VARIFIED")
-	private boolean emailVarified;
+	private Boolean emailVarified;
 
 	@Column(name="EMAIL_VARIFICATION_CODE")
 	private String emailVarficationAccessCode;
