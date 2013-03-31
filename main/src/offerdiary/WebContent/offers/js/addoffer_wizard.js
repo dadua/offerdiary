@@ -36,11 +36,17 @@ it.offer.addwizard = function () {
         };
         vendorStep.setStepValidator(vendorStepValidator);
         vendorStep.setFetchDataFromHtmlCb(function(){
-            var selectedVendorLiDomId = vendorStep.$('li.selected').attr('id');
-            var selectedVendorId = /vendorSearch_(\d+)/.exec(selectedVendorLiDomId)[1];
+            var selectedVendor$ = vendorStep.$('li.selected'),
+                selectedVendorLiDomId = selectedVendor$.attr('id');
+            var selectedVendorId = /vendorSearch_(\d+)/.exec(selectedVendorLiDomId)[1],
+                vendorName = selectedVendor$.attr('data-vendor-name');
+            if (parseInt(selectedVendorId, 10) === 0) {
+                selectedVendorId = null;
+            }
             return {
                 vendor: {
-                    id: selectedVendorId
+                    id: selectedVendorId,
+                    name: vendorName
                 }
             };
         });
