@@ -84,9 +84,15 @@ it.offer.getCompactFormattedTimeToExpire = function(timeToExpireString) {
 it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     //Setting values from offer vo to the template..
     if (offer.targetVendor) {
-        offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ (offer.targetVendor.logoUrl || 'defaultVendor.jpg'));
         offerTemplate$.find('.vendorName').html(offer.targetVendor.name);
+        offerTemplate$.find('.vendorOnOfferNameVal').html(offer.targetVendor.name);
         offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
+    	if (offer.targetVendor.logoUrl) {
+    		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
+    	} else {
+    		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/blankVendor.png');
+    		offerTemplate$.find('.vendorOnOfferNameVal').removeClass('hide');
+    	}
     } else {
         offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }

@@ -52,4 +52,26 @@
             	border-width: 2px;
             }
             
+            .vendorImgSection {
+            	position: relative;
+            }
+            
+            .targetVendor-logoUrl {
+            	/*
+            	margin: -4px;
+            	*/
+            }
+            
+            .vendorOnOfferNameVal {
+            	font-size: 1.2em;
+            	position: absolute;
+				left: 5%;
+				top: 10%;
+				color: #0088CC;
+				font-family: "Comic Sans MS",cursive,sans-serif;
+			    font-weight: bold;
+			    border: solid 1px #EEEEEE;
+			    padding: 5px;
+            }
+            
             
