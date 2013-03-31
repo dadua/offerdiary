@@ -99,13 +99,38 @@ it.vendor.addHandlers = function() {
     });
 };
 
-it.vendor.plotAll = function (vendors) {
+it.vendor.getAddNewVendor$ = function (query) {
+    var vendor = {
+        id: 0,
+        name: query
+    }, 
+    vendor$ = this.get$(vendor);
+
+    //TODO: Add something to indicate
+    //that this new vendor name would be added..
+
+    return vendor$;
+};
+
+it.vendor.getAddNewVendorAlert$ = function (query) {
+    var addNewVendorAlertHtml = '<div class="addNewVendorAlert row-fluid"><div class="alert alert-info"><strong>A New Vendor: </strong> <span class="vendorNameAlertVal"></span> would be added for you</div></div>',
+        addNewVendorAlert$ = $(addNewVendorAlertHtml);
+    addNewVendorAlert$.find('.vendorNameAlertVal').html(query);
+    return addNewVendorAlert$;
+};
+
+it.vendor.plotAll = function (vendors, query) {
     var vendorsHtml = this.view.getVendorsHtml();
     var vendors$ = [],
-    currentThreeVendorMax$ = $(vendorsHtml);
+        currentThreeVendorMax$ = $(vendorsHtml),
+        vendor$ = null;
     this.view.getContainer$().html(currentThreeVendorMax$);
     for (var i=0;i < vendors.length;i++) {
-        var vendor$ = this.get$(vendors[i]);
+        vendor$ = this.get$(vendors[i]);
+        vendors$.push(vendor$);
+    }
+    if (vendors.length === 0) {
+        vendor$ = this.getAddNewVendor$(query);
         vendors$.push(vendor$);
     }
     for (i=0;i<vendors$.length; i++) {
@@ -116,12 +141,16 @@ it.vendor.plotAll = function (vendors) {
         }
         currentThreeVendorMax$.append(currentVendor$);
     }
+    if (vendors.length === 0) {
+        var addNewVendorAlert$ = this.getAddNewVendorAlert$(query);
+        this.view.getContainer$().append(addNewVendorAlert$);
+    }
     this.addHandlers();
 };
 
 it.vendor.plotAllAddable = function(query) {
     $.getJSON( "searchVendor.do", {searchKey: query}, function(data){
-        it.vendor.plotAll (data.result);
+        it.vendor.plotAll (data.result, query);
     });
 
 };
