@@ -26,6 +26,10 @@ import com.itech.offer.model.enums.VendorType;
 @Scope("prototype")
 public class RedWineSyncJob  extends BaseItechJob{
 
+	private static final String REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\cards-minimal.json";
+	private static final String ALL_REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\all-cards-minimal.json";
+	private static final String REDANAR_CARDS_WITH_OFFERS_BASE_DIR = "resources\\redanar\\offers";
+
 	@Autowired
 	private OfferCardManager offerCardManager;
 
@@ -37,10 +41,8 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 	private void syncRedWineData() {
 		logger.info("initializing redwine data");
-		String sourceFileName = "resources\\redanar\\cards-minimal.json";
-		String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
+		String sourceFileName = REDANAR_CARDDATA_JSON_FILE_OUT;
 		List<RedWineCard> redWineCards = RedWineCardsParser.readRedWineRecordsFromFile(sourceFileName, false);
-		List<RedWineCard> redWineCardsWithOffers = RedWineCardsParser.readRedWineRecordsFromFile(cardsWithOffersSourceFileName, false);
 		Map<String, OfferCard> redwineCardToODCardMap =  new HashMap<String, OfferCard>();
 		for (RedWineCard redWineCard : redWineCards) {
 			synchronized (this) {
@@ -71,9 +73,13 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 		getHibernateSessionFactory().commitCurrentTransaction();
 
-		for (RedWineCard redWineCard : redWineCardsWithOffers) {
-			OfferCard offerCard = redwineCardToODCardMap.get(redWineCard.getCardId());
-			List<Offer> offers = getOffersFrom(redWineCard.getOffers());
+		for (RedWineCard redWineCard : redWineCards) {
+			RedWineCard redWineCardWithOffers = RedWineCardsParser.readRedWineRecordsForCardId(redWineCard.getCardId(), false);
+			if (redWineCardWithOffers == null) {
+				continue;
+			}
+			OfferCard offerCard = redwineCardToODCardMap.get(redWineCardWithOffers.getCardId());
+			List<Offer> offers = getOffersFrom(redWineCardWithOffers.getOffers());
 			getOfferManager().addOffersForCard(offers, offerCard);
 			getHibernateSessionFactory().commitCurrentTransaction();
 		}

@@ -54,9 +54,14 @@ public class RedWineCardsParser {
 		return redWineCards;
 	}
 
-	public static List<RedWineCard> readRedWineRecordsForCardId(String cardId, boolean isAbsoluteUrl) {
+	public static RedWineCard readRedWineRecordsForCardId(String cardId, String baseDirectory, boolean isAbsoluteUrl) {
 		String fileName = CARD_OFFER_FILE_NAME_PREFIX + cardId;
-		return readRedWineRecordsFromFile(fileName, isAbsoluteUrl);
+		File targetFile = new File(baseDirectory, fileName);
+		List<RedWineCard> redWineRecordsFromFile = readRedWineRecordsFromFile(targetFile.getAbsolutePath(), isAbsoluteUrl);
+		if (redWineRecordsFromFile.size() >= 1) {
+			return redWineRecordsFromFile.get(0);
+		}
+		return null;
 	}
 
 	public static void writeRedWineCardsToSingleFile(List<RedWineCard> redWineForCards, String outPutFile){
