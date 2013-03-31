@@ -15,6 +15,7 @@ import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.security.SecurityManager;
 import com.itech.common.security.ThreadLocalSecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
+import com.itech.config.ProjectConfigs;
 import com.itech.offer.manager.OfferCardManager;
 import com.itech.offer.manager.OfferManager;
 import com.itech.offer.manager.VendorManager;
@@ -67,7 +68,7 @@ public class CommonAction {
 
 	protected String getAbsoluteURL(HttpServletRequest httpRequest, String url) {
 		//TODO: add handling for production server
-		String absoluteURL = "http://" + httpRequest.getServerName() + ":" + httpRequest.getServerPort() + httpRequest.getContextPath();
+		String absoluteURL = ProjectConfigs.defaultServerUrl.get();
 		absoluteURL += url;
 		return absoluteURL;
 	}
