@@ -12,6 +12,9 @@ VendorManager {
 
 	@Override
 	public Vendor getVendorFor(Long vendorId) {
+		if (vendorId == null) {
+			return null;
+		}
 		return vendorDAO.getById(vendorId);
 	}
 
