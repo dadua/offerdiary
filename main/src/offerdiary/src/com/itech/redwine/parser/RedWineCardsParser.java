@@ -2,7 +2,9 @@ package com.itech.redwine.parser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
@@ -191,11 +193,31 @@ public class RedWineCardsParser {
 
 		//String cardsWithOffersSourceFileName = "resources\\redanar\\cards-with-offers.json";
 		//List<RedWineCard> cardsWithOffer = readRedWineCardsWithOfferFile(cardsWithOffersSourceFileName);
-		RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
+		//RedWineCardsParser.printGetRedWineOffers(REDANAR_CARDDATA_JSON_FILE_OUT);
+
+
+		List<RedWineCard> redWineCards = readCards();
+		int validCards = 0;
+		Set<String> cardTypes = new HashSet<String>();
+		for (RedWineCard redWineCard : redWineCards) {
+			cardTypes.add(redWineCard.getCardType());
+			if ("Credit".equalsIgnoreCase(redWineCard.getCardType()) || "Debit".equalsIgnoreCase(redWineCard.getCardType())) {
+				validCards++;
+			}
+		}
+		System.out.println(validCards);
+		System.out.println(cardTypes);
 	}
 
 
 
+	private static List<RedWineCard> readCards() {
+		String cardDataJson = CommonFileUtilities.readDataFromFile(REDANAR_CARDDATA_JSON_FILE_OUT);
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
+		List<RedWineCard> redWineCards = gson.fromJson(cardDataJson, offerCardJsonType);
+		return redWineCards;
+	}
 	private static List<RedWineCard> filterCardsWithName(String name, List<RedWineCard> cards) {
 		List<RedWineCard> filteredCards = new ArrayList<RedWineCard>();
 		for (RedWineCard redWineCard : cards) {

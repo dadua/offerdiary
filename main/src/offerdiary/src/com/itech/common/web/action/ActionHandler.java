@@ -23,6 +23,8 @@ import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
 import com.itech.user.model.User;
 import com.itech.web.ActionMappings;
+import com.itech.web.FbConstants;
+import com.itech.web.WebConstatnts;
 
 
 public class ActionHandler {
@@ -45,6 +47,7 @@ public class ActionHandler {
 		Method executeMethod = null;
 		Transaction transaction = null;
 		try {
+			setFbDetails(request);
 			User user = (User) request.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 			getSecurityContextHolder().setContext(new SecurityContext(user));
 			getHibernateSessionFactory().openNewSession();
@@ -123,6 +126,10 @@ public class ActionHandler {
 			getHibernateSessionFactory().closeCurrentSession();
 		}
 
+	}
+
+	private static void setFbDetails(HttpServletRequest request) {
+		request.setAttribute(WebConstatnts.FB_APP_ID_ATTRIBUTE_KEY, FbConstants.getFbAppId());
 	}
 
 	private static void logException(Exception ex, Method method) {
