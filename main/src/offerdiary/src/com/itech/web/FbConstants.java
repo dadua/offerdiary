@@ -7,7 +7,7 @@ public class FbConstants {
 	public static final String APP_ID_LIVE = "187105271327076";
 	public static final String APP_SECRET_LIVE = "e67421b0f65d03bc9b72a17496864fde";
 
-	public static final String APP_ID_DEV = "187105271327076";
+	public static final String APP_ID_DEV = "253396431422694";
 	public static final String APP_SECRET_DEV = "e67421b0f65d03bc9b72a17496864fde";
 
 	public static final String FB_GRAPH_URL = "graph.facebook.com";
