@@ -38,8 +38,9 @@ set PROJ_HOME=%~dp0
 set PATH=%PROJ_JDK_HOME%\bin;%PATH%
 set PATH=%EXTN_HOME%;%PROJ_ANT_HOME%\bin;%PATH%
 
-set INSTALLATION_MODE=DEV
+set SERVER_MODE=DEV
 :: DEV/LIVE
+set DEFAULT_SERVER_URL=http://www.offerdiary.com
 
 set JAVA_HOME=%PROJ_JDK_HOME%
 
