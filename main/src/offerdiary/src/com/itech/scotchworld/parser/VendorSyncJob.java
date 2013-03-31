@@ -60,9 +60,9 @@ public class VendorSyncJob extends BaseItechJob{
 			checkAndUpdateVendorUrl(scotchWorldStore);
 			updateAffiliateURL(scotchWorldStore);
 			Vendor vendor = getVendorFrom(scotchWorldStore);
-			logger.info("Processing for vendor: " + vendor);
+			logger.debug("Processing for vendor: " + vendor);
 			Vendor existingVendor = getVendorManager().getVendorForVendorDetail(vendor);
-			logger.info("Processing for vendor: " + vendor + " with existing vendor: " + existingVendor);
+			logger.debug("Processing for vendor: " + vendor + " with existing vendor: " + existingVendor);
 			if (existingVendor != null) {
 				existingVendor.setSiteUrl(vendor.getSiteUrl());
 				if (CommonUtilities.isNotEmpty(vendor.getAffiliateUrl())) {
