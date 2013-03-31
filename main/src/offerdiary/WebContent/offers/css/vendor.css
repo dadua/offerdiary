@@ -48,3 +48,8 @@
 .vendorNameAlertVal {
 	text-decoration: underline;
 }
+
+.vendorSelectHelp {
+	font-size: .85em;
+	
+}

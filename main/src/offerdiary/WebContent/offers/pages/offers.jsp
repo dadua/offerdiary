@@ -115,6 +115,11 @@
                         </li>
                     </ul>
                 </div>
+                <div class="row-fluid">
+					<div class="span6 pull-right vendorSelectHelp">
+					* Click on vendor to select and proceed
+					</div>
+				</div>
             </div>
         </div>
         <div id="benefitDetailsTemplate">

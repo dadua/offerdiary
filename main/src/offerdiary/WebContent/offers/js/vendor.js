@@ -10,8 +10,8 @@ it.vendor.view = it.vendor.view || {};
 it.vendor.view = function () {
     var threeVendorsContainerHtml = '<ul class="thumbnails currentSearchedVendors row-fluid"></ul>';
     var vendorHtml = '<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/blankVendor.png" /></div><div class="vendorNameVal hide"></div></li>',
-    vendorSearchContainerId = 'searchedVendors',
-    containerId$;
+	    vendorSearchContainerId = 'searchedVendors',
+	    containerId$;
     return {
         getHtmlTemplate: function () {
             return vendorHtml;
