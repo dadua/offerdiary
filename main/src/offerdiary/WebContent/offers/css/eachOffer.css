@@ -72,6 +72,8 @@
 			    font-weight: bold;
 			    border: solid 1px #EEEEEE;
 			    padding: 5px;
+			    min-height: 60%;
+			    min-width: 80%;
             }
             
             

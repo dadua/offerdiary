@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -161,6 +162,8 @@ public class RedWineCardsParser {
 		return offers;
 	}
 
+
+
 	private static List<RedWineOffer> getCardOffersForPage(String cardNumber, int pageNumber) {
 		List<RedWineOffer> redWineOffers = new ArrayList<RedWineOffer>();
 		String offersUrl = redWineOffersBaseUrl.replace("cardNumber", cardNumber+"");
@@ -169,18 +172,93 @@ public class RedWineCardsParser {
 		if(null != respHtml){
 			Document doc = Jsoup.parse(respHtml);
 			List<Element> offerElements = doc.select("li.clearfix");
+			if (isNoMoreOffersInPage(offerElements)) {
+				return redWineOffers;
+			}
 			for(Element offerElement: offerElements){
-				RedWineOffer rOffer = new RedWineOffer();
-				rOffer.setMerchantName(offerElement.child(0).text());
-				rOffer.setDescription(offerElement.child(1).text());
-				rOffer.setExpiryDate(offerElement.getElementsByTag("dt").get(0).text());
-				redWineOffers.add(rOffer);
+				RedWineOffer rOffer = getRedWineOfferFromElement(offerElement);
+				if (rOffer != null) {
+					redWineOffers.add(rOffer);
+				}
 			}
 		}
 		return redWineOffers;
 	}
 
+	private static RedWineOffer getRedWineOfferFromElement(Element offerElement) {
+		RedWineOffer rOffer = new RedWineOffer();
+		String merchantName = getMerchantName(offerElement);
+		if (merchantName == null) {
+			return null;
+		}
+		rOffer.setMerchantName(merchantName);
+		String description = getDescription(offerElement);
+		rOffer.setDescription(description);
+		rOffer.setExpiryDate(getExpiryDate(offerElement));
+		return rOffer;
+	}
 
+	private static boolean isNoMoreOffersInPage(List<Element> offerElements) {
+		if (offerElements.size()==0) {
+			return true;
+		}
+
+		if (offerElements.size() == 1) {
+			Element offerElement = offerElements.get(0);
+			String merchantName = getMerchantName(offerElement);
+			if (merchantName == null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static String getExpiryDate(Element offerElement) {
+		String expiryDate = null;
+		//		Elements merchantLocationAnchors = offerElement.select("dl > dt > a");
+		Elements dtElems = offerElement.select("dl > dt");
+
+		for (Element dtElem: dtElems) {
+			if (dtElem.select("a").size()>0) {
+				continue;
+			}
+			String text = dtElem.text();
+			if (!"".equals(text)) {
+				expiryDate = text;
+				break;
+			}
+		}
+
+		return expiryDate;
+	}
+
+	private static String getDescription(Element offerElement) {
+		String description = null;
+		Elements descriptionContainingAnchors = offerElement.select("p > a");
+		if (descriptionContainingAnchors.size()>0) {
+			description = descriptionContainingAnchors.get(0).text();
+		}
+		return description;
+	}
+
+	private static String getMerchantName(Element offerElement) {
+		String merchant = null;
+		Elements paras = offerElement.select("p");
+		if (paras.size() > 1) {//Atleast 2 paras: 1 for merchant name, other for description having a tag
+			for (Element para: paras) {
+				if (para.select("a").size()>0) {
+					continue;
+				}
+				String text = para.text();
+				if ("".compareTo(text) != 0) {
+					merchant = text;
+					break;
+				}
+			}
+		}
+		return merchant;
+	}
 
 	public static void main(String[] args){
 
