@@ -1,5 +1,7 @@
 package com.itech.web;
 
+import com.itech.config.ProjectConfigs;
+
 
 
 public class WebConstatnts {
@@ -22,6 +24,12 @@ public class WebConstatnts {
 
 
 	public static final String FB_APP_ID_ATTRIBUTE_KEY = "fbAppId";
+
+
+
+	public static final String getOfferDetailPageBaseURL() {
+		return ProjectConfigs.defaultServerUrl.get() + "/getOfferDetail.do?id=";
+	}
 
 
 
