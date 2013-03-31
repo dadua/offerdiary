@@ -5,12 +5,12 @@ import com.itech.web.FbConstants;
 
 public class FbAdapterFactory {
 	public static FbAdapter getFbAdapter(String callbackUrl, String accessToken) {
-		FbAdapter fbAdapter = new FbAdapter(FbConstants.APP_ID, FbConstants.APP_SECRET, callbackUrl, accessToken);
+		FbAdapter fbAdapter = new FbAdapter(FbConstants.getFbAppId(), FbConstants.getFbAppSecret(), callbackUrl, accessToken);
 		return fbAdapter;
 	}
 
 	public static FbAdapter getFbAdapter(String accessToken) {
-		FbAdapter fbAdapter = new FbAdapter(FbConstants.APP_ID, FbConstants.APP_SECRET,
+		FbAdapter fbAdapter = new FbAdapter(FbConstants.getFbAppId(), FbConstants.getFbAppSecret(),
 				FbConstants.REDIRECT_URL, accessToken);
 		return fbAdapter;
 	}

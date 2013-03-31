@@ -1,6 +1,7 @@
 package com.itech.web;
 
 
+
 public class WebConstatnts {
 	public static final String CONSUMER_KEY = "orkud2facebook.appspot.com";
 	public static final String CONSUMER_SECRET = "NHH04EkpzhE+cSM+mJ0hgud+";
@@ -18,6 +19,9 @@ public class WebConstatnts {
 	public static final String STATS_DATA_DUMP_FILE_DEV = "/home/ec2-user/orkut2fb-log";
 
 	public static final String STATS_DATA_DUMP_FILE_TEST = "c:\\orkut\\orkut2fb-log";
+
+
+	public static final String FB_APP_ID_ATTRIBUTE_KEY = "fbAppId";
 
 
 
