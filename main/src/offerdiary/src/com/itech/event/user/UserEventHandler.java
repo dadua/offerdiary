@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.Email;
-import com.itech.email.vo.EmailContent;
 import com.itech.email.vo.EmailContentParam;
 import com.itech.email.vo.NewUserRegistrationEmail;
 import com.itech.email.vo.NewUserSubscriptionEmail;
@@ -20,8 +19,9 @@ public class UserEventHandler implements EventHandler {
 	private EmailManager emailManager;
 	@Override
 	public boolean handles(Event event) {
-		if (UserEvent.class.isAssignableFrom(event.getClass()))
+		if (UserEvent.class.isAssignableFrom(event.getClass())) {
 			return true;
+		}
 
 		return false;
 	}
@@ -74,7 +74,7 @@ public class UserEventHandler implements EventHandler {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put(EmailContentParam.NEW_USER_REG_PARAM_NAME, userEvent.getUser().getName());
 		contentParam.setPARAM_MAP(paramMap);
-		Email email = new NewUserRegistrationEmail(contentParam, toEmailId);
+		Email email = new NewUserRegistrationEmail(userEvent.getUser(), contentParam, toEmailId);
 		getEmailManager().sendEmailAsync(email);
 	}
 
