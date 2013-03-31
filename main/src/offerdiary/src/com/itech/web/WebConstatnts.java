@@ -32,5 +32,9 @@ public class WebConstatnts {
 	}
 
 
+	public static final String getVarifyEmailPageBaseURL() {
+		return ProjectConfigs.defaultServerUrl.get() + "/varifyEmail.do?code=";
+	}
+
 
 }

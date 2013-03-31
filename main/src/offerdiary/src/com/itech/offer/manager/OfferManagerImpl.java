@@ -258,14 +258,16 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
-			Vendor existingVendor = getVendorManager().getVendorByName(offer.getTargetVendor().getName());
-			if (existingVendor == null) {
-				offer.getTargetVendor().setVendorType(VendorType.VIA_CARD);
-				getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
-			} else {
-				offer.setTargetVendor(existingVendor);
+			Vendor targetVendorFromOffer = offer.getTargetVendor();
+			if (CommonUtilities.isNotEmpty(targetVendorFromOffer.getName())){
+				Vendor existingVendor = getVendorManager().getVendorForVendorDetail(targetVendorFromOffer);
+				if (existingVendor == null) {
+					offer.getTargetVendor().setVendorType(VendorType.VIA_CARD);
+					getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
+				} else {
+					offer.setTargetVendor(existingVendor);
+				}
 			}
-
 
 			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
 			assoc.setOffer(offer);

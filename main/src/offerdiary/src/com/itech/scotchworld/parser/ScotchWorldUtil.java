@@ -22,6 +22,11 @@ public class ScotchWorldUtil {
 		if (storeURL.indexOf("?", "http://".length()) != -1) {
 			storeURL = storeURL.substring(0, storeURL.indexOf("?", "http://".length()));
 		}
+
+		storeURL = storeURL.replace("http://", "");
+		storeURL = storeURL.replace("https://", "");
+		storeURL = storeURL.replace("https:/", "");
+		storeURL = storeURL.replace("http:/", "");
 		logger.debug("orig -" + storeURLOrig + " ,  formated--" + storeURL);
 		return storeURL;
 	}

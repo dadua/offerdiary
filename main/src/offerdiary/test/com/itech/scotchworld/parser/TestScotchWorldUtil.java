@@ -18,19 +18,19 @@ public class TestScotchWorldUtil extends CommonTestBase{
 
 	public void testFormatSiteURL() {
 		String inputURL1 = "location: http://www.dealsfive.com/index.aspx";
-		String expectedURL1 = "http://www.dealsfive.com";
+		String expectedURL1 = "www.dealsfive.com";
 
 		String inputURL2 = "location: http://www.s2d6.com/x/?x=c&z=s&v=3407682";
-		String expectedURL2 = "http://www.s2d6.com";
+		String expectedURL2 = "www.s2d6.com";
 
 		String inputURL3 = "http://www.s2d6.com/x/?x=c&z=s&v=3407682";
-		String expectedURL3 = "http://www.s2d6.com";
+		String expectedURL3 = "www.s2d6.com";
 
 		String inputURL4 = "location: http://www.jdoqocy.com/click-4320459-10933625?url=http%3A%2F%2Fwww.emirates.com%2";
-		String expectedURL4 = "http://www.jdoqocy.com";
+		String expectedURL4 = "www.jdoqocy.com";
 
 		String inputURL5 = "location: http://www.dealsfive.com/index.aspx";
-		String expectedURL5 = "http://www.dealsfive.com";
+		String expectedURL5 = "www.dealsfive.com";
 
 		String actualResult1 = ScotchWorldUtil.formatSiteURL(inputURL1);
 		assertEquals(expectedURL1, actualResult1);
