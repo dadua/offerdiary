@@ -41,6 +41,10 @@
                     </div>
                     <hr class="offset1 span8" />
                     <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
                         </div>
