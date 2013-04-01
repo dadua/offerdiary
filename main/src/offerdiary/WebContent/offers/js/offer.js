@@ -28,13 +28,17 @@ it.offer.getExpiryDateBasedClass = function(daysToExpire) {
         return '';
     } else if(daysToExpire < 14) {
         return 'label-important';
-    } else if (daysToExpire < 30) {
+    } else if (daysToExpire < 45) {
         return 'label-warning';
-    } else if (daysToExpire < 90) {
+    }
+    /*
+    else if (daysToExpire < 90) {
         return 'label-info';
     } else if (daysToExpire < 120) {
         return 'label-inverse';
-    } else {
+    }
+    */
+    else {
         return 'label-success';
     }
 };
