@@ -44,7 +44,7 @@ it.fb = function () {
             method: 'feed',
             redirect_uri: 'http://localhost:8080/offerdiary/',
             link: 'http://www.offerdiary.com',
-            picture: 'http://ec2-54-245-11-4.us-west-2.compute.amazonaws.com/images/logo_tag.png',
+            picture: 'http://offerdiary.com/images/logo_tag.png',
             name: 'Offer Diary',
             caption: 'Never miss an offer',
             description: '',
