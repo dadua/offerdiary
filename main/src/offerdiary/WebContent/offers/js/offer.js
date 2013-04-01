@@ -166,7 +166,7 @@ it.offer.plotAll = function (offers, isOldAddition) {
     }
 
     $('#offerContainerFluid').rowFluidAdder({ items$: offers$,
-                                      itemRowContainerTemplate$: '<ul class="thumbnails row-fluid"></ul>' });
+                                      itemRowContainerTemplate$: '<ul class="thumbnails eachOfferRow row-fluid"></ul>' });
     it.offer.addHandlers();
 };
 
