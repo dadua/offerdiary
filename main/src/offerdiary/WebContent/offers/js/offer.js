@@ -64,9 +64,11 @@ it.offer.getFormattedTimeToExpire = function(daysToExpire) {
 };
 
 it.offer.getCompactFormattedTimeToExpire = function(timeToExpireString) {
+    /*
     if (timeToExpireString.length > 16) {
         var displayedTimeToExpire = timeToExpireString.substring(0, 12),
         undisplayedTimeToExpire = timeToExpireString.substring(16, timeToExpireString.length);
+
         displayedTimeToExpire += '<span class="hiddenTillAddSuccess" style="display:none" >';
         displayedTimeToExpire += timeToExpireString.substring(12,16);
         displayedTimeToExpire += '</span>';
@@ -76,10 +78,20 @@ it.offer.getCompactFormattedTimeToExpire = function(timeToExpireString) {
         displayedTimeToExpire += '<a class="daysToExpireDetails" href="#" title="'+timeToExpireString +'">...</a>';
         return displayedTimeToExpire;
     } else {
-        return timeToExpireString;
-    }
+   */
+    return timeToExpireString;
+    //}
 };
 
+it.offer.setDaysToExpireDataToTemplate$ = function (offer, offerTemplate$) {
+    var daysToExpire = this.getDaysToExpire(offer),
+        labelClass = this.getExpiryDateBasedClass(daysToExpire),
+        formattedTimeToExpire = this.getFormattedTimeToExpire(daysToExpire);
+    if (daysToExpire < 0) {
+        formattedTimeToExpire = 'Expired';
+    } 
+    offerTemplate$.find('.daysToExpire').html(formattedTimeToExpire).addClass(labelClass).removeClass('hide');
+};
 
 it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     //Setting values from offer vo to the template..
@@ -87,17 +99,18 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
         offerTemplate$.find('.vendorName').html(offer.targetVendor.name);
         offerTemplate$.find('.vendorOnOfferNameVal').html(offer.targetVendor.name);
         offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
-    	if (offer.targetVendor.logoUrl) {
-    		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
-    	} else {
-    		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/blankVendor.png');
-    		offerTemplate$.find('.vendorOnOfferNameVal').removeClass('hide');
-    	}
+        if (offer.targetVendor.logoUrl) {
+            offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
+        } else {
+            offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/blankVendor.png');
+            offerTemplate$.find('.vendorOnOfferNameVal').removeClass('hide');
+        }
     } else {
         offerTemplate$.find('.targetVendor-logoUrl').attr('src', 'images/stores/defaultVendor.jpg');
     }
     if (offer.expiryDateInMillis!== 0) {
         offerTemplate$.find('.offerExpiryDate').html(it.offer.getReadableDate(offer));
+        this.setDaysToExpireDataToTemplate$(offer, offerTemplate$);
     } else {
         offerTemplate$.find('.expiryDate').hide();
     }
@@ -313,24 +326,12 @@ it.offer.addHandlers = function () {
     $('.offerAction').tooltip();
     
     /*
-    $('.icon-trash').hover(function(e) {
-        $(this).removeClass('icon-white');
-    }, function(e){
-        $(this).addClass('icon-white');
-    });
-    $('.offer-trash').click(it.offer.trashOffer).tooltip();
     $('.daysToExpireDetails').tooltip({
         placement: 'right'
     }).click(function(e){
         $(this).parent().find('.hiddenPartOfTime').show();
         $(this).tooltip('hide').remove();
     });
-       $('.checkBoxSelected').live('click', function() {
-       $(this).removeClass('checkBoxSelected').addClass('checkBoxUnSelected');
-       });
-       $('.checkBoxUnSelected').live('click', function(){
-       $(this).removeClass('checkBoxUnSelected').addClass('checkBoxSelected');
-       });
        */
 };
 
