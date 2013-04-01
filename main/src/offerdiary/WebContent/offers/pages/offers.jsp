@@ -74,7 +74,8 @@
 	                        </div>
                         </div>
                     </div>
-                    <br>
+                    <br/>
+                    <br/>
 
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
