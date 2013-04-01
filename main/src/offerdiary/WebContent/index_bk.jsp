@@ -37,14 +37,14 @@
     }
 
     .carousel .item {
-      height: 700px;
+      height: 500px;
     }
     .carousel img {
       position: absolute;
       top: 0;
       left: 0;
       min-width: 100%;
-
+      height: 500px;
     }
 
     .carousel-caption {
@@ -58,6 +58,7 @@
     .carousel-caption .lead {
       margin: 0;
       line-height: 1.25;
+      color: #fff;
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
     }
     .carousel-caption .btn {
@@ -83,68 +84,71 @@
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="images/slider/my_offers.jpg" align="right" alt="">
+          <img src="images/slider/slide-01.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>My Offers</h1>
-               <div class="lead">
-					<ul style="list-style: circle;">
-						<li class="mb10">Manage Your offers</li>
-						<li class="mb10">Add offers from cards to wallet</li>
-					</ul>
-			  </div>
+              <h1>Example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, 
+egestas eget quam. Donec id elit non mi porta gravida at eget metus. 
+Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
               <a class="btn btn-large btn-primary" href="#">Sign up today</a>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="images/slider/share_offer.jpg" alt="">
+          <img src="images/slider/slide-02.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Share with Friends</h1>
-               <div class="lead">
-					<ul style="list-style: circle;">
-						<li class="mb10">Share Offers with your Friends</li>
-						<li class="mb10">Share on Facebook</li>
-						<li class="mb10">Share on Email</li>
-					</ul>
-			  </div>
-              <a class="btn btn-large btn-primary" href="#">Sign up today</a>			  
+              <h1>Another example headline.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, 
+egestas eget quam. Donec id elit non mi porta gravida at eget metus. 
+Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Learn more</a>
             </div>
           </div>
         </div>
         <div class="item">
-          <img src="images/slider/offer_expiry.jpg" align="right" alt="">
+          <img src="images/slider/slide-03.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Get Timely Notifications</h1>
-               <div class="lead">
-					<ul style="list-style: circle;">
-						<li class="mb10">Get Expiry Notification on email</li>
-						<li class="mb10">Get Offers Expiring in Next 7 days on My Offers page</li>
-					</ul>
-			  </div>
-              <a class="btn btn-large btn-primary" href="#">Sign up today</a>			  
+              <h1>One more for good measure.</h1>
+              <p class="lead">Cras justo odio, dapibus ac facilisis in, 
+egestas eget quam. Donec id elit non mi porta gravida at eget metus. 
+Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <a class="btn btn-large btn-primary" href="#">Browse gallery</a>
             </div>
           </div>
         </div>
-        <div class="item">
-          <img src="images/slider/card_offers.jpg" alt="">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Know Offers on your cards</h1>
-               <div class="description">
-					<ul style="list-style: circle;">
-						<li class="mb10">Know Offers available on your cards</li>
-					</ul>
-			  </div>
-              <a class="btn btn-large btn-primary" href="#">Sign up today</a>
-            </div>
-          </div>
-        </div>            
       </div>
-  
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
+
+	
+		<div class="container">
+			<div class="row">
+				<div class="span4" >
+					<img src="images/icons/policycatalog.png" class="img-polaroid img-rounded" style="height: 240px;">
+				</div>
+				<div class="span4 ">
+					<img src="images/icons/tagcatalog.png" class="img-polaroid img-rounded" style="height: 240px;">
+				</div>
+				<div class="span4 ">
+					<img src="images/icons/HipsPolicyMigration.png" class="img-polaroid img-rounded" style="height: 240px;">
+				</div>
+			</div>
+			<br>
+			<br>
+			<div class="row">
+				<div class="span3 offset3 thumbnail">
+					<img src="images/app_stores.png">
+				</div>
+				<div class="thumbnail span3 feedbackFb">
+					<div class="someMargin">
+					Drop in your thoughts at: <a target="_blank" href="https://www.facebook.com/offerdiary">facebook.com/offerdiary</a>
+					</div>
+				</div>
+			</div>
+				
+		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
