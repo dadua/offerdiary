@@ -40,7 +40,7 @@ set PATH=%EXTN_HOME%;%PROJ_ANT_HOME%\bin;%PATH%
 
 set SERVER_MODE=DEV
 :: DEV/LIVE
-set DEFAULT_SERVER_URL=http://www.offerdiary.com
+set DEFAULT_SERVER_URL=http://localhost:8080
 
 set JAVA_HOME=%PROJ_JDK_HOME%
 
