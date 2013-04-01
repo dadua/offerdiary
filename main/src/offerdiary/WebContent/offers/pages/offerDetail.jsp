@@ -27,7 +27,7 @@
 
     </style>
 
-    <title>Offers</title>
+    <title>Offer Details</title>
     
 <%@include file="/common/pages/bodyBegin.jsp" %>
     <div class="container" >

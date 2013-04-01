@@ -27,20 +27,23 @@
 
     </style>
 
-    <title>Offers</title>
+    <title>Shared Offer</title>
     
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
     <div class="container" >
         <div class="row">
-            <div class="content-container"  >
+            <div class=""  >
                 <div class="container-fluid">
                     <div class="row-fluid bluishText largeTitleFontSize offset1">
                     	<strong>
-                    	Offer Detail
+                    	Shared Offer 
                     	</strong>
                     </div>
                     <hr class="offset1 span8" />
+                    <br/>
+                    <br/>
+                    <br/>
                     <br/>
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
