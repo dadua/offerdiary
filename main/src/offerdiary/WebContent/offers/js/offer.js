@@ -26,7 +26,7 @@ it.offer.getDaysToExpire = function(offer) {
 it.offer.getExpiryDateBasedClass = function(daysToExpire) {
     if(daysToExpire < 0 ) {
         return '';
-    } else if(daysToExpire < 14) {
+    } else if(daysToExpire < 15) {
         return 'label-important';
     } else if (daysToExpire < 45) {
         return 'label-warning';
