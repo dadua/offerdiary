@@ -76,6 +76,7 @@ public class VendorSyncJob extends BaseItechJob{
 				existingVendor.setOwner(vendor.getOwner());
 				existingVendor.setVendorType(VendorType.GLOBAL);
 				existingVendor.setLogoUrl(vendor.getLogoUrl());
+				existingVendor.setOdReputation(vendor.getOdReputation());
 				getVendorManager().saveOrUpdateVendor(existingVendor);
 				logger.warn("Vendor already exists for name - " + vendor.getName());
 				continue;
@@ -101,7 +102,7 @@ public class VendorSyncJob extends BaseItechJob{
 
 
 	private void loadInitialData() {
-		this.affiliateUrlsToIgnore =  CommonFileUtilities.getResourceFileAsLines(AFFILIATE_URLS_TO_BE_FILTERED);
+		affiliateUrlsToIgnore =  CommonFileUtilities.getResourceFileAsLines(AFFILIATE_URLS_TO_BE_FILTERED);
 
 		InputStream affiliateUrlsIS = null;
 		try {
