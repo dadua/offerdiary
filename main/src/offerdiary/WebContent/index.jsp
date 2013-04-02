@@ -37,7 +37,7 @@
     }
 
     .carousel .item {
-      height: 700px;
+      height: 750px;
     }
     .carousel img {
       position: absolute;
@@ -50,9 +50,9 @@
     .carousel-caption {
       background-color: transparent;
       position: static;
-      max-width: 550px;
+      max-width: 750px;
       padding: 0 20px;
-      margin-top: 200px;
+      margin-top: 100px;
     }
     .carousel-caption h1,
     .carousel-caption .lead {
@@ -83,7 +83,7 @@
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="images/slider/my_offers.jpg" align="right" alt="">
+          <img src="images/slider/my_offers.png" align="right" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>My Offers</h1>
@@ -98,7 +98,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="images/slider/share_offer.jpg" alt="">
+          <img src="images/slider/share_offer.png" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>Share with Friends</h1>
@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="images/slider/offer_expiry.jpg" align="right" alt="">
+          <img src="images/slider/offer_expiry.png" align="right" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>Notifications</h1>
@@ -129,7 +129,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="images/slider/card_offers.jpg" alt="">
+          <img src="images/slider/card_offers.png" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>Card Offers</h1>
