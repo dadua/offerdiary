@@ -70,6 +70,9 @@ public class Vendor extends PersistableEntity{
 	@JoinColumn(name=VendorModelContants.COL_OWNER)
 	private User owner;
 
+	@Column(name="OD_REPUTATION")
+	private Integer odReputation = 0;
+
 	public String getName() {
 		return name;
 	}
@@ -185,6 +188,14 @@ public class Vendor extends PersistableEntity{
 				+ siteUrl + ", affiliateUrl=" + affiliateUrl + ", logoUrl="
 				+ logoUrl + ", city=" + city + ", vendorType=" + vendorType
 				+ ", owner=" + owner + "]";
+	}
+
+	public Integer getOdReputation() {
+		return odReputation;
+	}
+
+	public void setOdReputation(Integer odReputation) {
+		this.odReputation = odReputation;
 	}
 
 }

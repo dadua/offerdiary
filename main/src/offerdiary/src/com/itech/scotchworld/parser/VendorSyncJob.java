@@ -33,6 +33,7 @@ public class VendorSyncJob extends BaseItechJob{
 	private static final String SITE_URL_PREFIX = "www.";
 	private static final String VENDOR_JSON_FILE_PATH = "resources\\couponduniya\\stores-minimal.json";
 	private static final String VENDOR_TO_AFFILIATE_URL_MAPPINGS = "resources\\couponduniya\\vendor_to_aff_urls.properties";
+	private static final String VENDOR_TO_OD_REPUTATION_MAPPINGS = "resources\\couponduniya\\vendor_to_od_reputation.properties";
 
 	private static final String AFFILIATE_URLS_TO_BE_FILTERED = "resources\\couponduniya\\affiliate_site_urls.properties";
 
@@ -45,6 +46,7 @@ public class VendorSyncJob extends BaseItechJob{
 
 	private String[] affiliateUrlsToIgnore;
 	private final Map<String, String> vendorToAffUrlMap = new HashMap<String, String>();
+	private final Map<String, Integer> vendorToOdReputationMap = new HashMap<String, Integer>();
 
 	private  void syncVendors() {
 		loadInitialData();
@@ -60,6 +62,7 @@ public class VendorSyncJob extends BaseItechJob{
 			checkAndUpdateVendorUrl(scotchWorldStore);
 			updateAffiliateURL(scotchWorldStore);
 			Vendor vendor = getVendorFrom(scotchWorldStore);
+			updateOdReputation(vendor);
 			logger.debug("Processing for vendor: " + vendor);
 			Vendor existingVendor = getVendorManager().getVendorForVendorDetail(vendor);
 			logger.debug("Processing for vendor: " + vendor + " with existing vendor: " + existingVendor);
@@ -89,14 +92,22 @@ public class VendorSyncJob extends BaseItechJob{
 		}
 	}
 
+	private void updateOdReputation(Vendor vendor) {
+		Integer odReputation = vendorToOdReputationMap.get(vendor.getName().toLowerCase().trim());
+		if (odReputation != null) {
+			vendor.setOdReputation(odReputation);
+		}
+	}
+
+
 	private void loadInitialData() {
 		this.affiliateUrlsToIgnore =  CommonFileUtilities.getResourceFileAsLines(AFFILIATE_URLS_TO_BE_FILTERED);
 
-		InputStream fis = null;
+		InputStream affiliateUrlsIS = null;
 		try {
-			fis = CommonFileUtilities.class.getClassLoader().getResourceAsStream(VENDOR_TO_AFFILIATE_URL_MAPPINGS);
+			affiliateUrlsIS = CommonFileUtilities.class.getClassLoader().getResourceAsStream(VENDOR_TO_AFFILIATE_URL_MAPPINGS);
 			Properties vendorToAffUrlProperties = new Properties();
-			vendorToAffUrlProperties.load(fis);
+			vendorToAffUrlProperties.load(affiliateUrlsIS);
 			Set<Entry<Object, Object>> entrySet = vendorToAffUrlProperties.entrySet();
 			for (Entry<Object, Object> entry : entrySet) {
 				vendorToAffUrlMap.put((String)entry.getKey(),(String) entry.getValue());
@@ -105,11 +116,35 @@ public class VendorSyncJob extends BaseItechJob{
 		} catch (Exception e) {
 			logger.error("error while processing file for vendor url to affiliate url mappings", e);
 		} finally {
-			if (fis != null) {
+			if (affiliateUrlsIS != null) {
 				try {
-					fis.close();
+					affiliateUrlsIS.close();
 				} catch (IOException e) {
 					logger.error("error in closing file for vendor url to affiliate url mappings", e);
+				}
+			}
+		}
+
+
+
+		InputStream odReputationFileIS = null;
+		try {
+			odReputationFileIS = CommonFileUtilities.class.getClassLoader().getResourceAsStream(VENDOR_TO_OD_REPUTATION_MAPPINGS);
+			Properties vendorToOdReputationProperties = new Properties();
+			vendorToOdReputationProperties.load(odReputationFileIS);
+			Set<Entry<Object, Object>> entrySet = vendorToOdReputationProperties.entrySet();
+			for (Entry<Object, Object> entry : entrySet) {
+				vendorToOdReputationMap.put((String)entry.getKey(),Integer.parseInt((String)entry.getValue()));
+			}
+
+		} catch (Exception e) {
+			logger.error("error while processing file for vendor to od reputation mappings", e);
+		} finally {
+			if (odReputationFileIS != null) {
+				try {
+					odReputationFileIS.close();
+				} catch (IOException e) {
+					logger.error("error in closing file for vendor url to od reputation  mappings", e);
 				}
 			}
 		}
