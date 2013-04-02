@@ -19,9 +19,9 @@ public class VendorDAOImpl extends HibernateCommonBaseDAO<Vendor> implements Ven
 
 	@Override
 	public List<Vendor> getVendorsFor(String vendorName, int maxResults) {
-		String hql = "from " + getEntityClassName() + " where (vendorType=:vendorType or owner = :owner) and name like :vendorName ";
+		String hql = "from " + getEntityClassName() + " where (vendorType=:vendorType or owner = :owner) and name like :vendorName   order by";
 		if (CommonUtilities.isNullOrEmpty(vendorName)) {
-			hql += " order by odReputation desc ";
+			hql += " odReputation desc ";
 		}
 
 		hql += "  name asc";
