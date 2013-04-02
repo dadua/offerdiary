@@ -89,8 +89,8 @@
               <h1>My Offers</h1>
                <div class="lead">
 					<ul style="list-style: circle;">
-						<li class="mb10">Manage Your offers</li>
-						<li class="mb10">Add offers from cards to wallet</li>
+						<li >Manage Your offers</li>
+						<li >Add offers from cards to wallet</li>
 					</ul>
 			  </div>
               <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>
@@ -104,9 +104,9 @@
               <h1>Share with Friends</h1>
                <div class="lead">
 					<ul style="list-style: circle;">
-						<li class="mb10">Share Offers with your Friends</li>
-						<li class="mb10">Share on Facebook</li>
-						<li class="mb10">Share on Email</li>
+						<li >Share Offers with your Friends</li>
+						<li >Share on Facebook</li>
+						<li >Share on Email</li>
 					</ul>
 			  </div>
               <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>			  
@@ -117,11 +117,11 @@
           <img src="images/slider/offer_expiry.jpg" align="right" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Get Timely Notifications</h1>
+              <h1>Notifications</h1>
                <div class="lead">
 					<ul style="list-style: circle;">
-						<li class="mb10">Get Expiry Notification on email</li>
-						<li class="mb10">Get Offers Expiring in Next 7 days on My Offers page</li>
+						<li >Offer Expiry Notification on email</li>
+						<li >Offers Expiring in Next 7 days</li>
 					</ul>
 			  </div>
               <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>			  
@@ -132,10 +132,10 @@
           <img src="images/slider/card_offers.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Know Offers on your cards</h1>
+              <h1>Card Offers</h1>
                <div class="description">
 					<ul style="list-style: circle;">
-						<li class="mb10">Know Offers available on your cards</li>
+						<li >Know Offers available on your cards</li>
 					</ul>
 			  </div>
               <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>
