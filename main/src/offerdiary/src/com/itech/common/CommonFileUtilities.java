@@ -77,7 +77,7 @@ public class CommonFileUtilities {
 	}
 
 
-	public static void writeImageToImageRepoFolder(Map<String, String> imageNameSrcMap){
+	public static void writeImageToImageRepoFolder(Map<String, String> imageNameSrcMap, String folderPath){
 		for (Map.Entry<String, String> entry : imageNameSrcMap.entrySet()) {
 			String nameOfImage =  entry.getKey();
 			String imageSrc=  entry.getValue();
@@ -88,7 +88,7 @@ public class CommonFileUtilities {
 				URL url = new URL(imageSrc);
 				BufferedImage image = null;
 				image = ImageIO.read(url);
-				File file = new File("c:\\data\\storeImages" + "\\" + nameOfImage+".jpg");
+				File file = new File( folderPath + "\\" + nameOfImage+".jpg");
 				ImageIO.write(image, "jpg", file);
 			}catch(Exception e){
 				logger.error(nameOfImage+ " image could not be written ", e);
