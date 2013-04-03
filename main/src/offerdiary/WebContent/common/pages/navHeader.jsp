@@ -23,6 +23,7 @@
 			width: 19px;
 			height: 19px;
 		}
+
 		</style>
 		
 		<div class="navbar navbar-fixed-top">
@@ -36,24 +37,24 @@
         				<img src="images/logo_tag.png" class="brandImage" alt="Offer Diary" />
         			</a>
         			<c:if test="${userSession!=null}">
-	     				<ul class="featureTabs nav nav-tabs " style="margin-left: 25px; margin-top:30px;">
+	     				<ul class="featureTabs nav nav-tabs " style="margin-left: 25px; margin-top:30px;color:#0088CC;">
 	     					<li class="divider-vertical"></li>
-							<li id="offerTab" >
-								 <a href="offers.do" >My Offers</a>
+							<li class="featureTab" id="offerTab" >
+								 <a href="offers.do" style="color:#0088CC;">My Offers</a>
 							</li>
 							<li class="divider-vertical"></li>
 							<%--
 							<li id="alertTab" >
-								<a href="alerts.do" >Notifications</a>
+								<a href="alerts.do" style="color:#0088CC;" >Notifications</a>
 							</li>
 							<li class="divider-vertical"></li>
 							 --%>
-							<li id="cardTab" >
-								<a href="cards.do" >Cards</a>
+							<li class="featureTab" id="cardTab" >
+								<a href="cards.do" style="color:#0088CC;">Cards</a>
 							</li>
 							<li class="divider-vertical"></li>
-							<li id="profileTab" >
-								<a href="profile.do" >Profile</a>
+							<li class="featureTab" id="profileTab" >
+								<a href="profile.do" style="color:#0088CC;">Profile</a>
 							</li>
 							<li class="divider-vertical"></li>
 						</ul>
