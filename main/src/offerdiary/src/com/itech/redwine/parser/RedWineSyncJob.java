@@ -1,5 +1,7 @@
 package com.itech.redwine.parser;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,12 +10,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.itech.common.CommonFileUtilities;
 import com.itech.common.CommonUtilities;
 import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
@@ -34,12 +40,15 @@ public class RedWineSyncJob  extends BaseItechJob{
 	private static final String REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\cards-minimal.json";
 	private static final String ALL_REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\all-cards-minimal.json";
 	private static final String REDANAR_CARDS_WITH_OFFERS_BASE_DIR = "resources\\redanar\\offers";
+	private static final String PROVIDER_KEY_TOMATCHING_STRINGS_MAPPINGS = "resources\\redanar\\provider_key_matching_string.properties";
 
 	@Autowired
 	private OfferCardManager offerCardManager;
 
 	@Autowired
 	private OfferManager offerManager;
+
+	private final Map<String, String> providerKeyToMatchingStringMap = new HashMap<String, String>();
 
 	private static final Logger logger = Logger.getLogger(RedWineSyncJob.class);
 
@@ -88,6 +97,32 @@ public class RedWineSyncJob  extends BaseItechJob{
 			getOfferManager().addOffersForCard(offers, offerCard);
 			getHibernateSessionFactory().commitCurrentTransaction();
 		}
+	}
+
+	private void loadInitialData() {
+
+		InputStream providerKeyToMatchingStringIS = null;
+		try {
+			providerKeyToMatchingStringIS = CommonFileUtilities.class.getClassLoader().getResourceAsStream(PROVIDER_KEY_TOMATCHING_STRINGS_MAPPINGS);
+			Properties providerKeyToMatchingStringProperties = new Properties();
+			providerKeyToMatchingStringProperties.load(providerKeyToMatchingStringIS);
+			Set<Entry<Object, Object>> entrySet = providerKeyToMatchingStringProperties.entrySet();
+			for (Entry<Object, Object> entry : entrySet) {
+				providerKeyToMatchingStringMap.put((String)entry.getKey(),(String) entry.getValue());
+			}
+
+		} catch (Exception e) {
+			logger.error("error while processing file for provider keys", e);
+		} finally {
+			if (providerKeyToMatchingStringIS != null) {
+				try {
+					providerKeyToMatchingStringIS.close();
+				} catch (IOException e) {
+					logger.error("error in closing file for vendor url to affiliate url mappings", e);
+				}
+			}
+		}
+
 	}
 
 	private List<Offer> getOffersFrom(List<RedWineOffer> redWineOffers) {
