@@ -46,3 +46,7 @@ input, button, select, textarea {
 			color: #0088CC;
 			font-weight: bold;
 		}
+		
+.modal-backdrop {
+	background-color: #FDFDFD;
+}
