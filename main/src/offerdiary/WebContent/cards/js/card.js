@@ -66,8 +66,13 @@ it.card.addHandlers = function () {
 it.card.setupCardFiltersHandlers = function () {
    $('.discoverNewCards').click (function() {
        it.card.toggler.showDiscoverCards();
-       //$('.discoverNewCards').parent().addClass('active');
+       $('html, body').animate({
+           scrollTop: $(".discoverNewCards").offset().top
+       }, 2000);
    }); 
+   $('.myCardsFilter').click(function() {
+       it.card.toggler.showDiscoverCards();
+   });
 };
 
 //Card UI views Plotting/refreshing funcitons

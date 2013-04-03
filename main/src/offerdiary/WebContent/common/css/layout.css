@@ -37,3 +37,12 @@ input, button, select, textarea {
 .bluishText {
 	color: #0088CC;
 }
+
+		.featureTab {
+			color: #0088CC;
+		}
+		
+		.featureTab.active {
+			color: #0088CC;
+			font-weight: bold;
+		}

@@ -117,7 +117,7 @@
                     </ul>
                 </div>
                 <div class="row-fluid">
-					<div class="span6 pull-right vendorSelectHelp">
+					<div class="pull-right vendorSelectHelp">
 					* Click on vendor to select and proceed
 					</div>
 				</div>
