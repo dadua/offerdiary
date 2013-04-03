@@ -64,6 +64,8 @@ public class OfferCard extends PersistableEntity{
 	@Column(name=OfferCardModelConstants.COL_IMAGE_URL)
 	private String imageURL;
 
+	@Column(name="PROVIDER")
+	private String provider;//e.g. ICICI_BANK, AXIS_BANK
 
 
 	@Transient
@@ -160,6 +162,14 @@ public class OfferCard extends PersistableEntity{
 
 	public String getCardSourceIdentifier() {
 		return cardSourceIdentifier;
+	}
+
+	public String getProvider() {
+		return provider;
+	}
+
+	public void setProvider(String provider) {
+		this.provider = provider;
 	}
 
 
