@@ -155,26 +155,30 @@ public class VendorSyncJob extends BaseItechJob{
 	private void checkAndUpdateVendorUrl(ScotchWorldStore scotchWorldStore) {
 		String storeURL = scotchWorldStore.getStoreURL();
 		String storeName = scotchWorldStore.getStoreName();
-		if (CommonUtilities.isNullOrEmpty(storeURL)) {
-			return;
-		}
+
 		boolean fixStoreUrl = false;
 		for (String affiliateUrl : affiliateUrlsToIgnore) {
-			if (storeURL.contains(affiliateUrl) || storeURL.equals("http://") || storeURL.equals("https:/")) {
+			if (storeURL.contains(affiliateUrl) || storeURL.equals("http://") ||
+					storeURL.equals("https:/") ||
+					storeURL.equals("https://") ||
+					CommonUtilities.isNullOrEmpty(storeURL)) {
 				fixStoreUrl = true;
 				break;
 			}
 		}
 
+
 		if (fixStoreUrl) {
 			String newUrl = "";
-			if (storeName.endsWith(".com") || storeName.endsWith(".com")) {
-				newUrl =  SITE_URL_PREFIX + storeName.toLowerCase();
-			} else {
-				newUrl =  SITE_URL_PREFIX + storeName.replace(" ", "").toLowerCase() + ".com";
+			if (storeName.endsWith(".com") || storeName.endsWith(".in") || storeName.endsWith("co.in")) {
+				newUrl =  SITE_URL_PREFIX + storeName.toLowerCase().replace(" ", "");
+				scotchWorldStore.setStoreURL(newUrl);
+				logger.info("for vendor: " + storeName + ", URL replaced from: " + storeURL + "  to: " + newUrl);
+				return;
 			}
+
+			newUrl =  SITE_URL_PREFIX + storeName.replace(" ", "").toLowerCase() + ".com";
 			logger.info("for vendor: " + storeName + ", URL replaced from: " + storeURL + "  to: " + newUrl);
-			scotchWorldStore.setStoreURL(newUrl);
 		}
 	}
 

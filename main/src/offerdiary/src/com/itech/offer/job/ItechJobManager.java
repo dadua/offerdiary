@@ -24,7 +24,7 @@ public class ItechJobManager {
 		if (job != null) {
 			return jobId;
 		}
-		for (Entry<String, ItechJob> entry : jobMap.entrySet()) {
+		for (Entry<String, ItechJob> entry : jobMap.entrySet()) {//jobMap.remove(jobId);
 			if (entry.getValue().equals(itechJob)) {
 				return entry.getKey();
 			}

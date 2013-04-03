@@ -46,7 +46,7 @@ public class RedWineCardsParser {
 		List<RedWineCard> redWineCards = new ArrayList<RedWineCard>();
 
 		for (String fileName : filesToProcess) {
-			cardDataJson = CommonFileUtilities.getResourceFileAsString(fileName, isAbsoluteUrl);
+			cardDataJson = CommonFileUtilities.getResourceFileAsString(fileName, true);
 			Gson gson = new Gson();
 			Type offerCardJsonType = new TypeToken<List<RedWineCard>>() { }.getType();
 			List<RedWineCard> redWineCardsFromFile = gson.fromJson(cardDataJson, offerCardJsonType);
@@ -55,16 +55,21 @@ public class RedWineCardsParser {
 		return redWineCards;
 	}
 
-	public static RedWineCard readRedWineRecordsForCardId(String cardId, String baseDirectory, boolean isAbsoluteUrl) {
-		String fileName = CARD_OFFER_FILE_NAME_PREFIX + cardId;
-		File targetFile = new File(baseDirectory, fileName);
-		List<RedWineCard> redWineRecordsFromFile = readRedWineRecordsFromFile(targetFile.getAbsolutePath(), isAbsoluteUrl);
-		if (redWineRecordsFromFile.size() >= 1) {
-			return redWineRecordsFromFile.get(0);
+	public static RedWineCard readSingleRedWineRecordFromFile(String sourceFileName, boolean isAbsoluteUrl) {
+		String cardDataJson = CommonFileUtilities.getResourceFileAsString(sourceFileName, isAbsoluteUrl);
+		if (CommonUtilities.isNullOrEmpty(cardDataJson)) {
+			return null;
 		}
-		return null;
+		Gson gson = new Gson();
+		Type offerCardJsonType = new TypeToken<RedWineCard>() { }.getType();
+		RedWineCard redWineCardFromFile = gson.fromJson(cardDataJson, offerCardJsonType);
+		return redWineCardFromFile;
 	}
 
+	public static RedWineCard readRedWineRecordsForCardId(String cardId, String baseDirectory, boolean isAbsoluteUrl) {
+		String sourceFileName = baseDirectory + "\\" + CARD_OFFER_FILE_NAME_PREFIX  + cardId;
+		return readSingleRedWineRecordFromFile(sourceFileName, isAbsoluteUrl);
+	}
 	public static void writeRedWineCardsToSingleFile(List<RedWineCard> redWineForCards, String outPutFile){
 		writeRecordsToFile(redWineForCards, outPutFile);
 	}
