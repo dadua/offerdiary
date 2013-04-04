@@ -204,7 +204,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 		if ("valid".equalsIgnoreCase(uniqueFilter)) {
 			parameterMap.put("now", new Date(System.currentTimeMillis()));
-			return  " (o.expiry > :now or o.expiry is null) ";
+			return  " (o.expiry >= :now or o.expiry is null) ";
 		}
 
 
@@ -216,7 +216,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			Date expiryLimit = new Date(System.currentTimeMillis() + CommonUtilities.MILLIS_IN_A_DAY*numberOfDays);
 			parameterMap.put("now", new Date(today.getTime()));
 			parameterMap.put("expiryDate", expiryLimit);
-			return  " (o.expiry >= :now and o.expiry < :expiryDate)";
+			return  " (o.expiry >= :now and o.expiry <= :expiryDate)";
 		}
 
 		if (OfferSearchFilterUtil.isCreationFilter(uniqueFilter)) {
@@ -227,7 +227,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			parameterMap.put("now", new Date(today.getTime()));
 			Date addedOn = new Date(System.currentTimeMillis() - CommonUtilities.MILLIS_IN_A_DAY*numberOfDays);
 			parameterMap.put("creationDate", addedOn);
-			return  " (oua.createdOn <= :now and oua.createdOn > :creationDate)";
+			return  " (oua.createdOn <= :now and oua.createdOn >= :creationDate)";
 		}
 		return " 1=1 ";
 	}
