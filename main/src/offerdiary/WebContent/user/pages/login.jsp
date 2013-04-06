@@ -102,7 +102,7 @@
 				<div class="span6 offset3">
 					<div class="row">
 						<div class="span4 offset4">
-							<form id="goToWallet" action="wallet.do" method="get">
+							<form id="goToWallet" action="diary.do" method="get">
 								<input id="loginToFb" class="btn btn-large btn-primary fb-btn-color disabled"  type="button" value="Connect with Facebook" />
 								<input type="hidden" name="login" value="success" />
 							</form>

@@ -208,7 +208,7 @@ public class LoginAction extends CommonAction{
 				user.setPassword(password);
 				getUserManager().save(user);
 				updateLoggedInUser(req, user);
-				return new Redirect("wallet.do");
+				return new Redirect("diary.do");
 			}
 
 			if(null != user){
@@ -218,7 +218,7 @@ public class LoginAction extends CommonAction{
 			user = getUserManager().saveEmailUser(name, email, password);
 			updateLoggedInUser(req, user);
 		}
-		return new Redirect("wallet.do");
+		return new Redirect("diary.do");
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

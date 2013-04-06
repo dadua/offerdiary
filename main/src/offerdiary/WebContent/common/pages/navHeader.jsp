@@ -62,7 +62,7 @@
 					<c:choose>
 						<c:when test="${userSession !=null}">
 							<div class="topAlign pull-right btn-group" id="userContainer" style="margin-top: 2%;">
-								<a class="btn btn-info" href="wallet.do">
+								<a class="btn btn-info" href="diary.do">
 									<c:choose>
 										<c:when test="${userSession.name != null}">
 											${userSession.name}
@@ -83,7 +83,7 @@
 								<ul class="dropdown-menu">
 		
 									<li>
-										<a href="wallet.do">
+										<a href="diary.do">
 										My Account
 										</a>
 									</li>

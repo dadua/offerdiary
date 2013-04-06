@@ -80,7 +80,7 @@ public class OfferAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="wallet.do")
+	@ActionMapping(value="diary.do")
 	public Response goToMyWallet(HttpServletRequest req, HttpServletResponse resp) {
 		User loggedInUser = getLoggedInUser();
 		if (loggedInUser != null) {
