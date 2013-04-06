@@ -10,7 +10,7 @@ it.offersoncard.hide = function () {
 };
 
 it.offersoncard.getCardName = function (offersOnCardLabelTarget) {
-    return $(offersOnCardLabelTarget).parent().find('.cardName').html();
+    return $(offersOnCardLabelTarget).parent().parent().parent().find('.cardName').html();
 };
 
 it.offersoncard.getCardId = function (offersOnCardLabelTarget) {
