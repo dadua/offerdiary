@@ -49,7 +49,7 @@ it.offer.detail.trashOffer = function(e) {
         if (ret.success === true) {
             $('#'+targetId).tooltip('hide');
             $('#offer_'+offerId).remove();
-            $('<form action="wallet.do" method="get"></form>').appendTo('body').submit();
+            $('<form action="diary.do" method="get"></form>').appendTo('body').submit();
         } else {
             //Handle error case
         }

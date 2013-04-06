@@ -96,7 +96,7 @@ public class LoginFilter implements Filter {
 			}
 
 			if ("/index.jsp".equals(reqUrl) || "/".equals(reqUrl)) {
-				httpRequest.getRequestDispatcher("/wallet.do").forward(req, resp);
+				httpRequest.getRequestDispatcher("/diary.do").forward(req, resp);
 				return;
 			}
 		}
