@@ -64,7 +64,8 @@ it.card.addHandlers = function () {
 };
 
 it.card.setupCardFiltersHandlers = function () {
-    $('.discoverNewCards').click (function() {
+    $('.discoverNewCards').click (function(e) {
+    	e.preventDefault();
         it.card.toggler.showDiscoverCards();
         $('html, body').animate({
             scrollTop: $(".discoverNewCards").offset().top
