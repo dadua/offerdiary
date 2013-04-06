@@ -29,7 +29,7 @@ public class ActionServlet extends HttpServlet {
 			ActionHandler.handleAction(request, response);
 		} catch (Exception exception) {
 			logger.error("", exception);
-			request.getRequestDispatcher("error_page.jsp").forward(request, response);
+			request.getRequestDispatcher("/exceptions/commonErrorPage.jsp").forward(request, response);
 		}
 	}
 
