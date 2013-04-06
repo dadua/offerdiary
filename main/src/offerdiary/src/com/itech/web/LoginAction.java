@@ -88,7 +88,7 @@ public class LoginAction extends CommonAction{
 
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="verifyEmail.do")
+	@ActionMapping(value="verifyEmailForPassword.do")
 	public Response verifyEmail(HttpServletRequest req, HttpServletResponse resp){
 		User user = getLoggedInUser();
 		if (user == null) {
@@ -241,21 +241,21 @@ public class LoginAction extends CommonAction{
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="varifyEmail.do")
+	@ActionMapping(value="verifyEmail.do")
 	public Response varifyEmail(HttpServletRequest req, HttpServletResponse resp){
 		String message = "";
 		String emailVarificationCode = req.getParameter("code");
 		User user = getUserManager().getUserForEmailVarificationCode(emailVarificationCode);
 		if (user == null) {
-			message = "Invalid Email varification request";
+			message = "Invalid Email verification request";
 		}
 
-		if (user.isEmailVarified()) {
-			message = "Email Varification already completed";
+		if ((user.isEmailVarified() != null) && user.isEmailVarified()) {
+			message = "Email Verification already completed";
 		} else {
 			user.setEmailVarified(true);
 			getUserManager().save(user);
-			message = "Your Email Varified successfully";
+			message = "Your Email Verified successfully";
 		}
 
 		req.setAttribute(URLConstants.COMMON_ERROR_MESSAGE_ATTR_NAME, message);

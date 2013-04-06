@@ -27,7 +27,7 @@
 				if (creds === null) {
 					return;
 				}
-				$.post('verifyEmail.do',
+				$.post('verifyEmailForPassword.do',
 						{'credVoKey': JSON.stringify(creds)},
 						function(data) {
 							var ret = $.parseJSON(data);

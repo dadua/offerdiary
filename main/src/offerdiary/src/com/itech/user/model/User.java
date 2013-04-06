@@ -222,7 +222,7 @@ public class User extends PersistableEntity{
 	public boolean isODAdmin() {
 		return UserRole.OD_ADMIN.equals(getUserRole());
 	}
-	public boolean isEmailVarified() {
+	public Boolean isEmailVarified() {
 		return emailVarified;
 	}
 	public void setEmailVarified(boolean emailVarified) {

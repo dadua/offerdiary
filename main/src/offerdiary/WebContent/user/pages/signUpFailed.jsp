@@ -1,6 +1,6 @@
 <%@page import="com.itech.web.LoginConstants"%>
 <%@include file="/common/pages/headBegin.jsp" %>
-		<itle>Login to Offer Diary</title>
+		<title>Login to Offer Diary</title>
 		
 		<style type="text/css">
 			h1.forgot-password-heading{
@@ -62,7 +62,7 @@
 								<div class="span4">
 									<a class="btn btn-primary"
 										href="getPassword.do">
-										Retrive Password
+										Retrieve Password
 									</a>
 								</div>
 							</div>
