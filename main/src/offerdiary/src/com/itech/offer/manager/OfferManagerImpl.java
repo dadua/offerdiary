@@ -168,6 +168,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		List<Offer> offers = getOfferDAO().getByUniqueId(offerUniqueIds);
 		for(Offer offer: offers){
 			OfferUserAssoc offerUserAssocWithLoggedInUser = getOfferUserAssocDAO().getAssocFor(offer, loggedInUser);
+			if (offerUserAssocWithLoggedInUser == null) {
+				continue;
+			}
 			if (!OfferOwnershipType.CREATOR.equals(offerUserAssocWithLoggedInUser.getOwnershipType())) {
 				getOfferUserAssocDAO().delete(offerUserAssocWithLoggedInUser);
 				continue;

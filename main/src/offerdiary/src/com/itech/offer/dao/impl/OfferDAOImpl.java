@@ -106,7 +106,10 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			fromHql.append(", OfferUserAssoc oua where oua.offer=o and oua.user=:user ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append( " where 1=1 ");
+			fromHql.append(" where 1=1");
+			//			fromHql.append( " left join  OfferUserAssoc oua  on oua.offer=o where (oua.user is null or oua.user.userRole=:userRole)");
+			//			parameterMap.put("userRole", UserRole.OD_ADMIN);
+			//TODO fix authorization problem here
 		}
 
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);

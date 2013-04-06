@@ -12,7 +12,7 @@ public class OfferModelConstants {
 	public static final String COL_DISCOUNT_VALUE="DISCOUNT_VALUE";
 	public static final String COL_EXPIRY="EXPIRY";
 	public static final String COL_OFFER_CODE="OFFER_CODE";
-	public static final String COL_OFFER_TYPE="NAME";
+	public static final String COL_OFFER_TYPE="OFFER_TYPE";
 	public static final String COL_TARGET_VENDOR="TARGET_VENDOR";
 	public static final String COL_IMAGE_SOURCE="IMAGE_SOURCE";
 	public static final String COL_SOURCE_VENDOR="SOURCE_VENDOR";
