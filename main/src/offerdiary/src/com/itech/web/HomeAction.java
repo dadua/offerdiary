@@ -29,5 +29,11 @@ public class HomeAction extends CommonAction{
 		return new Forward("termsAndConditions.jsp");
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="aboutUs.do")
+	public Response goToAboutUs(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward("aboutUs.jsp");
+	}
+
 
 }
