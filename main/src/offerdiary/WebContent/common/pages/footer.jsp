@@ -1,25 +1,25 @@
     <footer class="footer container">
         <div class="footer container">
             <hr>
-            <div class="span3">
+            <div class="span4">
                 &nbsp;
             </div>
-            <div class="span6" >
+            <div class="span4" >
                 <ul class="nav nav-pills">
                     <li>
-                    <a href="home.do" class="footerLink"><i class="icon-home icon-white"></i>Home</a>
+                    <a href="home.do" class="footerLink">Home</a>
                     </li>
                     <li>
-                    <a href="#" class="footerLink"><i class="icon-volume-down icon-white"></i>About Us</a>
+                    <a href="aboutUs.do" class="footerLink">About Us</a>
                     </li>
                     <li>
-                    <a href="#" class="footerLink"><i class="icon-pencil icon-white"></i>Blog</a>
+                    <a href="#" class="footerLink">Blog</a>
                     </li>
                     <li>
-                    <a href="tnc.do" class="footerLink"><i class="icon-comment icon-white"></i>Terms</a>
+                    <a href="tnc.do" class="footerLink">Terms</a>
                     </li>
                     <li>
-                    <a href="privacy.do" class="footerLink"><i class="icon-folder-close icon-white"></i>Privacy</a>
+                    <a href="privacy.do" class="footerLink">Privacy</a>
                     </li>
                 </ul>
             </div>
