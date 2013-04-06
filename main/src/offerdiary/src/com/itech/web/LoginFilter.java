@@ -39,7 +39,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/commonHeader.jsp");
 		bypassUrls.add("/comingSoon.jsp");
 		bypassUrls.add("/getPassword.do");
-		bypassUrls.add("/verifyEmail.do");
+		bypassUrls.add("/verifyEmailForPassword.do");
 		bypassUrls.add("/gotPassword.do");
 		bypassUrls.add("/getSharedOffer.do");
 		bypassUrls.add("/sharedOffer.jsp");
@@ -48,7 +48,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/authorizationFailureJsonResponse.do");
 
 		bypassUrls.add("/common/pages/message_page.jsp");
-		bypassUrls.add("/varifyEmail.do");
+		bypassUrls.add("/verifyEmail.do");
 	}
 
 	@Override

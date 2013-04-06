@@ -31,7 +31,11 @@ public class NewUserRegistrationEmail extends Email {
 	public String getMailContent() {
 		String emailVarificationLink = WebConstatnts.getVarifyEmailPageBaseURL() + user.getEmailVarficationAccessCode();
 		//TODO to activate your account please varify your email address
-		return getRegistrationEmailHTML();
+
+		String registrationEmailHTML2 = getRegistrationEmailHTML();
+		Document document = Jsoup.parse(registrationEmailHTML2);
+		document.select("#messageParagraph3").html("To start off Please <a href=\"" + emailVarificationLink + "\" >Verify this email address</a>");
+		return document.toString();
 	}
 
 	@Override
@@ -46,7 +50,7 @@ public class NewUserRegistrationEmail extends Email {
 		content.setSalutation("Dear");
 		content.setName("User");
 		content.setPara1("Thank you for signing up for OfferDiary. With offerdiary you'd be able to add offers and receive " +
-				"timely notifications. You can share your offers with your friends and spread the word.");
+		"timely notifications. You can share your offers with your friends and spread the word.");
 		//You can import you facebook offers " +
 		//"to OfferDiary for easy management");
 		content.setPara2("With OfferDiary you'd be able to do so much more with your offers. keep exploring !");
