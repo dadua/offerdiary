@@ -64,15 +64,19 @@ it.card.addHandlers = function () {
 };
 
 it.card.setupCardFiltersHandlers = function () {
-   $('.discoverNewCards').click (function() {
-       it.card.toggler.showDiscoverCards();
-       $('html, body').animate({
-           scrollTop: $(".discoverNewCards").offset().top
-       }, 2000);
-   }); 
-   $('.myCardsFilter').click(function() {
-       it.card.toggler.showDiscoverCards();
-   });
+    $('.discoverNewCards').click (function() {
+        it.card.toggler.showDiscoverCards();
+        $('html, body').animate({
+            scrollTop: $(".discoverNewCards").offset().top
+        }, 2000);
+        $('#cardFullName').tooltip({title: 'Search your card', placement:'top'}).tooltip('show');
+        setTimeout(function () {
+            $('#cardFullName').tooltip('hide');
+        }, 4000);
+    }); 
+    $('.myCardsFilter').click(function() {
+        it.card.toggler.showDiscoverCards();
+    });
 };
 
 //Card UI views Plotting/refreshing funcitons
