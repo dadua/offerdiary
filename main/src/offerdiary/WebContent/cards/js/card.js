@@ -7,7 +7,7 @@ it.card = it.card || {};
 //Utility function
 it.card.getParentCardId = function(actionElem) {
     var cardIdExtractRegex = /^card_(.*)/,
-        parentCardElem$ = $(actionElem).parent().parent(),
+        parentCardElem$ = $(actionElem).closest('.card'),
         cardId = cardIdExtractRegex.exec($(parentCardElem$).attr('id'))[1];
     return cardId;
 };
