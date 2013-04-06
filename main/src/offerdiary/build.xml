@@ -51,6 +51,13 @@
 		</javac>
 		<copy  todir="${compile.home}/classes" file="${src}/log4j.properties"/>
 		<copy  todir="${compile.home}/classes" file="${src}/key.cfg"/>
+	    <copy todir="${compile.home}/classes">
+			<fileset dir="${src}" includes="**" />
+	    </copy>
+		
+	    <copy todir="${compile.home}/classes">
+			<fileset dir="${src}/resources" includes="**/**" />
+	    </copy>
 		<jar destfile="${compile.home}/${product.jar.name}.jar" basedir="${compile.home}/classes">
 			<manifest>
 				<!-- Who is building this jar? -->
