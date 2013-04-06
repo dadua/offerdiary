@@ -35,6 +35,7 @@ import com.itech.user.vos.ShareOfferActionVO;
 public class OfferManagerImpl extends CommonBaseManager implements OfferManager {
 
 	private static final Logger logger = Logger.getLogger(OfferManagerImpl.class);
+
 	private OfferDAO offerDAO;
 	private OfferUserAssocDAO offerUserAssocDAO;
 	private OfferShareDAO offerShareDAO;
