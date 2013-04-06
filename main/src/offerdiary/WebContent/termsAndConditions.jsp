@@ -22,7 +22,7 @@
 		The Site is intended for Indian residents only, accessing the Site from the India only.
 		We reserve the right to stop anyone using the Site at any time.
 		These terms and conditions may change at any time.
-		If, after reading with them you don’t agree with them, the best thing to do is not to use this website.
+		If, after reading with them you don't agree with them, the best thing to do is not to use this website.
 		Your use of this website is subject to a legal binding agreement between you and www.OfferDiary.com
 		</p>
 
