@@ -31,10 +31,10 @@ OfferCardManager {
 
 	@Override
 	public OfferCard saveOrUpdateOfferCard(OfferCard offerCard) {
-		if (offerCard.getId() != null) {
+		if (offerCard.getId() == null) {
 			OfferCard existingCardInDb = getOfferCardDAO().getByName(offerCard.getName());
-			if (existingCardInDb == null) {
-				return null;
+			if (existingCardInDb != null) {
+				return existingCardInDb;
 			}
 		}
 		getOfferCardDAO().addOrUpdate(offerCard);
