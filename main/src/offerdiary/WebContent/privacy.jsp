@@ -11,7 +11,7 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
 		<div class="container">
-			<h2>Privacy Policy</h2>
+			<h2 class="bluishText">Privacy Policy</h2>
 		
 		<p>
 		OfferDiary Systems Private Limited shares the concerns of users of OfferDiary's applications and websites ("you") about the protection of your personal information. This is OfferDiary's policy regarding the privacy of information we collect inside our websites and applications.

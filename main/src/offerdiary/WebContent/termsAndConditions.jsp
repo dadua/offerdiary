@@ -11,7 +11,7 @@
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
 		<div class="container">
-		<h2>Terms and Conditions</h2>
+		<h2 class="bluishText">Terms and Conditions</h2>
 		<div class="container-fluid">
 		<h3>Introduction</h3>
 
