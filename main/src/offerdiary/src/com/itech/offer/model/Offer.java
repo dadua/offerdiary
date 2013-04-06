@@ -22,6 +22,10 @@ import com.itech.offer.vo.NotifyVO;
 @Entity
 @Table(name=OfferModelConstants.TABLE_OFFER)
 public class Offer extends PersistableEntity implements Cloneable{
+
+
+	private static final long TIME_23HR_59_MINUTES_IN_MILLIES = 23*60*60*1000 + 59*60*1000;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name=OfferModelConstants.COL_ID)
@@ -307,6 +311,9 @@ public class Offer extends PersistableEntity implements Cloneable{
 	}
 
 	public long getExpiryDateInMillis() {
+		if (getExpiry() != null) {
+			return getExpiry().getTime() + TIME_23HR_59_MINUTES_IN_MILLIES;//Temporary fixing expiry days issues in UI
+		}
 		return expiryDateInMillis;
 	}
 
