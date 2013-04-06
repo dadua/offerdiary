@@ -37,10 +37,11 @@ import com.itech.offer.model.enums.VendorType;
 @Scope("prototype")
 public class RedWineSyncJob  extends BaseItechJob{
 
+	private static final String DEFAULT_BANK_IMAGE_URL = "DEFAULT_BANK.jpg";
 	private static final String REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\cards-minimal.json";
 	private static final String ALL_REDANAR_CARDDATA_JSON_FILE_OUT = "resources\\redanar\\all-cards-minimal.json";
 	private static final String REDANAR_CARDS_WITH_OFFERS_BASE_DIR = "resources\\redanar\\offers";
-	private static final String PROVIDER_KEY_TOMATCHING_STRINGS_MAPPINGS = "resources\\redanar\\provider_key_matching_string.properties";
+	private static final String CARD_PROVIDER_MAPPINGS = "resources\\redanar\\card-providers.properties";
 
 	@Autowired
 	private OfferCardManager offerCardManager;
@@ -48,7 +49,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 	@Autowired
 	private OfferManager offerManager;
 
-	private final Map<String, String> providerKeyToMatchingStringMap = new HashMap<String, String>();
+	private final Map<String, String[]> cardProviderKeyToMatchingStringsMap = new HashMap<String, String[]>();
 
 	private static final Logger logger = Logger.getLogger(RedWineSyncJob.class);
 
@@ -56,9 +57,11 @@ public class RedWineSyncJob  extends BaseItechJob{
 	private void syncRedWineData() {
 		logger.info("initializing redwine data");
 		String sourceFileName = REDANAR_CARDDATA_JSON_FILE_OUT;
+		loadInitialData();
 		List<RedWineCard> redWineCards = RedWineCardsParser.readRedWineRecordsFromFile(sourceFileName, false);
 		Map<String, OfferCard> redwineCardToODCardMap =  new HashMap<String, OfferCard>();
 		for (RedWineCard redWineCard : redWineCards) {
+			logger.info("Processing card: " + redWineCard);
 			synchronized (this) {
 				if (stopped) {
 					break;
@@ -75,8 +78,13 @@ public class RedWineSyncJob  extends BaseItechJob{
 				}
 			}
 			OfferCard offerCard = getOfferCardFrom(redWineCard);
+			updateProviderInformation(offerCard);
 			OfferCard existingCardInDb = getOfferCardManager().getOfferCardFor(offerCard.getName());
 			if (existingCardInDb != null) {
+				existingCardInDb.setProvider(offerCard.getProvider());
+				existingCardInDb.setProviderImgUrl(offerCard.getProviderImgUrl());
+				existingCardInDb.setCardType(offerCard.getCardType());
+				getOfferCardManager().saveOrUpdateOfferCard(existingCardInDb);
 				redwineCardToODCardMap.put(redWineCard.getCardId(), existingCardInDb);
 				logger.warn("Offer card already exists for name - " + offerCard.getName());
 				continue;
@@ -99,16 +107,35 @@ public class RedWineSyncJob  extends BaseItechJob{
 		}
 	}
 
-	private void loadInitialData() {
+	private void updateProviderInformation(OfferCard offerCard) {
+		String cardName = offerCard.getName().toLowerCase();
+		for (Entry<String, String[]> cardProviderEntry : cardProviderKeyToMatchingStringsMap.entrySet()) {
+			String providerKey = cardProviderEntry.getKey();
+			String[] matchStrings = cardProviderEntry.getValue();
+			for (String matchString : matchStrings) {
+				if (cardName.startsWith(matchString + " ") || cardName.contains(" " + matchString + " ")) {
+					offerCard.setProvider(providerKey);
+					offerCard.setProviderImgUrl(providerKey + ".jpg");
+					return;
+				}
+			}
+		}
+		if (CommonUtilities.isNullOrEmpty(offerCard.getProvider())) {
+			offerCard.setProviderImgUrl(DEFAULT_BANK_IMAGE_URL);
+		}
+	}
 
+	private void loadInitialData() {
 		InputStream providerKeyToMatchingStringIS = null;
 		try {
-			providerKeyToMatchingStringIS = CommonFileUtilities.class.getClassLoader().getResourceAsStream(PROVIDER_KEY_TOMATCHING_STRINGS_MAPPINGS);
+			providerKeyToMatchingStringIS = CommonFileUtilities.class.getClassLoader().getResourceAsStream(CARD_PROVIDER_MAPPINGS);
 			Properties providerKeyToMatchingStringProperties = new Properties();
 			providerKeyToMatchingStringProperties.load(providerKeyToMatchingStringIS);
 			Set<Entry<Object, Object>> entrySet = providerKeyToMatchingStringProperties.entrySet();
 			for (Entry<Object, Object> entry : entrySet) {
-				providerKeyToMatchingStringMap.put((String)entry.getKey(),(String) entry.getValue());
+				String matchStrings = (String) entry.getValue();
+				String[] matchStringsArray = matchStrings.toLowerCase().split(",");
+				cardProviderKeyToMatchingStringsMap.put((String)entry.getKey(), matchStringsArray);
 			}
 
 		} catch (Exception e) {

@@ -67,6 +67,9 @@ public class OfferCard extends PersistableEntity{
 	@Column(name="PROVIDER")
 	private String provider;//e.g. ICICI_BANK, AXIS_BANK
 
+	@Column(name="PROVIDER_IMAGE_URL")
+	private String providerImgUrl;
+
 
 	@Transient
 	private boolean associatedWithCurrentUser;
@@ -170,6 +173,14 @@ public class OfferCard extends PersistableEntity{
 
 	public void setProvider(String provider) {
 		this.provider = provider;
+	}
+
+	public String getProviderImgUrl() {
+		return providerImgUrl;
+	}
+
+	public void setProviderImgUrl(String providerImgUrl) {
+		this.providerImgUrl = providerImgUrl;
 	}
 
 
