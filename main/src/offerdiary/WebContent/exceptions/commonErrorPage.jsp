@@ -13,7 +13,7 @@
    			<div class="span6 offset3">
 		   		<strong>
 		   			<c:choose>
-			   			<c:when test="${errorMessage!=''}">
+			   			<c:when test="${errorMessage}">
 							${errorMessage}
 			   			</c:when>
 			   			<c:otherwise>
