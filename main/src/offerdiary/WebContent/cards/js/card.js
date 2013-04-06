@@ -86,12 +86,14 @@ it.card.view = function () {
         var myCard$ = $('.my_card_template').clone();
         myCard$.removeClass('my_card_template').attr('id', 'card_' + card.id).find('.cardName').html(card.name);
         myCard$.find('.offersOnCardLabel').attr('id', 'offersOnCardLabel_' + card.id);
+        myCard$.find('.providerImg').attr('src', 'images/cards/providers/' + (card.providerImgUrl || 'DEFAULT_BANK.jpg'));
         return myCard$;
     };
 
     var _getAddableCard$ = function (card) {
         var addableCard$ = $('.addable_card_template').clone();
         addableCard$.removeClass('addable_card_template').attr('id', 'card_' + card.id).find('.cardName').html(card.name);
+        addableCard$.find('.providerImg').attr('src', 'images/cards/providers/' + (card.providerImgUrl || 'DEFAULT_BANK.jpg'));
         return addableCard$;
     };
 
