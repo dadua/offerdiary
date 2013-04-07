@@ -98,7 +98,7 @@
 						<li >Add offers from cards to wallet</li>
 					</ul>
 			  </div>
-              <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>
+              <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@
 						<li >Share on Email</li>
 					</ul>
 			  </div>
-              <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>			  
+              <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@
 						<li >Offers Expiring in Next 7 days</li>
 					</ul>
 			  </div>
-              <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>			  
+              <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
             </div>
           </div>
         </div>
@@ -143,7 +143,7 @@
 						<li >Know Offers available on your cards</li>
 					</ul>
 			  </div>
-              <a class="btn btn-large btn-primary" href="http://localhost:8080/offerdiary/signup.do">Sign up today</a>
+              <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
             </div>
           </div>
         </div>            
