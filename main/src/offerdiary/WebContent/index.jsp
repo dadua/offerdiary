@@ -57,9 +57,14 @@
     .carousel-caption h1,
     .carousel-caption .lead {
       margin: 0;
-      line-height: 1.25;
+      line-height: 2em;
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
     }
+    
+    .lead li {
+	    line-height: 1.5em;
+    }
+    
     .carousel-caption .btn {
       margin-top: 10px;
     }
@@ -133,7 +138,7 @@
           <div class="container">
             <div class="carousel-caption">
               <h1>Card Offers</h1>
-               <div class="description">
+               <div class="lead">
 					<ul style="list-style: circle;">
 						<li >Know Offers available on your cards</li>
 					</ul>
