@@ -2,15 +2,19 @@
 	<title>OfferDiary : Never miss an offer!</title>
 	<script type="text/javascript">
 		$(function(){
+		    $('.goDown').click(function(e){
+				var id = $(this).attr('id');
+					//locationToScroll = /go-to-(.+)/.exec(id)[1];
+		        $('html, body').animate({
+		            scrollTop: $("#"+id).offset().top
+		        }, 2000);
+		    });
 		});
 	</script>
 	<style>
     .someMargin {
     	margin: 12px;
     }
-    
-   
-
     
     <%@include file="/common/css/layout.css" %>
 	 body {
@@ -23,12 +27,24 @@
     .featureItem {
     	margin-top: 7%;
     	margin-bottom: 10%;
+    	/*border: 1px solid #DDDDDD;*/
+    }
+    
+    .goDown {
+	    background: none repeat scroll 0 0 #E5E5E5;
+	    border-radius: 0 0 8px 8px;
+	    padding: 5px 10px 2px;
+	    position: absolute;
+	    right: 48%;
+	    top: 50%;
+	    cursor: pointer;
     }
     
 	</style>
 		
 <%@include file="/common/pages/bodyBegin.jsp" %>
-    <div class="featureItem">
+	<div id="features">
+    <div id="myOffers" class="featureItem">
         <div class="container">
 	        <div class="row">
 	            <div class="description span4">
@@ -47,9 +63,15 @@
 			        <img src="images/home/my_offers.png" alt="My Offers">
 		        </div>
 	        </div>
+	        <div class="row" style="position:relative">
+	        	<hr>
+	        	<div id="go-to-share" class="goDown">
+	        		<i class="icon-chevron-down icon-white"></i>
+	        	</div>
+	        </div>
 	     </div>
     </div>
-    <div class="featureItem">
+    <div id="share" class="featureItem">
         <div class="container">
 	        <div class="row">
 	            <div class="description span4">
@@ -67,9 +89,15 @@
 			        <img src="images/home/share_offer.png" alt="">
 		        </div>
 	        </div>
+	        <div class="row" style="position:relative">
+	        	<hr>
+	        	<div id="go-to-notifications" class="goDown">
+	        		<i class="icon-chevron-down icon-white"></i>
+	        	</div>
+	        </div>
 	    </div>
     </div>
-    <div class="featureItem">
+    <div id="notifications" class="featureItem">
         <div class="container">
 	        <div class="row">
 	            <div class="description span4">
@@ -86,9 +114,15 @@
 			        <img src="images/home/offer_expiry.png" alt="">
 		        </div>
 	        </div>
+	        <div class="row" style="position:relative">
+	        	<hr>
+	        	<div id="go-to-cardOffers" class="goDown">
+	        		<i class="icon-chevron-down icon-white"></i>
+	        	</div>
+	        </div>
 	    </div>
     </div>
-    <div class="featureItem">
+    <div id="cardOffers" class="featureItem">
         <div class="container">
 	        <div class="row">
 	            <div class="description span4">
@@ -106,4 +140,5 @@
 	        </div>
         </div>
     </div>            
+    </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
