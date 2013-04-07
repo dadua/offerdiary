@@ -58,23 +58,26 @@
 	    <copy todir="${compile.home}/classes">
 			<fileset dir="${src}/resources" includes="**/**" />
 	    </copy>
-		<jar destfile="${compile.home}/${product.jar.name}.jar" basedir="${compile.home}/classes">
+	    <!--<jar destfile="${compile.home}/${product.jar.name}.jar" basedir="${compile.home}/classes">
 			<manifest>
-				<!-- Who is building this jar? -->
+			
 				<attribute name="Built-By" value="Itech inc"/>
-				<!-- Information about the program itself -->
+			
 				<attribute name="Implementation-Vendor" value="Itech inc."/>
 				<attribute name="Implementation-Title" value="OfferDiary"/>
 				<attribute name="Implementation-Version" value="1.0.0 alpha"/>
 
 			</manifest>
-		</jar>
+		</jar>-->
 	</target>
 
 	<target name="dist" description="Make a package" depends="compile">
-	    <copy todir="${dist.web.home}/WEB-INF/lib" file="${compile.home}/${product.jar.name}.jar"/>
-	    <copy todir="${dist.web.home}">
+		<!-- <copy todir="${dist.web.home}/WEB-INF/lib" file="${compile.home}/${product.jar.name}.jar"/>-->
+		<copy todir="${dist.web.home}/">
 		<fileset dir="${web.home}" includes="**" />
+	    </copy>
+	    <copy todir="${dist.web.home}/WEB-INF">
+		<fileset dir="${compile.home}" includes="**" />
 	    </copy>
 	    <echo message="Making package"/>
 	    <echo message="Zipping the content into war file"/>    
