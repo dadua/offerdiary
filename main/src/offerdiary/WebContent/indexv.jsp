@@ -21,8 +21,8 @@
 		padding-top: 70px;
 	}
 	
-	.lead li {
-	    line-height: 1.5em;
+	.lead > .explanation {
+	    line-height: 2em;
     }
     .featureItem {
     	margin-top: 7%;
@@ -40,6 +40,14 @@
 	    cursor: pointer;
     }
     
+    .correct {
+		color: green;
+		font-size: 1.5em;
+		margin-right: 3%;
+		text-align: center;
+		vertical-align: middle;
+	}
+    
 	</style>
 		
 <%@include file="/common/pages/bodyBegin.jsp" %>
@@ -52,10 +60,8 @@
 	            	<br>
 	                <h1 class="bluishText">My Offers</h1>
 	                <div class="lead">
-	                    <ul style="list-style: circle;">
-	                        <li >Manage Your offers</li>
-	                        <li >Add offers from cards to wallet</li>
-	                    </ul>
+                        <div class="explanation"><span class="correct">&#10004;</span>Manage Your offers</div>
+                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to wallet</div>
 	                </div>
 	                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 	            </div>
@@ -77,11 +83,9 @@
 	            <div class="description span4">
 	                <h1 class="bluishText">Share with Friends</h1>
 	                <div class="lead">
-	                    <ul style="list-style: circle;">
-	                        <li >Share Offers with your Friends</li>
-	                        <li >Share on Facebook</li>
-	                        <li >Share on Email</li>
-	                    </ul>
+                        <div class="explanation"><span class="correct">&#10004;</span>Share Offers with your Friends</div>
+                        <div class="explanation"><span class="correct">&#10004;</span>Share on Facebook</div>
+                        <div class="explanation"><span class="correct">&#10004;</span>Share on Email</div>
 	                </div>
 	                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 	            </div>
@@ -103,10 +107,8 @@
 	            <div class="description span4">
 	                <h1 class="bluishText">Notifications</h1>
 	                <div class="lead">
-	                    <ul style="list-style: circle;">
-	                        <li >Offer Expiry Notification on email</li>
-	                        <li >Offers Expiring in Next 7 days</li>
-	                    </ul>
+                        <div class="explanation"><span class="correct">&#10004;</span>Offer Expiry Notification on email</div>
+                        <div class="explanation"><span class="correct">&#10004;</span>Offers Expiring in Next 7 days</div>
 	                </div>
 	                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 	            </div>
@@ -128,9 +130,7 @@
 	            <div class="description span4">
 	                <h1 class="bluishText">Card Offers</h1>
 	                <div class="lead">
-	                    <ul style="list-style: circle;">
-	                        <li >Know Offers available on your cards</li>
-	                    </ul>
+                        <div class="explanation"><span class="correct">&#10004;</span>Know Offers available on your cards</div>
 	                </div>
 	                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 	            </div>
