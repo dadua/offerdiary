@@ -21,8 +21,8 @@
 	    line-height: 1.5em;
     }
     .featureItem {
-    	margin-top: 2%;
-    	margin-bottom: 2%;
+    	margin-top: 7%;
+    	margin-bottom: 10%;
     }
     
 	</style>
