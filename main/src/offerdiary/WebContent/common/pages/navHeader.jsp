@@ -23,6 +23,10 @@
 			width: 19px;
 			height: 19px;
 		}
+		
+		.fbLikeContainer {
+		    margin-top: 2%;
+		}
 
 		</style>
 		
@@ -59,6 +63,7 @@
 							<li class="divider-vertical"></li>
 						</ul>
 					</c:if>
+					
 					<c:choose>
 						<c:when test="${userSession !=null}">
 							<div class="topAlign pull-right btn-group" id="userContainer" style="margin-top: 2%;">
@@ -107,6 +112,9 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
+					<div class="pull-right fbLikeContainer">
+						<div class="fb-like" data-href="https://www.facebook.com/offerdiary" data-send="false" data-width="320" data-show-faces="false"></div>
+					</div>
         		</div>
       		</div>
        		<%@include file="/common/pages/actionInfoRow.jsp" %>
