@@ -67,11 +67,11 @@ public class LoginFilter implements Filter {
 
 		setFbDetails(httpRequest);
 
-		String reqUrl = httpRequest.getServletPath();
-		if (contextContainsWWW(httpRequest)) {
-			redirectToNormal(httpRequest, httpResponse);
-			return;
-		}
+		//		String reqUrl = httpRequest.getServletPath();
+		//		if (contextContainsWWW(httpRequest)) {
+		//			redirectToNormal(httpRequest, httpResponse);
+		//			return;
+		//		}
 		logger.debug(reqUrl);
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
