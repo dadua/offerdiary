@@ -25,8 +25,8 @@
 		}
 		
 		.fbLikeContainer {
-		    margin-top: 2%;
-		    margin-right: 20px;
+		    margin-top: 2.4%;
+		    margin-right: 10px;
 		}
 
 		</style>
