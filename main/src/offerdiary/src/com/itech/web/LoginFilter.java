@@ -125,7 +125,7 @@ public class LoginFilter implements Filter {
 
 	private boolean contextContainsWWW(HttpServletRequest httpRequest) {
 		String serverName = httpRequest.getServerName();
-		return serverName.startsWith("www.offerdiary.com");
+		return serverName.toLowerCase().startsWith("www.offerdiary.com");
 	}
 
 
