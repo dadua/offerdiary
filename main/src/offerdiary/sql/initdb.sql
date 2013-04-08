@@ -1,3 +1,3 @@
 CREATE SCHEMA `offerdiary` ;
-CREATE USER 'offerdiary'@'localhost' IDENTIFIED BY 'offerdiary';
-GRANT ALL PRIVILEGES ON *.* TO 'offerdiary'@'localhost' WITH GRANT OPTION;
+CREATE USER 'od'@'localhost' IDENTIFIED BY 'od@123!@#';
+GRANT ALL PRIVILEGES ON *.* TO 'od'@'localhost' WITH GRANT OPTION;

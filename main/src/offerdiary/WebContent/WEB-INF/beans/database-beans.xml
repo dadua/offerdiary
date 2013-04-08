@@ -7,8 +7,8 @@
  <bean id="itech.DataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://localhost/offerdiary"/>
-		<property name="username" value="offerdiary"/>
-		<property name="password" value="offerdiary"/>
+		<property name="username" value="od"/>
+		<property name="password" value="od@123!@#"/>
  </bean>
 		 
   <bean id="itech.SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
