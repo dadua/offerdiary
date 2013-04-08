@@ -29,7 +29,7 @@ import com.itech.user.model.UserRole;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager, Initialize {
 	private static final String OD_ADMIN_NAME = "odadmin";
-	private static final String OD_ADMIN_PASSWORD = "odadmin@123";
+	private static final String OD_ADMIN_PASSWORD = "od@123!@#";
 	private static final String OD_ADMIN_EMAIL_ID = "admin@offerdiary.com";
 	private static final Logger logger = Logger.getLogger(UserManagerImpl.class);
 	private UserDAO userDAO;
