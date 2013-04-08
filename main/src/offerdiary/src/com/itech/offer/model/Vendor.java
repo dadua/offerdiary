@@ -66,12 +66,21 @@ public class Vendor extends PersistableEntity{
 	@Enumerated(EnumType.STRING)
 	private VendorType vendorType = VendorType.USER_DEFINED;
 
+	@Column(name="SOURCE_TYPE")
+	@Enumerated(EnumType.STRING)
+	private SourceType sourceType = SourceType.USER_DEFINED;
+
 	@ManyToOne
 	@JoinColumn(name=VendorModelContants.COL_OWNER)
 	private User owner;
 
 	@Column(name="OD_REPUTATION")
 	private Integer odReputation = 0;
+
+	public enum SourceType {
+		REDSCOTCH, USER_DEFINED, REDWINE
+	}
+
 
 	public String getName() {
 		return name;
@@ -196,6 +205,14 @@ public class Vendor extends PersistableEntity{
 
 	public void setOdReputation(Integer odReputation) {
 		this.odReputation = odReputation;
+	}
+
+	public SourceType getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(SourceType sourceType) {
+		this.sourceType = sourceType;
 	}
 
 }
