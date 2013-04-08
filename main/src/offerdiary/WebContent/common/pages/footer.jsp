@@ -12,9 +12,11 @@
                     <li>
                     <a href="aboutUs.do" class="footerLink">About Us</a>
                     </li>
+                    <%--
                     <li>
                     <a href="#" class="footerLink">Blog</a>
                     </li>
+                     --%>
                     <li>
                     <a href="tnc.do" class="footerLink">Terms</a>
                     </li>
