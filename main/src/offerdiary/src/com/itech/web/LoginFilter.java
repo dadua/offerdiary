@@ -68,6 +68,10 @@ public class LoginFilter implements Filter {
 		setFbDetails(httpRequest);
 
 		String reqUrl = httpRequest.getServletPath();
+		if (contextContainsWWW(httpRequest)) {
+			redirectToNormal(httpRequest, httpResponse);
+			return;
+		}
 		logger.debug(reqUrl);
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
@@ -104,6 +108,26 @@ public class LoginFilter implements Filter {
 
 		filterChain.doFilter(req, resp);
 	}
+
+	private void redirectToNormal(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
+		String reqUrl = httpRequest.getServletPath();
+		String queryString = httpRequest.getQueryString();
+		String serverName = httpRequest.getServerName();
+		String redirectURL  = serverName.replaceFirst("www.", "") + reqUrl;
+		if (CommonUtilities.isNotEmpty(queryString)) {
+			redirectURL  +="?"+queryString;
+		}
+		httpRequest.getSession().setAttribute("redirectURL", redirectURL);
+		httpResponse.sendRedirect("login.do");
+		logger.debug("redirected to home: " + reqUrl);
+	}
+
+
+	private boolean contextContainsWWW(HttpServletRequest httpRequest) {
+		String serverName = httpRequest.getServerName();
+		return serverName.startsWith("www.offerdiary.com");
+	}
+
 
 	private static void setFbDetails(HttpServletRequest request) {
 		request.setAttribute(WebConstatnts.FB_APP_ID_ATTRIBUTE_KEY, FbConstants.getFbAppId());

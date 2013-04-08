@@ -43,7 +43,7 @@ it.fb = function () {
         options = $.extend({
             method: 'feed',
             redirect_uri: 'http://localhost:8080/offerdiary/',
-            link: 'http://www.offerdiary.com',
+            link: 'http://offerdiary.com',
             picture: 'http://offerdiary.com/images/logo_tag.png',
             name: 'Offer Diary',
             caption: 'Never miss an offer',

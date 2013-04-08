@@ -23,7 +23,7 @@
 		We reserve the right to stop anyone using the Site at any time.
 		These terms and conditions may change at any time.
 		If, after reading with them you don't agree with them, the best thing to do is not to use this website.
-		Your use of this website is subject to a legal binding agreement between you and www.OfferDiary.com
+		Your use of this website is subject to a legal binding agreement between you and OfferDiary.com
 		</p>
 
 		<h3>Site User Obligations</h3>

@@ -18,7 +18,7 @@
 		<div class="container-fluid">
 			<h3>What is OfferDiary?</h3>
 			<p class="explanation">
-				<a href="http://www.offerdiary.com">OfferDiary</a> is a platform for managing all your offers, coupons, vouchers
+				<a href="http://offerdiary.com">OfferDiary</a> is a platform for managing all your offers, coupons, vouchers
 				and loyalty credits effectively.
 				OfferDiary helps you track your offers and share them with your friends.
 				With OfferDiary you would never have to deal with unused offers and expired credits. 

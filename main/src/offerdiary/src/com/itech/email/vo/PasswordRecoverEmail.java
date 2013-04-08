@@ -2,24 +2,21 @@ package com.itech.email.vo;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.itech.common.CommonFileUtilities;
-import com.itech.email.vo.Email.EmailType;
 
 public class PasswordRecoverEmail extends Email{
 
-	
+
 	private static final String DEFAULT_PASSWORD_RECOVERY_SUBJECT="Your OfferDiary Credentials";
 	private String PASSWORD_RECOVERY_EMAIL_HTML;
 	private static final String EMAIL_CONTENT_FILE ="resources\\generic_html_template.html";
-	private EmailContent defaultEmailContent ; 
+	private EmailContent defaultEmailContent ;
 	private Document docHTML ;
 
-	
+
 	public PasswordRecoverEmail(){
 		super();
 	}
@@ -50,7 +47,7 @@ public class PasswordRecoverEmail extends Email{
 		content.setSalutation("Dear");
 		content.setName("User");
 		content.setPara1("Your current password is ");
-		content.setPara2("Access your Offerdairy account here <a title='OfferDiary' href='"+"http://www.offerdiary.com"+"'>OfferDiary</a>");
+		content.setPara2("Access your Offerdairy account here <a title='OfferDiary' href='"+"http://offerdiary.com"+"'>OfferDiary</a>");
 		setDefaultEmailContent(content);
 	}
 
@@ -69,16 +66,16 @@ public class PasswordRecoverEmail extends Email{
 		doc.select(EmailContent.SELECT_PARA1).first().append(getDefaultEmailContent().getPara1());
 		doc.select(EmailContent.SELECT_PARA2).first().append(getDefaultEmailContent().getPara2());
 	}
-	
+
 
 	private void setContentParams(EmailContentParam content) {
 		if(null != getDocHTML()){
-			String name = content.getPARAM_MAP().get(EmailContentParam.FORGOT_PASSWORD_PARAM_NAME); 
-			String password = (String) content.getPARAM_MAP().get(EmailContentParam.FORGOT_PASSWORD_PARAM_PASSWORD);
+			String name = content.getPARAM_MAP().get(EmailContentParam.FORGOT_PASSWORD_PARAM_NAME);
+			String password = content.getPARAM_MAP().get(EmailContentParam.FORGOT_PASSWORD_PARAM_PASSWORD);
 			if( name != null){
-					getDefaultEmailContent().setName(name);
+				getDefaultEmailContent().setName(name);
 			}if(password != null){
-					getDefaultEmailContent().setPara1(getDefaultEmailContent().getPara1() +password);
+				getDefaultEmailContent().setPara1(getDefaultEmailContent().getPara1() +password);
 			}
 		}
 	}
@@ -87,7 +84,7 @@ public class PasswordRecoverEmail extends Email{
 	public void setSubject() {
 		this.subject = DEFAULT_PASSWORD_RECOVERY_SUBJECT;
 	}
-	
+
 	@Override
 	public EmailType getEmailType() {
 		return EmailType.PASSWORD_RECOVERY_EMAIL;
