@@ -246,6 +246,16 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
 		List<Offer> existingOffers = new ArrayList<Offer>();
 		for (Offer offer : offers) {
+			Vendor targetVendorFromOffer = offer.getTargetVendor();
+			if (CommonUtilities.isNotEmpty(targetVendorFromOffer.getName())){
+				Vendor existingVendor = getVendorManager().getVendorForVendorDetail(targetVendorFromOffer);
+				if (existingVendor == null) {
+					getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
+				} else {
+					offer.setTargetVendor(existingVendor);
+				}
+			}
+
 			OfferOfferCardAssoc existingOfferCardAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(offerCard, offer.getDescription(), offer.getTargetVendor().getName());
 			if (existingOfferCardAssoc != null) {
 				Offer existingOffer = existingOfferCardAssoc.getOffer();
@@ -262,16 +272,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
-			Vendor targetVendorFromOffer = offer.getTargetVendor();
-			if (CommonUtilities.isNotEmpty(targetVendorFromOffer.getName())){
-				Vendor existingVendor = getVendorManager().getVendorForVendorDetail(targetVendorFromOffer);
-				if (existingVendor == null) {
-					offer.getTargetVendor().setVendorType(VendorType.VIA_CARD);
-					getVendorManager().saveOrUpdateVendor(offer.getTargetVendor());
-				} else {
-					offer.setTargetVendor(existingVendor);
-				}
-			}
+
 
 			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
 			assoc.setOffer(offer);

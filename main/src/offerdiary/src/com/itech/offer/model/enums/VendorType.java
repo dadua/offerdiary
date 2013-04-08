@@ -1,5 +1,5 @@
 package com.itech.offer.model.enums;
 
 public enum VendorType {
-	GLOBAL, USER_DEFINED, VIA_CARD
+	GLOBAL, USER_DEFINED
 }

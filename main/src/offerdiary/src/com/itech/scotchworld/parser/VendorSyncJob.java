@@ -23,6 +23,7 @@ import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
 import com.itech.offer.manager.VendorManager;
 import com.itech.offer.model.Vendor;
+import com.itech.offer.model.Vendor.SourceType;
 import com.itech.offer.model.enums.VendorType;
 import com.itech.user.manager.UserManager;
 
@@ -75,6 +76,7 @@ public class VendorSyncJob extends BaseItechJob{
 				existingVendor.setDescription(vendor.getDescription());
 				existingVendor.setOwner(vendor.getOwner());
 				existingVendor.setVendorType(VendorType.GLOBAL);
+				existingVendor.setSourceType(vendor.getSourceType());
 				existingVendor.setLogoUrl(vendor.getLogoUrl());
 				existingVendor.setOdReputation(vendor.getOdReputation());
 				getVendorManager().saveOrUpdateVendor(existingVendor);
@@ -190,6 +192,7 @@ public class VendorSyncJob extends BaseItechJob{
 		vendor.setSiteUrl(ScotchWorldUtil.formatSiteURL(scotchWorldStore.getStoreURL()));
 		vendor.setLogoUrl(scotchWorldStore.getStoreName() + ".jpg");
 		vendor.setVendorType(VendorType.GLOBAL);
+		vendor.setSourceType(SourceType.REDSCOTCH);
 		vendor.setAffiliateUrl(scotchWorldStore.getAffiliateUrl());
 		vendor.setOwner(userManager.getODAdminUser());
 		return vendor;

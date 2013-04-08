@@ -31,6 +31,7 @@ import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCard.CardSource;
 import com.itech.offer.model.Vendor;
+import com.itech.offer.model.Vendor.SourceType;
 import com.itech.offer.model.enums.VendorType;
 
 @Component
@@ -218,7 +219,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 		vendor.setName(vendorName);
 		vendor.setSiteUrl(vendorUrl);
 		vendor.setVendorType(VendorType.GLOBAL);
-		vendor.setVendorType(VendorType.VIA_CARD);
+		vendor.setSourceType(SourceType.REDWINE);
 		return vendor;
 	}
 
