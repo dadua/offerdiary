@@ -26,6 +26,7 @@
 		
 		.fbLikeContainer {
 		    margin-top: 2%;
+		    margin-right: 20px;
 		}
 
 		</style>
@@ -113,7 +114,7 @@
 						</c:otherwise>
 					</c:choose>
 					<div class="pull-right fbLikeContainer">
-						<div class="fb-like" data-href="https://www.facebook.com/offerdiary" data-send="false" data-width="320" data-show-faces="false"></div>
+						<div class="fb-like" data-href="https://www.facebook.com/offerdiary" data-send="false" data-width="350" data-show-faces="false"></div>
 					</div>
         		</div>
       		</div>
