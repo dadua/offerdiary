@@ -31,7 +31,7 @@ import com.itech.user.manager.UserManager;
 @Scope("prototype")
 public class VendorSyncJob extends BaseItechJob{
 
-	private static final String SITE_URL_PREFIX = "www.";
+	private static final String SITE_URL_PREFIX = "http://";
 	private static final String VENDOR_JSON_FILE_PATH = "resources\\couponduniya\\stores-minimal.json";
 	private static final String VENDOR_TO_AFFILIATE_URL_MAPPINGS = "resources\\couponduniya\\vendor_to_aff_urls.properties";
 	private static final String VENDOR_TO_OD_REPUTATION_MAPPINGS = "resources\\couponduniya\\vendor_to_od_reputation.properties";
@@ -155,11 +155,15 @@ public class VendorSyncJob extends BaseItechJob{
 	}
 
 	private void checkAndUpdateVendorUrl(ScotchWorldStore scotchWorldStore) {
-		String storeURL = scotchWorldStore.getStoreURL();
+		String storeURL = SITE_URL_PREFIX + ScotchWorldUtil.formatSiteURL(scotchWorldStore.getStoreURL());
+		scotchWorldStore.setStoreURL(storeURL);
 		String storeName = scotchWorldStore.getStoreName();
 
 		boolean fixStoreUrl = false;
 		for (String affiliateUrl : affiliateUrlsToIgnore) {
+			if (CommonUtilities.isNullOrEmpty(affiliateUrl)) {
+				continue;
+			}
 			if (storeURL.contains(affiliateUrl) || storeURL.equals("http://") ||
 					storeURL.equals("https:/") ||
 					storeURL.equals("https://") ||
@@ -180,6 +184,7 @@ public class VendorSyncJob extends BaseItechJob{
 			}
 
 			newUrl =  SITE_URL_PREFIX + storeName.replace(" ", "").toLowerCase() + ".com";
+			scotchWorldStore.setStoreURL(newUrl);
 			logger.info("for vendor: " + storeName + ", URL replaced from: " + storeURL + "  to: " + newUrl);
 		}
 	}
@@ -189,7 +194,7 @@ public class VendorSyncJob extends BaseItechJob{
 		Vendor vendor = new Vendor();
 		vendor.setName(scotchWorldStore.getStoreName());
 		vendor.setDescription(scotchWorldStore.getDescription());
-		vendor.setSiteUrl(ScotchWorldUtil.formatSiteURL(scotchWorldStore.getStoreURL()));
+		vendor.setSiteUrl(scotchWorldStore.getStoreURL());
 		vendor.setLogoUrl(scotchWorldStore.getStoreName() + ".jpg");
 		vendor.setVendorType(VendorType.GLOBAL);
 		vendor.setSourceType(SourceType.REDSCOTCH);

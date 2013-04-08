@@ -23,6 +23,7 @@ public class ScotchWorldUtil {
 			storeURL = storeURL.substring(0, storeURL.indexOf("?", "http://".length()));
 		}
 
+		storeURL = storeURL.replace("//www.", "//");
 		storeURL = storeURL.replace("http://", "");
 		storeURL = storeURL.replace("https://", "");
 		storeURL = storeURL.replace("https:/", "");
