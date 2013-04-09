@@ -284,7 +284,10 @@ public class OfferAction extends CommonAction{
 		fbPostVO.setCaption("offerdiary.com");
 		fbPostVO.setDescription(offerShareVO.getOffer().getDescription() + " (Shared via Offer Diary)");
 		fbPostVO.setLink(absoluteSharedURL);
-		fbPostVO.setPictureURL("");
+		if(CommonUtilities.isNotEmpty(offerShareVO.getOffer().getTargetVendor().getLogoUrl())) {
+			String pictureUrl = "/iamges/stores/" + offerShareVO.getOffer().getTargetVendor().getLogoUrl();
+			fbPostVO.setPictureURL(getAbsoluteURL(req, pictureUrl));
+		}
 		fbPostVO.setName("Offer From - " + offerShareVO.getOffer().getTargetVendor().getName());
 		fbPostVO.setRedirectURI(getAbsoluteURL(req, ""));
 		offerShareVO.setFbPost(fbPostVO);
