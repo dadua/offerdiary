@@ -202,10 +202,10 @@
 	        <div class="container">
 		        <div class="row">
 		            <div class="description span4">
-		                <h1 class="bluishText">Get timely Notifications</h1>
+		                <h1 class="bluishText">Notifications</h1>
 		                <div class="lead">
 	                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Get offer expiry notifications via email</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</div>
 		                </div>
 		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 		            </div>
