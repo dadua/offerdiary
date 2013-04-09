@@ -40,7 +40,7 @@
         <%@include file="/common/pages/featureTabsRow.jsp" %>
         <div class="row">
             <div class="span2" >
-                <div class="container-fluid options-left-container">
+                <div class="span2 container-fluid options-left-container">
                     <ul class="nav nav-list offerFilters">
                         <li class="nav-header">My Offers:</li>
                         <li class="active validOffers"><a href="#">Valid</a></li>
