@@ -114,14 +114,18 @@
 		padding: 0;
 		border: 1px solid #DDDDDD;
 		position: fixed;
-		width: 180px;
-		left: -5px;
+		width: 135px;
+		left: -10px;
 		background-color: #FAFAFA;
 	    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
 	    background-repeat: repeat-x;
 	}
 	.scroller > .divider {
 		margin: 2px 1px;
+	}
+
+	.itemContainer {
+		margin-left: 70px;
 	}
 	</style>
 	
@@ -138,9 +142,9 @@
 		<ul class="nav scroller nav-list">
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>
-			<li class="navScroller myOffersNav"><a href="#">My Offers <i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller myOffersNav"><a href="#">My Offers<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
-			<li class="navScroller shareNav"><a  href="#go-to-share">Share With Friends<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller shareNav"><a  href="#go-to-share">Share<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
 			<li class="navScroller notificationsNav"><a  href="#go-to-notifications">Notifications<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
@@ -151,92 +155,100 @@
 	<div id="features">
 	    <div id="myOffers" class="featureItem">
 	        <div class="container">
-		        <div class="row">
-		            <div class="description span4">
-		            	<br>
-		            	<br>
-		                <h1 class="bluishText">My Offers</h1>
-		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Manage your offers, coupons and deals</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></div>
-		                </div>
-		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
-		            </div>
-		        	<div class="span8">
-				        <img src="images/home/my_offers.png" alt="My Offers">
+	        	<div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			            	<br>
+			            	<br>
+			                <h1 class="bluishText">My Offers</h1>
+			                <div class="lead">
+		                        <div class="explanation"><span class="correct">&#10004;</span>Manage your offers, coupons and deals</div>
+		                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></div>
+			                </div>
+			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
+			            </div>
+			        	<div class="span8">
+					        <img src="images/home/my_offers.png" alt="My Offers">
+				        </div>
 			        </div>
-		        </div>
-		        <div class="row" style="position:relative">
-		        	<hr>
-		        	<div id="go-to-share" class="goDown">
-		        		<i class="icon-chevron-down icon-white"></i>
-		        	</div>
-		        </div>
+			        <div class="row-fluid" style="position:relative">
+			        	<hr>
+			        	<div id="go-to-share" class="goDown">
+			        		<i class="icon-chevron-down icon-white"></i>
+			        	</div>
+			        </div>
+			     </div>
 		     </div>
 	    </div>
 	    <div id="share" class="featureItem">
 		    <div class="container">
-		        <div class="row">
-		            <div class="description span4">
-		                <h1 class="bluishText">Share with Friends</h1>
-		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share via Facebook</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share via Email</div>
-		                </div>
-		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
-		            </div>
-			        <div class="span8">
-				        <img src="images/home/share_offer.png" alt="">
+			    <div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			                <h1 class="bluishText">Share with Friends</h1>
+			                <div class="lead">
+		                        <div class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</div>
+		                        <div class="explanation"><span class="correct">&#10004;</span>Share via Facebook</div>
+		                        <div class="explanation"><span class="correct">&#10004;</span>Share via Email</div>
+			                </div>
+			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
+			            </div>
+				        <div class="span8">
+					        <img src="images/home/share_offer.png" alt="">
+				        </div>
 			        </div>
-		        </div>
-		        <div class="row" style="position:relative">
-		        	<hr>
-		        	<div id="go-to-notifications" class="goDown">
-		        		<i class="icon-chevron-down icon-white"></i>
-		        	</div>
-		        </div>
+			        <div class="row-fluid" style="position:relative">
+			        	<hr>
+			        	<div id="go-to-notifications" class="goDown">
+			        		<i class="icon-chevron-down icon-white"></i>
+			        	</div>
+			        </div>
+			    </div>
 		    </div>
 	    </div>
 	    <div id="notifications" class="featureItem">
 	        <div class="container">
-		        <div class="row">
-		            <div class="description span4">
-		                <h1 class="bluishText">Notifications</h1>
-		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</div>
-		                </div>
-		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
-		            </div>
-			        <div class="span8">
-				        <img src="images/home/offer_expiry.png" alt="">
+		        <div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			                <h1 class="bluishText">Notifications</h1>
+			                <div class="lead">
+		                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
+		                        <div class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</div>
+			                </div>
+			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
+			            </div>
+				        <div class="span8">
+					        <img src="images/home/offer_expiry.png" alt="">
+				        </div>
 			        </div>
-		        </div>
-		        <div class="row" style="position:relative">
-		        	<hr>
-		        	<div id="go-to-cardOffers" class="goDown">
-		        		<i class="icon-chevron-down icon-white"></i>
-		        	</div>
-		        </div>
+			        <div class="row-fluid" style="position:relative">
+			        	<hr>
+			        	<div id="go-to-cardOffers" class="goDown">
+			        		<i class="icon-chevron-down icon-white"></i>
+			        	</div>
+			        </div>
+			   </div>
 		    </div>
 	    </div>
 	    <div id="cardOffers" class="featureItem">
 	        <div class="container">
-		        <div class="row">
-		            <div class="description span4">
-		                <h1 class="bluishText">Card Offers</h1>
-		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</div>
-		                </div>
-		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
-		            </div>
-			        <div class="span8">
-				        <img src="images/home/card_offers.png" alt="">
+		        <div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			                <h1 class="bluishText">Card Offers</h1>
+			                <div class="lead">
+		                        <div class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</div>
+		                        <div class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</div>
+			                </div>
+			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
+			            </div>
+				        <div class="span8">
+					        <img src="images/home/card_offers.png" alt="">
+				        </div>
 			        </div>
 		        </div>
-	        </div>
+		   </div>
 	    </div>            
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
