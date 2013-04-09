@@ -157,8 +157,8 @@
 		            	<br>
 		                <h1 class="bluishText">My Offers</h1>
 		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Manage Your offers</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to wallet</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Manage your offers, coupons and deals</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></div>
 		                </div>
 		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 		            </div>
@@ -180,9 +180,9 @@
 		            <div class="description span4">
 		                <h1 class="bluishText">Share with Friends</h1>
 		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share Offers with your Friends</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share on Facebook</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Share on Email</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Share via Facebook</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Share via Email</div>
 		                </div>
 		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 		            </div>
@@ -202,10 +202,10 @@
 	        <div class="container">
 		        <div class="row">
 		            <div class="description span4">
-		                <h1 class="bluishText">Notifications</h1>
+		                <h1 class="bluishText">Get timely Notifications</h1>
 		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Offer Expiry Notification on email</div>
-	                        <div class="explanation"><span class="correct">&#10004;</span>Offers Expiring in Next 7 days</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Get offer expiry notifications via email</div>
 		                </div>
 		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 		            </div>
@@ -227,7 +227,8 @@
 		            <div class="description span4">
 		                <h1 class="bluishText">Card Offers</h1>
 		                <div class="lead">
-	                        <div class="explanation"><span class="correct">&#10004;</span>Know Offers available on your cards</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</div>
+	                        <div class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</div>
 		                </div>
 		                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 		            </div>
