@@ -2,6 +2,7 @@
 		<%@include file="/common/pages/jqueryAllInclude.html" %>
 		<%@include file="/common/pages/bootstrapHeadInclude.jsp" %>
 		<%@include file="/common/pages/fb/fbLoginAboveHeadJs.jsp" %>
+		<%@include file="/common/pages/googleanalytics.html" %>
 		<link rel="shortcut icon" href="favicon.ico" />
 		<script type="text/javascript">
 			$(function() {
