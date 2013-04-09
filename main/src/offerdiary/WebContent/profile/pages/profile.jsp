@@ -29,7 +29,7 @@
 			<%@include file="/common/pages/featureTabsRow.jsp" %>
 			<div class="row">
 				<div class="span2" >
-                	<div class="container-fluid options-left-container">
+                	<div class="span2 container-fluid options-left-container">
                 		<div class="img-polaroid">
                 		<%--
                 			<img src="https://graph.facebook.com/alok.id/picture?type=large" />
