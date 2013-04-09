@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:ror="http://rorweb.com/0.1/" >
+<channel>
+  <title>Sitemap for http://offerdiary.com/</title>
+  <link>http://offerdiary.com/</link>
+
+<item>
+     <link>http://offerdiary.com/</link>
+     <title>OfferDiary : Never miss an offer!</title>
+     <description>OfferDiary : Never miss an offer!</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>0</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>http://offerdiary.com/home.do</link>
+     <title>OfferDiary : Never miss an offer!</title>
+     <description>OfferDiary : Never miss an offer!</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+
+<item>
+     <link>http://offerdiary.com/signup.do</link>
+     <title>Sign Up to Offer Diary</title>
+     <description>Sign Up to Offer Diary</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>http://offerdiary.com/aboutUs.do</link>
+     <title>About Us</title>
+     <description>About Us</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>http://offerdiary.com/tnc.do</link>
+     <title>Terms and Conditions</title>
+     <description>Terms and Conditions</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+<item>
+     <link>http://offerdiary.com/privacy.do</link>
+     <title>Privacy</title>
+     <description>Privacy</description>
+     <ror:updatePeriod></ror:updatePeriod>
+     <ror:sortOrder>1</ror:sortOrder>
+     <ror:resourceOf>sitemap</ror:resourceOf>
+</item>
+</channel>
+</rss>
+  
