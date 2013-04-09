@@ -125,7 +125,7 @@
 	}
 
 	.itemContainer {
-		margin-left: 70px;
+		margin-left: 90px;
 	}
 	</style>
 	
