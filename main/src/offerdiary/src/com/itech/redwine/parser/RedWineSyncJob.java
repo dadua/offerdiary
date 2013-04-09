@@ -210,7 +210,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 		}
 
 		if (merchantName.endsWith(".com") || merchantName.endsWith(".in") || merchantName.endsWith(".org") || merchantName.endsWith(".co.in")) {
-			vendorUrl = "www." + merchantName.toLowerCase();
+			vendorUrl = "http://" + merchantName.toLowerCase();
 			String[] strings = merchantName.split("\\.");
 			vendorName = strings[0];
 		}

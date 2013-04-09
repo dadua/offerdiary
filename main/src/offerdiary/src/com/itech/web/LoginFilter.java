@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import com.itech.common.CommonUtilities;
 import com.itech.common.security.SecurityContext;
+import com.itech.config.ProjectConfigs;
 import com.itech.user.model.User;
 
 public class LoginFilter implements Filter {
@@ -68,6 +69,10 @@ public class LoginFilter implements Filter {
 		setFbDetails(httpRequest);
 
 		String reqUrl = httpRequest.getServletPath();
+		if (contextContainsWWW(httpRequest)) {
+			redirectToNormal(httpRequest, httpResponse);
+			return;
+		}
 		logger.debug(reqUrl);
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
@@ -108,13 +113,12 @@ public class LoginFilter implements Filter {
 	private void redirectToNormal(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
 		String reqUrl = httpRequest.getServletPath();
 		String queryString = httpRequest.getQueryString();
-		String serverName = httpRequest.getServerName();
-		String redirectURL  = serverName.replaceFirst("www.", "") + reqUrl;
+		//String serverName = httpRequest.getServerName();
+		String redirectURL  = ProjectConfigs.defaultServerUrl.get() + reqUrl;
 		if (CommonUtilities.isNotEmpty(queryString)) {
 			redirectURL  +="?"+queryString;
 		}
-		httpRequest.getSession().setAttribute("redirectURL", redirectURL);
-		httpResponse.sendRedirect("login.do");
+		httpResponse.sendRedirect(redirectURL);
 		logger.debug("redirected to home: " + reqUrl);
 	}
 
