@@ -6,13 +6,14 @@
 			it.newUser = it.newUser || {};
 			
 			it.newUser.getCreds = function(){
-				var name$ = $('#name');
-				name =  name$.val();
-				var email$ = $('#email');
-				email=email$.val();
-				var password$ = $('#password');
-				password = password$.val();
-				returnNull = false;
+				var name$ = $('#name'),
+					name =  name$.val(),
+					email$ = $('#email'),
+					email=email$.val(),
+					password$ = $('#password'),
+					password = password$.val(),
+					returnNull = false;
+				
 				if (name=== '') {
 					name$.siblings('.help-inline').show().hide('fade', 10000);
 					name$.parent().addClass('error').removeClass('error', 10000);
@@ -54,17 +55,17 @@
 			$(function(){
 				$('#signup').click(it.newUser.signUp);
 				var $invalidErrorMsg = $('#invalidUserNamePassword'),
-				callLoginOnEnter = function(e) {
-					$(this).siblings('.help-inline').hide().parent().removeClass('error');
-					$invalidErrorMsg.hide();
-					var code = e.keyCode ? e.keyCode : e.which;
-					if(code.toString() == 13) {
-						it.user.login();
-					}
-				}
-				$('#name').keypress(callLoginOnEnter);
-				$('#email').keypress(callLoginOnEnter);
-				$('#password').keypress(callLoginOnEnter);
+					callSignupOnEnter = function(e) {
+						$(this).siblings('.help-inline').hide().parent().removeClass('error');
+						$invalidErrorMsg.hide();
+						var code = e.keyCode ? e.keyCode : e.which;
+						if(code.toString() == 13) {
+						    it.newUser.signUp();
+						}
+					};
+				$('#name').keypress(callSignupOnEnter);
+				$('#email').keypress(callSignupOnEnter);
+				$('#password').keypress(callSignupOnEnter);
 			});
 			
 			
