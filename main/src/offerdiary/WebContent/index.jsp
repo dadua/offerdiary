@@ -114,8 +114,7 @@
 		padding: 0;
 		border: 1px solid #DDDDDD;
 		position: fixed;
-		width: 135px;
-		left: -10px;
+		left: -30px;
 		background-color: #FAFAFA;
 	    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
 	    background-repeat: repeat-x;
@@ -138,7 +137,7 @@
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
-	<div class="scrollFeatures">
+	<div class="scrollFeatures span2">
 		<ul class="nav scroller nav-list">
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>

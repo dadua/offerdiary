@@ -4,7 +4,7 @@ body {
 
 body {
 	/*BS Accounts*/
-	padding-top: 165px;
+	padding-top: 110px;
 	font-family: 'Open Sans', 'lucida sans unicode', 'lucida grande', 'Trebuchet MS', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -26,7 +26,7 @@ input, button, select, textarea {
 	 border-left: 1px solid #DDDDDD;
 	 border-right: 1px solid #DDDDDD;
 	 padding-top: 20px;
-	 min-height: 400px;
+	 min-height: 550px;
 	 margin-left: 16px;
 }
 
@@ -54,4 +54,8 @@ input, button, select, textarea {
 		
 .modal-backdrop {
 	background-color: #FDFDFD;
+}
+
+#actionInfoRow {
+	margin-bottom: 5px;
 }
