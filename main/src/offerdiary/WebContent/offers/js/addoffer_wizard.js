@@ -69,17 +69,20 @@ it.offer.addwizard = function () {
         offerDetailsStep.setTitle('Benefits');
         offerDetailsStep.setHtmlTemplateSelector('#benefitDetailsTemplate');
         offerDetailsStep.setPlotHtmlFromDataCb(function(data) {
-            //TODO: This check might break edit case when data.code is undefined
-            // but data.description is available..
-            // Then the description value would be set to ''
-            if (data && data.code && data.description) {
-                //TODO: fill description etc..
-                offerDetailsStep.$('#offerDescription').val(data.description);
-                offerDetailsStep.$('#offerCode').val(data.code);
-            } else {
-                offerDetailsStep.$('#offerDescription').val('');
-                offerDetailsStep.$('#offerCode').val('');
-            }
+            offerDetailsStep.$('#offerCode').val('');
+            offerDetailsStep.$('#offerDescription').val('');
+            offerDetailsStep.$('#offerUrl').val('');
+            if (data) {
+            	if(data.code) {
+            		offerDetailsStep.$('#offerCode').val(data.code);
+            	} 
+            	if(data.description) {
+            		offerDetailsStep.$('#offerDescription').val(data.description);
+            	} 
+            	if (data.offerLink) {
+            		offerDetailsStep.$('#offerUrl').val(data.offerLink);
+            	}
+            } 
         });
         offerDetailsStep.setStepValidator(function() {
             var isValidated = true;
@@ -90,11 +93,13 @@ it.offer.addwizard = function () {
         });
         offerDetailsStep.setFetchDataFromHtmlCb(function() {
             var code = offerDetailsStep.$('#offerCode').val(),
-                description = offerDetailsStep.$('#offerDescription').val();
+                description = offerDetailsStep.$('#offerDescription').val(),
+                offerUrl =  offerDetailsStep.$('#offerUrl').val();
 
             return {
                 code: code,
-                description: description
+                description: description,
+                offerLink: offerUrl
             };
 
         });
