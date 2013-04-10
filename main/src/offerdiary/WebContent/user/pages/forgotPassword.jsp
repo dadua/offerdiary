@@ -78,6 +78,10 @@
 				line-height: 1.6em;
 			}
 			<%@include file="/common/css/layout.css" %>
+			body {
+				padding-top: 165px;
+			}
+			
 		</style>
 	</head>
 	<body>

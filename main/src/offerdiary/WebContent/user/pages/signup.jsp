@@ -96,6 +96,10 @@
 			}
 			<%@include file="/common/css/layout.css" %>
 			
+			body {
+				padding-top: 165px;
+			}
+			
 		</style>
 	
 <%@include file="/common/pages/bodyBegin.jsp" %>
