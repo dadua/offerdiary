@@ -30,6 +30,11 @@ input, button, select, textarea {
 	 margin-left: 16px;
 }
 
+.content-container > .container-fluid {
+	padding-left: 5%;
+}
+
+
 .ui-autocomplete-loading {
     background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
 }
