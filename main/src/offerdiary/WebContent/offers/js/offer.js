@@ -238,7 +238,8 @@ it.offer.saveOfferFromWizard= function (offerData) {
         offerCode: offerData.code,
         description: offerData.description,
         expiryDateInMillis: offerData.expiryDateInMillis,
-        targetVendor: offerData.vendor
+        targetVendor: offerData.vendor,
+        offerLink: offerData.offerLink
     },
     offers = [];
     offers.push(offerVO);

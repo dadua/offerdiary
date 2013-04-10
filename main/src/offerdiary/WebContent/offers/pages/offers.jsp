@@ -131,6 +131,13 @@
                         <input id="offerCode" type="text" placeholder="Offer Code" />
                     </div>
                 </div>
+                
+                 <div class="control-group">
+                    <label class="control-label bluishText" for="offerUrl">Offer URL:</label>
+                    <div class="controls">
+                        <input id="offerUrl" placeholder="Offer Link" type="text"></input>
+                    </div>
+                </div>
 
                 <div class="control-group">
                     <label class="control-label bluishText" for="offerDescription">Offer Description:</label>
