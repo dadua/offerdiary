@@ -50,7 +50,7 @@ public class VendorAction extends CommonAction{
 		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);
 		List<VendorVO> vendorVOs = getVendorVOsfrom(vendors);
 		Result<List<VendorVO>> result = new Result<List<VendorVO>>(vendorVOs);
-		Type type = new TypeToken<Result<List<Vendor>>>() { }.getType();
+		Type type = new TypeToken<Result<List<VendorVO>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
 	}
 
