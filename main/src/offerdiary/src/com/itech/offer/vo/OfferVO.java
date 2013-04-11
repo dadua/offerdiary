@@ -2,9 +2,9 @@ package com.itech.offer.vo;
 
 import java.sql.Date;
 
+import com.itech.common.UrlUtils;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.Offer.OfferSourceType;
-import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.DiscountType;
 import com.itech.offer.model.enums.OfferType;
 
@@ -34,11 +34,11 @@ public class OfferVO {
 
 	private OfferType offerType = OfferType.OFFER; //coupon, voucher, offer
 
-	private Vendor targetVendor;
+	private VendorVO targetVendor;
 
 	private String imageSource;
 
-	private Vendor sourceVendor;
+	private VendorVO sourceVendor;
 
 	private Boolean isOnlineOffer;
 
@@ -70,6 +70,9 @@ public class OfferVO {
 
 
 	public static OfferVO getOfferVOFor(Offer offer) {
+		if (offer == null) {
+			return null;
+		}
 		OfferVO offerVO = new OfferVO();
 		offerVO.setId(offer.getUniqueId());
 		offerVO.setByUniqueId(true);
@@ -83,15 +86,16 @@ public class OfferVO {
 		offerVO.setIsOnlineOffer(offer.isOnlineOffer());
 		offerVO.setLocation(offer.getLocation());
 		offerVO.setOfferCode(offer.getOfferCode());
-		offerVO.setSourceVendor(offer.getSourceVendor());
-		offerVO.setTargetVendor(offer.getTargetVendor());
 		offerVO.setTermsAndConditions(offer.getTermsAndConditions());
 		offerVO.setTitle(offer.getTitle());
 		offerVO.setUniqueId(offer.getUniqueId());
 		offerVO.setAssociatedWithLoggedInUser(offer.isAssociatedWithLoggedInUser());
 		offerVO.setSourceType(offer.getSourceType());
 		offerVO.setSource(offer.getSource());
-		offerVO.setOfferLink(offer.getOfferLink());
+		offerVO.setOfferLink(UrlUtils.getHttpPrefixedUrl(offer.getOfferLink()));
+
+		offerVO.setSourceVendor(VendorVO.getVendorVOFor(offer.getSourceVendor()));
+		offerVO.setTargetVendor(VendorVO.getVendorVOFor(offer.getTargetVendor()));
 		return offerVO;
 	}
 
@@ -211,12 +215,12 @@ public class OfferVO {
 	}
 
 
-	public Vendor getTargetVendor() {
+	public VendorVO getTargetVendor() {
 		return targetVendor;
 	}
 
 
-	public void setTargetVendor(Vendor targetVendor) {
+	public void setTargetVendor(VendorVO targetVendor) {
 		this.targetVendor = targetVendor;
 	}
 
@@ -231,12 +235,12 @@ public class OfferVO {
 	}
 
 
-	public Vendor getSourceVendor() {
+	public VendorVO getSourceVendor() {
 		return sourceVendor;
 	}
 
 
-	public void setSourceVendor(Vendor sourceVendor) {
+	public void setSourceVendor(VendorVO sourceVendor) {
 		this.sourceVendor = sourceVendor;
 	}
 

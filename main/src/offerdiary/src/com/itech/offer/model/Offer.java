@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.itech.common.UrlUtils;
 import com.itech.common.db.PersistableEntity;
 import com.itech.offer.model.enums.DiscountType;
 import com.itech.offer.model.enums.OfferType;
@@ -440,7 +439,7 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 
 	public String getOfferLink() {
-		return UrlUtils.getHttpPrefixedUrl(offerLink);
+		return offerLink;
 	}
 
 

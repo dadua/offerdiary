@@ -1,6 +1,7 @@
 package com.itech.offer.web;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.model.Vendor;
+import com.itech.offer.vo.VendorVO;
 
 @Controller
 public class VendorAction extends CommonAction{
@@ -46,8 +48,18 @@ public class VendorAction extends CommonAction{
 	public Response searchVendors (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorSearchString = req.getParameter(VENDOR_NAME_SEARCH_KEY);
 		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);
-		Result<List<Vendor>> result = new Result<List<Vendor>>(vendors);
+		List<VendorVO> vendorVOs = getVendorVOsfrom(vendors);
+		Result<List<VendorVO>> result = new Result<List<VendorVO>>(vendorVOs);
 		Type type = new TypeToken<Result<List<Vendor>>>() { }.getType();
 		return new CommonBeanResponse(result, type);
+	}
+
+	private List<VendorVO> getVendorVOsfrom(List<Vendor> vendors) {
+		List<VendorVO> vendorVOs = new ArrayList<VendorVO>();
+		for (Vendor vendor : vendors) {
+			vendorVOs.add(VendorVO.getVendorVOFor(vendor));
+		}
+		return vendorVOs;
+		return null;
 	}
 }
