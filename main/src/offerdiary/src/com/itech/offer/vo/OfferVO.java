@@ -66,6 +66,8 @@ public class OfferVO {
 
 	private String source;
 
+	private String offerLink;
+
 
 	public static OfferVO getOfferVOFor(Offer offer) {
 		OfferVO offerVO = new OfferVO();
@@ -89,6 +91,7 @@ public class OfferVO {
 		offerVO.setAssociatedWithLoggedInUser(offer.isAssociatedWithLoggedInUser());
 		offerVO.setSourceType(offer.getSourceType());
 		offerVO.setSource(offer.getSource());
+		offerVO.setOfferLink(offer.getOfferLink());
 		return offerVO;
 	}
 
@@ -375,6 +378,16 @@ public class OfferVO {
 
 	public void setSource(String source) {
 		this.source = source;
+	}
+
+
+	public void setOfferLink(String offerLink) {
+		this.offerLink = offerLink;
+	}
+
+
+	public String getOfferLink() {
+		return offerLink;
 	}
 
 }

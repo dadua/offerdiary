@@ -126,6 +126,12 @@
 	.itemContainer {
 		margin-left: 90px;
 	}
+	
+	.heading {
+		font-size:3.1em;
+		line-height: 1.2em;
+	}
+	
 	</style>
 	
 	<%--
@@ -159,9 +165,12 @@
 			            <div class="description span4">
 			            	<br>
 			            	<br>
-			                <h1 class="bluishText">My Offers</h1>
+			                <div class="heading bluishText">My Offers</div>
 			                <div class="lead">
-		                        <div class="explanation"><span class="correct">&#10004;</span>Manage your offers, coupons and deals</div>
+		                        <div class="explanation">
+		                        	<span class="correct">&#10004;</span>
+		                        	Manage your offers, coupons and deals
+		                        </div>
 		                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></div>
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
@@ -184,7 +193,7 @@
 			    <div class="container-fluid itemContainer">
 			        <div class="row-fluid">
 			            <div class="description span4">
-			                <h1 class="bluishText">Share with Friends</h1>
+			                <div class="heading bluishText">Share with Friends</div>
 			                <div class="lead">
 		                        <div class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</div>
 		                        <div class="explanation"><span class="correct">&#10004;</span>Share via Facebook</div>
@@ -210,7 +219,7 @@
 		        <div class="container-fluid itemContainer">
 			        <div class="row-fluid">
 			            <div class="description span4">
-			                <h1 class="bluishText">Notifications</h1>
+			                <div class="heading bluishText">Notifications</div>
 			                <div class="lead">
 		                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
 		                        <div class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</div>
@@ -235,7 +244,7 @@
 		        <div class="container-fluid itemContainer">
 			        <div class="row-fluid">
 			            <div class="description span4">
-			                <h1 class="bluishText">Card Offers</h1>
+			                <div class="heading bluishText">Card Offers</div>
 			                <div class="lead">
 		                        <div class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</div>
 		                        <div class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</div>
