@@ -4,17 +4,18 @@ public class UrlUtils {
 
 
 	private static final String HTTP_PREFIX = "http://";
+	private static final String HTTPS_PREFIX = "https://";
 
 	public static String getHttpPrefixedUrl (String url) {
 		if (CommonUtilities.isNullOrEmpty(url)) {
 			return url;
-		} else {
-			if (url.toLowerCase().trim().startsWith(HTTP_PREFIX)) {
-				return url;
-			} else {
-				return HTTP_PREFIX + url.trim();
-			}
 		}
+
+		if (url.toLowerCase().trim().startsWith(HTTP_PREFIX) || url.toLowerCase().trim().startsWith(HTTPS_PREFIX)) {
+			return url;
+		}
+
+		return HTTP_PREFIX + url.trim();
 	}
 
 }

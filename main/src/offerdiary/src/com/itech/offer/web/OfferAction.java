@@ -98,34 +98,7 @@ public class OfferAction extends CommonAction{
 		return searchOffers(req, resp);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="getOffersOnMyCards.do")
-	@Deprecated
-	public Response getOffersOnMyCards (HttpServletRequest req, HttpServletResponse resp) {
-		User loggedInUser = getLoggedInUser();
-		OfferSearchResultVO offers = null;
-		if (loggedInUser != null) {
-			offers = getOfferManager().getAllOffersOnCardsForUser(loggedInUser);
-		} else {
-			offers = null;
-		}
-		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
-		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
-		return new CommonBeanResponse(result, type);
-	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="getOffersOnCard.do")
-	@Deprecated
-	public Response getOffersOnCard (HttpServletRequest req, HttpServletResponse resp) {
-		String offerCardId = req.getParameter(OfferWalletConstants.OFFER_CARD_ID_PARAM_KEY);
-		Long cardId = Long.parseLong(offerCardId);
-		OfferSearchResultVO offers = getOfferManager().getAllOffersForCard(cardId);
-		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
-		result.setMsg("Got offers on cards");
-		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
-		return new CommonBeanResponse(result, type);
-	}
 
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -292,5 +265,63 @@ public class OfferAction extends CommonAction{
 		fbPostVO.setRedirectURI(getAbsoluteURL(req, ""));
 		offerShareVO.setFbPost(fbPostVO);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	//	@ActionMapping(value="getOffersOnMyCards.do")
+	//	@Deprecated
+	//	public Response getOffersOnMyCards (HttpServletRequest req, HttpServletResponse resp) {
+	//		User loggedInUser = getLoggedInUser();
+	//		OfferSearchResultVO offers = null;
+	//		if (loggedInUser != null) {
+	//			offers = getOfferManager().getAllOffersOnCardsForUser(loggedInUser);
+	//		} else {
+	//			offers = null;
+	//		}
+	//		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
+	//		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
+	//		return new CommonBeanResponse(result, type);
+	//	}
+	//
+	//	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	//	@ActionMapping(value="getOffersOnCard.do")
+	//	@Deprecated
+	//	public Response getOffersOnCard (HttpServletRequest req, HttpServletResponse resp) {
+	//		String offerCardId = req.getParameter(OfferWalletConstants.OFFER_CARD_ID_PARAM_KEY);
+	//		Long cardId = Long.parseLong(offerCardId);
+	//		OfferSearchResultVO offers = getOfferManager().getAllOffersForCard(cardId);
+	//		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
+	//		result.setMsg("Got offers on cards");
+	//		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
+	//		return new CommonBeanResponse(result, type);
+	//	}
+	//
+	//
 
 }
