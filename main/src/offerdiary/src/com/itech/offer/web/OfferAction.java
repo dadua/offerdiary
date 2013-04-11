@@ -123,7 +123,7 @@ public class OfferAction extends CommonAction{
 		if (accessToken != null) {
 			newOffer = getOfferManager().addSharedOfferToWallet(accessToken, getLoggedInUser());
 		}
-		return new Redirect("wallet.do");
+		return new Redirect("diary.do");
 	}
 
 
