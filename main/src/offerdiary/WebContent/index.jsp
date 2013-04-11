@@ -29,6 +29,7 @@
 		    var goToShare$ = $('#go-to-share'),
 		    	goToNotifications$ = $('#go-to-notifications'),
 		    	goToCards$ = $('#go-to-cardOffers'),
+		    	goToFeedback$ = $('#go-to-feedback'),
 		    	window$ = $(window);
 		    
 		    window$.scroll(function (e) {
@@ -40,7 +41,8 @@
 					offset = 95,
 					shareTop = goToShare$.offset().top - offset,
 					notificationsTop = goToNotifications$.offset().top - offset,
-					cardsTop = goToCards$.offset().top - offset;
+					cardsTop = goToCards$.offset().top - offset,
+					feedbackTop = goToFeedback$.offset().top - offset - 90;
 				
 				if (windowTop>=0 && windowTop < shareTop) {
 				    $('.navScroller').removeClass('active');
@@ -51,9 +53,12 @@
 				} else if (windowTop>= notificationsTop && windowTop < cardsTop) {
 				    $('.navScroller').removeClass('active');
 				    $('.notificationsNav').addClass('active');
-				} else if (windowTop>= cardsTop) {
+				} else if (windowTop>= cardsTop && windowTop < feedbackTop) {
 				    $('.navScroller').removeClass('active');
 				    $('.cardOffersNav').addClass('active');
+				} else if (windowTop >= feedbackTop) {
+				    $('.navScroller').removeClass('active');
+				    $('.feedBackNav').addClass('active');
 				}
 			
 		    };
@@ -132,6 +137,23 @@
 		line-height: 1.2em;
 	}
 	
+	.greenishText {
+		color: #62C462;
+	}
+	
+	
+	.navScroller.nav-header.feedBackNav  {
+		margin-top: 0px;
+	}
+	
+	.navScroller.nav-header.feedBackNav > a {
+		color: #999999;
+	}
+	
+	.navScroller.feedBackNav.active > a {
+	    color: lightgreen;
+	}
+	
 	</style>
 	
 	<%--
@@ -147,6 +169,7 @@
 		<ul class="nav scroller nav-list">
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>
+			<li class="divider"></li>
 			<li class="navScroller myOffersNav"><a href="#">My Offers<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
 			<li class="navScroller shareNav"><a  href="#go-to-share">Share<i class="pull-right icon-arrow-right icon-white"></i></a></li>
@@ -154,7 +177,9 @@
 			<li class="navScroller notificationsNav"><a  href="#go-to-notifications">Notifications<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
 			<li class="navScroller cardOffersNav"><a  href="#go-to-cardOffers">Card Offers<i class="pull-right icon-arrow-right icon-white"></i></a></li>
-			
+			<li class="divider"></li>
+			<li class="divider"></li>
+			<li class="navScroller nav-header feedBackNav"><a  href="#go-to-feedback"> Feedback<i class="pull-right icon-arrow-right icon-white"></i></a></li>
 		</ul>
 	</div>
 	<div id="features">
@@ -255,8 +280,52 @@
 					        <img src="images/home/card_offers.png" alt="">
 				        </div>
 			        </div>
+			        <div class="row-fluid" style="position:relative">
+			        	<hr>
+			        	<div id="go-to-feedback" class="goDown">
+			        		<i class="icon-chevron-down icon-white"></i>
+			        	</div>
+			        </div>
 		        </div>
 		   </div>
 	    </div>            
+	    
+	    <div id="feedback" class="featureItem">
+	        <div class="container">
+		        <div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			                <div class="heading greenishText">Feedback</div>
+			            </div>
+			        </div>
+			        <div class="row-fluid">
+				        <div class="lead ">
+					        <div class="explanation">Drop in your thoughts: </div>
+					    </div>
+			        </div>
+			        <div class="row-fluid">
+			        	<div class="container-fluid">
+			        		<div class="row-fluid">
+					        	<div class="span2">
+					        		<a href="https://www.facebook.com/offerdiary" target="_blank">
+					        			<img src="images/home/facebook.png" class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        		</a>
+					        	</div>
+					        	<div class="span2">
+					        		<a href="https://www.twitter.com/offerdiary"  target="_blank">
+					        			<img src="images/home/twitter.png"  class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        		</a>
+					        	</div>
+					        	<div class="span2">
+					        		<a href="mailto:support@offerdiary.com"  target="_blank">
+					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        		</a>
+					        	</div>
+				        	</div>
+			        	</div>
+			        </div>
+		        </div>
+		   </div>
+	    </div> 
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
