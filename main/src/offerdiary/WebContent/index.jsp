@@ -119,7 +119,9 @@
 		padding: 0;
 		border: 1px solid #DDDDDD;
 		position: fixed;
-		left: -30px;
+		width: 135px;
+		/*width: 9%;*/
+        left: -13px;
 		background-color: #FAFAFA;
 	    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
 	    background-repeat: repeat-x;
@@ -127,6 +129,12 @@
 	.scroller > .divider {
 		margin: 2px 1px;
 	}
+	
+	.navScroller > a {
+		padding-right: 0;
+	}
+	
+	
 
 	.itemContainer {
 		margin-left: 90px;
@@ -165,21 +173,21 @@
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
-	<div class="scrollFeatures span2">
+	<div class="scrollFeatures">
 		<ul class="nav scroller nav-list">
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>
 			<li class="divider"></li>
-			<li class="navScroller myOffersNav"><a href="#">My Offers<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller myOffersNav"><a href="#">My Offers<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
-			<li class="navScroller shareNav"><a  href="#go-to-share">Share<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller shareNav"><a  href="#go-to-share">Share<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
-			<li class="navScroller notificationsNav"><a  href="#go-to-notifications">Notifications<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller notificationsNav"><a  href="#go-to-notifications">Notifications<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
-			<li class="navScroller cardOffersNav"><a  href="#go-to-cardOffers">Card Offers<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller cardOffersNav"><a  href="#go-to-cardOffers">Card Offers<i class="pull-right hide icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
 			<li class="divider"></li>
-			<li class="navScroller nav-header feedBackNav"><a  href="#go-to-feedback"> Feedback<i class="pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller nav-header feedBackNav"><a  href="#go-to-feedback"> Feedback<i class="pull-right hide icon-arrow-right icon-white"></i></a></li>
 		</ul>
 	</div>
 	<div id="features">
