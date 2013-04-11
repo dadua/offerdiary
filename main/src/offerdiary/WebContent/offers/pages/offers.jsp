@@ -133,7 +133,7 @@
                 </div>
                 
                  <div class="control-group">
-                    <label class="control-label bluishText" for="offerUrl">Offer URL:</label>
+                    <label class="control-label bluishText" for="offerUrl">Offer Link:</label>
                     <div class="controls">
                         <input id="offerUrl" placeholder="Offer Link" type="text"></input>
                     </div>

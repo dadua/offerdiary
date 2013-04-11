@@ -125,13 +125,25 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
     offerTemplate$.find('.offerDetail').attr('id', 'offerDetail_' + offer.id);
+    
+    var isOfferDescriptionPresent = false;
+    if (typeof offer.description == 'string' && offer.description != '') {
+	    offerTemplate$.find('.offerDesc').html(offer.description);
+	    isOfferDescriptionPresent = true;
+    }
+    
+    if (typeof offer.offerLink == 'string' && offer.offerLink != '') {
+	    offerTemplate$.find('.offerUrl').attr({'href': offer.offerLink, 'target': '_blank'});
+	    if (!isOfferDescriptionPresent) {
+		    offerTemplate$.find('.offerDesc').html(offer.offerLink);
+	    }
+    }
 
     if (typeof offer.offerCode === 'string' && offer.offerCode !== '') {
         offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     } else {
         offerTemplate$.find('.offerCode').addClass('hide');
     }
-    offerTemplate$.find('.offerDesc').html(offer.description);
     return offerTemplate$;
 	
 };
