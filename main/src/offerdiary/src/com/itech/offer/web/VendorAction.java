@@ -60,6 +60,5 @@ public class VendorAction extends CommonAction{
 			vendorVOs.add(VendorVO.getVendorVOFor(vendor));
 		}
 		return vendorVOs;
-		return null;
 	}
 }
