@@ -50,6 +50,9 @@ public class LoginAction extends CommonAction{
 	@ActionMapping(value="login.do")
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute(PAGE_ATTR_KEY, "login");
+		if (getLoggedInUser()!=null) {
+			return new Redirect("diary.do");
+		}
 		return new Forward("user/pages/login.jsp");
 	}
 
@@ -58,6 +61,9 @@ public class LoginAction extends CommonAction{
 	public Response signup(HttpServletRequest req, HttpServletResponse resp) {
 
 		req.setAttribute(PAGE_ATTR_KEY, "signup");
+		if (getLoggedInUser()!=null) {
+			return new Redirect("diary.do");
+		}
 		return new Forward("user/pages/signup.jsp");
 	}
 
