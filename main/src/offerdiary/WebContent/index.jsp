@@ -244,7 +244,7 @@
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 			            </div>
 				        <div class="span8">
-					        <img src="images/home/share_offer.png" alt="">
+					        <img src="images/home/share_offer.png" alt="Share offers coupons with your friends">
 				        </div>
 			        </div>
 			        <div class="row-fluid" style="position:relative">
@@ -269,7 +269,7 @@
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 			            </div>
 				        <div class="span8">
-					        <img src="images/home/offer_expiry.png" alt="">
+					        <img src="images/home/offer_expiry.png" alt="Get timely notifications before expiry of coupons and offers">
 				        </div>
 			        </div>
 			        <div class="row-fluid" style="position:relative">
@@ -294,7 +294,7 @@
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 			            </div>
 				        <div class="span8">
-					        <img src="images/home/card_offers.png" alt="">
+					        <img src="images/home/card_offers.png" alt="Discover offers deals available on your Credit/Debit cards">
 				        </div>
 			        </div>
 			        <div class="row-fluid" style="position:relative">
@@ -325,17 +325,17 @@
 			        		<div class="row-fluid">
 					        	<div class="span2">
 					        		<a href="https://www.facebook.com/offerdiary" target="_blank">
-					        			<img src="images/home/facebook.png" class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        			<img src="images/home/facebook.png" class="img-polaroid img-rounded" alt="Offerdiary on https://www.facebook.com/offerdiary"/>
 					        		</a>
 					        	</div>
 					        	<div class="span2">
 					        		<a href="https://www.twitter.com/offerdiary"  target="_blank">
-					        			<img src="images/home/twitter.png"  class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        			<img src="images/home/twitter.png"  class="img-polaroid img-rounded" alt="Offerdiary on https://twitter.com/offerdiary"/>
 					        		</a>
 					        	</div>
 					        	<div class="span2">
 					        		<a href="mailto:support@offerdiary.com" >
-					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
+					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="Mail us at support@offerdiary.com"/>
 					        		</a>
 					        	</div>
 				        	</div>

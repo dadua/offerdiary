@@ -11,7 +11,7 @@ it.profile.userInfo.view = function(){
             dobMillis: '',
             city: '',
             emailId: '',
-            nickName: '',
+            nickname: '',
             mobileNumber: '',
             pinCode: ''
         }, userInfo);
@@ -20,7 +20,7 @@ it.profile.userInfo.view = function(){
         _userInfo$.find('.userCity').html(userInfo.city);
         _userInfo$.find('.userEmail').html(userInfo.emailId);
         _userInfo$.find('.dob').html(userInfo.dobMillis);
-        _userInfo$.find('.nickName').html(userInfo.nickName);
+        _userInfo$.find('.nickName').html(userInfo.nickname);
         _userInfo$.find('.pinCode').html(userInfo.pinCode);
         _userInfo$.find('.mobileNumber').html(userInfo.mobileNumber);
         return _userInfo$;
@@ -69,7 +69,7 @@ it.profile.userInfo.view = function(){
                             city: userCity,
                             mobileNumber: mobileNumber,
                             pinCode: pinCode,
-                            nickName: nickName
+                            nickname: nickName
                             //dob: dob, handle dobMillis
             };
 
