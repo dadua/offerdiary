@@ -41,7 +41,6 @@
 			}
 			
 			.footerLink{
-				color: #777777;
 				background-color: #FAFAFA;
 				font-size: .8em;
 			}

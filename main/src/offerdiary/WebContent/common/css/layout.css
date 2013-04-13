@@ -59,3 +59,13 @@ input, button, select, textarea {
 #actionInfoRow {
 	margin-bottom: 5px;
 }
+
+
+@media (max-width: 767px) {
+    .itemContainer {
+        margin-left: 20px;
+    }
+    body {
+		padding-top: 0px;
+	}
+}

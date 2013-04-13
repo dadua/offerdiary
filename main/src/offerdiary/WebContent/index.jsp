@@ -161,6 +161,15 @@
 	.navScroller.feedBackNav.active > a {
 	    color: lightgreen;
 	}
+
+        @media (max-width: 767px) {
+            .itemContainer {
+                margin-left: 20px;
+            }
+            body {
+				padding-top: 0px;
+			}
+        }
 	
 	</style>
 	
@@ -173,7 +182,7 @@
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
 	
-	<div class="scrollFeatures">
+	<div class="scrollFeatures hidden-phone">
 		<ul class="nav scroller nav-list">
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>
@@ -325,7 +334,7 @@
 					        		</a>
 					        	</div>
 					        	<div class="span2">
-					        		<a href="mailto:support@offerdiary.com"  target="_blank">
+					        		<a href="mailto:support@offerdiary.com" >
 					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="facebook.com/offerdiary"/>
 					        		</a>
 					        	</div>
