@@ -41,11 +41,15 @@
         				 
         				<img src="images/logo_tag.png" class="brandImage" alt="Offer Diary" />
         			</a>
-        			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        			
+        			
+        			<div class="btn btn-navbar topAlign pull-right" data-toggle="collapse" data-target=".nav-collapse">
 	        			<span class="icon-bar"></span>
 	        			<span class="icon-bar"></span>
 	        			<span class="icon-bar"></span>
-        			</a>
+        			</div>
+        			
+	
         			<div class="nav-collapse collapse">
 	        			<c:if test="${userSession!=null}">
 		     				<ul class="featureTabs nav nav-tabs" style="margin-left: 25px; margin-top:30px;color:#0088CC;">
@@ -68,12 +72,17 @@
 									<a href="profile.do" style="color:#0088CC;">Profile</a>
 								</li>
 								<li class="divider-vertical"></li>
+								<li class="visible-phone">
+									<a href="logout.do">
+									Logout
+									</a>
+								</li>
 							</ul>
 						</c:if>
 						
 						<c:choose>
 							<c:when test="${userSession !=null}">
-								<div class="topAlign pull-right btn-group" id="userContainer" style="margin-top: 2%;">
+								<div class="topAlign pull-right btn-group hidden-phone" id="userContainer" style="margin-top: 2%;">
 									<a class="btn btn-info" href="profile.do">
 										<c:choose>
 											<c:when test="${userSession.name != null}">
@@ -129,9 +138,11 @@
 								</div>
 							</c:otherwise>
 						</c:choose>
-						<div class="pull-right fbLikeContainer">
-							<div class="fb-like" data-href="https://www.facebook.com/offerdiary" data-send="false" data-layout="button_count" data-width="140" data-show-faces="false"></div>
-						</div>
+						
+					</div>
+					
+					<div class="fbLikeContainer hidden-phone topAlign pull-right">
+						<div class="fb-like" data-href="https://www.facebook.com/offerdiary" data-send="false" data-layout="button_count" data-width="140" data-show-faces="false"></div>
 					</div>
         		</div>
       		</div>
