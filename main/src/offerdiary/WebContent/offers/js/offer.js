@@ -128,17 +128,21 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     
     var isOfferDescriptionPresent = false;
     if (typeof offer.description == 'string' && offer.description != '') {
-	    offerTemplate$.find('.offerDesc').html(offer.description);
 	    isOfferDescriptionPresent = true;
     }
+    
     
     if (typeof offer.offerLink == 'string' && offer.offerLink != '') {
 	    offerTemplate$.find('.offerUrl').attr({'href': offer.offerLink, 'target': '_blank'});
 	    if (!isOfferDescriptionPresent) {
-		    offerTemplate$.find('.offerDesc').html(offer.offerLink);
+	    	offerTemplate$.find('.offerUrl').html(offer.offerLink);
+	    } else {
+	    	offerTemplate$.find('.offerUrl').html(offer.description);
 	    }
+    } else if (isOfferDescriptionPresent) {
+    	offerTemplate$.find('.offerDesc').html(offer.description);
     }
-
+    
     if (typeof offer.offerCode === 'string' && offer.offerCode !== '') {
         offerTemplate$.find('.offerCodeVal').html(offer.offerCode);
     } else {
