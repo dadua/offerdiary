@@ -52,8 +52,10 @@ it.offer.share.checkEmailAndToggle = function () {
     }
     if (isValidated) {
         share_offer$.find('.shareOfferBtn').removeClass('disabled');
+        share_offer$.find('.shareEmailContent').removeClass('warning').addClass('success').find('.help-inline, .help-block').addClass('invisible');
     } else {
         share_offer$.find('.shareOfferBtn').addClass('disabled');
+        share_offer$.find('.shareEmailContent').removeClass('success').addClass('warning').find('.help-inline, .help-block').removeClass('invisible');
     }
 };
 
