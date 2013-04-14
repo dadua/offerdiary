@@ -82,6 +82,16 @@
 				padding-top: 165px;
 			}
 			
+			@media (max-width: 767px) {
+			    .itemContainer {
+			        margin-left: 20px;
+			    }
+			    body {
+					padding-top: 0px;
+				}
+				
+			}
+			
 		</style>
 	</head>
 	<body>
