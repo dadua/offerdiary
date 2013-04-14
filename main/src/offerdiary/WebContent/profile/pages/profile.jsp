@@ -58,6 +58,8 @@
                 </div>
                 
 				<div class="span10 content-container"  >
+				
+
 					<div class="container-fluid" id="profileContainer" >
 					</div>
 				</div>

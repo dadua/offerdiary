@@ -1,5 +1,5 @@
 		<%@include file="/common/pages/fontsInclude.html" %>
-		<%@include file="/common/pages/jqueryAllInclude.html" %>
+		<%@include file="/common/pages/jqueryAllInclude.jsp" %>
 		<%@include file="/common/pages/bootstrapHeadInclude.jsp" %>
 		<%@include file="/common/pages/fb/fbLoginAboveHeadJs.jsp" %>
 		<%@include file="/common/pages/googleanalytics.html" %>
