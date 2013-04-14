@@ -133,6 +133,7 @@ public class LoginFilter implements Filter {
 
 	private static void setFbDetails(HttpServletRequest request) {
 		request.setAttribute(WebConstatnts.FB_APP_ID_ATTRIBUTE_KEY, FbConstants.getFbAppId());
+		request.setAttribute("odServerMode", ProjectConfigs.serverMode.get());
 	}
 
 
