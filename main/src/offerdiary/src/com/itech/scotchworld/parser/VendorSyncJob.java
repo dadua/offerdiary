@@ -34,6 +34,7 @@ public class VendorSyncJob extends BaseItechJob{
 	private static final String SITE_URL_PREFIX = "http://";
 	private static final String VENDOR_JSON_FILE_PATH = "resources\\couponduniya\\stores-minimal.json";
 	private static final String VENDOR_TO_AFFILIATE_URL_MAPPINGS = "resources\\couponduniya\\vendor_to_aff_urls.properties";
+	private static final String VENDOR_TO_SITE_URLS_MAPPINGS = "resources\\couponduniya\\vendor_to_urls.properties";
 	private static final String VENDOR_TO_OD_REPUTATION_MAPPINGS = "resources\\couponduniya\\vendor_to_od_reputation.properties";
 
 	private static final String AFFILIATE_URLS_TO_BE_FILTERED = "resources\\couponduniya\\affiliate_site_urls.properties";
@@ -47,6 +48,7 @@ public class VendorSyncJob extends BaseItechJob{
 
 	private String[] affiliateUrlsToIgnore;
 	private final Map<String, String> vendorToAffUrlMap = new HashMap<String, String>();
+	private final Map<String, String> vendorToSiteUrlMap = new HashMap<String, String>();
 	private final Map<String, Integer> vendorToOdReputationMap = new HashMap<String, Integer>();
 
 	private  void syncVendors() {
@@ -128,6 +130,27 @@ public class VendorSyncJob extends BaseItechJob{
 			}
 		}
 
+		InputStream siteUrlsIs = null;
+		try {
+			siteUrlsIs = CommonFileUtilities.class.getClassLoader().getResourceAsStream(VENDOR_TO_SITE_URLS_MAPPINGS);
+			Properties vendorToSiteUrlProperties = new Properties();
+			vendorToSiteUrlProperties.load(siteUrlsIs);
+			Set<Entry<Object, Object>> entrySet = vendorToSiteUrlProperties.entrySet();
+			for (Entry<Object, Object> entry : entrySet) {
+				vendorToSiteUrlMap.put((String)entry.getKey(),(String) entry.getValue());
+			}
+
+		} catch (Exception e) {
+			logger.error("error while processing file for vendor url to affiliate url mappings", e);
+		} finally {
+			if (siteUrlsIs != null) {
+				try {
+					siteUrlsIs.close();
+				} catch (IOException e) {
+					logger.error("error in closing file for vendor url to affiliate url mappings", e);
+				}
+			}
+		}
 
 
 		InputStream odReputationFileIS = null;
@@ -157,7 +180,13 @@ public class VendorSyncJob extends BaseItechJob{
 	private void checkAndUpdateVendorUrl(ScotchWorldStore scotchWorldStore) {
 		String storeURL = SITE_URL_PREFIX + ScotchWorldUtil.formatSiteURL(scotchWorldStore.getStoreURL());
 		scotchWorldStore.setStoreURL(storeURL);
-		String storeName = scotchWorldStore.getStoreName();
+		String storeName = scotchWorldStore.getStoreName().toLowerCase();
+
+		String siteUrlFromConfig = vendorToSiteUrlMap.get(storeName);
+		if (siteUrlFromConfig != null) {
+			scotchWorldStore.setStoreURL(siteUrlFromConfig);
+			return;
+		}
 
 		boolean fixStoreUrl = false;
 		for (String affiliateUrl : affiliateUrlsToIgnore) {
