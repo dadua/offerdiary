@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import com.itech.common.CommonFileUtilities;
+import com.itech.common.CommonUtilities;
 
 public class EmailSenderImpl implements EmailSender {
 
@@ -26,6 +27,10 @@ public class EmailSenderImpl implements EmailSender {
 
 	public boolean sendEmail(String fromAddress, String toAddress, String subject, String messageContent, List<String> attachements) {
 		try{
+			if (CommonUtilities.isNullOrEmpty(toAddress)) {
+				logger.warn("trying to send email to blank email id.");
+				logger.debug("trying to send email to blank email id. subject: " + subject);
+			}
 			MimeMessageHelper helper;
 			MimeMessage message = mailSender.createMimeMessage();
 			if(null != attachements && !attachements.isEmpty()){
