@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.itech.common.CommonUtilities;
 import com.itech.common.db.hibernate.HibernateSessionFactory;
 import com.itech.common.services.Initialize;
 import com.itech.email.model.EmailMessages;
@@ -67,9 +68,18 @@ public class EmailDispatcher implements Initialize, Runnable, EventHandler{
 				String toAddress = emailMessage.getToAddress();
 				String subject = emailMessage.getSubject();
 				String messageContent = emailMessage.getMessageContent();
-				List<String> attachements=null;
-				emailMessage.updateTryCount();
-				boolean emailSend  =getEmailSender().sendEmail(fromAddress, toAddress, subject, messageContent, attachements);
+
+				boolean emailSend;
+				if (CommonUtilities.isNotEmpty(toAddress)) {
+					List<String> attachements=null;
+					emailMessage.updateTryCount();
+					emailSend  = getEmailSender().sendEmail(fromAddress, toAddress, subject, messageContent, attachements);
+				} else {
+					emailSend = true;
+					logger.warn("trying to send email to blank email id.");
+					logger.debug("trying to send email to blank email id. subject: " + subject);
+				}
+
 				if(emailSend){
 					getEmailManager().deleteEmailMessages(emailMessage);
 					getHibernateSessionFactory().commitCurrentTransaction();
