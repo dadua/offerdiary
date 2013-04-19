@@ -52,5 +52,7 @@ public interface OfferManager {
 
 	OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria);
 
+	public void addOffersForCards(List<Offer> offers, List<OfferCard> cards);
+
 
 }

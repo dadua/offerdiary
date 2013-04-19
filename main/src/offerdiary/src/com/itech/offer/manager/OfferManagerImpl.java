@@ -242,11 +242,37 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 
 	@Override
+	public void addOffersForCards(List<Offer> offers, List<OfferCard> cards) {
+		List<Offer> clonedOfferList = cloneOfferList(offers);
+		for (OfferCard card : cards) {
+			addOffersForCard(clonedOfferList, card);
+		}
+	}
+
+
+
+	private List<Offer> cloneOfferList(List<Offer> offers) {
+		List<Offer> clonedOfferList = new ArrayList<Offer>();
+		for (Offer offer : offers) {
+			try {
+				clonedOfferList.add(offer.clone());
+			} catch (CloneNotSupportedException e) {
+				logger.error("error in cloning" , e);
+			}
+		}
+		return clonedOfferList;
+	}
+
+
+	@Override
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
 		List<Offer> existingOffers = new ArrayList<Offer>();
 		for (Offer offer : offers) {
 			Vendor targetVendorFromOffer = offer.getTargetVendor();
+			if (targetVendorFromOffer == null) {
+				continue;
+			}
 			if (CommonUtilities.isNotEmpty(targetVendorFromOffer.getName())){
 				Vendor existingVendor = getVendorManager().getVendorForVendorDetail(targetVendorFromOffer);
 				if (existingVendor == null) {
@@ -272,7 +298,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
 			}
-
 
 			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
 			assoc.setOffer(offer);
@@ -434,7 +459,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
-
 
 
 }

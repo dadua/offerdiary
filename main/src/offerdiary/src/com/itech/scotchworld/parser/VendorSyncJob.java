@@ -31,6 +31,7 @@ import com.itech.user.manager.UserManager;
 @Scope("prototype")
 public class VendorSyncJob extends BaseItechJob{
 
+	private static final int MIN_REPUTATION_FOR_CD_VENDOR = 10;
 	private static final String SITE_URL_PREFIX = "http://";
 	private static final String VENDOR_JSON_FILE_PATH = "resources\\couponduniya\\stores-minimal.json";
 	private static final String VENDOR_TO_AFFILIATE_URL_MAPPINGS = "resources\\couponduniya\\vendor_to_aff_urls.properties";
@@ -101,6 +102,8 @@ public class VendorSyncJob extends BaseItechJob{
 		Integer odReputation = vendorToOdReputationMap.get(vendor.getName().toLowerCase().trim());
 		if (odReputation != null) {
 			vendor.setOdReputation(odReputation);
+		} else {
+			vendor.setOdReputation(MIN_REPUTATION_FOR_CD_VENDOR);
 		}
 	}
 

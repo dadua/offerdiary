@@ -120,13 +120,13 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		fromHql.append(" and" + whereClauseForSearch);
 		fromHql.append(" and" + whereCluseForOfferCardSpecificSearch);
 
-		String resultHQL = "select o " + fromHql.toString() ;
 		if (searchCriteria.getPrivateSearchOnly()) {
-			resultHQL += " order by oua.createdOn desc ";
+			fromHql.append(" order by oua.createdOn desc ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append( " order by o.createdOn desc  ");
+			fromHql.append( " order by o.targetVendor, o.createdOn desc  ");
 		}
+		String resultHQL = "select o " + fromHql.toString() ;
 
 		String resultCountHQL = "select count(*) " + fromHql.toString();
 		Query resultQuery = getSession().createQuery(resultHQL);

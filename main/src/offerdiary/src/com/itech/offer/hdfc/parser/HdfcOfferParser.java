@@ -1,4 +1,4 @@
-package com.itech.offer.fetchers.parser;
+package com.itech.offer.hdfc.parser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.jsoup.nodes.Element;
 
+import com.itech.offer.fetchers.parser.CommonHttpParser;
 import com.itech.parser.offer.model.CardOfferVO;
 
 public class HdfcOfferParser extends CommonHttpParser{
@@ -16,7 +17,7 @@ public class HdfcOfferParser extends CommonHttpParser{
 		super(html);
 	}
 
-	public List<CardOfferVO> getDebitCardOffers() {
+	public List<CardOfferVO> getOffersOnCard() {
 		List<CardOfferVO> debitCardOffers = new ArrayList<CardOfferVO>();
 		List<Element> offerPosts = getDoc().select("div.postdetails");
 		for(Element offerPost : offerPosts){
@@ -26,17 +27,20 @@ public class HdfcOfferParser extends CommonHttpParser{
 	}
 
 	private void processOfferPost(Element offerPost,
-			List<CardOfferVO> debitCardOffers) {
+			List<CardOfferVO> cardOffers) {
 		String merchantName = getMerchantName(offerPost);
 		String imageURL = getOfferImage(offerPost);
 		String description = getOfferDescription(offerPost);
 		String validity = getOfferValidity(offerPost);
+		String offerUrl = getOfferUrl(offerPost);
 		CardOfferVO cardOffer = new CardOfferVO();
 		cardOffer.setDescription(description);
 		cardOffer.setImageSrc(imageURL);
 		cardOffer.setMerchantName(merchantName);
 		cardOffer.setValidity(validity);
-		debitCardOffers.add(cardOffer);
+		cardOffer.setOfferUrl(offerUrl);
+		cardOffer.setMerchantImageUrl(imageURL);
+		cardOffers.add(cardOffer);
 
 	}
 
@@ -55,6 +59,12 @@ public class HdfcOfferParser extends CommonHttpParser{
 	}
 
 	private String getOfferDescription(Element offerPost) {
+		String fullOfferText = getFullOfferText(offerPost);
+		String description = HdfcOfferParserUtil.getOfferDescriptionFrom(fullOfferText);
+		return description;
+	}
+
+	private String getFullOfferText(Element offerPost) {
 		String description = "";
 		Element offerDescriptionBlock = offerPost.select("h4.posttitle").first();
 		if(null != offerDescriptionBlock){
@@ -73,26 +83,18 @@ public class HdfcOfferParser extends CommonHttpParser{
 	}
 
 	private String getMerchantName(Element offerPost) {
-		String merchantName = "";
-		Element merchantBlock = offerPost.select("h4.posttitle").first();
-		if(null != merchantBlock){
-			Pattern pattern = Pattern.compile("([a-zA-Z0-9]|\\s)*-");
-			Matcher matcher = pattern.matcher(merchantBlock.text());
-			if (matcher.find())
-			{
-				return matcher.group();
-			}
-		}
+		String fullOfferText = getFullOfferText(offerPost);
+		String merchantName = HdfcOfferParserUtil.getMerchantNameFrom(fullOfferText);
 		return merchantName;
 	}
 
-	public List<CardOfferVO> getCreditCardOffers() {
-		List<CardOfferVO> creditCardOffers = new ArrayList<CardOfferVO>();
-		List<Element> offerPosts = getDoc().select("div.postdetails");
-		for(Element offerPost : offerPosts){
-			processOfferPost(offerPost, creditCardOffers);
+	private String getOfferUrl(Element offerPost) {
+		String offerUrl = null;
+		Element urlElement = offerPost.select(".readmore").first();
+		if(null != urlElement){
+			offerUrl = urlElement.attr("href");
 		}
-		return creditCardOffers;
+		return offerUrl;
 	}
 
 }

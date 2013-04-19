@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.itech.common.services.Initialize;
 import com.itech.common.services.ServiceLocator;
+import com.itech.offer.hdfc.parser.HDFCCardOfferSyncJob;
 import com.itech.offer.job.JobStatus.JobStatusEnum;
 import com.itech.redwine.parser.RedWineSyncJob;
 import com.itech.scotchworld.parser.VendorSyncJob;
@@ -62,6 +63,10 @@ public class ItechBackGroundTasksService implements Initialize{
 
 		if ("vendorSync".equalsIgnoreCase(taskName)) {
 			return ServiceLocator.getInstance().getBean(VendorSyncJob.class);
+		}
+
+		if ("hdfcOfferSync".equalsIgnoreCase(taskName)) {
+			return ServiceLocator.getInstance().getBean(HDFCCardOfferSyncJob.class);
 		}
 		return null;
 	}

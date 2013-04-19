@@ -28,6 +28,10 @@ OfferCardManager {
 		return getOfferCardDAO().getByName(cardName);
 	}
 
+	@Override
+	public List<OfferCard> getOfferCardsByProvider(String providerName) {
+		return getOfferCardDAO().getOfferCardsByProvider(providerName);
+	}
 
 	@Override
 	public OfferCard saveOrUpdateOfferCard(OfferCard offerCard) {
@@ -110,4 +114,6 @@ OfferCardManager {
 		offerCardVO.setPerPageCount(searchCriteria.getResultsPerPage());
 		return offerCardVO;
 	}
+
+
 }

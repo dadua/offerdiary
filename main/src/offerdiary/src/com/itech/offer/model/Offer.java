@@ -237,7 +237,9 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setExpiry(Date expiry) {
 		this.expiry = expiry;
-		setExpiryDateInMillis(expiry.getTime());
+		if (expiry != null) {
+			setExpiryDateInMillis(expiry.getTime());
+		}
 	}
 
 	public String getOfferCode() {
