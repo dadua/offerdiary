@@ -27,6 +27,10 @@ public class OfferCard extends PersistableEntity{
 		REDWINE, OFFER_DIARY;
 	}
 
+	public enum PaymentChannel {
+		VISA, MASTER_CARD, MAESTRO,UNKNOWN;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -70,6 +74,9 @@ public class OfferCard extends PersistableEntity{
 	@Column(name="PROVIDER_IMAGE_URL")
 	private String providerImgUrl;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name="PAYMENT_CHANNEL")
+	private PaymentChannel paymentChannel = PaymentChannel.UNKNOWN;
 
 	@Transient
 	private boolean associatedWithCurrentUser;
@@ -183,7 +190,13 @@ public class OfferCard extends PersistableEntity{
 		this.providerImgUrl = providerImgUrl;
 	}
 
+	public PaymentChannel getPaymentChannel() {
+		return paymentChannel;
+	}
 
+	public void setPaymentChannel(PaymentChannel paymentChannel) {
+		this.paymentChannel = paymentChannel;
+	}
 
 
 }

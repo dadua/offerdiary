@@ -96,6 +96,13 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name=OfferModelConstants.COL_FB_NOTIFICATION)
 	private Boolean fbNotification = Boolean.FALSE;
 
+	@Column(name="APPROVED")
+	private boolean approved;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name="SOURCE_TYPE")
+	private OfferSourceType sourceTypeInDb = OfferSourceType.UNKOWN;
+
 
 	@Transient
 	private NotifyVO notifyVO;
@@ -104,13 +111,13 @@ public class Offer extends PersistableEntity implements Cloneable{
 	private boolean associatedWithLoggedInUser;
 
 	@Transient
-	private OfferSourceType sourceType;
+	private OfferSourceType sourceType = OfferSourceType.UNKOWN;
 
 	@Transient
 	private String source;
 
 	public enum OfferSourceType {
-		CARD, COUPON_SITE, USER
+		CARD, COUPON_SITE, USER, UNKOWN
 	}
 
 
@@ -445,6 +452,26 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setOfferLink(String offerLink) {
 		this.offerLink = offerLink;
+	}
+
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
+	}
+
+
+	public OfferSourceType getSourceTypeInDb() {
+		return sourceTypeInDb;
+	}
+
+
+	public void setSourceTypeInDb(OfferSourceType sourceTypeInDb) {
+		this.sourceTypeInDb = sourceTypeInDb;
 	}
 
 }
