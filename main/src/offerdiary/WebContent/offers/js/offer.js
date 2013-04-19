@@ -104,7 +104,11 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
         offerTemplate$.find('.vendorOnOfferNameVal').html(offer.targetVendor.name);
         offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
         if (offer.targetVendor.logoUrl) {
-            offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
+        	if (offer.targetVendor.isAbsoluteLogoUrl) {
+        		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', offer.targetVendor.logoUrl );
+        	} else {
+        		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
+        	}
         } else {
             offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/blankVendor.png');
             offerTemplate$.find('.vendorOnOfferNameVal').removeClass('hide');

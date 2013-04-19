@@ -1,5 +1,6 @@
 package com.itech.offer.vo;
 
+import com.itech.common.CommonUtilities;
 import com.itech.offer.model.Vendor;
 
 public class VendorVO {
@@ -12,7 +13,7 @@ public class VendorVO {
 
 	private String siteUrl;
 
-	private boolean isAbsoluteSiteUrl;
+	private boolean isAbsoluteLogoUrl = false;
 
 	private String logoUrl;
 
@@ -41,8 +42,8 @@ public class VendorVO {
 		vendorVO.setId(vendor.getId());
 		vendorVO.setName(vendor.getName());
 		vendorVO.setPinCode(vendor.getPinCode());
-		if (vendor.getSiteUrl().startsWith("http")) {
-			vendorVO.setAbsoluteSiteUrl(true);
+		if (CommonUtilities.isNotEmpty(vendor.getLogoUrl()) && vendor.getLogoUrl().startsWith("http")) {
+			vendorVO.setAbsoluteLogoUrl(true);
 		}
 		vendorVO.setSiteUrl(vendor.getSiteUrl());
 		return vendorVO;
@@ -135,13 +136,13 @@ public class VendorVO {
 	}
 
 
-	public boolean isAbsoluteSiteUrl() {
-		return isAbsoluteSiteUrl;
+	public boolean isAbsoluteLogoUrl() {
+		return isAbsoluteLogoUrl;
 	}
 
 
-	public void setAbsoluteSiteUrl(boolean absoluteSiteUrl) {
-		this.isAbsoluteSiteUrl = absoluteSiteUrl;
+	public void setAbsoluteLogoUrl(boolean absoluteSiteUrl) {
+		this.isAbsoluteLogoUrl = absoluteSiteUrl;
 	}
 
 }

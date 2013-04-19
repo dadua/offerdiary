@@ -27,6 +27,9 @@ public class HdfcOfferParserUtil {
 				merchantName = merchantName.trim();
 			}
 		}
+		if (CommonUtilities.isNotEmpty(merchantName) && merchantName.startsWith("Visa")) {
+			return "Visa";
+		}
 		return merchantName;
 	}
 
@@ -82,7 +85,7 @@ public class HdfcOfferParserUtil {
 		if (matcher.find()) {
 			dateText = matcher.group(1);
 		}
-		return dateText.replace("st", "").replace("nd", "").replace("rd", "").replace("th", "");
+		return dateText.replace("1st ", "1 ").replace("nd", "").replace("rd", "").replace("th", "");
 	}
 
 }
