@@ -23,8 +23,6 @@ import com.itech.common.CommonFileUtilities;
 import com.itech.common.CommonUtilities;
 import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
-import com.itech.offer.job.JobStatus;
-import com.itech.offer.job.JobStatus.JobStatusEnum;
 import com.itech.offer.manager.OfferCardManager;
 import com.itech.offer.manager.OfferManager;
 import com.itech.offer.model.Offer;
@@ -289,21 +287,6 @@ public class RedWineSyncJob  extends BaseItechJob{
 			paused = false;
 			this.notifyAll();
 		}
-	}
-
-	@Override
-	public JobStatus getJobStatus() {
-		if (finished) {
-			return new JobStatus(JobStatusEnum.FINISHED);
-		}
-		if (stopped) {
-			return new JobStatus(JobStatusEnum.STOPPED);
-		}
-
-		if (paused) {
-			return new JobStatus(JobStatusEnum.PAUSED);
-		}
-		return new JobStatus(JobStatusEnum.RUNNING);
 	}
 
 	@Override

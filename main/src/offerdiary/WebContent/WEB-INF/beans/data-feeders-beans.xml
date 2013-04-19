@@ -23,5 +23,12 @@
 		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>	
 		<property name="userManager" ref="itech.UserManager"/>
 	</bean>
+	
+	<bean id="itech.hdfcCardOfferSyncJob" class="com.itech.offer.hdfc.parser.HDFCCardOfferSyncJob" scope="prototype">
+		<property name="offerCardManager" ref="itech.offerCardManager"/>
+		<property name="hibernateSessionFactory" ref="itech.HibernateSessionFactory"/>
+		<property name="offerManager" ref="itech.offerManager"/>	
+	</bean>
+		
 		
 </beans>

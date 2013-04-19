@@ -48,7 +48,7 @@ public class AdminAction extends CommonAction {
 	}
 
 	/**
-	 * Task names : redWIneSync, vendorSync
+	 * Task names : redWIneSync, vendorSync, hdfcOfferSync
 	 * @param req
 	 * @param resp
 	 * @return

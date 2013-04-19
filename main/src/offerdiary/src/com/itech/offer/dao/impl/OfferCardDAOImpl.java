@@ -68,11 +68,7 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		String hql = "from " + getEntityClassName() + " where  name=:cardName ";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("cardName", cardName);
-		List<OfferCard> list = query.list();
-		if (list.isEmpty()) {
-			return null;
-		}
-		return list.get(0);
+		return getSingleResultFrom(query);
 	}
 
 	@Override
@@ -81,6 +77,16 @@ public class OfferCardDAOImpl extends HibernateCommonBaseDAO<OfferCard> implemen
 		Query query = getSession().createQuery(hql);
 		query.setParameter("user", user);
 		List list = query.list();
+		return list;
+	}
+
+
+	@Override
+	public List<OfferCard> getOfferCardsByProvider(String providerName) {
+		String hql = "from " + getEntityClassName() + " where  provider=:provider ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("provider", providerName);
+		List<OfferCard> list = query.list();
 		return list;
 	}
 

@@ -78,7 +78,7 @@ public class Vendor extends PersistableEntity{
 	private Integer odReputation = 0;
 
 	public enum SourceType {
-		REDSCOTCH, USER_DEFINED, REDWINE
+		REDSCOTCH, USER_DEFINED, REDWINE, OD_BANK_OFFER_PARSER
 	}
 
 

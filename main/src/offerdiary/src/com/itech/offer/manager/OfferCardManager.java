@@ -25,4 +25,6 @@ public interface OfferCardManager {
 
 
 	public OfferCardVO getOfferCardVOsFor(SearchCriteria searchCriteria, boolean excludeAssociatedCard);
+
+	public List<OfferCard> getOfferCardsByProvider(String providerName);
 }

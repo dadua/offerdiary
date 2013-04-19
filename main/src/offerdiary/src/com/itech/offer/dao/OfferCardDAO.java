@@ -19,4 +19,6 @@ public interface OfferCardDAO extends CommonBaseDAO<OfferCard>{
 	Long getTotalOfferCardCount(SearchCriteria searchCriteria,
 			boolean excludeAssociatedCard);
 
+	List<OfferCard> getOfferCardsByProvider(String providerName);
+
 }
