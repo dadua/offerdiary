@@ -12,6 +12,8 @@ public class VendorVO {
 
 	private String siteUrl;
 
+	private boolean isAbsoluteSiteUrl;
+
 	private String logoUrl;
 
 	private String description;
@@ -39,6 +41,9 @@ public class VendorVO {
 		vendorVO.setId(vendor.getId());
 		vendorVO.setName(vendor.getName());
 		vendorVO.setPinCode(vendor.getPinCode());
+		if (vendor.getSiteUrl().startsWith("http")) {
+			vendorVO.setAbsoluteSiteUrl(true);
+		}
 		vendorVO.setSiteUrl(vendor.getSiteUrl());
 		return vendorVO;
 	}
@@ -127,6 +132,16 @@ public class VendorVO {
 
 	public void setParentVendor(Vendor parentVendor) {
 		this.parentVendor = parentVendor;
+	}
+
+
+	public boolean isAbsoluteSiteUrl() {
+		return isAbsoluteSiteUrl;
+	}
+
+
+	public void setAbsoluteSiteUrl(boolean absoluteSiteUrl) {
+		this.isAbsoluteSiteUrl = absoluteSiteUrl;
 	}
 
 }
