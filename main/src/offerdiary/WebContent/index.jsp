@@ -161,6 +161,10 @@
 	.navScroller.feedBackNav.active > a {
 	    color: lightgreen;
 	}
+	
+	.feedbackLink {
+		line-height: 2em;
+	}
 
         @media (max-width: 767px) {
             .itemContainer {
@@ -323,19 +327,23 @@
 			        <div class="row-fluid">
 			        	<div class="container-fluid">
 			        		<div class="row-fluid">
-					        	<div class="span2">
-					        		<a href="https://www.facebook.com/offerdiary" target="_blank">
-					        			<img src="images/home/facebook.png" class="img-polaroid img-rounded" alt="Offerdiary on https://www.facebook.com/offerdiary"/>
+					        	<div class="span3">
+					        		<a target="_blank" href="https://www.facebook.com/offerdiary">
+					        			<img alt="Offerdiary on https://www.facebook.com/offerdiary" class="img-polaroid img-rounded" src="images/home/facebook.png">
+					        			<span class="feedbackLink">facebook.com/offerdiary</span>
 					        		</a>
 					        	</div>
-					        	<div class="span2">
-					        		<a href="https://www.twitter.com/offerdiary"  target="_blank">
-					        			<img src="images/home/twitter.png"  class="img-polaroid img-rounded" alt="Offerdiary on https://twitter.com/offerdiary"/>
+					        	<div class="span3">
+					        		<a href="https://www.twitter.com/offerdiary" target="_blank">
+					        			<img src="images/home/twitter.png" class="img-polaroid img-rounded" alt="Offerdiary on https://twitter.com/offerdiary">
+					        			<span class="feedbackLink">twitter.com/offerdiary</span>
 					        		</a>
+
 					        	</div>
-					        	<div class="span2">
-					        		<a href="mailto:support@offerdiary.com" >
-					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="Mail us at support@offerdiary.com"/>
+					        	<div class="span3">
+					        		<a href="mailto:support@offerdiary.com">
+					        			<img src="images/home/gmail.png" class="img-polaroid img-rounded" alt="Mail us at support@offerdiary.com">
+					        			<span class="feedbackLink">support@offerdiary.com</span>
 					        		</a>
 					        	</div>
 				        	</div>
