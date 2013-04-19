@@ -2,14 +2,17 @@ package com.itech.offer.hdfc.parser;
 
 import java.sql.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import com.itech.common.CommonUtilities;
 
 public class HdfcOfferParserUtil {
+
+	private static final Logger logger = Logger.getLogger(HdfcOfferParserUtil.class);
 
 	public static String getMerchantNameFrom (String fullOfferText) {
 		String merchantName = null;
@@ -64,15 +67,15 @@ public class HdfcOfferParserUtil {
 		if (CommonUtilities.isNullOrEmpty(dateText)) {
 			return null;
 		}
-		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 			java.util.Date parsedDate = dateFormat.parse(dateText);
 			long epochtimeUTCInMillis = parsedDate.getTime();
 			Date date = new Date(epochtimeUTCInMillis);
 			return date;
 
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("error in parsing date: " + dateText, e);
 		}
 		return null;
 	}
@@ -85,6 +88,7 @@ public class HdfcOfferParserUtil {
 		if (matcher.find()) {
 			dateText = matcher.group(1);
 		}
+		dateText = dateText.replace("Sept ", "September ");
 		return dateText.replace("1st ", "1 ").replace("nd", "").replace("rd", "").replace("th", "");
 	}
 
