@@ -46,6 +46,7 @@ public class HDFCCardOfferSyncJob  extends BaseItechJob{
 			List<Offer> offers = entry.getValue();
 			List<OfferCard> cards = filterCardsFor(allCardsForHDFC, typeKey);
 			getOfferManager().addOffersForCards(offers, cards);
+			getHibernateSessionFactory().commitCurrentTransaction();
 		}
 	}
 

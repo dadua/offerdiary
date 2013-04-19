@@ -267,10 +267,12 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	@Override
 	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
-		List<Offer> existingOffers = new ArrayList<Offer>();
+		List<Offer> offersToSave = new ArrayList<Offer>();
+
 		for (Offer offer : offers) {
 			Vendor targetVendorFromOffer = offer.getTargetVendor();
 			if (targetVendorFromOffer == null) {
+				logger.error("target vendor found null :");
 				continue;
 			}
 			if (CommonUtilities.isNotEmpty(targetVendorFromOffer.getName())){
@@ -287,7 +289,6 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				Offer existingOffer = existingOfferCardAssoc.getOffer();
 				Date newExpiryDate = offer.getExpiry();
 				Date existingExpiryDate = existingOffer.getExpiry();
-				existingOffers.add(offer);
 				if (newExpiryDate == null || newExpiryDate.equals(existingExpiryDate)) {
 					continue;
 				}
@@ -303,9 +304,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			assoc.setOffer(offer);
 			assoc.setOfferCard(offerCard);
 			assocs.add(assoc);
+
+			offersToSave.add(offer);
 		}
-		offers.removeAll(existingOffers);
-		getOfferDAO().addOrUpdate(offers);
+		getOfferDAO().addOrUpdate(offersToSave);
 		getOfferOfferCardAssocDAO().addOrUpdate(assocs);
 		return true;
 	}
