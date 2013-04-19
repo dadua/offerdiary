@@ -61,7 +61,7 @@ public class HdfcOfferParserUtil {
 		if (CommonUtilities.isNullOrEmpty(dateText)) {
 			return null;
 		}
-		DateFormat dateFormat = new SimpleDateFormat("DD'th' MMMM yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 		try {
 			java.util.Date parsedDate = dateFormat.parse(dateText);
 			long epochtimeUTCInMillis = parsedDate.getTime();
@@ -82,7 +82,7 @@ public class HdfcOfferParserUtil {
 		if (matcher.find()) {
 			dateText = matcher.group(1);
 		}
-		return dateText;
+		return dateText.replace("st", "").replace("nd", "").replace("rd", "").replace("th", "");
 	}
 
 }
