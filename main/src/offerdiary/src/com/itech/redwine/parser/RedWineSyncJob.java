@@ -54,6 +54,13 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 	private static final Logger logger = Logger.getLogger(RedWineSyncJob.class);
 
+	private boolean syncCards = true;
+	private boolean syncOfferOnCards = true;
+
+	public void setFullSync() {
+		this.syncCards = true;
+		this.syncOfferOnCards = true;
+	}
 
 	private void syncRedWineData() {
 		logger.info("initializing redwine data");
@@ -85,6 +92,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 				existingCardInDb.setProvider(offerCard.getProvider());
 				existingCardInDb.setProviderImgUrl(offerCard.getProviderImgUrl());
 				existingCardInDb.setCardType(offerCard.getCardType());
+				existingCardInDb.setPaymentChannel(offerCard.getPaymentChannel());
 				getOfferCardManager().saveOrUpdateOfferCard(existingCardInDb);
 				redwineCardToODCardMap.put(redWineCard.getCardId(), existingCardInDb);
 				logger.warn("Offer card already exists for name - " + offerCard.getName());
@@ -96,15 +104,17 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 		getHibernateSessionFactory().commitCurrentTransaction();
 
-		for (RedWineCard redWineCard : redWineCards) {
-			RedWineCard redWineCardWithOffers = RedWineCardsParser.readRedWineRecordsForCardId(redWineCard.getCardId(), REDANAR_CARDS_WITH_OFFERS_BASE_DIR, false);
-			if (redWineCardWithOffers == null) {
-				continue;
+		if (syncOfferOnCards) {
+			for (RedWineCard redWineCard : redWineCards) {
+				RedWineCard redWineCardWithOffers = RedWineCardsParser.readRedWineRecordsForCardId(redWineCard.getCardId(), REDANAR_CARDS_WITH_OFFERS_BASE_DIR, false);
+				if (redWineCardWithOffers == null) {
+					continue;
+				}
+				OfferCard offerCard = redwineCardToODCardMap.get(redWineCardWithOffers.getCardId());
+				List<Offer> offers = getOffersFrom(redWineCardWithOffers.getOffers());
+				getOfferManager().addOffersForCard(offers, offerCard);
+				getHibernateSessionFactory().commitCurrentTransaction();
 			}
-			OfferCard offerCard = redwineCardToODCardMap.get(redWineCardWithOffers.getCardId());
-			List<Offer> offers = getOffersFrom(redWineCardWithOffers.getOffers());
-			getOfferManager().addOffersForCard(offers, offerCard);
-			getHibernateSessionFactory().commitCurrentTransaction();
 		}
 	}
 
@@ -229,8 +239,11 @@ public class RedWineSyncJob  extends BaseItechJob{
 		String cardId = RedWineParserUtil.getIdFromCard(redWineCard.getCardUrl());
 		offerCard.setCardSource(CardSource.REDWINE);
 		offerCard.setCardSourceIdentifier(cardId);
+		offerCard.setCardType(RedWineParserUtil.getCardTypeFor(redWineCard.getCardType(), redWineCard.getCardName()));
+		offerCard.setPaymentChannel(RedWineParserUtil.getPaymentChannelFor(redWineCard.getCardName()));
 		return offerCard;
 	}
+
 
 	public void setOfferCardManager(OfferCardManager offerCardManager) {
 		this.offerCardManager = offerCardManager;
@@ -280,6 +293,9 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 	@Override
 	public JobStatus getJobStatus() {
+		if (finished) {
+			return new JobStatus(JobStatusEnum.FINISHED);
+		}
 		if (stopped) {
 			return new JobStatus(JobStatusEnum.STOPPED);
 		}
@@ -295,5 +311,23 @@ public class RedWineSyncJob  extends BaseItechJob{
 		// TODO Auto-generated method stub
 
 	}
+
+	public boolean isSyncCards() {
+		return syncCards;
+	}
+
+	public void setSyncCards(boolean syncCards) {
+		this.syncCards = syncCards;
+	}
+
+	public boolean isSyncOfferOnCards() {
+		return syncOfferOnCards;
+	}
+
+	public void setSyncOfferOnCards(boolean syncOfferOnCards) {
+		this.syncOfferOnCards = syncOfferOnCards;
+	}
+
+
 
 }

@@ -12,7 +12,7 @@ import com.itech.parser.offer.model.CardOfferVO;
 public class HdfcOfferFetcher implements OfferFetcher{
 
 
-	Logger logger = Logger.getLogger(HdfcOfferFetcher.class);
+	private static final Logger logger = Logger.getLogger(HdfcOfferFetcher.class);
 	public static final String HDFC_OFFER_BASE_URL="http://www.hdfcbank.com/personal/Offer_Landing/offers-landing";
 	public static final String HDFC_DEBIT_CARD_OFFER_URL="http://www.hdfcbanksmartbuy.com/pages/Debit-Card-Offers/pgid-35401.aspx";
 	public static final String HDFC_CREDIT_CARD_OFFER_URL="http://www.hdfcbanksmartbuy.com/pages/Credit-Card-Offers/pgid-35449.aspx";
