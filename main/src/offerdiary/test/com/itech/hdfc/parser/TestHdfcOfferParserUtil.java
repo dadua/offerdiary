@@ -70,7 +70,7 @@ public class TestHdfcOfferParserUtil extends CommonTestUtil {
 
 		String expectedDate1 = "2013-09-30";
 		String expectedDate2 = "2013-09-30";
-		String expectedDate3 = "2013-03-01";
+		String expectedDate3 = "2013-06-28";
 
 		String actualDate1 = HdfcOfferParserUtil.getExpiryDateFrom(dateText1).toString();
 		String actualDate2 = HdfcOfferParserUtil.getExpiryDateFrom(dateText2).toString();
