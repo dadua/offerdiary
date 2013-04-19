@@ -1,9 +1,8 @@
 package com.itech.offer.hdfc.parser;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jsoup.nodes.Element;
 
@@ -31,32 +30,26 @@ public class HdfcOfferParser extends CommonHttpParser{
 		String merchantName = getMerchantName(offerPost);
 		String imageURL = getOfferImage(offerPost);
 		String description = getOfferDescription(offerPost);
-		String validity = getOfferValidity(offerPost);
 		String offerUrl = getOfferUrl(offerPost);
+		Date expiry = getOfferExpiry(offerPost);
 		CardOfferVO cardOffer = new CardOfferVO();
 		cardOffer.setDescription(description);
 		cardOffer.setImageSrc(imageURL);
 		cardOffer.setMerchantName(merchantName);
-		cardOffer.setValidity(validity);
 		cardOffer.setOfferUrl(offerUrl);
 		cardOffer.setMerchantImageUrl(imageURL);
 		cardOffers.add(cardOffer);
+		cardOffer.setExpiry(expiry);
 
 	}
 
-	private String getOfferValidity(Element offerPost) {
-		String validity = "";
+	private Date getOfferExpiry(Element offerPost) {
 		Element validityBlock = offerPost.select("p.postsummery").first();
-		if(null != validityBlock){
-			Pattern pattern = Pattern.compile("Valid([a-zA-Z0-9]|\\s)*2012");
-			Matcher matcher = pattern.matcher(validityBlock.text());
-			if (matcher.find())
-			{
-				return matcher.group();
-			}
-		}
-		return validity;
+		String validityText = validityBlock.text();
+		Date expiry = HdfcOfferParserUtil.getExpiryDateFrom(validityText);
+		return expiry;
 	}
+
 
 	private String getOfferDescription(Element offerPost) {
 		String fullOfferText = getFullOfferText(offerPost);
