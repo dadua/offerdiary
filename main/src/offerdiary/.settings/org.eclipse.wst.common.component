@@ -6,6 +6,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/client"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/samples"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/other/sources"/>
         <property name="context-root" value="offerdiary"/>
         <property name="java-output-path" value="/offerdiary/build/classes"/>
     </wb-module>
