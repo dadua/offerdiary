@@ -67,17 +67,21 @@ public class TestHdfcOfferParserUtil extends CommonTestUtil {
 		String dateText1 = "Offer Period Valid upto 30th September 2013";
 		String dateText2 = "Offer Valid upto 30th September 2013";
 		String dateText3 = "Offer valid from 01st March 2013 to 28th June 2013";
+		String dateText4 = "Offer Valid upto 30th August 2013";
 
 		String expectedDate1 = "2013-09-30";
 		String expectedDate2 = "2013-09-30";
 		String expectedDate3 = "2013-06-28";
+		String expectedDate4 = "2013-08-30";
 
 		String actualDate1 = HdfcOfferParserUtil.getExpiryDateFrom(dateText1).toString();
 		String actualDate2 = HdfcOfferParserUtil.getExpiryDateFrom(dateText2).toString();
 		String actualDate3 = HdfcOfferParserUtil.getExpiryDateFrom(dateText3).toString();
+		String actualDate4 = HdfcOfferParserUtil.getExpiryDateFrom(dateText4).toString();
 
 		assertEquals(expectedDate1, actualDate1);
 		assertEquals(expectedDate2, actualDate2);
 		assertEquals(expectedDate3, actualDate3);
+		assertEquals(expectedDate4, actualDate4);
 	}
 }
