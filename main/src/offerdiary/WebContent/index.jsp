@@ -213,11 +213,11 @@
 			            	<br>
 			                <div class="heading bluishText">My Offers</div>
 			                <div class="lead">
-		                        <div class="explanation">
+		                        <p class="explanation">
 		                        	<span class="correct">&#10004;</span>
 		                        	Manage your offers, coupons and deals
-		                        </div>
-		                        <div class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></div>
+		                        </p>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Add offers from cards to your <strong>OfferDiary</strong></p>
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 			            </div>
@@ -241,9 +241,9 @@
 			            <div class="description span4">
 			                <div class="heading bluishText">Share with Friends</div>
 			                <div class="lead">
-		                        <div class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</div>
-		                        <div class="explanation"><span class="correct">&#10004;</span>Share via Facebook</div>
-		                        <div class="explanation"><span class="correct">&#10004;</span>Share via Email</div>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Share offers with your friends</p>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Share via Facebook</p>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Share via Email</p>
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 			            </div>
@@ -267,8 +267,8 @@
 			            <div class="description span4">
 			                <div class="heading bluishText">Notifications</div>
 			                <div class="lead">
-		                        <div class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</div>
-		                        <div class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</div>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Why let the offers, coupons go waste?</p>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Get timely offer expiry notifications via email</p>
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>			  
 			            </div>
@@ -292,8 +292,8 @@
 			            <div class="description span4">
 			                <div class="heading bluishText">Card Offers</div>
 			                <div class="lead">
-		                        <div class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</div>
-		                        <div class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</div>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Discover the offers available on your cards</p>
+		                        <p class="explanation"><span class="correct">&#10004;</span>Track the offers available on your cards</p>
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 			            </div>
@@ -321,7 +321,7 @@
 			        </div>
 			        <div class="row-fluid">
 				        <div class="lead ">
-					        <div class="explanation">Drop in your thoughts: </div>
+					        <p class="explanation">Drop in your thoughts: </p>
 					    </div>
 			        </div>
 			        <div class="row-fluid">
