@@ -17,7 +17,7 @@ A non float version inside a container
 </div>
  --%>
 <div id="actionInfoContainer" class="row">
-    <div id="actionInfoRow" class="span6 offset7 alert hide alert-success ">
+    <div id="actionInfoRow" class="span6 offset3 alert hide alert-success ">
         <button type="button" class="hideAlert close">×</button>
         <div id="alertMessage">
         </div>
@@ -27,7 +27,7 @@ A non float version inside a container
         
     </div>
     <noscript>
-  	    <div id="actionInfoRow" class="span6 offset7 alert alert-warning">
+  	    <div id="actionInfoRow" class="span6 offset3 alert alert-warning">
 	        <button type="button" class="hideAlert close">×</button>
 	        <div id="alertMessage">
 		        OfferDiary makes heavy use of javascript.
