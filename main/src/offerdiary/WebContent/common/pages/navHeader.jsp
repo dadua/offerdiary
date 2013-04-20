@@ -146,7 +146,9 @@
 					</div>
         		</div>
       		</div>
-       		<%@include file="/common/pages/actionInfoRow.jsp" %>
+      		<div class="container">
+	       		<%@include file="/common/pages/actionInfoRow.jsp" %>
+       		</div>
  		</div>
  		<script type="text/javascript" >
  			$(function(){
