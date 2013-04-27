@@ -73,15 +73,15 @@ it.offer.addwizard = function () {
             offerDetailsStep.$('#offerDescription').val('');
             offerDetailsStep.$('#offerUrl').val('');
             if (data) {
-            	if(data.code) {
-            		offerDetailsStep.$('#offerCode').val(data.code);
-            	} 
-            	if(data.description) {
-            		offerDetailsStep.$('#offerDescription').val(data.description);
-            	} 
-            	if (data.offerLink) {
-            		offerDetailsStep.$('#offerUrl').val(data.offerLink);
-            	}
+                if(data.code) {
+                    offerDetailsStep.$('#offerCode').val(data.code);
+                } 
+                if(data.description) {
+                    offerDetailsStep.$('#offerDescription').val(data.description);
+                } 
+                if (data.offerLink) {
+                    offerDetailsStep.$('#offerUrl').val(data.offerLink);
+                }
             } 
         });
         offerDetailsStep.setStepValidator(function() {
@@ -133,8 +133,12 @@ it.offer.addwizard = function () {
         };
         remindMeStep.setStepValidator(remindMeStepValidator);
         remindMeStep.setFetchDataFromHtmlCb(function () {
+            var expiryDate = null;
+            if ($('#expiryOptionRadio').is(':checked')) {
+                expiryDate = $('#expiryDatePicker').datepicker('getDate').getTime();
+            } 
             return {
-                expiryDateInMillis : $('#expiryDatePicker').datepicker('getDate').getTime()
+                expiryDateInMillis : expiryDate
             };
         });
     };
@@ -154,6 +158,35 @@ it.offer.addwizard = function () {
             altField: '#expiryDateInput',
             altFormat: "d M, yy"
         });
+
+
+        var disableDateInput = function () {
+            remindMeStep.$('#expiryDatePicker').datepicker('disable');
+            remindMeStep.$('#expiryDateInput').attr('disabled', 'true');
+        };
+
+        var enableDateInput = function() {
+            remindMeStep.$('#expiryDatePicker').datepicker('enable');
+            remindMeStep.$('#expiryDateInput').removeAttr('disabled');
+        };
+
+        remindMeStep.$('#noExpiryOptionRadio, #expiryOptionRadio').change(function() {
+            if ($(this).attr('id') == 'expiryOptionRadio') {
+                if ($(this).is(':checked')){
+                    enableDateInput();
+                } else {
+                    disableDateInput();
+                }
+
+            } else {
+                if ($(this).is(':checked')){
+                    disableDateInput();
+                } else {
+                    enableDateInput();
+                }
+            }
+        });
+
     };
 
     var _initDomHandlers = function () {
