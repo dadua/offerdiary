@@ -148,13 +148,21 @@
             </div>
         </div>
         <div id="reminderDetailsTemplate">
-            <div class="control-group">
-                <label class="control-label bluishText" for="expiryDateInput">Expiry Date:</label>
-                <div class="controls">
-                    <input id="expiryDateInput" type="text" placeholder="Example: 16 December, 2013" />
-                    <div id="expiryDatePicker"></div>
-                </div>
-            </div>
+	        <label class="radio">
+	        	<input type="radio" name="optionsRadios" id="expiryOptionRadio" value="expiry" checked>
+	            <div class="control-group">
+	                <label class="control-label bluishText" for="expiryDateInput">Offer expires on:</label>
+	                <div class="controls">
+	                    <input id="expiryDateInput" type="text" placeholder="Example: 26 December, 2013" />
+	                    <div id="expiryDatePicker"></div>
+	                </div>
+	            </div>
+            </label>
+            
+        	<label class="radio bluishText">
+	        	<input type="radio" name="optionsRadios" id="noExpiryOptionRadio" value="noExpiry" >
+	        	Offer has no expiry
+	        </label>
         </div>
     </div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
