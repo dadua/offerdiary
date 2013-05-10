@@ -60,6 +60,8 @@ public class OfferVO {
 
 	private String sharedURL;
 
+	private boolean isPublic;
+
 	private boolean associatedWithLoggedInUser;
 
 	private OfferSourceType sourceType;
@@ -96,6 +98,7 @@ public class OfferVO {
 
 		offerVO.setSourceVendor(VendorVO.getVendorVOFor(offer.getSourceVendor()));
 		offerVO.setTargetVendor(VendorVO.getVendorVOFor(offer.getTargetVendor()));
+		offerVO.setPublic(offer.getIsPublic());
 		return offerVO;
 	}
 
@@ -392,6 +395,16 @@ public class OfferVO {
 
 	public String getOfferLink() {
 		return offerLink;
+	}
+
+
+	public boolean isPublic() {
+		return isPublic;
+	}
+
+
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
 	}
 
 }

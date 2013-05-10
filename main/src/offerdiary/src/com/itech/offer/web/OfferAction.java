@@ -61,7 +61,13 @@ public class OfferAction extends CommonAction{
 	 * cardOffersOnly=true
 	 * cardId=id of card
 	 * 
+	 * 
+	 * 
+	 * for public search--
+	 * public=true
+	 * q=query string
 	 */
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="searchOffers.do")
 	public Response searchOffers(HttpServletRequest req, HttpServletResponse resp) {

@@ -44,6 +44,9 @@ public class HDFCCardOfferSyncJob  extends BaseItechJob{
 		for (Entry<CardTypeKey, List<Offer>> entry : offerMap.entrySet()) {
 			CardTypeKey typeKey = entry.getKey();
 			List<Offer> offers = entry.getValue();
+			for (Offer offer :  offers) {
+				offer.setSourceTag(getSourceTag(typeKey));
+			}
 			List<OfferCard> cards = filterCardsFor(allCardsForHDFC, typeKey);
 			getOfferManager().addOffersForCards(offers, cards);
 			getHibernateSessionFactory().commitCurrentTransaction();
@@ -103,6 +106,29 @@ public class HDFCCardOfferSyncJob  extends BaseItechJob{
 			}
 		}
 		return filteredCards;
+	}
+
+	public String getSourceTag(CardTypeKey typeKey) {
+		String providerPrefix = "HDFC Bank ";
+		switch (typeKey) {
+		case CREDIT:
+			return providerPrefix + " Credit Cards";
+		case CREDIT_VISA:
+			return providerPrefix + " VISA Credit Cards";
+		case CREDIT_MASTER:
+			return providerPrefix + " Master Credit Cards";
+		case DEBIT:
+			return providerPrefix + " Debit Cards";
+		case DEBIT_MASTER:
+			return providerPrefix + " Matser Debit Cards";
+		case DEBIT_VISA:
+			return providerPrefix + " Visa Debit Cards";
+
+		case EMI_CREDIT:
+			return providerPrefix + " Credit Card EMIs";
+		default:
+			return providerPrefix;
+		}
 	}
 
 
