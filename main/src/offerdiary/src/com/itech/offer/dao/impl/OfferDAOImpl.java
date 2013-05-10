@@ -99,6 +99,9 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 	@Override
 	public OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria) {
+		if (getLoggedInUser() == null) {
+			searchCriteria.setPrivateSearchOnly(false);
+		}
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		StringBuilder fromHql = new StringBuilder().append("from " + getEntityClassName() + " o ");
 
@@ -106,10 +109,9 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			fromHql.append(", OfferUserAssoc oua where oua.offer=o and oua.user=:user ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append(" where 1=1");
+			fromHql.append(" where (o.isPublic=:isPublic)");
 			//			fromHql.append( " left join  OfferUserAssoc oua  on oua.offer=o where (oua.user is null or oua.user.userRole=:userRole)");
-			//			parameterMap.put("userRole", UserRole.OD_ADMIN);
-			//TODO fix authorization problem here
+			parameterMap.put("isPublic", true);
 		}
 
 		String whereClauseForFilter = getWhereClauseForFilterCriteria(searchCriteria.getUniqueFilter(), parameterMap);
@@ -237,30 +239,41 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 
 	@Override
 	public void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user) {
-		List<OfferUserAssoc> filteredOffers = getOffersAssociatedWithUser(offers, user);
-		for (OfferUserAssoc offerUserAssoc : filteredOffers) {
-			Offer offerFromAssoc = offerUserAssoc.getOffer();
-			for (Offer offer : offers) {
-				if (offer.equals(offerFromAssoc)) {
-					if (OfferOwnershipType.CREATOR.equals(offerUserAssoc.getOwnershipType())) {
-						offer.setSourceType(OfferSourceType.USER);
+
+		for (Offer offer : offers) {
+			if (user != null) {
+				List<OfferUserAssoc> filteredOffers = getOffersAssociatedWithUser(offers, user);
+				for (OfferUserAssoc offerUserAssoc : filteredOffers) {
+					Offer offerFromAssoc = offerUserAssoc.getOffer();
+					if (offer.equals(offerFromAssoc)) {
+						if (OfferOwnershipType.CREATOR.equals(offerUserAssoc.getOwnershipType())) {
+							offer.setSourceType(OfferSourceType.USER);
+						}
+						offer.setAssociatedWithLoggedInUser(true);
+						break;
 					}
-					offer.setAssociatedWithLoggedInUser(true);
 				}
 			}
-		}
 
-		List<OfferOfferCardAssoc> filteredByCardOffers = getOfferCardAssocBy(offers);
-		for (OfferOfferCardAssoc offerCardAssoc :  filteredByCardOffers) {
-
-			for (Offer offer : offers) {
-				Offer offerFromAssoc = offerCardAssoc.getOffer();
-				if (offer.equals(offerFromAssoc)) {
-					offer.setSource(offerCardAssoc.getOfferCard().getName());
+			if (CommonUtilities.isNotEmpty(offer.getSourceTag())){
+				offer.setSource(offer.getSourceTag());
+				if (OfferSourceType.CARD.equals(offer.getSourceTypeInDb())) {
 					offer.setSourceType(OfferSourceType.CARD);
 				}
+			} else {
+				List<OfferOfferCardAssoc> offerCardAssocs = getOfferCardAssocBy(offer);
+				if (CommonUtilities.isNotEmpty(offerCardAssocs)) {
+					OfferOfferCardAssoc offerOfferCardAssoc = offerCardAssocs.get(0);
+					Offer offerFromAssoc = offerOfferCardAssoc.getOffer();
+					if (offer.equals(offerFromAssoc)) {
+						offer.setSource(offerOfferCardAssoc.getOfferCard().getName());
+						offer.setSourceType(OfferSourceType.CARD);
+						break;
+					}
+				}
 			}
 		}
+
 	}
 
 
@@ -272,6 +285,14 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		String hql = "select oca from " + getEntityClassName() + " o, OfferOfferCardAssoc oca  where oca.offer=o and o in (:offers)";
 		Query query = getSession().createQuery(hql);
 		query.setParameterList("offers", offers);
+		List list = query.list();
+		return query.list();
+	}
+
+	public List<OfferOfferCardAssoc> getOfferCardAssocBy(Offer offer) {
+		String hql = "select oca from " + getEntityClassName() + " o, OfferOfferCardAssoc oca  where oca.offer=o and o =:offer";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offer", offer);
 		List list = query.list();
 		return query.list();
 	}

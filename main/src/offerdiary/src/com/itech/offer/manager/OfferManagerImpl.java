@@ -17,6 +17,7 @@ import com.itech.offer.dao.OfferOfferCardAssocDAO;
 import com.itech.offer.dao.OfferShareDAO;
 import com.itech.offer.dao.OfferUserAssocDAO;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferOfferCardAssoc;
 import com.itech.offer.model.OfferShare;
@@ -29,6 +30,7 @@ import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
+import com.itech.user.model.UserRole;
 import com.itech.user.vos.ShareOfferActionVO;
 
 
@@ -69,6 +71,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
 				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+			}
+			offer.setSourceType(OfferSourceType.USER);
+			if (UserRole.OD_ADMIN.equals(user.getUserRole()) || UserRole.SUPER_USER.equals(user.getUserRole())) {
+				offer.setIsPublic(true);
 			}
 		} else {
 			OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
@@ -289,10 +295,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				Offer existingOffer = existingOfferCardAssoc.getOffer();
 				Date newExpiryDate = offer.getExpiry();
 				Date existingExpiryDate = existingOffer.getExpiry();
-				if (newExpiryDate == null || newExpiryDate.equals(existingExpiryDate)) {
-					continue;
+
+				if (newExpiryDate != null &&  !newExpiryDate.equals(existingExpiryDate)) {
+					existingOffer.setExpiry(newExpiryDate);
 				}
-				existingOffer.setExpiry(newExpiryDate);
+				existingOffer.setSourceTag(offer.getSourceTag());
 				getOfferDAO().addOrUpdate(existingOffer);
 				continue;
 			}

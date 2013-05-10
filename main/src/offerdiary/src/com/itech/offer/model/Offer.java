@@ -99,10 +99,17 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name="APPROVED")
 	private boolean approved;
 
+
+	@Column(name="IS_PUBLIC")
+	private Boolean isPublic = Boolean.FALSE;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name="SOURCE_TYPE")
 	private OfferSourceType sourceTypeInDb = OfferSourceType.UNKOWN;
 
+
+	@Column(name="SOURCE_TAG")
+	private String sourceTag;
 
 	@Transient
 	private NotifyVO notifyVO;
@@ -476,4 +483,23 @@ public class Offer extends PersistableEntity implements Cloneable{
 		this.sourceTypeInDb = sourceTypeInDb;
 	}
 
+
+	public Boolean getIsPublic() {
+		return isPublic;
+	}
+
+
+	public void setIsPublic(Boolean isPublic) {
+		this.isPublic = isPublic;
+	}
+
+
+	public String getSourceTag() {
+		return sourceTag;
+	}
+
+
+	public void setSourceTag(String sourceTag) {
+		this.sourceTag = sourceTag;
+	}
 }

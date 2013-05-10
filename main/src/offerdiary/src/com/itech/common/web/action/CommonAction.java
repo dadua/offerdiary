@@ -25,6 +25,10 @@ import com.itech.user.model.User;
 public class CommonAction {
 	private static final String SEARCH_CRITERIA_PARAM_KEY = "searchCriteria";
 	private static final String SEARCH_CRITERIA_TYPE_PARAM_KEY = "searchCriteriaType"; //offer, card etc
+
+	private static final String SEARCH_CRITERIA_SEARCH_STRING_PARAM_KEY = "q";
+	private static final String SEARCH_CRITERIA_PUBLIC_SEARCH_PARAM_KEY = "public";
+
 	private SecurityManager securityManager;
 	private SecurityContextHolder securityContextHolder;
 	private UserManager userManager;
@@ -45,9 +49,22 @@ public class CommonAction {
 	protected SearchCriteria getSearchCriteria(HttpServletRequest req){
 		String searchCriteriaJSON = req.getParameter(SEARCH_CRITERIA_PARAM_KEY);
 		String searchCriteriaType= req.getParameter(SEARCH_CRITERIA_TYPE_PARAM_KEY);
+
+		if (CommonUtilities.isNullOrEmpty(searchCriteriaType)) {
+			searchCriteriaType = "offer";
+		}
+
 		if ( "offer".equalsIgnoreCase(searchCriteriaType))  {
 			if (CommonUtilities.isNullOrEmpty(searchCriteriaJSON)) {
-				return new OfferSearchCriteria();
+				String searchString = req.getParameter(SEARCH_CRITERIA_SEARCH_STRING_PARAM_KEY);
+				String publicSearch = req.getParameter(SEARCH_CRITERIA_PUBLIC_SEARCH_PARAM_KEY);
+				OfferSearchCriteria offerSearchCriteria = new OfferSearchCriteria();
+
+				if ("true".equalsIgnoreCase(publicSearch)) {
+					offerSearchCriteria.setPrivateSearchOnly(false);
+				}
+				offerSearchCriteria.setSearchString(searchString);
+				return offerSearchCriteria;
 			}
 			Gson gson = new Gson();
 			Type searchCriteriaJsonType = new TypeToken<OfferSearchCriteria>() { }.getType();
@@ -55,13 +72,7 @@ public class CommonAction {
 			return searchCriteria;
 		}
 
-		if (CommonUtilities.isNullOrEmpty(searchCriteriaJSON)) {
-			return new OfferSearchCriteria();
-		}
-		Gson gson = new Gson();
-		Type searchCriteriaJsonType = new TypeToken<OfferSearchCriteria>() { }.getType();
-		OfferSearchCriteria searchCriteria = gson.fromJson(searchCriteriaJSON, searchCriteriaJsonType);
-		return searchCriteria;
+		return null;
 
 	}
 
