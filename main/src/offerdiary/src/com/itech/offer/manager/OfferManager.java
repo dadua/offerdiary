@@ -54,5 +54,7 @@ public interface OfferManager {
 
 	public void addOffersForCards(List<Offer> offers, List<OfferCard> cards);
 
+	public void addOfferToUser(String offerId, User user);
+
 
 }

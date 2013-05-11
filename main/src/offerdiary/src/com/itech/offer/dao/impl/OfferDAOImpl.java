@@ -18,6 +18,7 @@ import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferOfferCardAssoc;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.OfferOwnershipType;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.offer.vo.OfferSearchResultVO;
@@ -126,7 +127,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			fromHql.append(" order by oua.createdOn desc ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append( " order by o.targetVendor, o.createdOn desc  ");
+			fromHql.append( " order by o.reputation desc, o.createdOn desc, o.targetVendor desc  ");
 		}
 		String resultHQL = "select o " + fromHql.toString() ;
 
@@ -318,6 +319,21 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 		Query query = getSession().createQuery(hql);
 		query.setParameterList("uniqueIds", offerUniqueIds);
 		return query.list();
+	}
+
+	@Override
+	public Offer getOfferFor(String description, Vendor targetVendor,
+			String sourceTag, OfferSourceType sourceTypeInDb) {
+		String hql = "select o from " + getEntityClassName() + " o where o.description=:description " +
+				" and o.targetVendor = :targetVendor " +
+				" and o.sourceTag=:sourceTag " +
+				" and o.sourceTypeInDb=:sourceTypeInDb ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("description", description);
+		query.setParameter("targetVendor", targetVendor);
+		query.setParameter("sourceTag", sourceTag);
+		query.setParameter("sourceTypeInDb", sourceTypeInDb);
+		return getSingleResultFrom(query);
 	}
 
 

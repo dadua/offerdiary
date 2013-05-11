@@ -4,6 +4,7 @@ import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.offer.dao.OfferOfferCardAssocDAO;
+import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferOfferCardAssoc;
 
@@ -33,6 +34,16 @@ OfferOfferCardAssocDAO {
 		query.setParameter("targetVendorName", targetVendorName);
 		return getSingleResultFrom(query);
 
+	}
+
+	@Override
+	public OfferOfferCardAssoc getOfferAssocFor(OfferCard card, Offer offer) {
+		String hql = "select oca from " + getEntityClassName() + " oca where " +
+				" oca.offerCard=:offerCard and oca.offer=:offer ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("offerCard",card);
+		query.setParameter("offer", offer);
+		return getSingleResultFrom(query);
 	}
 
 }

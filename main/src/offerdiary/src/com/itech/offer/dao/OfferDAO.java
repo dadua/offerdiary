@@ -5,8 +5,10 @@ import java.util.List;
 import com.itech.common.db.CommonBaseDAO;
 import com.itech.common.db.OfferSearchCriteria;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferUserAssoc;
+import com.itech.offer.model.Vendor;
 import com.itech.offer.model.enums.OfferType;
 import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.user.model.User;
@@ -34,6 +36,9 @@ public interface OfferDAO extends CommonBaseDAO<Offer>{
 	OfferSearchResultVO searchOffersFor(OfferSearchCriteria searchCriteria);
 
 	void fetchAndFillOfferRelationshipWithUser(List<Offer> offers, User user);
+
+	Offer getOfferFor(String description, Vendor targetVendor,
+			String sourceTag, OfferSourceType sourceTypeInDb);
 
 
 
