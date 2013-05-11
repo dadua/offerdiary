@@ -25,8 +25,8 @@
 		        }, 1500);
 		    });
 		    
-		    
-		    var goToShare$ = $('#go-to-share'),
+		    var goToMyOffers$ = $('#go-to-myOffers'),
+			    goToShare$ = $('#go-to-share'),
 		    	goToNotifications$ = $('#go-to-notifications'),
 		    	goToCards$ = $('#go-to-cardOffers'),
 		    	goToFeedback$ = $('#go-to-feedback'),
@@ -39,12 +39,16 @@
 		    var scrollChecker = function () {
 				var windowTop = window$.scrollTop(),
 					offset = 95,
+					myOffersTop = goToMyOffers$.offset().top - offset,
 					shareTop = goToShare$.offset().top - offset,
 					notificationsTop = goToNotifications$.offset().top - offset,
 					cardsTop = goToCards$.offset().top - offset,
 					feedbackTop = goToFeedback$.offset().top - offset - 90;
 				
-				if (windowTop>=0 && windowTop < shareTop) {
+				if (windowTop>=0 && windowTop < myOffersTop) {
+				    $('.navScroller').removeClass('active');
+				    $('.findOffersNav').addClass('active');
+				} else if (windowTop>=myOffersTop && windowTop < shareTop) {
 				    $('.navScroller').removeClass('active');
 				    $('.myOffersNav').addClass('active');
 				} else if (windowTop>= shareTop && windowTop < notificationsTop) {
@@ -191,7 +195,9 @@
 			<li class="nav-header">Features</li>
 			<li class="divider"></li>
 			<li class="divider"></li>
-			<li class="navScroller myOffersNav"><a href="#">My Offers<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="navScroller findOffersNav"><a href="#">Find Offers<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
+			<li class="divider"></li>
+			<li class="navScroller myOffersNav"><a href="#go-to-myOffers">My Offers<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
 			<li class="navScroller shareNav"><a  href="#go-to-share">Share<i class="hide pull-right icon-arrow-right icon-white"></i></a></li>
 			<li class="divider"></li>
@@ -204,6 +210,47 @@
 		</ul>
 	</div>
 	<div id="features">
+		<div id="discoverOffers" class="featureItem">
+	        <div class="container">
+	        	<div class="container-fluid itemContainer">
+			        <div class="row-fluid">
+			            <div class="description span4">
+			                <div class="heading bluishText">Discover New Offers</div>
+			                <div class="lead">
+		                        <p class="explanation">
+		                        	<span class="correct">&#10004;</span>
+		                        	Find great coupons, deals and offers
+		                        </p>
+		                        <p class="explanation">
+		                        	<span class="correct">&#10004;</span>
+		                        	Enjoy the offers when you shop the next time
+		                        </p>
+		                        
+			                </div>
+			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
+			            </div>
+			        	<div class="offset1 span7">
+			        	<br>
+			        	<br>
+			        	<br>
+			        	<br>
+			        		<div class="form-search">
+	                            <div class="input-append">
+	                                <input id="searchOfferQuery" class="offerDetail search-query input-xxlarge" type="text" placeholder="Discover Great Offers" />
+	                                <button class="btn"><i class="icon-search"></i></button>
+	                            </div>
+	                        </div>
+				        </div>
+			        </div>
+			        <div class="row-fluid" style="position:relative">
+			        	<hr>
+			        	<div id="go-to-myOffers" class="goDown">
+			        		<i class="icon-chevron-down icon-white"></i>
+			        	</div>
+			        </div>
+			     </div>
+		     </div>
+	    </div>
 	    <div id="myOffers" class="featureItem">
 	        <div class="container">
 	        	<div class="container-fluid itemContainer">
