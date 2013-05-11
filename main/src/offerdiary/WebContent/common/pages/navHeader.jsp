@@ -55,7 +55,7 @@
 		     				<ul class="featureTabs nav nav-tabs" style="margin-left: 25px; margin-top:30px;color:#0088CC;">
 		     					<li class="divider-vertical"></li>
 								<li class="featureTab" id="offerTab" >
-									 <a href="offers.do" style="color:#0088CC;">My Offers</a>
+									 <a href="myoffers.do" style="color:#0088CC;">My Offers</a>
 								</li>
 								<li class="divider-vertical"></li>
 								<%--

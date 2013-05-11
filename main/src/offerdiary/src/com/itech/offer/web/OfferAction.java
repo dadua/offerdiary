@@ -36,6 +36,7 @@ public class OfferAction extends CommonAction{
 
 	private static final String IS_SHARED_OFFER_PARAM_KEY = "isSharedOffer";
 	private static final String MY_VALID_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
+	private static final String PUBLIC_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -79,8 +80,9 @@ public class OfferAction extends CommonAction{
 	}
 
 
+
 	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="offers.do")
+	@ActionMapping(value="myoffers.do")
 	public Response goToOffers(HttpServletRequest req, HttpServletResponse resp) {
 		return goToMyWallet(req, resp);
 	}
@@ -96,6 +98,16 @@ public class OfferAction extends CommonAction{
 			req.setAttribute(MY_VALID_OFFERS_COUNT_ATTR_KEY, offerSearchResultVO.getTotalCount());
 		}
 		return new Forward(OfferWalletConstants.WALLET_PAGE);
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="offers.do")
+	public Response goToPublicOffers(HttpServletRequest req, HttpServletResponse resp) {
+		OfferSearchCriteria validOffersSearchCriteria = new OfferSearchCriteria();
+		validOffersSearchCriteria.setPrivateSearchOnly(false);
+		OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
+		req.setAttribute(PUBLIC_OFFERS_COUNT_ATTR_KEY, offerSearchResultVO.getTotalCount());
+		return new Forward(OfferWalletConstants.PUBLIC_OFFERS_PAGE);
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

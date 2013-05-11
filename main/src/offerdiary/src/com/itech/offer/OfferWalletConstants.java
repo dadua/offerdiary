@@ -4,6 +4,7 @@ public class OfferWalletConstants {
 	public static final String OFFER_LIST_PARAM_KEY = "offers";
 	public static final String OFFER_IDS_PARAM_KEY = "offerIds";
 	public static final String WALLET_PAGE = "offers/pages/offers.jsp";
+	public static final String PUBLIC_OFFERS_PAGE = "offers/pages/publicOffers.jsp";
 	public static final String INDEX_PAGE = "index.jsp";
 	public static final String OFFER_NOTIFICATION_CONFIG_PARAM_KEY = "offerNotificationConfigs";
 

@@ -104,11 +104,11 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
         offerTemplate$.find('.vendorOnOfferNameVal').html(offer.targetVendor.name);
         offerTemplate$.find('.vendorUrl').html(offer.targetVendor.siteUrl).attr('href', offer.targetVendor.siteUrl);
         if (offer.targetVendor.logoUrl) {
-        	if (offer.targetVendor.isAbsoluteLogoUrl) {
-        		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', offer.targetVendor.logoUrl );
-        	} else {
-        		offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
-        	}
+            if (offer.targetVendor.isAbsoluteLogoUrl) {
+                offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', offer.targetVendor.logoUrl );
+            } else {
+                offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/'+ offer.targetVendor.logoUrl );
+            }
         } else {
             offerTemplate$.find('.targetVendor-logoUrl').attr('alt', offer.targetVendor.name).attr('src', 'images/stores/blankVendor.png');
             offerTemplate$.find('.vendorOnOfferNameVal').removeClass('hide');
@@ -129,22 +129,22 @@ it.offer.setOfferDataToOffer$ = function (offer, offerTemplate$) {
     offerTemplate$.find('.offerTrash').attr('id', 'offerTrash_' + offer.id);
     offerTemplate$.find('.offerShare').attr('id', 'offerShare_' + offer.id);
     offerTemplate$.find('.offerDetail').attr('id', 'offerDetail_' + offer.id);
-    
+
     var isOfferDescriptionPresent = false;
-    if (typeof offer.description == 'string' && offer.description != '') {
-	    isOfferDescriptionPresent = true;
+    if (typeof offer.description == 'string' && offer.description !== '') {
+        isOfferDescriptionPresent = true;
     }
-    
-    
-    if (typeof offer.offerLink == 'string' && offer.offerLink != '') {
-	    offerTemplate$.find('.offerUrl').attr({'href': offer.offerLink, 'target': '_blank'});
-	    if (!isOfferDescriptionPresent) {
-	    	offerTemplate$.find('.offerUrl').html(offer.offerLink);
-	    } else {
-	    	offerTemplate$.find('.offerUrl').html(offer.description);
-	    }
+
+
+    if (typeof offer.offerLink === 'string' && offer.offerLink !== '') {
+        offerTemplate$.find('.offerUrl').attr({'href': offer.offerLink, 'target': '_blank'});
+        if (!isOfferDescriptionPresent) {
+            offerTemplate$.find('.offerUrl').html(offer.offerLink);
+        } else {
+            offerTemplate$.find('.offerUrl').html(offer.description);
+        }
     } else if (isOfferDescriptionPresent) {
-    	offerTemplate$.find('.offerDesc').html(offer.description);
+        offerTemplate$.find('.offerDesc').html(offer.description);
     }
     
     if (typeof offer.offerCode === 'string' && offer.offerCode !== '') {
