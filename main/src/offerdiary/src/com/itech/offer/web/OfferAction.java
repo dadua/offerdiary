@@ -158,6 +158,19 @@ public class OfferAction extends CommonAction{
 	}
 
 
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="addOffer.do")
+	public Response addOffer (HttpServletRequest req, HttpServletResponse resp) {
+		String offerId = req.getParameter(OfferWalletConstants.OFFER_ID_PARAM_KEY);
+		getOfferManager().addOfferToUser(offerId, getLoggedInUser());
+		Result<String> result = new Result<String>("Offer successfully  added to your wallet");
+		result.setMsg("Offer successfully  added to your wallet");
+		Type resultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultType);
+	}
+
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteOffers.do")
 	public Response removeOffersFromWallet (HttpServletRequest req, HttpServletResponse resp) {

@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+import com.itech.offer.FeederConstants;
 import com.itech.offer.fetchers.HdfcOfferFetcher;
 import com.itech.offer.fetchers.HdfcOfferFetcher.CardTypeKey;
 import com.itech.offer.job.BaseItechJob;
@@ -148,6 +149,8 @@ public class HDFCCardOfferSyncJob  extends BaseItechJob{
 				logger.error("Target vendor is null for offer: " + cardOfferVO);
 				continue;
 			}
+			offer.setFeeder(FeederConstants.HDFC_CARD_OFFER_FEEDER);
+			offer.setReputation(FeederConstants.OD_BANK_CARD_OFFER_FEEDER_OFFER_REPUTATION);
 			offerList.add(offer);
 		}
 		return offerMap;

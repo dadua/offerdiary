@@ -21,11 +21,13 @@ import org.springframework.stereotype.Component;
 
 import com.itech.common.CommonFileUtilities;
 import com.itech.common.CommonUtilities;
+import com.itech.offer.FeederConstants;
 import com.itech.offer.job.BaseItechJob;
 import com.itech.offer.job.JobEventListener;
 import com.itech.offer.manager.OfferCardManager;
 import com.itech.offer.manager.OfferManager;
 import com.itech.offer.model.Offer;
+import com.itech.offer.model.Offer.OfferSourceType;
 import com.itech.offer.model.OfferCard;
 import com.itech.offer.model.OfferCard.CardSource;
 import com.itech.offer.model.Vendor;
@@ -109,7 +111,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 					continue;
 				}
 				OfferCard offerCard = redwineCardToODCardMap.get(redWineCardWithOffers.getCardId());
-				List<Offer> offers = getOffersFrom(redWineCardWithOffers.getOffers());
+				List<Offer> offers = getOffersFrom(redWineCardWithOffers.getOffers(), offerCard);
 				getOfferManager().addOffersForCard(offers, offerCard);
 				getHibernateSessionFactory().commitCurrentTransaction();
 			}
@@ -161,16 +163,21 @@ public class RedWineSyncJob  extends BaseItechJob{
 
 	}
 
-	private List<Offer> getOffersFrom(List<RedWineOffer> redWineOffers) {
+	private List<Offer> getOffersFrom(List<RedWineOffer> redWineOffers, OfferCard offerCard) {
 		List<Offer> offers = new ArrayList<Offer>();
 		for (RedWineOffer redWineOffer : redWineOffers) {
 			Offer offer = new Offer();
 			offer.setDescription(redWineOffer.getDescription());
 			Vendor vendor = getVendorFrom(redWineOffer);
 			offer.setTargetVendor(vendor);
+			offer.setFeeder(FeederConstants.REDWINE_CARD_OFFER_FEEDER);
+			offer.setReputation(FeederConstants.REDWINE_CARD_OFFER_FEEDER_OFFER_REPUTATION);
 			Date expiry = getExpiryFrom(redWineOffer.getExpiryDate());
 			offer.setExpiry(expiry);
+			offer.setSourceTag(offerCard.getName());
+			offer.setSourceTypeInDb(OfferSourceType.CARD);
 			offers.add(offer);
+
 		}
 		return offers;
 	}

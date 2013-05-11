@@ -12,6 +12,7 @@ import com.itech.common.services.CommonBaseManager;
 import com.itech.email.services.EmailManager;
 import com.itech.email.vo.ShareOfferNotificationEmail;
 import com.itech.event.offer.OfferEventGenerator;
+import com.itech.offer.FeederConstants;
 import com.itech.offer.dao.OfferDAO;
 import com.itech.offer.dao.OfferOfferCardAssocDAO;
 import com.itech.offer.dao.OfferShareDAO;
@@ -75,6 +76,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			offer.setSourceType(OfferSourceType.USER);
 			if (UserRole.OD_ADMIN.equals(user.getUserRole()) || UserRole.SUPER_USER.equals(user.getUserRole())) {
 				offer.setIsPublic(true);
+				offer.setReputation(FeederConstants.OD_ADMIN_OFFER_REPUTATION);
+			} else {
+				offer.setReputation(FeederConstants.USER_OFFER_REPUTATION);
 			}
 		} else {
 			OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
@@ -249,31 +253,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 
 	@Override
 	public void addOffersForCards(List<Offer> offers, List<OfferCard> cards) {
-		List<Offer> clonedOfferList = cloneOfferList(offers);
-		for (OfferCard card : cards) {
-			addOffersForCard(clonedOfferList, card);
-		}
-	}
-
-
-
-	private List<Offer> cloneOfferList(List<Offer> offers) {
-		List<Offer> clonedOfferList = new ArrayList<Offer>();
-		for (Offer offer : offers) {
-			try {
-				clonedOfferList.add(offer.clone());
-			} catch (CloneNotSupportedException e) {
-				logger.error("error in cloning" , e);
-			}
-		}
-		return clonedOfferList;
-	}
-
-
-	@Override
-	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
+		List<Offer> modifiedOfferList = new ArrayList<Offer>();
 		List<OfferOfferCardAssoc> assocs = new ArrayList<OfferOfferCardAssoc>();
-		List<Offer> offersToSave = new ArrayList<Offer>();
 
 		for (Offer offer : offers) {
 			Vendor targetVendorFromOffer = offer.getTargetVendor();
@@ -290,9 +271,10 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				}
 			}
 
-			OfferOfferCardAssoc existingOfferCardAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(offerCard, offer.getDescription(), offer.getTargetVendor().getName());
-			if (existingOfferCardAssoc != null) {
-				Offer existingOffer = existingOfferCardAssoc.getOffer();
+			Offer existingOffer = getOfferDAO().getOfferFor(offer.getDescription(), offer.getTargetVendor(), offer.getSourceTag(), OfferSourceType.CARD);
+
+			if (existingOffer != null) {
+				modifiedOfferList.add(existingOffer);
 				Date newExpiryDate = offer.getExpiry();
 				Date existingExpiryDate = existingOffer.getExpiry();
 
@@ -300,22 +282,45 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 					existingOffer.setExpiry(newExpiryDate);
 				}
 				existingOffer.setSourceTag(offer.getSourceTag());
+				existingOffer.setIsPublic(true);
+				existingOffer.setReputation(offer.getReputation());
 				getOfferDAO().addOrUpdate(existingOffer);
 				continue;
-			}
-			if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
-				offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+			} else {
+				if (CommonUtilities.isNullOrEmpty(offer.getUniqueId())) {
+					offer.setUniqueId(CommonUtilities.getUniqueId("OFFER"));
+				}
+				offer.setIsPublic(true);
+				offer.setSourceTypeInDb(OfferSourceType.CARD);
+				getOfferDAO().addOrUpdate(offer);
+				modifiedOfferList.add(offer);
 			}
 
-			OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
-			assoc.setOffer(offer);
-			assoc.setOfferCard(offerCard);
-			assocs.add(assoc);
 
-			offersToSave.add(offer);
+
 		}
-		getOfferDAO().addOrUpdate(offersToSave);
+
+		for (Offer offer : modifiedOfferList) {
+			for (OfferCard card : cards) {
+				OfferOfferCardAssoc existingAssoc = getOfferOfferCardAssocDAO().getOfferAssocFor(card, offer);
+				if (existingAssoc == null) {
+					OfferOfferCardAssoc assoc = new OfferOfferCardAssoc();
+					assoc.setOffer(offer);
+					assoc.setOfferCard(card);
+					assocs.add(assoc);
+				}
+			}
+		}
+
 		getOfferOfferCardAssocDAO().addOrUpdate(assocs);
+	}
+
+
+	@Override
+	public boolean addOffersForCard(List<Offer> offers, OfferCard offerCard) {
+		List<OfferCard> cards = new ArrayList<OfferCard>();
+		cards.add(offerCard);
+		addOffersForCards(offers, cards);
 		return true;
 	}
 
@@ -383,6 +388,13 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		Offer offer = getOfferForUnqueId(offerId);
 		addOfferForUser(offer , user);
 	}
+
+	@Override
+	public void addOfferToUser(String offerId, User user) {
+		Offer offer = getOfferForUnqueId(offerId);
+		addOfferForUser(offer , user);
+	}
+
 
 
 	public OfferDAO getOfferDAO() {
@@ -468,6 +480,8 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
+
+
 
 
 }

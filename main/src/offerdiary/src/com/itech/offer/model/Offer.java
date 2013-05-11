@@ -111,6 +111,12 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name="SOURCE_TAG")
 	private String sourceTag;
 
+	@Column(name="FEEDER")
+	private String feeder; //REDWINE etc
+
+	@Column(name="REPUTATION")
+	private int reputation;
+
 	@Transient
 	private NotifyVO notifyVO;
 
@@ -501,5 +507,25 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setSourceTag(String sourceTag) {
 		this.sourceTag = sourceTag;
+	}
+
+
+	public String getFeeder() {
+		return feeder;
+	}
+
+
+	public void setFeeder(String feeder) {
+		this.feeder = feeder;
+	}
+
+
+	public int getReputation() {
+		return reputation;
+	}
+
+
+	public void setReputation(int reputation) {
+		this.reputation = reputation;
 	}
 }
