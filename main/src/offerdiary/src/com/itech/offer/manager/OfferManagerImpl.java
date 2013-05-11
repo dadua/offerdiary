@@ -76,10 +76,11 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 			offer.setSourceType(OfferSourceType.USER);
 			if (UserRole.OD_ADMIN.equals(user.getUserRole()) || UserRole.SUPER_USER.equals(user.getUserRole())) {
 				offer.setIsPublic(true);
-				offer.setReputation(FeederConstants.OD_ADMIN_OFFER_REPUTATION);
+				offer.setFeederReputation(FeederConstants.OD_ADMIN_OFFER_REPUTATION);
 			} else {
 				offer.setReputation(FeederConstants.USER_OFFER_REPUTATION);
 			}
+			updateReputation(offer);
 		} else {
 			OfferUserAssoc existingUserAssoc = getOfferUserAssocDAO().getAssocFor(offer, user);
 			if (existingUserAssoc != null) {
@@ -283,7 +284,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				}
 				existingOffer.setSourceTag(offer.getSourceTag());
 				existingOffer.setIsPublic(true);
+				existingOffer.setFeederReputation(offer.getFeederReputation());
 				existingOffer.setReputation(offer.getReputation());
+				updateReputation(existingOffer);
 				getOfferDAO().addOrUpdate(existingOffer);
 				continue;
 			} else {
@@ -292,6 +295,7 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 				}
 				offer.setIsPublic(true);
 				offer.setSourceTypeInDb(OfferSourceType.CARD);
+				updateReputation(offer);
 				getOfferDAO().addOrUpdate(offer);
 				modifiedOfferList.add(offer);
 			}
@@ -313,6 +317,12 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 		}
 
 		getOfferOfferCardAssocDAO().addOrUpdate(assocs);
+	}
+
+
+	private void updateReputation(Offer offer) {
+		int reputation = offer.getFeederReputation();
+		offer.setReputation(reputation);
 	}
 
 

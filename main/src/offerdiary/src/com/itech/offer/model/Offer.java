@@ -59,6 +59,10 @@ public class Offer extends PersistableEntity implements Cloneable{
 	@Column(name="CREATED_ON")
 	private Date createdOn = new Date(System.currentTimeMillis());
 
+	@Column(name="LAST_UPDATED_ON")
+	private Date lastUpdated = new Date(System.currentTimeMillis());
+
+
 	@Column(name=OfferModelConstants.COL_OFFER_CODE)
 	private String offerCode;
 
@@ -115,7 +119,11 @@ public class Offer extends PersistableEntity implements Cloneable{
 	private String feeder; //REDWINE etc
 
 	@Column(name="REPUTATION")
-	private int reputation;
+	private int reputation = 1;
+
+
+	@Column(name="FEEDER_REPUTATION")
+	private int feederReputation = 1;
 
 	@Transient
 	private NotifyVO notifyVO;
@@ -527,5 +535,25 @@ public class Offer extends PersistableEntity implements Cloneable{
 
 	public void setReputation(int reputation) {
 		this.reputation = reputation;
+	}
+
+
+	public int getFeederReputation() {
+		return feederReputation;
+	}
+
+
+	public void setFeederReputation(int feederReputation) {
+		this.feederReputation = feederReputation;
+	}
+
+
+	public Date getLastUpdated() {
+		return lastUpdated;
+	}
+
+
+	public void setLastUpdated(Date lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 }

@@ -75,7 +75,7 @@ public class Vendor extends PersistableEntity{
 	private User owner;
 
 	@Column(name="OD_REPUTATION")
-	private Integer odReputation = 0;
+	private Integer odReputation = 1;
 
 	public enum SourceType {
 		REDSCOTCH, USER_DEFINED, REDWINE, OD_BANK_OFFER_PARSER

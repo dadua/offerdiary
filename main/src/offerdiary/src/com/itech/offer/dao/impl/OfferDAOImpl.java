@@ -127,7 +127,7 @@ public class OfferDAOImpl extends HibernateCommonBaseDAO<Offer> implements Offer
 			fromHql.append(" order by oua.createdOn desc ");
 			parameterMap.put("user", getLoggedInUser());
 		} else {
-			fromHql.append( " order by o.reputation desc, o.createdOn desc, o.targetVendor desc  ");
+			fromHql.append( " order by o.reputation desc, o.targetVendor.odReputation desc, o.createdOn desc, o.targetVendor.name desc  ");
 		}
 		String resultHQL = "select o " + fromHql.toString() ;
 

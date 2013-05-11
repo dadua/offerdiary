@@ -150,7 +150,7 @@ public class HDFCCardOfferSyncJob  extends BaseItechJob{
 				continue;
 			}
 			offer.setFeeder(FeederConstants.HDFC_CARD_OFFER_FEEDER);
-			offer.setReputation(FeederConstants.OD_BANK_CARD_OFFER_FEEDER_OFFER_REPUTATION);
+			offer.setFeederReputation(FeederConstants.OD_BANK_CARD_OFFER_FEEDER_REPUTATION);
 			offerList.add(offer);
 		}
 		return offerMap;
