@@ -60,9 +60,9 @@ public class OfferVO {
 
 	private String sharedURL;
 
-	private boolean isPublic;
+	private Boolean isPublic;
 
-	private boolean associatedWithLoggedInUser;
+	private Boolean associatedWithLoggedInUser;
 
 	private OfferSourceType sourceType;
 
@@ -398,12 +398,12 @@ public class OfferVO {
 	}
 
 
-	public boolean isPublic() {
+	public Boolean isPublic() {
 		return isPublic;
 	}
 
 
-	public void setPublic(boolean isPublic) {
+	public void setPublic(Boolean isPublic) {
 		this.isPublic = isPublic;
 	}
 
