@@ -2,22 +2,21 @@
 
     <script src="common/js/rowFluidAdder.jquery.js" charset="UTF-8"> </script>
     <script src="offers/js/offer.js" > </script>
+    <script src="offers/js/public_offers.js" > </script>
     <script src="offers/js/offerdetail.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
     <script src="common/libs/jquery-pagination/jquery.pagination.js" charset="UTF-8"> </script>
     
     <script type="text/javascript">
         $(function() {
-            var myValidOffersCount = ${myValidOffersCount};
-            it.offer.init(myValidOffersCount);
-            it.offer.share.init();
+            var publicOffersCount = ${publicOffersCount};
+            it.publicOffers.init(publicOffersCount);
         });
             
     </script>
 
     <style type="text/css">
     
-            <%@include file="/common/css/wizard.css" %>
             <%@include file="/common/css/layout.css" %>
             <%@include file="/offers/css/vendor.css" %>
             <%@include file="/offers/css/offer.css" %>
@@ -27,13 +26,14 @@
 
     </style>
 
-    <title>Discover great Offers</title>
+    <title>Discover Great Coupons, Deals and Offers</title>
     
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
     <div class="container" >
         <%@include file="/common/pages/featureTabsRow.jsp" %>
         <div class="row">
+        <%--
             <div class="span2" >
                 <div class="span2 container-fluid options-left-container">
                     <ul class="nav nav-list offerFilters">
@@ -52,12 +52,12 @@
                     </ul>
                 </div>
             </div>
-
-            <div class="span10 content-container"  >
+ --%>
+            <div class="content-container"  >
                 <div class="container-fluid">
                     <div class="row-fluid">
                     	<div class="span6">
-	                    	<h3 class="bluishText">My Offers</h3>
+	                    	<h3 class="bluishText">Discover New Offers</h3>
                     	</div>
                     	<div class="span5">
 	                        <br/>
@@ -74,7 +74,6 @@
 
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
-                            <%@include file="/offers/templates/addOfferTemplate.html" %>
                         </div>
                         <div class="container-fluid">
 	                        <div id="offerPaginationContainer" class="row-fluid span6 offset6">

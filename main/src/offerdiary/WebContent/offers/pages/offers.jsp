@@ -15,7 +15,6 @@
             it.offer.addwizard.init();
             var myValidOffersCount = ${myValidOffersCount};
             it.offer.init(myValidOffersCount);
-            it.offer.share.init();
         });
             
     </script>

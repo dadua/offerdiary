@@ -36,7 +36,7 @@ public class OfferAction extends CommonAction{
 
 	private static final String IS_SHARED_OFFER_PARAM_KEY = "isSharedOffer";
 	private static final String MY_VALID_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
-	private static final String PUBLIC_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
+	private static final String PUBLIC_OFFERS_COUNT_ATTR_KEY = "publicOffersCount";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)

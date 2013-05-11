@@ -169,13 +169,13 @@ it.offer.view = function () {
 
 
 it.offer.refreshOffers = function () {
-	$.getJSON('getMyOffers.do', function (resp) {
-            if (resp.success) {
-                it.offer.plotAll(resp.result, true);
-            } else {
-                //TODO: Error..
-            }
-        });
+    $.getJSON('getMyOffers.do', function (resp) {
+        if (resp.success) {
+            it.offer.plotAll(resp.result, true);
+        } else {
+            //TODO: Error..
+        }
+    });
 };
 
 
@@ -399,6 +399,7 @@ it.offer.searchOffers = function (pageNo, isPaginationClick) {
 it.offer.init = function (validOfferCount) {
     it.offer.pagination.init(validOfferCount);
     it.offer.addOneHandlers();
+    it.offer.share.init();
 };
 
 
