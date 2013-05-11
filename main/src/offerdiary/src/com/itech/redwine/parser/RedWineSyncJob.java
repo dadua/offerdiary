@@ -171,7 +171,7 @@ public class RedWineSyncJob  extends BaseItechJob{
 			Vendor vendor = getVendorFrom(redWineOffer);
 			offer.setTargetVendor(vendor);
 			offer.setFeeder(FeederConstants.REDWINE_CARD_OFFER_FEEDER);
-			offer.setReputation(FeederConstants.REDWINE_CARD_OFFER_FEEDER_OFFER_REPUTATION);
+			offer.setFeederReputation(FeederConstants.REDWINE_CARD_OFFER_FEEDER_REPUTATION);
 			Date expiry = getExpiryFrom(redWineOffer.getExpiryDate());
 			offer.setExpiry(expiry);
 			offer.setSourceTag(offerCard.getName());
