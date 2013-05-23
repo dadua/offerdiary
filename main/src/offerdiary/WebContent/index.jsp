@@ -74,7 +74,22 @@
 				    it.scroll.did = false;
 				    scrollChecker();
 				}
-		    }, 250)
+		    }, 250);
+		    
+		    var _goToPublicSearchPage = function () {
+				var searchQuery = $("#searchOfferQuery").val();
+			    $('<form action="offers.do" method="get"><input type="hidden" name="q" value="'+searchQuery+'"></input></form>').appendTo('body').submit();
+		    };
+		    
+		    var _callSearchOnEnter = function(e) {
+				var code = e.keyCode ? e.keyCode : e.which;
+				if(code.toString() == 13) {
+				    _goToPublicSearchPage();
+				}
+			};
+		    
+		    $('#searchOfferQuery').keyup(_callSearchOnEnter);
+		    $('#searchPublicOffers').click(_goToPublicSearchPage);
 		});
                 
 	</script>
@@ -237,7 +252,7 @@
 			        		<div class="form-search">
 	                            <div class="input-append">
 	                                <input id="searchOfferQuery" class="offerDetail search-query input-xxlarge" type="text" placeholder="Discover Great Offers" />
-	                                <button class="btn"><i class="icon-search"></i></button>
+	                                <button id="searchPublicOffers" class="btn"><i class="icon-search"></i></button>
 	                            </div>
 	                        </div>
 				        </div>
