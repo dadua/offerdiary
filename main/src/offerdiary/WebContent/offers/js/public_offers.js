@@ -39,8 +39,9 @@ it.publicOffers.addOfferToWallet = function(e) {
 };
 
 it.publicOffers.addOfferHandlers = function() {
+    //TODO: Check the right specific classes 
     $('.offerShare').click(it.offer.share.show);
-    $('.offerDetail').click(it.offer.detail.show);
+    //$('.offerDetail').click(it.offer.detail.show);
     $('.offerAction').tooltip();
     $('.offerAddToWallet').click(it.publicOffers.addOfferToWallet);
     
@@ -61,7 +62,8 @@ it.publicOffers.plotOffers = function (offers) {
 
 it.publicOffers.init = function (publicOfferCount) {
     it.publicOffers.pagination.init(publicOfferCount);
-    it.share.init();
+    it.offer.share.init();
+    $('#searchOfferQuery').keyup(it.publicOffers.searchOffers);
 };
 
 
