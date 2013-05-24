@@ -37,6 +37,7 @@ public class OfferAction extends CommonAction{
 	private static final String IS_SHARED_OFFER_PARAM_KEY = "isSharedOffer";
 	private static final String MY_VALID_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
 	private static final String PUBLIC_OFFERS_COUNT_ATTR_KEY = "publicOffersCount";
+	private static final String PUBLIC_OFFERS_SEARCH_QUERY_ATTR_KEY = "publicSearchQuery";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -103,8 +104,12 @@ public class OfferAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="offers.do")
 	public Response goToPublicOffers(HttpServletRequest req, HttpServletResponse resp) {
+		String query = req.getParameter("q");
+		req.setAttribute(PUBLIC_OFFERS_SEARCH_QUERY_ATTR_KEY, query);
 		OfferSearchCriteria validOffersSearchCriteria = new OfferSearchCriteria();
 		validOffersSearchCriteria.setPrivateSearchOnly(false);
+		validOffersSearchCriteria.setQ(query);
+
 		OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
 		req.setAttribute(PUBLIC_OFFERS_COUNT_ATTR_KEY, offerSearchResultVO.getTotalCount());
 		return new Forward(OfferWalletConstants.PUBLIC_OFFERS_PAGE);
