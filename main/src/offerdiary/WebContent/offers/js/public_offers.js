@@ -26,10 +26,11 @@ it.publicOffers.addOfferToWallet = function(e) {
     var target = e.target,
         targetId = target.id,
         offerIdExtractRegex = /^offerAddToWallet_(.*)/,
-        offerId = offerIdExtractRegex.exec(targetId)[1];
+        offerId = offerIdExtractRegex.exec(targetId)[1],
+        query = $('#searchOfferQuery').val();
 
     //TODO: The add url needs to change
-    $.post('addOfferFromCardToWallet.do', {id: offerId}, function (respStr) {
+    $.post('addOfferFromCardToWallet.do', {id: offerId, src: '/offers.do?q='+query}, function (respStr) {
         var resp = $.parseJSON(respStr);
         if (resp.success) {
             var offer$ = it.publicOffers.getOffer$(offerId);
@@ -38,12 +39,33 @@ it.publicOffers.addOfferToWallet = function(e) {
     });
 };
 
+
+
+
+it.publicOffers.showShare= function (e) {
+    
+    var target = e.target,
+        targetId = target.id,
+        offerIdExtractRegex = /^offerShare_(.*)/,
+        offerId = offerIdExtractRegex.exec(targetId)[1];
+
+    $.get('reShareOffer.do', {accessCode: offerId}, function(response){
+        var resp = $.parseJSON(response);
+        if (resp.success) {
+            it.offer.share.plot(resp.result);
+        } else {
+            //TODO: Handle error
+        }
+    });
+};
+
+
 it.publicOffers.addOfferHandlers = function() {
     //TODO: Check the right specific classes 
-    $('.offerShare').click(it.offer.share.show);
-    //$('.offerDetail').click(it.offer.detail.show);
+    $('.offerAction > .offerShare').click(it.publicOffers.showShare);
+    $('.offerAction > .offerDetail').click(it.offer.detail.show);
     $('.offerAction').tooltip();
-    $('.offerAddToWallet').click(it.publicOffers.addOfferToWallet);
+    $('.offerAction > .offerAddToWallet').click(it.publicOffers.addOfferToWallet);
     
 };
 

@@ -15,6 +15,12 @@ public class ReturnCodes {
 
 	public static final ReturnCode INVALID_CURRENT_PASSWORD =  new ReturnCode(100);
 	public static final ReturnCode AUTHENTICATION_FAILURE  =  new ReturnCode(101);
+
+	/**
+	 * If the a ajax call which requires authentication is being called from a public page
+	 * then this error is sent.. In this case the Client handles the login
+	 */
+	public static final ReturnCode AUTHENTICATION_FAILURE_FROM_PUBLIC_PAGE  =  new ReturnCode(103);
 	public static final ReturnCode AUTHORIZATION_FAILURE  =  new ReturnCode(102);
 
 
