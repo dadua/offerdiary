@@ -21,7 +21,12 @@ import com.itech.config.ProjectConfigs;
 import com.itech.user.model.User;
 
 public class LoginFilter implements Filter {
+
+	private static final String REDIRECT_URL_SESSION_ATTR_KEY = "redirectURL";
+	public static final String IS_PUBLIC_PAGE_SOURCE_ATTR_KEY = "isPublicSourceAttrKey";
+
 	private static final Logger logger = Logger.getLogger(LoginFilter.class);
+
 	private static Set<String> bypassUrls = new HashSet<String>();
 	static {
 		bypassUrls.add("/");
@@ -81,8 +86,8 @@ public class LoginFilter implements Filter {
 		User loggedInUser = (User) httpRequest.getSession().getAttribute(SecurityContext.USER_SESSION_KEY);
 		if (loggedInUser == null) {
 			if (!isBypass(reqUrl)) {
-				String headerForJsonCheck = httpRequest.getHeader("x-requested-with");
-				if ("XMLHttpRequest".equalsIgnoreCase(headerForJsonCheck)) {
+				if (isRequestAjax(httpRequest)) {
+					updateRedirectUrlOnLogin(httpRequest);
 					httpRequest.getRequestDispatcher("/authorizationFailureJsonResponse.do").forward(req, resp);
 					return;
 				}
@@ -91,15 +96,15 @@ public class LoginFilter implements Filter {
 				if (CommonUtilities.isNotEmpty(queryString)) {
 					redirectURL  +="?"+queryString;
 				}
-				httpRequest.getSession().setAttribute("redirectURL", redirectURL);
+				httpRequest.getSession().setAttribute(REDIRECT_URL_SESSION_ATTR_KEY, redirectURL);
 				httpResponse.sendRedirect("login.do");
 				logger.debug("redirected to home: " + reqUrl);
 				return;
 			}
 		} else {
-			String redirectURL = (String) httpRequest.getSession().getAttribute("redirectURL");
+			String redirectURL = (String) httpRequest.getSession().getAttribute(REDIRECT_URL_SESSION_ATTR_KEY);
 			if ((redirectURL != null) && (redirectURL.length() != 0)) {
-				httpRequest.getSession().setAttribute("redirectURL", null);
+				httpRequest.getSession().setAttribute(REDIRECT_URL_SESSION_ATTR_KEY, null);
 				httpResponse.sendRedirect(redirectURL.substring(1));
 				logger.debug("redirected to : " + redirectURL);
 				return;
@@ -112,6 +117,21 @@ public class LoginFilter implements Filter {
 		}
 
 		filterChain.doFilter(req, resp);
+	}
+
+
+	private void updateRedirectUrlOnLogin(HttpServletRequest httpRequest) {
+		String srcParamVal = httpRequest.getParameter("src");
+		if (!CommonUtilities.isNullOrEmpty(srcParamVal)) {
+			httpRequest.getSession().setAttribute(REDIRECT_URL_SESSION_ATTR_KEY, srcParamVal);
+			httpRequest.setAttribute(IS_PUBLIC_PAGE_SOURCE_ATTR_KEY, true);
+		}
+	}
+
+
+	private boolean isRequestAjax(HttpServletRequest httpRequest) {
+		String headerForJsonCheck = httpRequest.getHeader("x-requested-with");
+		return "XMLHttpRequest".equalsIgnoreCase(headerForJsonCheck);
 	}
 
 	private void redirectToNormal(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {

@@ -39,7 +39,11 @@ public class LoginAction extends CommonAction{
 	@ActionMapping(value="authorizationFailureJsonResponse.do")
 	public Response authorizationFailureJsonResponse(HttpServletRequest req, HttpServletResponse resp) {
 		Result<String> result = new Result<String>("User is not logged in.");
-		result.setReturnCode(ReturnCodes.AUTHENTICATION_FAILURE);
+		if (req.getAttribute(LoginFilter.IS_PUBLIC_PAGE_SOURCE_ATTR_KEY)!=null) {
+			result.setReturnCode(ReturnCodes.AUTHENTICATION_FAILURE_FROM_PUBLIC_PAGE);
+		} else {
+			result.setReturnCode(ReturnCodes.AUTHENTICATION_FAILURE);
+		}
 		Type resultType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultType);

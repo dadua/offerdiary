@@ -44,13 +44,21 @@
     var _getResponseMsg = function (resp) {
         return resp.msg;
     };
-
+    
+    var _getCurrentLocationUrl = function () {
+        var currentLoc = window.location.href;
+        currentLoc = currentLoc.match(/(^[^#]*)/)[0];
+        return currentLoc;
+    };
 
     var _loginFailedHandler = function (resp) {
         it.actionInfo.showErrorActionMsg("Not logged in..");
-        var currentLoc = window.location.href;
-        currentLoc = currentLoc.match(/(^[^#]*)/)[0];
+        var currentLoc = _getCurrentLocationUrl();
         $('<form action="'+currentLoc+'" method="get"></form>').appendTo('body').submit();
+    };
+
+    var _goToLoginPage = function () {
+        $('<form action="login.do" method="get"></form>').appendTo('body').submit();
     };
 
     /**
@@ -62,6 +70,9 @@
 
          if (resp.returnCode.code === 101) {
              _loginFailedHandler(resp);
+             return;
+         } else if (resp.returnCode.code === 103) {
+             _goToLoginPage();
              return;
          }
 
@@ -96,6 +107,7 @@
     $.async = $.async || {};
 
     $.async.init = _initAsyncHandlers;
+    $.async.getCurrentLocationUrl = _getCurrentLocationUrl;
 
     /**
      * settings same as $.ajax
