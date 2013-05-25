@@ -118,7 +118,7 @@ it.publicOffers.pagination = function () {
 
     var _init = function (totalNoOfCards) {
         $('#offerPaginationContainer').pagination(totalNoOfCards, {
-            items_per_page:7,
+            items_per_page:10,
             callback:handlePaginationClick,
             num_edge_entries:1,
             num_display_entries: 5
@@ -129,7 +129,8 @@ it.publicOffers.pagination = function () {
         var q = $('#searchOfferQuery').val();
 
         $.post('searchOffers.do',
-               {'searchCriteria': JSON.stringify ({q: q}), 'public': true},
+               {'searchCriteria': JSON.stringify ({q: q, resultsPerPage: 10, privateSearchOnly: false}), 'public': true},
+			
                function(response) {
                        var resp = $.parseJSON(response);
                        if (resp.success) {
