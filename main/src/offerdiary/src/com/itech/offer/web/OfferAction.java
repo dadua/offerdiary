@@ -22,6 +22,7 @@ import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.OfferWalletConstants;
+import com.itech.offer.manager.OfferViewUtils;
 import com.itech.offer.model.Offer;
 import com.itech.offer.model.OfferShare;
 import com.itech.offer.vo.FBPostVO;
@@ -217,11 +218,13 @@ public class OfferAction extends CommonAction{
 		String uniqueId = req.getParameter(OfferWalletConstants.OFFER_ID_PARAM_KEY);
 		Offer offer = getOfferManager().getOfferForUnqueId(uniqueId);
 		OfferVO offerVO = OfferVO.getOfferVOFor(offer);
+		String offerHtmlFrom = OfferViewUtils.getOfferHtmlFrom(offerVO, false);
 		Gson gson = new Gson();
 		String offerVOJson = gson.toJson(offerVO, OfferVO.class);
 		req.setAttribute(OfferWalletConstants.OFFER_PARAM_KEY, offer);
 		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
 				StringEscapeUtils.escapeJavaScript(offerVOJson));
+		req.setAttribute("offerHtml", offerHtmlFrom);
 		return new Forward(OfferWalletConstants.GET_OFFER_DETAIL_PAGE);
 	}
 

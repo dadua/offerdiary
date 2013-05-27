@@ -47,6 +47,7 @@
                     
                     <div class="row-fluid">
                         <div id="offerContainerFluid" class="container-fluid">
+                        ${offerHtml}                        
                         </div>
                     </div>
                 </div>
