@@ -15,7 +15,6 @@ public class OfferViewUtils {
 
 	public static String getOfferHtmlFrom(OfferVO offer, boolean isSharedOffer) {
 		Document doc = Jsoup.parse(CommonFileUtilities.getWebResourceAsString("offers/templates/offerDetailTemplate.html"));
-		//("resources\\offerDetailTemplate.html", false));
 
 		Element offerTemplate$ = doc.select(".offer_detail_ui_template").first();
 
