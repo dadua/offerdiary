@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 
+import com.itech.common.server.ProjectContextListener;
 import com.itech.common.util.FileUtil;
 
 public class CommonFileUtilities {
@@ -28,6 +29,12 @@ public class CommonFileUtilities {
 
 	public static String getResourceFileAsString(String resourceFilename) {
 		return getResourceFileAsString(resourceFilename, false);
+	}
+
+	public static String getWebResourceAsString(String sourceFileName) {
+		String realPath = ProjectContextListener.getServletContext().getRealPath(sourceFileName);
+		return getResourceFileAsString(realPath, true);
+
 	}
 
 	public static String getResourceFileAsString(String sourceFileName,

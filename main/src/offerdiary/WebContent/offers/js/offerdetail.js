@@ -90,7 +90,7 @@ it.offer.detail.addHandlers = function (isSharedOffer) {
 };
 
 it.offer.detail.init = function (offers, isSharedOffer) {
-    it.offer.detail.plot(offers, isSharedOffer);
+    //it.offer.detail.plot(offers, isSharedOffer);
     it.offer.detail.addOneHandlers();
     it.offer.detail.addHandlers(isSharedOffer);
     it.offer.share.init();
