@@ -14,9 +14,13 @@ it.offer.detail.getOfferHtml = function(offer, isSharedOffer) {
         offerTemplate$.find('.offerAdd').hide();
     }
     
-    offerTemplate$.find("#oDfferdFbComment").attr('href', window.location.href);
 
     return offerTemplate$;
+};
+
+it.offer.detail.setComments = function () {
+	var offerTemplate$ = $('#offerContainerFluid');
+    offerTemplate$.find("#oDfferdFbComment").attr('href', window.location.href);
 };
 
 
@@ -91,6 +95,7 @@ it.offer.detail.addHandlers = function (isSharedOffer) {
 
 it.offer.detail.init = function (offers, isSharedOffer) {
     //it.offer.detail.plot(offers, isSharedOffer);
+	it.offer.detail.setComments();
     it.offer.detail.addOneHandlers();
     it.offer.detail.addHandlers(isSharedOffer);
     it.offer.share.init();
