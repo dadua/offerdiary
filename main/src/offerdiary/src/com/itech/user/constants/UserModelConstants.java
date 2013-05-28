@@ -24,4 +24,6 @@ public class UserModelConstants {
 	public static final String COL_PIN_CODE = "PIN_CODE";
 
 	public static final String COL_DOB = "DOB";
+
+	public static final String COL_LAST_LOGIN_TIME = "LAST_LOGIN_TIME";
 }

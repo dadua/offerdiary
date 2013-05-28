@@ -25,5 +25,7 @@ public interface UserManager {
 	public void save(UserNotificationConfig userNotificationConfig);
 	public User getUserForEmailVarificationCode(String emailVarificationCode);
 
+	//For Od admin as of now
 	public List<User> getAllUsers();
+	public void updateUserLastLoginTime(User user);
 }

@@ -39,6 +39,9 @@
 								<th>
 								Login Type
 								</th>
+								<th>
+								Last Login Time
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -65,6 +68,9 @@
                                                             </td>
                                                             <td>
                                                                 ${user.loginType}
+                                                            </td>
+                                                            <td>
+                                                            	${user.lastLoginTime}
                                                             </td>
                                                         </tr>
 							</c:forEach>

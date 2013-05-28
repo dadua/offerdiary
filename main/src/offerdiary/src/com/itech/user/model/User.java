@@ -68,6 +68,9 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME)
 	private Date notifyPasswordTime;
 
+	@Column(name=UserModelConstants.COL_LAST_LOGIN_TIME)
+	private Date lastLoginTime;
+
 	@Column(name="IS_EMAIL_VARIFIED")
 	private Boolean emailVarified;
 
@@ -233,6 +236,12 @@ public class User extends PersistableEntity{
 	}
 	public void setEmailVarficationAccessCode(String emailVarficationAccessCode) {
 		this.emailVarficationAccessCode = emailVarficationAccessCode;
+	}
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	public Date getLastLoginTime() {
+		return lastLoginTime;
 	}
 
 }

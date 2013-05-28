@@ -284,5 +284,12 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		return userDAO.getAll();
 	}
 
+	@Override
+	public void updateUserLastLoginTime(User user) {
+		long currentTimeMillis = System.currentTimeMillis();
+		user.setLastLoginTime(new Date(currentTimeMillis));
+		userDAO.addOrUpdate(user);
+	}
+
 
 }
