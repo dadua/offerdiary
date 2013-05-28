@@ -22,6 +22,7 @@ public class TestRedWineCardsParser {
 			List<RedWineOffer> allOffersForCard = RedWineCardsParser.getAllOffersForCard(cardNumber, MAX_OFFERS_TOB_FETCHED);
 			redWineCard.setOffers(allOffersForCard);
 			RedWineCardsParser.writeRedWineCardsToSeperateFiles(redWineCard, REDANAR_CARDS_WITH_OFFERS_BASE_DIR);
+			System.out.println("offers processed for card: " + redWineCard.getCardName());
 		}
 
 	}
