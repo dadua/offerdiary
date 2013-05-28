@@ -1,5 +1,10 @@
 package com.itech.offer.job;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
 import com.itech.common.services.Initialize;
@@ -14,6 +19,39 @@ public class ItechBackGroundTasksService implements Initialize{
 
 	public enum TaskAction {
 		START, STOP, RESUME, PAUSE
+	}
+
+	public enum Tasks {
+		REDWINESYNC ("redWineSync" , "Red Wine Sync Job"), VENDORSYNC("vendorSync", "CD Vendor Sync Job"), HDFCOFFERSYNC("hdfcOfferSync", "HDFC CARD Offer Sync Job");
+
+		private final String taskName;
+		private final String displayName;
+
+		Tasks(String taskName, String displayName) {
+			this.taskName = taskName;
+			this.displayName = displayName;
+		}
+
+		public String getTaskName() {
+			return taskName;
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+
+	private final List<String> taskActions = new ArrayList<String>();
+	private final Map<String, String>  taskNames= new HashMap<String, String>();
+
+
+	public Map<String, String>  getTaskNames() {
+		return taskNames;
+	}
+
+	public List<String> getTaskActions() {
+		return taskActions;
 	}
 
 
@@ -57,15 +95,15 @@ public class ItechBackGroundTasksService implements Initialize{
 
 	private ItechJob createJob(String taskName) {
 
-		if ("redWIneSync".equalsIgnoreCase(taskName)) {
+		if (Tasks.REDWINESYNC.getTaskName().equalsIgnoreCase(taskName)) {
 			return ServiceLocator.getInstance().getBean(RedWineSyncJob.class);
 		}
 
-		if ("vendorSync".equalsIgnoreCase(taskName)) {
+		if (Tasks.VENDORSYNC.getTaskName().equalsIgnoreCase(taskName)) {
 			return ServiceLocator.getInstance().getBean(VendorSyncJob.class);
 		}
 
-		if ("hdfcOfferSync".equalsIgnoreCase(taskName)) {
+		if (Tasks.HDFCOFFERSYNC.getTaskName().equalsIgnoreCase(taskName)) {
 			return ServiceLocator.getInstance().getBean(HDFCCardOfferSyncJob.class);
 		}
 		return null;
@@ -73,6 +111,13 @@ public class ItechBackGroundTasksService implements Initialize{
 
 	@Override
 	public void init() {
+		for (TaskAction taskAction : TaskAction.values()) {
+			taskActions.add(taskAction.toString());
+		}
+
+		for (Tasks task : Tasks.values()) {
+			taskNames.put(task.getTaskName(), task.getDisplayName());
+		}
 		ItechJobManager.start();
 	}
 

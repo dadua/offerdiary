@@ -1,6 +1,8 @@
 package com.itech.admin.web;
 
 import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +74,26 @@ public class AdminAction extends CommonAction {
 		String taskStatus = getBackGroundTasksService().getTaskStatus(taskName);
 		Result<String> result = new Result<String>(taskStatus);
 		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getTaskNames.do")
+	public Response getTaskNames (HttpServletRequest req, HttpServletResponse resp) {
+		Map<String, String> taskNames = getBackGroundTasksService().getTaskNames();
+		Result<Map<String, String>> result = new Result<Map<String, String>>(taskNames);
+		Type resultStringType = new TypeToken<Result<Map<String, String>>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getTaskActions.do")
+	public Response getTaskActions (HttpServletRequest req, HttpServletResponse resp) {
+		List<String> taskNames = getBackGroundTasksService().getTaskActions();
+		Result<List<String>> result = new Result<List<String>>(taskNames);
+		Type resultStringType = new TypeToken<Result<List<String>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
