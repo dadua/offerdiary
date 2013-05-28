@@ -44,6 +44,9 @@ public class CommonAction {
 	public void updateLoggedInUser(HttpServletRequest req, User user) {
 		req.getSession().setAttribute(SecurityContext.USER_SESSION_KEY, user);
 		getSecurityContextHolder().setContext(new SecurityContext(user));
+		if (user != null) {
+			userManager.updateUserLastLoginTime(user);
+		}
 	}
 
 	protected SearchCriteria getSearchCriteria(HttpServletRequest req){

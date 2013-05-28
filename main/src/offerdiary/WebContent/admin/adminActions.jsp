@@ -19,7 +19,7 @@
 					<div class="thumbnail">
 						<c:forEach var="taskAction" items="${taskActions}">
 							<div>
-								<a href="manageBackGroundTask.do?taskName=${taskNameEntry.key}&${taskAction}">${taskNameEntry.value} - ${taskAction}</a>
+								<a href="manageBackGroundTask.do?taskName=${taskNameEntry.key}&action=${taskAction}">${taskNameEntry.value} - ${taskAction}</a>
 							</div>
 						</c:forEach>
 					</div>
