@@ -17,9 +17,11 @@ import com.itech.common.services.ServiceLocator;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
+import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.offer.job.ItechBackGroundTasksService;
+import com.itech.user.model.User;
 import com.itech.user.model.UserRole;
 import com.itech.web.ActionMappings;
 
@@ -50,7 +52,7 @@ public class AdminAction extends CommonAction {
 	}
 
 	/**
-	 * Task names : redWIneSync, vendorSync, hdfcOfferSync
+	 * Task names : redWineSync, vendorSync, hdfcOfferSync
 	 * @param req
 	 * @param resp
 	 * @return
@@ -76,6 +78,27 @@ public class AdminAction extends CommonAction {
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="odusers.do")
+	public Response goToOdUsers(HttpServletRequest req, HttpServletResponse resp) {
+
+		List<User> allUsers = getUserManager().getAllUsers();
+		req.setAttribute("users", allUsers);
+		return new Forward("admin/users.jsp");
+	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="odadmin.do")
+	public Response goToAdminAction(HttpServletRequest req, HttpServletResponse resp) {
+
+		Map<String, String> taskNames = getBackGroundTasksService().getTaskNames();
+		List<String> taskActions = getBackGroundTasksService().getTaskActions();
+		req.setAttribute("taskNameToDisplayNameMap", taskNames);
+		req.setAttribute("taskActions", taskActions);
+		return new Forward("admin/adminActions.jsp");
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

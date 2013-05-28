@@ -1,6 +1,7 @@
 package com.itech.user.manager;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -276,6 +277,11 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 	}
 	public void setUserNotificationConfigDAO(UserNotificationConfigDAO userNotificationConfigDAO) {
 		this.userNotificationConfigDAO = userNotificationConfigDAO;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		return userDAO.getAll();
 	}
 
 

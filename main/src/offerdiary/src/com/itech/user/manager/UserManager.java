@@ -1,5 +1,7 @@
 package com.itech.user.manager;
 
+import java.util.List;
+
 import com.itech.fb.services.FbService;
 import com.itech.user.model.User;
 import com.itech.user.model.UserNotificationConfig;
@@ -22,4 +24,6 @@ public interface UserManager {
 	public UserNotificationConfig getUserNotificationConfigFor(User user);
 	public void save(UserNotificationConfig userNotificationConfig);
 	public User getUserForEmailVarificationCode(String emailVarificationCode);
+
+	public List<User> getAllUsers();
 }
