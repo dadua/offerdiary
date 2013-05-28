@@ -34,7 +34,9 @@ public class ShareOfferNotificationEmail extends Email{
 		String offerShareLink = shareOfferActionVO.getShareOfferURL();
 
 		//TODO add html in share_offer_email_template.html and replace data here
-		doc.select("#friendName").first().append(user.getName());
+		if (user != null) {
+			doc.select("#friendName").first().append(user.getName());
+		}
 		doc.select("#offerDetail").first().append(offerDescription);
 		doc.select("#vendor").first().append(offerShare.getOffer().getTargetVendor().getName());
 		doc.select("#offerLink").first().append("<a href=\"" + offerShareLink + "\" target=\"_blank\" style=\"color:#0088CC;\">View offer on OfferDiary</a>");
