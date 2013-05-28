@@ -59,6 +59,7 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/common/pages/message_page.jsp");
 		bypassUrls.add("/verifyEmail.do");
 		bypassUrls.add("/shareOfferViaEmail.do");
+		bypassUrls.add("/getOfferDetail.do");
 	}
 
 	@Override
