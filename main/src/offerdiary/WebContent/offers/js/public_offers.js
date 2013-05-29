@@ -82,10 +82,26 @@ it.publicOffers.plotOffers = function (offers) {
 
 };
 
+
+it.publicOffers.addHistoryHandlers = function () {
+
+    History.Adapter.bind(window,'statechange',function(){
+        var state = History.getState(),
+            q = state.data.q;
+        it.publicOffers.searchOffers();
+    });
+};
+
+it.publicOffers.onQueryChanged = function (e) {
+    var q = $(this).val();
+    History.pushState({q: q}, 'Discover Great Offers', '?q='+q);
+};
+
 it.publicOffers.init = function (publicOfferCount) {
     it.publicOffers.pagination.init(publicOfferCount);
     it.offer.share.init();
-    $('#searchOfferQuery').keyup(it.publicOffers.searchOffers);
+    $('#searchOfferQuery').keyup(it.publicOffers.onQueryChanged);
+    it.publicOffers.addHistoryHandlers();
 };
 
 
