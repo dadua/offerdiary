@@ -6,6 +6,7 @@
     <script src="offers/js/offerdetail.js" > </script>
     <script src="offers/js/share_offers.js" > </script>
     <script src="common/libs/jquery-pagination/jquery.pagination.js" charset="UTF-8"> </script>
+	<script src="common/libs/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
     
     <script type="text/javascript">
         $(function() {
