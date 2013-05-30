@@ -27,7 +27,7 @@
 
     </style>
 
-    <title>Shared Offer</title>
+    <title>Offer - ${offer.description}</title>
     
 <%@include file="/common/pages/bodyBegin.jsp" %>
 
