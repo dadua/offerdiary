@@ -12,6 +12,10 @@ it.vendor.view = function () {
     var vendorHtml = '<li data-trigger="hover" class="span4 vendorSearch unselected" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/blankVendor.png" /></div><div class="vendorNameVal hide"></div></li>',
         vendorSearchContainerId = 'searchedVendors',
         containerId$;
+
+    var fourVendorsIncarouselItemHtml = '<div class="item"><ul class="thumbnails"></ul></div>',
+        eachVendorInCarouselHtml = '<li data-trigger="hover" class="thumbnail vendorCarouselItem" title="Default Vendor" ><div class="vendorImage thumbnail"><img src="images/stores/blankVendor.png" /></div><div class="vendorNameVal hide"></div></li>';
+
     return {
         getHtmlTemplate: function () {
             return vendorHtml;
@@ -24,6 +28,12 @@ it.vendor.view = function () {
         },
         getVendorsHtml: function () {
             return threeVendorsContainerHtml;
+        },
+        getEachVendorInCarouselHtml: function () {
+            return eachVendorInCarouselHtml;
+        },
+        getvendorsInCarouselItemHtml: function () {
+            return fourVendorsIncarouselItemHtml;
         }
     };
 }();
@@ -147,6 +157,72 @@ it.vendor.plotAll = function (vendors, query) {
         this.view.getContainer$().append(addNewVendorAlert$);
     }
     this.addHandlers();
+};
+
+it.vendor.getCarousel$ = function (vendor) {
+    var vendorHtml = this.view.getEachVendorInCarouselHtml();
+    var vendor$ = $(vendorHtml).clone().attr('id', 'vendorSearch_'+vendor.id);
+    this.setImage(vendor, vendor$);
+    this.setNameDesc(vendor, vendor$);
+    return vendor$;
+};
+
+
+it.vendor.plotCarouselItems = function (vendors) {
+    var vendors$ = [],
+        fourVendorsIncarouselItems$ = [],
+        vendor$ = null;
+
+
+    for (var i=0;i < vendors.length;i++) {
+        vendor$ = this.getCarousel$(vendors[i]);
+        vendors$.push(vendor$);
+    }
+
+    var currentFourVendorsIncarouselItem$ = null;
+    var fourVendorsIncarouselItemHtml= this.view.getvendorsInCarouselItemHtml();
+
+    for (i=0;i<vendors$.length; i++) {
+
+        if (i%4=== 0) {
+            currentFourVendorsIncarouselItem$ = $(fourVendorsIncarouselItemHtml);
+            fourVendorsIncarouselItems$.push(currentFourVendorsIncarouselItem$);
+
+        }
+        var currentVendor$ = vendors$[i];
+        currentFourVendorsIncarouselItem$.find('.thumbnails').append(currentVendor$);
+
+    }
+
+    for (i=0;i<fourVendorsIncarouselItems$.length; i++) {
+        if (i === 0) {
+            $('#vendorItems').html(fourVendorsIncarouselItems$[i].addClass('active'));
+        } else {
+            $('#vendorItems').append(fourVendorsIncarouselItems$[i]);
+        }
+    }
+    this.addCarouselHandlers();
+};
+
+it.vendor.addCarouselHandlers = function () {
+    $('#vendorCarousel').carousel({
+        interval:3000
+    });
+
+    var _onVendorInCarouselClicked = function (e) {
+        var vendorName = $(this).attr('title');
+        $('<form action="offers.do" method="get"><input type="hidden" name="q" value="'+vendorName+'"></input></form>').appendTo('body').submit();
+    };
+
+    $('.vendorCarouselItem').click(_onVendorInCarouselClicked);
+
+
+};
+
+it.vendor.plotCarousel = function() {
+    $.getJSON( "searchVendor.do", {searchKey: '', maxResultCountKey: 12}, function(data){
+        it.vendor.plotCarouselItems(data.result);
+    });
 };
 
 it.vendor.plotAllAddable = function(query) {

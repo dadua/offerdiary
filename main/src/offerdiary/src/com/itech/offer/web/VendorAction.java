@@ -28,6 +28,7 @@ public class VendorAction extends CommonAction{
 	// also consider this as the default count..
 	private static final int MAX_RESULT_COUNT = 9;
 	private static final String VENDOR_NAME_SEARCH_KEY = "searchKey";
+	private static final String MAX_RESULT_COUNT_KEY = "maxResultCountKey";
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="addVendor.do")
@@ -47,7 +48,12 @@ public class VendorAction extends CommonAction{
 	@ActionMapping(value="searchVendor.do")
 	public Response searchVendors (HttpServletRequest req, HttpServletResponse resp) {
 		String vendorSearchString = req.getParameter(VENDOR_NAME_SEARCH_KEY);
-		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, MAX_RESULT_COUNT);
+		String maxResultsCountStr = req.getParameter(MAX_RESULT_COUNT_KEY);
+		int maxResultsCount = MAX_RESULT_COUNT;
+		if (maxResultsCountStr!=null) {
+			maxResultsCount = Integer.parseInt(maxResultsCountStr);
+		}
+		List<Vendor> vendors = getVendorManager().getVendorsFor(vendorSearchString, maxResultsCount);
 		List<VendorVO> vendorVOs = getVendorVOsfrom(vendors);
 		Result<List<VendorVO>> result = new Result<List<VendorVO>>(vendorVOs);
 		Type type = new TypeToken<Result<List<VendorVO>>>() { }.getType();

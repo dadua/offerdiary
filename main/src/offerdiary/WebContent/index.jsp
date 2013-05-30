@@ -1,10 +1,13 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 	<title>OfferDiary : Never miss an offer!</title>
+    <script src="offers/js/vendor.js" > </script>
 	<script type="text/javascript">
 		var it = it || {};
 		it.scroll = it.scroll || {};
 		it.scroll.did = false;
 		$(function(){
+		    it.vendor.plotCarousel();
+
 		    $('.goDown').click(function(e){
 				var id = $(this).attr('id');
 					//locationToScroll = /go-to-(.+)/.exec(id)[1];
@@ -94,6 +97,10 @@
                 
 	</script>
 	<style>
+	.vendorCarouselItem { 
+	    cursor: pointer;
+	}
+	
     .someMargin {
     	margin: 12px;
     }
@@ -244,17 +251,64 @@
 			                </div>
 			                <a class="btn btn-large btn-primary" href="signup.do">Sign up today</a>
 			            </div>
-			        	<div class="offset1 span7">
-			        	<br>
-			        	<br>
-			        	<br>
-			        	<br>
-			        		<div class="form-search">
-	                            <div class="input-append">
-	                                <input id="searchOfferQuery" class="offerDetail search-query input-xxlarge" type="text" placeholder="Discover Great Offers" />
-	                                <button id="searchPublicOffers" class="btn"><i class="icon-search"></i></button>
-	                            </div>
-	                        </div>
+			        	<div class="span8">
+			        		<br>
+			        		<br>
+				        	<div class="container-fluid">
+				        		<div class="row-fluid">
+					        		<div class="form-search">
+			                            <div class="input-append">
+			                                <input id="searchOfferQuery" class="offerDetail search-query input-xxlarge" type="text" placeholder="Discover Great Offers" />
+			                                <button id="searchPublicOffers" class="btn"><i class="icon-search"></i></button>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <br>
+			                    <br>
+			                    <div class="row-fluid">
+			                        <div id="vendorCarousel" class="carousel slide">
+				                        <div id="vendorItems" class="carousel-inner">
+					                        <div class="item active">
+					                        	<ul class="thumbnails">
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Flipkart.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Yebhi.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Myntra.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Myntra.jpg" />
+						                        	</li>
+					                        	</ul>
+					                        </div>
+					                        <div class="item">
+					                        	<ul class="thumbnails">
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Babyoye.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Yebhi.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Myntra.jpg" />
+						                        	</li>
+						                        	<li class="thumbnail">
+							                        	<img src="images/stores/Myntra.jpg" />
+						                        	</li>
+					                        	</ul>
+					                        </div>
+				                        </div>
+			                        </div>
+			                    </div>
+				                <div class="row-fluid bluishText">
+					                <h4 class="offset1 span10">
+					                Find Offers by Vendors
+					                </h4>
+				                </div>
+					        </div>
 				        </div>
 			        </div>
 			        <div class="row-fluid" style="position:relative">
