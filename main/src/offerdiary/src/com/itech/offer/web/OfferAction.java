@@ -30,6 +30,7 @@ import com.itech.offer.vo.OfferSearchResultVO;
 import com.itech.offer.vo.OfferShareVO;
 import com.itech.offer.vo.OfferVO;
 import com.itech.user.model.User;
+import com.itech.user.model.UserRole;
 import com.itech.user.vos.ShareOfferActionVO;
 
 @Controller
@@ -76,6 +77,9 @@ public class OfferAction extends CommonAction{
 	@ActionMapping(value="searchOffers.do")
 	public Response searchOffers(HttpServletRequest req, HttpServletResponse resp) {
 		OfferSearchCriteria searchCriteria = (OfferSearchCriteria) getSearchCriteria(req);
+		if ((searchCriteria.isOffersOnMyCardsOnly()  || !searchCriteria.getPrivateSearchOnly()) && ( getLoggedInUser() == null || !UserRole.OD_ADMIN.equals(getLoggedInUser().getUserRole()))) {
+			searchCriteria.setUniqueFilter("valid");//TODO do this in some good way
+		}
 		OfferSearchResultVO offers = getOfferManager().searchOffersFor(searchCriteria);
 		Result<OfferSearchResultVO> result = new Result<OfferSearchResultVO>(offers);
 		Type type = new TypeToken<Result<OfferSearchResultVO>>() { }.getType();
@@ -110,6 +114,9 @@ public class OfferAction extends CommonAction{
 		req.setAttribute(PUBLIC_OFFERS_SEARCH_QUERY_ATTR_KEY, query);
 		OfferSearchCriteria validOffersSearchCriteria = new OfferSearchCriteria();
 		validOffersSearchCriteria.setPrivateSearchOnly(false);
+		if (getLoggedInUser() == null || !UserRole.OD_ADMIN.equals(getLoggedInUser().getUserRole())) {
+			validOffersSearchCriteria.setUniqueFilter("valid");//TODO do this in some good way
+		}
 		validOffersSearchCriteria.setQ(query);
 
 		OfferSearchResultVO offerSearchResultVO = getOfferManager().searchOffersFor(validOffersSearchCriteria);
