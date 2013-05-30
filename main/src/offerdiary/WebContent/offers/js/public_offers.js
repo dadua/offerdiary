@@ -59,11 +59,20 @@ it.publicOffers.showShare= function (e) {
     });
 };
 
+it.publicOffers.showDetail = function (e) {
+    var target = e.target,
+    targetId = target.id,
+    offerIdExtractRegex = /offerDetail_(.*)/,
+    offerId = offerIdExtractRegex.exec(targetId)[1];
+    $('<form action="getSharedOffer.do" method="get"><input type="hidden" name="accessCode" value="'+offerId+'"></input></form>').appendTo('body').submit();
+	
+};
+
 
 it.publicOffers.addOfferHandlers = function() {
     //TODO: Check the right specific classes 
     $('.offerAction > .offerShare').click(it.publicOffers.showShare);
-    $('.offerAction > .offerDetail').click(it.offer.detail.show);
+    $('.offerAction > .offerDetail').click(it.publicOffers.showDetail);
     $('.offerAction').tooltip();
     $('.offerAction > .offerAddToWallet').click(it.publicOffers.addOfferToWallet);
     
