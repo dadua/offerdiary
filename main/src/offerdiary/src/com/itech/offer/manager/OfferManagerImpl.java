@@ -156,7 +156,9 @@ public class OfferManagerImpl extends CommonBaseManager implements OfferManager 
 	public Offer getOfferForUnqueId(String uniqueId) {
 		Offer offer = getOfferDAO().getByUniqueId(uniqueId);
 		ArrayList<Offer> offers = new ArrayList<Offer>();
-		offers.add(offer);
+		if (offer != null) {
+			offers.add(offer);
+		}
 		getOfferDAO().fetchAndFillOfferRelationshipWithUser(offers, getLoggedInUser());
 		return offer;
 	}
