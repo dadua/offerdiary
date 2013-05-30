@@ -10,6 +10,7 @@
     
     <script type="text/javascript">
         $(function() {
+            $('#publicOfferTab').addClass('active');
             var publicOffersCount = ${publicOffersCount};
             it.publicOffers.init(publicOffersCount);
         });
