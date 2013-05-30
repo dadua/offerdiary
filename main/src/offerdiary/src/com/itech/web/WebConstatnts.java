@@ -36,5 +36,11 @@ public class WebConstatnts {
 		return ProjectConfigs.defaultServerUrl.get() + "/verifyEmail.do?code=";
 	}
 
+	public static String getAbsoluteURL( String url) {
+		String absoluteURL = ProjectConfigs.defaultServerUrl.get();
+		absoluteURL += url;
+		return absoluteURL;
+	}
+
 
 }

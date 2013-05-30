@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import com.itech.common.CommonFileUtilities;
 import com.itech.common.CommonUtilities;
 import com.itech.offer.vo.OfferVO;
+import com.itech.web.WebConstatnts;
 
 public class OfferViewUtils {
 
@@ -31,14 +32,14 @@ public class OfferViewUtils {
 				if (offer.getTargetVendor().isAbsoluteLogoUrl()) {
 					offerTemplate$.select(".targetVendor-logoUrl").attr("alt", offer.getTargetVendor().getName()).attr("src", offer.getTargetVendor().getLogoUrl());
 				} else {
-					offerTemplate$.select(".targetVendor-logoUrl").attr("alt", offer.getTargetVendor().getName()).attr("src", "images/stores/"+ offer.getTargetVendor().getLogoUrl());
+					offerTemplate$.select(".targetVendor-logoUrl").attr("alt", offer.getTargetVendor().getName()).attr("src", WebConstatnts.getAbsoluteURL("/images/stores/"+ offer.getTargetVendor().getLogoUrl()));
 				}
 			} else {
-				offerTemplate$.select(".targetVendor-logoUrl").attr("alt", offer.getTargetVendor().getName()).attr("src", "images/stores/blankVendor.png");
+				offerTemplate$.select(".targetVendor-logoUrl").attr("alt", offer.getTargetVendor().getName()).attr("src", WebConstatnts.getAbsoluteURL("/images/stores/blankVendor.png"));
 				offerTemplate$.select(".vendorOnOfferNameVal").removeClass("hide");
 			}
 		} else {
-			offerTemplate$.select(".targetVendor-logoUrl").attr("src", "images/stores/defaultVendor.jpg");
+			offerTemplate$.select(".targetVendor-logoUrl").attr("src", WebConstatnts.getAbsoluteURL("/images/stores/defaultVendor.jpg"));
 		}
 
 		if (offer.getExpiryDateInMillis()!= 0) {
