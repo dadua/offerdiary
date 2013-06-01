@@ -41,6 +41,7 @@ public class OfferAction extends CommonAction{
 	private static final String MY_VALID_OFFERS_COUNT_ATTR_KEY = "myValidOffersCount";
 	private static final String PUBLIC_OFFERS_COUNT_ATTR_KEY = "publicOffersCount";
 	private static final String PUBLIC_OFFERS_SEARCH_QUERY_ATTR_KEY = "publicSearchQuery";
+	private static final String VENDOR_LOGO_URL_ATTR_KEY = "vendorLogoUrl";
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
@@ -220,6 +221,8 @@ public class OfferAction extends CommonAction{
 		req.setAttribute(OfferWalletConstants.OFFER_VO_PARAM_KEY,
 				StringEscapeUtils.escapeJavaScript(offerVOJson));
 		req.setAttribute(OFFER_HTML_ATTR_KEY, offerHtmlFrom);
+		req.setAttribute(VENDOR_LOGO_URL_ATTR_KEY
+				, OfferViewUtils.getVendorLogoUrl(sharedOffer));
 		return new Forward(OfferWalletConstants.GET_SHARED_OFFER_PAGE);
 	}
 
