@@ -90,6 +90,7 @@
 				    _goToPublicSearchPage();
 				}
 			};
+		
 		    
 		    $('#searchOfferQuery').keyup(_callSearchOnEnter);
 		    $('#searchPublicOffers').click(_goToPublicSearchPage);
@@ -266,7 +267,7 @@
 			                    <br>
 			                    <br>
 			                    <div class="row-fluid">
-			                        <div id="vendorCarousel" class="carousel slide">
+			                        <div id="vendorCarousel" data-pause="hover" class="carousel slide">
 				                        <div id="vendorItems" class="carousel-inner">
 					                        <div class="item active">
 					                        	<ul class="thumbnails">
