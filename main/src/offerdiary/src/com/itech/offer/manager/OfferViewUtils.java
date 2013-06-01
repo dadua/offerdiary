@@ -14,6 +14,24 @@ import com.itech.web.WebConstatnts;
 
 public class OfferViewUtils {
 
+	public static String getVendorLogoUrl(OfferVO offer) {
+
+		String vendorLogoUrl = "images/stores/defaultVendor.jpg";
+		if (offer.getTargetVendor()!=null) {
+			if (!CommonUtilities.isNullOrEmpty(offer.getTargetVendor().getLogoUrl())) {
+				if (offer.getTargetVendor().isAbsoluteLogoUrl()) {
+					vendorLogoUrl = offer.getTargetVendor().getLogoUrl();
+				} else {
+					vendorLogoUrl = "images/stores/"+ offer.getTargetVendor().getLogoUrl();
+				}
+			}
+		}
+
+		return vendorLogoUrl;
+
+
+	}
+
 	public static String getOfferHtmlFrom(OfferVO offer, boolean isSharedOffer) {
 		Document doc = Jsoup.parse(CommonFileUtilities.getWebResourceAsString("offers/templates/offerDetailTemplate.html"));
 
