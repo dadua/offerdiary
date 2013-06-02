@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+    
+    
+    <bean id="itech.ActionMappingService" class="com.itech.web.ActionMappingService">
+    
+    </bean>
+    
+    <bean id="itech.CommonAction" class="com.itech.common.web.action.CommonAction" abstract="true">
+    	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>
+    	<property name="userManager" ref="itech.UserManager"/>
+    </bean>
+    
+    <bean id="itech.LoginAction" class="com.itech.web.LoginAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
+    <bean id="itech.HomeAction" class="com.itech.web.HomeAction" scope="prototype" parent="itech.CommonAction">
+    </bean>	
+    
+ </beans>
+    
