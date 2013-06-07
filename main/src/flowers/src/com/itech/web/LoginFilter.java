@@ -32,10 +32,6 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/");
 		bypassUrls.add("/logout.do");
 		bypassUrls.add("/home.do");
-		bypassUrls.add("/privacy.do");
-		bypassUrls.add("/tnc.do");
-		bypassUrls.add("/hearMore.do");
-		bypassUrls.add("/setFbAdapter.do");
 		bypassUrls.add("/login.do");
 		bypassUrls.add("/signup.do");
 		bypassUrls.add("/emailLogin.do");
@@ -43,23 +39,13 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/index.jsp");
 		bypassUrls.add("/loginSignUp.jsp");
 		bypassUrls.add("/commonHeader.jsp");
-		bypassUrls.add("/comingSoon.jsp");
 		bypassUrls.add("/getPassword.do");
 		bypassUrls.add("/verifyEmailForPassword.do");
 		bypassUrls.add("/gotPassword.do");
-		bypassUrls.add("/getSharedOffer.do");
-		bypassUrls.add("/sharedOffer.jsp");
-		bypassUrls.add("/reShareOffer.do");
 		bypassUrls.add("/user/pages/signUpFailed.jsp");
 		bypassUrls.add("/authorizationFailureJsonResponse.do");
-		bypassUrls.add("/aboutUs.do");
-		bypassUrls.add("/offers.do");
-		bypassUrls.add("/searchOffers.do");
-		bypassUrls.add("/searchVendor.do");
 
 		bypassUrls.add("/common/pages/message_page.jsp");
-		bypassUrls.add("/verifyEmail.do");
-		bypassUrls.add("/shareOfferViaEmail.do");
 		bypassUrls.add("/getOfferDetail.do");
 	}
 
