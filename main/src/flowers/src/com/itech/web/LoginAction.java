@@ -47,9 +47,42 @@ public class LoginAction extends CommonAction{
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute(PAGE_ATTR_KEY, "login");
 		if (getLoggedInUser()!=null) {
-			return new Redirect("diary.do");
+			return new Redirect("home.do");
 		}
 		return new Forward("user/pages/login.jsp");
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="authenticate.do")
+	public Response authenticate(HttpServletRequest req, HttpServletResponse resp) {
+		String userName = req.getParameter("username");
+		String password = req.getParameter("password");
+		User user = getUserManager().getByUserId(userName);
+
+		if (user == null ) {
+			return invalidPasswordResponse();
+		}
+
+		if((password !=null) && password.equals(user.getPassword())){
+			updateLoggedInUser(req, user);
+		} else {
+			return invalidPasswordResponse();
+		}
+
+		Result<User> result = new Result<User>( user);
+		Type userResultType = new TypeToken<Result<User>>() {
+		}.getType();
+
+		return new CommonBeanResponse(result, userResultType);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="invalidPasswordResponse.do")
+	private Response invalidPasswordResponse() {
+		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
+		Type stringResultType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, stringResultType);
 	}
 
 
