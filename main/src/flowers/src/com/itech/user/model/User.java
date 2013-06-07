@@ -32,51 +32,24 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_USER_ID)
 	private String userId;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name=UserModelConstants.COL_LOGIN_TYPE)
-	private LoginType loginType = LoginType.UNKNOWN;
-
 	@Column(name=UserModelConstants.COL_PASSWORD)
 	private String password;
 
 	@Column(name=UserModelConstants.COL_NAME)
 	private String name;
 
-	@Column(name=UserModelConstants.COL_AGE)
-	private int age;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name=UserModelConstants.COL_GENDER)
-	private Gender gender = Gender.UNKNOWN;
-
-	@Column(name=UserModelConstants.COL_LOCATION)
-	private String location;
-
-	@Column(name=UserModelConstants.COL_LANGUAGE)
-	private String language;
-
 	@Column(name=UserModelConstants.COL_EMAIL_ID)
 	private String emailId;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name=UserModelConstants.COL_USER_ROLE)
-	private UserRole userRole = UserRole.CONSUMER;
+	private UserRole userRole = UserRole.ADMIN;
 
 	@Column(name=UserModelConstants.COL_REGISTRATION_TIME)
 	private Date registrationTime;
 
-	@Column(name=UserModelConstants.COL_LAST_NOTIFY_PASSWORD_EMAIL_TIME)
-	private Date notifyPasswordTime;
-
 	@Column(name=UserModelConstants.COL_LAST_LOGIN_TIME)
 	private Date lastLoginTime;
-
-	@Column(name="IS_EMAIL_VARIFIED")
-	private Boolean emailVarified;
-
-	@Column(name="EMAIL_VARIFICATION_CODE")
-	private String emailVarficationAccessCode;
-
 
 	public enum ActivationStatus {
 		ACTIVE, INACTIVE;
@@ -84,7 +57,7 @@ public class User extends PersistableEntity{
 
 	@Enumerated(EnumType.STRING)
 	@Column(name=UserModelConstants.COL_ACTIVATION_STATUS)
-	private ActivationStatus activationStatus = ActivationStatus.INACTIVE;
+	private ActivationStatus activationStatus = ActivationStatus.ACTIVE;
 
 	@Column(name=UserModelConstants.COL_CITY)
 	private String city;
@@ -92,156 +65,97 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_MOBILE_NUMBER)
 	private String mobileNumber;
 
-	@Column(name=UserModelConstants.COL_PIN_CODE)
-	private String pinCode;
+	public Long getId() {
+		return id;
+	}
 
-
-	@Column(name=UserModelConstants.COL_DOB)
-	private Date dob;
-
-	@Column(name=UserModelConstants.COL_NICKNAME)
-	private String nickname;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public LoginType getLoginType() {
-		return loginType;
-	}
-	public void setLoginType(LoginType userType) {
-		loginType = userType;
-	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public Gender getGender() {
-		return gender;
-	}
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getLanguage() {
-		return language;
-	}
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
+
 	public String getEmailId() {
 		return emailId;
 	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
 	public UserRole getUserRole() {
 		return userRole;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
 	}
-	public Long getId() {
-		return id;
-	}
-	@Override
-	public boolean isTransient() {
-		return id == null;
-	}
+
 	public Date getRegistrationTime() {
 		return registrationTime;
 	}
+
 	public void setRegistrationTime(Date registrationTime) {
 		this.registrationTime = registrationTime;
 	}
-	public Date getNotifyPasswordTime() {
-		return notifyPasswordTime;
+
+	public Date getLastLoginTime() {
+		return lastLoginTime;
 	}
-	public void setNotifyPasswordTime(Date notifyPasswordTime) {
-		this.notifyPasswordTime = notifyPasswordTime;
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
 	}
 
 	public ActivationStatus getActivationStatus() {
 		return activationStatus;
 	}
+
 	public void setActivationStatus(ActivationStatus activationStatus) {
 		this.activationStatus = activationStatus;
 	}
+
 	public String getCity() {
 		return city;
 	}
+
 	public void setCity(String city) {
 		this.city = city;
 	}
+
 	public String getMobileNumber() {
 		return mobileNumber;
 	}
+
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
-	public String getPinCode() {
-		return pinCode;
-	}
-	public void setPinCode(String pinCode) {
-		this.pinCode = pinCode;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickName) {
-		nickname = nickName;
-	}
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-	public Date getDob() {
-		return dob;
-	}
-	public void setUserRole(UserRole userRole) {
-		this.userRole = userRole;
-	}
 
-	public boolean isODAdmin() {
-		return UserRole.OD_ADMIN.equals(getUserRole());
-	}
-	public Boolean isEmailVarified() {
-		return emailVarified;
-	}
-	public void setEmailVarified(boolean emailVarified) {
-		this.emailVarified = emailVarified;
-	}
-	public String getEmailVarficationAccessCode() {
-		return emailVarficationAccessCode;
-	}
-	public void setEmailVarficationAccessCode(String emailVarficationAccessCode) {
-		this.emailVarficationAccessCode = emailVarficationAccessCode;
-	}
-	public void setLastLoginTime(Date lastLoginTime) {
-		this.lastLoginTime = lastLoginTime;
-	}
-	public Date getLastLoginTime() {
-		return lastLoginTime;
+	@Override
+	public boolean isTransient() {
+		return id == null;
 	}
 
 }
