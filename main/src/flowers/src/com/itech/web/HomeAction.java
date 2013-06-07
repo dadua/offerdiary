@@ -35,5 +35,10 @@ public class HomeAction extends CommonAction{
 		return new Forward("aboutUs.jsp");
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="home.do")
+	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(UrlConstants.HOME_RELATIVE_URL);
+	}
 
 }

@@ -12,6 +12,7 @@
      
 	<bean id="itech.flowerDAO" class="com.itech.flower.dao.FlowerDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
+	
      
      
      	   
