@@ -2,6 +2,6 @@ initializeRedWineData=false
 initializeScotchWorldData=false
 defaultOfferNotificationTriggerTimeInDays=7
 #dev/live
-serverMode=DEV
-defaultServerUrl=http://localhost:8080/flowers
+serverMode=SERVER_MODE
+defaultServerUrl=DEFAULT_SERVER_URL
 
