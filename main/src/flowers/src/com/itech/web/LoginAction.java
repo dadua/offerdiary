@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.itech.common.exeption.CommonException;
 import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
@@ -19,15 +17,11 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.common.web.action.URLConstants;
-import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
-import com.itech.user.vos.UserEmailCredsVO;
 
 @Controller
 public class LoginAction extends CommonAction{
 
-	private static final String SIGN_UP_FAILED_JSP = "user/pages/signUpFailed.jsp";
 	private static final String PAGE_ATTR_KEY = "pageAttrKey";
 	public static final String FORGOT_PASSWORD_EXECUTION_STATUS = "forgotPasswordStatus";
 
@@ -58,17 +52,6 @@ public class LoginAction extends CommonAction{
 		return new Forward("user/pages/login.jsp");
 	}
 
-	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="signup.do")
-	public Response signup(HttpServletRequest req, HttpServletResponse resp) {
-
-		req.setAttribute(PAGE_ATTR_KEY, "signup");
-		if (getLoggedInUser()!=null) {
-			return new Redirect("diary.do");
-		}
-		return new Forward("user/pages/signup.jsp");
-	}
-
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="getPassword.do")
@@ -77,43 +60,6 @@ public class LoginAction extends CommonAction{
 		return new Forward("user/pages/forgotPassword.jsp");
 	}
 
-	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="gotPassword.do")
-	public Response gotPassword(HttpServletRequest req, HttpServletResponse resp){
-		User user = getLoggedInUser();
-		if (user == null) {
-			String email = req.getParameter("email");
-			user = getUserManager().getByEmail(email);
-			if(null != user){
-				getUserManager().notifyPassword(user);
-			}else{
-				throw new CommonException(ReturnCodes.OBJECT_DOES_NOT_EXIST_ANYMORE);
-			}
-		}
-		req.setAttribute(FORGOT_PASSWORD_EXECUTION_STATUS, Boolean.TRUE.toString());
-		return new Forward("user/pages/forgotPassword.jsp");
-	}
-
-
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="verifyEmailForPassword.do")
-	public Response verifyEmail(HttpServletRequest req, HttpServletResponse resp){
-		User user = getLoggedInUser();
-		if (user == null) {
-			String emailPasswordCredsVOJson = req.getParameter("credVoKey");
-			Gson gson = new Gson();
-			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
-			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
-			if ((user == null) || ! user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
-					|| ! user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString())) {
-				return emailDoesntExist();
-			}
-		}
-		Result<User> result = new Result<User>( user);
-		Type userResultType = new TypeToken<Result<User>>() {
-		}.getType();
-		return new CommonBeanResponse(result, userResultType);
-	}
 
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -121,8 +67,6 @@ public class LoginAction extends CommonAction{
 	public Response loginDone (HttpServletRequest req, HttpServletResponse resp) {
 		User user = getLoggedInUser();
 		if (user == null) {
-			String sessionJson = req.getParameter("fbData");
-			Gson gson = new Gson();
 			updateLoggedInUser(req, user);
 		}
 		Result<User> result = new Result<User>( user);
@@ -131,97 +75,6 @@ public class LoginAction extends CommonAction{
 		return new CommonBeanResponse(result, userResultType);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="emailLogin.do")
-	public Response emailLogin(HttpServletRequest req, HttpServletResponse resp) {
-		User user = getLoggedInUser();
-		if (user == null) {
-			String emailPasswordCredsVOJson = req.getParameter("credVoKey");
-			Gson gson = new Gson();
-			UserEmailCredsVO userEmailCredsVO = gson.fromJson(emailPasswordCredsVOJson, UserEmailCredsVO.class);
-			user = getUserManager().getByUserId(userEmailCredsVO.getEmail());
-
-			if (user == null ) {
-				return invalidPasswordResponse();
-			}
-
-			if((userEmailCredsVO.getPassword() !=null) && userEmailCredsVO.getPassword().equals(user.getPassword())){
-				updateLoggedInUser(req, user);
-			} else {
-				return invalidPasswordResponse();
-			}
-		}
-		Result<User> result = new Result<User>( user);
-		Type userResultType = new TypeToken<Result<User>>() {
-		}.getType();
-
-		return new CommonBeanResponse(result, userResultType);
-	}
-
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="emailDoesntExist.do")
-	private Response emailDoesntExist() {
-		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
-		Type stringResultType = new TypeToken<Result<String>>() {
-		}.getType();
-		return new CommonBeanResponse(result, stringResultType);
-	}
-
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="invalidPasswordResponse.do")
-	private Response invalidPasswordResponse() {
-		Result<String> result = new Result<String>(ReturnCodes.INTERNAL_ERROR, LoginConstants.INVALID_CREDS);;
-		Type stringResultType = new TypeToken<Result<String>>() {
-		}.getType();
-		return new CommonBeanResponse(result, stringResultType);
-	}
-
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
-	@ActionMapping(value="signupDone.do")
-	public Response signUpDone (HttpServletRequest req, HttpServletResponse resp) {
-		User user = getLoggedInUser();
-		if (user == null) {
-			String sessionJson = req.getParameter("fbData");
-			Gson gson = new Gson();
-			updateLoggedInUser(req, user);
-		}
-		Result<User> result = new Result<User>( user);
-		Type userResultType = new TypeToken<Result<User>>() {
-		}.getType();
-		return new CommonBeanResponse(result, userResultType);
-	}
-
-	@ActionResponseAnnotation(responseType=Redirect.class)
-	@ActionMapping(value="emailSignup.do")
-	public Response emailSignUp (HttpServletRequest req, HttpServletResponse resp) {
-		User user = getLoggedInUser();
-		if (user == null) {
-			String name = req.getParameter("name");
-			String email = req.getParameter("email");
-			String password = req.getParameter("password");
-			user = getUserManager().getByEmail(email);
-			if((user != null) && (user.getLoginType().toString().equalsIgnoreCase(LoginType.INTERNAL.toString())
-					|| user.getLoginType().toString().equalsIgnoreCase(LoginType.MULTI.toString()))){
-				return new Forward(SIGN_UP_FAILED_JSP);
-			}
-
-			if((user != null) && user.getLoginType().toString().equalsIgnoreCase(LoginType.FACEBOOK.toString())){
-				user.setLoginType(LoginType.MULTI);
-				user.setPassword(password);
-				getUserManager().save(user);
-				updateLoggedInUser(req, user);
-				return new Redirect("diary.do");
-			}
-
-			if(null != user){
-				return new Forward(SIGN_UP_FAILED_JSP);
-			}
-
-			user = getUserManager().saveEmailUser(name, email, password);
-			updateLoggedInUser(req, user);
-		}
-		return new Redirect("diary.do");
-	}
 
 	@ActionResponseAnnotation(responseType=Redirect.class)
 	@ActionMapping(value="logout.do")
@@ -229,28 +82,4 @@ public class LoginAction extends CommonAction{
 		updateLoggedInUser(req, null);
 		return new Redirect("");
 	}
-
-
-	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="verifyEmail.do")
-	public Response varifyEmail(HttpServletRequest req, HttpServletResponse resp){
-		String message = "";
-		String emailVarificationCode = req.getParameter("code");
-		User user = getUserManager().getUserForEmailVarificationCode(emailVarificationCode);
-		if (user == null) {
-			message = "Invalid Email verification request";
-		}
-
-		if ((user.isEmailVarified() != null) && user.isEmailVarified()) {
-			message = "Email Verification already completed";
-		} else {
-			user.setEmailVarified(true);
-			getUserManager().save(user);
-			message = "Your Email Verified successfully";
-		}
-
-		req.setAttribute(URLConstants.COMMON_ERROR_MESSAGE_ATTR_NAME, message);
-		return new Forward("common/pages/message_page.jsp");
-	}
-
 }
