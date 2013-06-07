@@ -3,5 +3,16 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
+    	
+	<bean id="itech.supplierDAO" class="com.itech.supplier.dao.SupplierDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+	
+	<bean id="itech.customerDAO" class="com.itech.customer.dao.CustomerDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+     
+	<bean id="itech.flowerDAO" class="com.itech.flower.dao.FlowerDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+     
+     
      	   
 </beans>
