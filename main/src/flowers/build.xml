@@ -22,7 +22,6 @@
 		<delete file="src/config.properties" />
 		<copy file="${itech.config}.temp" tofile="${itech.config}" />
 		<replace file="${itech.config}" token="SERVER_MODE" value="${servermode}" />
-		<replace file="${itech.config}" token="DEFAULT_SERVER_URL" value="${defaultserverurl}" />
 	</target>		
 	<target name="compile-init">
 		<delete dir="${build.home}"/>
@@ -50,7 +49,6 @@
 			<classpath refid="classpath"/>
 		</javac>
 		<copy  todir="${compile.home}/classes" file="${src}/log4j.properties"/>
-		<copy  todir="${compile.home}/classes" file="${src}/key.cfg"/>
 	    <copy todir="${compile.home}/classes">
 			<fileset dir="${src}" includes="**" />
 	    </copy>
