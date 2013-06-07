@@ -11,72 +11,44 @@ import com.itech.common.exeption.ReturnCodes;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.common.services.Initialize;
 import com.itech.user.dao.UserDAO;
-import com.itech.user.model.LoginType;
 import com.itech.user.model.User;
 import com.itech.user.model.UserRole;
 
 public class UserManagerImpl extends CommonBaseManager implements UserManager, Initialize {
-	private static final String OD_ADMIN_NAME = "odadmin";
-	private static final String OD_ADMIN_PASSWORD = "od@123!@#";
-	private static final String OD_ADMIN_EMAIL_ID = "admin@offerdiary.com";
+	private static final String ADMIN_USER_ID = "admin";
+	private static final String ADMIN_USER_NAME = "admin";
+	private static final String ADMIN_PASSWORD = "admin";
+	private static final String ADMIN_EMAIL_ID = "admin@offerdiary.com";
 	private static final Logger logger = Logger.getLogger(UserManagerImpl.class);
 	private UserDAO userDAO;
 	private final User odAdmin = null;
 
 	@Override
 	public void init() {
-		String odAdminName = OD_ADMIN_NAME;
-		String odAdminPassword = OD_ADMIN_PASSWORD;
-		String odAdminEmail = OD_ADMIN_EMAIL_ID;
-		User odAdminUser = getUserDAO().getByEmail(odAdminEmail);
-		if (odAdminUser == null) {
-			odAdminUser = saveEmailUser(odAdminName, odAdminEmail, odAdminPassword, UserRole.OD_ADMIN);
-			odAdminUser.setEmailVarified(true);
+		String adminUserId = ADMIN_USER_ID;
+		String adminUserName = ADMIN_USER_NAME;
+		String adminUserPassword = ADMIN_PASSWORD;
+		String odAdmadminUserEmailinEmail = ADMIN_EMAIL_ID;
+		User adminUser = getUserDAO().getByUserId(adminUserId);
+		if (adminUser == null) {
+			adminUser = saveUser(adminUserId, adminUserName, odAdmadminUserEmailinEmail, adminUserPassword, UserRole.ADMIN);
 		}
 	}
 
-	@Override
-	public User getODAdminUser() {
-		return getUserDAO().getByEmail(OD_ADMIN_EMAIL_ID);
-	}
-
-	private User saveEmailUser(String name, String email,
+	private User saveUser(String userId, String name, String email,
 			String password, UserRole userRole) {
 		User user = new User();
-		user.setLoginType(LoginType.EMAIL);
-		user.setUserId(email);
+		user.setUserId(userId);
 		user.setEmailId(email);
 		user.setPassword(password);
 		user.setName(name);
 		user.setUserRole(userRole);
 		user.setRegistrationTime((new Date(System.currentTimeMillis())));
-		String emailVarficationAccessCode = CommonUtilities.getUniqueId("USER");
-		user.setEmailVarficationAccessCode(emailVarficationAccessCode);
 		save(user);
 		return user;
 	}
 
 
-	private void updateExistingUser(User existingUser, User user) {
-		existingUser.setUserId(user.getUserId());
-		existingUser.setGender(user.getGender());
-		existingUser.setName(user.getName());
-		user.setEmailId(user.getEmailId());
-		existingUser.setLanguage(user.getLanguage());
-		existingUser.setLoginType(LoginType.MULTI);
-
-	}
-
-	@Override
-	public User getByEmail(String email) {
-		return getUserDAO().getByEmail(email);
-	}
-
-	@Override
-	public void notifyPassword(User user) {
-		user.setNotifyPasswordTime((new Date(System.currentTimeMillis())));
-		getUserDAO().addOrUpdate(user);
-	}
 
 	@Override
 	public void changePassword(String userId, String currentPassword,
@@ -93,10 +65,6 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		existingUser.setPassword(newPassword);
 	}
 
-	@Override
-	public User saveEmailUser(String name, String email, String password) {
-		return saveEmailUser(name, email, password, UserRole.CONSUMER);
-	}
 
 	@Override
 	public User getById(long id) {
@@ -119,18 +87,6 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		getUserDAO().addOrUpdate(user);
 	}
 
-	@Override
-	public User getUserForEmailVarificationCode(String emailVarificationCode) {
-		return getUserDAO().getUserForEmailVarificationCode(emailVarificationCode);
-	}
-
-	public void setUserDAO(UserDAO userDAO) {
-		this.userDAO = userDAO;
-	}
-
-	public UserDAO getUserDAO() {
-		return userDAO;
-	}
 
 	@Override
 	public List<User> getAllUsers() {
@@ -142,6 +98,14 @@ public class UserManagerImpl extends CommonBaseManager implements UserManager, I
 		long currentTimeMillis = System.currentTimeMillis();
 		user.setLastLoginTime(new Date(currentTimeMillis));
 		userDAO.addOrUpdate(user);
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	public UserDAO getUserDAO() {
+		return userDAO;
 	}
 
 
