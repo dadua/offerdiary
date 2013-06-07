@@ -31,11 +31,9 @@ public class LoginFilter implements Filter {
 	static {
 		bypassUrls.add("/");
 		bypassUrls.add("/logout.do");
-		bypassUrls.add("/home.do");
 		bypassUrls.add("/login.do");
 		bypassUrls.add("/signup.do");
-		bypassUrls.add("/emailLogin.do");
-		bypassUrls.add("/emailSignup.do");
+		bypassUrls.add("/authenticate.do");
 		bypassUrls.add("/index.jsp");
 		bypassUrls.add("/loginSignUp.jsp");
 		bypassUrls.add("/commonHeader.jsp");
@@ -46,7 +44,6 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/authorizationFailureJsonResponse.do");
 
 		bypassUrls.add("/common/pages/message_page.jsp");
-		bypassUrls.add("/getOfferDetail.do");
 	}
 
 	@Override
@@ -62,7 +59,7 @@ public class LoginFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) req;
 		HttpServletResponse httpResponse = (HttpServletResponse) resp;
 
-		setFbDetails(httpRequest);
+		setCommonAttribs(httpRequest);
 
 		String reqUrl = httpRequest.getServletPath();
 		/*
@@ -142,8 +139,7 @@ public class LoginFilter implements Filter {
 	}
 
 
-	private static void setFbDetails(HttpServletRequest request) {
-		request.setAttribute(WebConstatnts.FB_APP_ID_ATTRIBUTE_KEY, FbConstants.getFbAppId());
+	private static void setCommonAttribs(HttpServletRequest request) {
 		request.setAttribute("odServerMode", ProjectConfigs.serverMode.get());
 	}
 

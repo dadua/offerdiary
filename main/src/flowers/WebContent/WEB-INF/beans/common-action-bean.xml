@@ -20,5 +20,8 @@
     <bean id="itech.HomeAction" class="com.itech.web.HomeAction" scope="prototype" parent="itech.CommonAction">
     </bean>	
     
+	<bean id="itech.FlowerAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
+	</bean>
+    
  </beans>
     
