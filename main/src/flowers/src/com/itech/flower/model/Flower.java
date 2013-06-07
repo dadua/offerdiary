@@ -1,11 +1,28 @@
 package com.itech.flower.model;
 
-public class Flower {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.itech.common.db.PersistableEntity;
+
+
+@Entity
+@Table(name="FLOWERS")
+public class Flower extends PersistableEntity {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Long id;
 
+	@Column(name="NAME")
 	private String name;
 
+	@Column(name="COLOR")
 	private String color;
 
 	public Long getId() {
@@ -32,4 +49,8 @@ public class Flower {
 		this.color = color;
 	}
 
+	@Override
+	public boolean isTransient() {
+		return id == null;
+	}
 }

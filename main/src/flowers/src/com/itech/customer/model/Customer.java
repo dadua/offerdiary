@@ -1,30 +1,45 @@
 package com.itech.customer.model;
 
-public class Customer {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.itech.common.db.PersistableEntity;
+
+
+
+@Entity
+@Table(name="CUSTOMER")
+public class Customer extends PersistableEntity {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
 	private Long id;
 
+	@Column(name="UNIQUE_ID")
+	private String uniqueId;
+
+	@Column(name="NAME")
 	private String name;
 
-	private String bankAccountNumber;
+	@Column(name="BANK_ACCOUNT_DETAILS")
+	private String bankAccountDetails;
 
+	@Column(name="BILLING_NAME")
 	private String billingName;
 
+	@Column(name="PHONE_NO")
 	private String phoneNo;
 
+	@Column(name="ALTERNATIVE_PHONE_NO")
 	private String alternativePhoneNo;
 
-	private String advance;
-
+	@Column(name="ADDRESS")
 	private String address;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -32,14 +47,6 @@ public class Customer {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getBankAccountNumber() {
-		return bankAccountNumber;
-	}
-
-	public void setBankAccountNumber(String bankAccountNumber) {
-		this.bankAccountNumber = bankAccountNumber;
 	}
 
 	public String getBillingName() {
@@ -58,27 +65,48 @@ public class Customer {
 		this.phoneNo = phoneNo;
 	}
 
-	public String getAlternativePhoneNo() {
-		return alternativePhoneNo;
-	}
-
-	public void setAlternativePhoneNo(String alternativePhoneNo) {
-		this.alternativePhoneNo = alternativePhoneNo;
-	}
-
-	public String getAdvance() {
-		return advance;
-	}
-
-	public void setAdvance(String advance) {
-		this.advance = advance;
-	}
-
 	public String getAddress() {
 		return address;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setAlternativePhoneNo(String alternativePhoneNo) {
+		this.alternativePhoneNo = alternativePhoneNo;
+	}
+
+	public String getAlternativePhoneNo() {
+		return alternativePhoneNo;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setBankAccountDetails(String bankAccountDetails) {
+		this.bankAccountDetails = bankAccountDetails;
+	}
+
+	public String getBankAccountDetails() {
+		return bankAccountDetails;
+	}
+
+	@Override
+	public boolean isTransient() {
+		return id == null;
 	}
 }
