@@ -19,15 +19,13 @@ import com.itech.common.web.action.Result;
 import com.itech.flower.model.Customer;
 
 public class CustomerAction extends CommonAction {
-	private static final String CUSTOMER_PARAM = "customer";
-	private static final String CUSTOMER_ID_PARAM = "id";
-	private static final String CUSTOMER_SEARCH_STRING_PARAM = "q";
+
 
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="addCustomer.do")
 	public Response addCustomer (HttpServletRequest req, HttpServletResponse resp) {
-		String customerJson = req.getParameter(CUSTOMER_PARAM);
+		String customerJson = req.getParameter(WebConstatnts.CUSTOMER_PARAM);
 		Gson gson = new Gson();
 		Type customerType = new TypeToken<Customer>() { }.getType();
 		Customer customer = gson.fromJson(customerJson, customerType);
@@ -43,7 +41,7 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteCustomer.do")
 	public Response deleteCustomers (HttpServletRequest req, HttpServletResponse resp) {
-		String customerId = req.getParameter(CUSTOMER_ID_PARAM);
+		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		getCustomerManager().delete(customer);
 		Result<String> result = new Result<String>("Successfully removed the customer " + customer.getName());
@@ -55,7 +53,7 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCustomers.do")
 	public Response getCustomer (HttpServletRequest req, HttpServletResponse resp) {
-		String searchString = req.getParameter(CUSTOMER_SEARCH_STRING_PARAM);
+		String searchString = req.getParameter(WebConstatnts.CUSTOMER_SEARCH_STRING_PARAM);
 		List<Customer> customers = getCustomerManager().searchByName(searchString);
 		Result<List<Customer>> result = new Result<List<Customer>>(customers);
 		Type resultStringType = new TypeToken<Result<List<Customer>>>() {
@@ -66,7 +64,7 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCustomerDetails.do")
 	public Response getCustomerDetails (HttpServletRequest req, HttpServletResponse resp) {
-		String customerId = req.getParameter(CUSTOMER_ID_PARAM);
+		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		Result<Customer> result = new Result<Customer>(customer);
 		Type resultStringType = new TypeToken<Result<Customer>>() {
