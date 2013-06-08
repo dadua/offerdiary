@@ -30,7 +30,13 @@
         			<a class="brand" href="home.do">
         				<img src="images/logo_tag.png" class="brandImage" alt="Flower Account Management" />
         			</a>
+        			<c:if test="${userSession!=null}">
+        			<div class="pull-right">
+        			<a href="logout.do" class="btn">Logout</a>
+        			</div>
+        			</c:if>
         		</div>
+        		
       		</div>
       		<div class="container">
 	       		<%@include file="/common/pages/actionInfoRow.jsp" %>
