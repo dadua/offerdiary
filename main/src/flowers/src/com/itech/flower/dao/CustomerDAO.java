@@ -1,4 +1,4 @@
-package com.itech.customer.dao;
+package com.itech.flower.dao;
 
 import java.util.List;
 

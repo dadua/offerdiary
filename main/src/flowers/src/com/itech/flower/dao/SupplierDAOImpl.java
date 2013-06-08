@@ -1,21 +1,21 @@
-package com.itech.customer.dao;
+package com.itech.flower.dao;
 
 import java.util.List;
 
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.flower.model.Customer;
+import com.itech.flower.model.Supplier;
 
-public class CustomerDAOImpl extends HibernateCommonBaseDAO<Customer> implements CustomerDAO {
+public class SupplierDAOImpl extends HibernateCommonBaseDAO<Supplier> implements SupplierDAO{
 
 	@Override
 	protected Class getEntityClass() {
-		return Customer.class;
+		return Supplier.class;
 	}
 
 	@Override
-	public Customer getByUniqueId(String uniqueId) {
+	public Supplier getByUniqueId(String uniqueId) {
 		String hql = "from " + getEntityClassName() + " where uniqueId = :uniqueId";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("uniqueId", uniqueId);
@@ -23,7 +23,7 @@ public class CustomerDAOImpl extends HibernateCommonBaseDAO<Customer> implements
 	}
 
 	@Override
-	public List<Customer> searchByName(String searchString) {
+	public List<Supplier> searchByName(String searchString) {
 		String hql = "from " + getEntityClassName() + " where name like :searchString";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("searchString", "%" + searchString + "%");

@@ -1,10 +1,10 @@
-package com.itech.customer.manager;
+package com.itech.flower.manager;
 
 import java.util.List;
 
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
-import com.itech.customer.dao.CustomerDAO;
+import com.itech.flower.dao.CustomerDAO;
 import com.itech.flower.model.Customer;
 
 public class CustomerManagerImpl extends CommonBaseManager implements CustomerManager{

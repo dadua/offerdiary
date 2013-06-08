@@ -10,7 +10,7 @@ import com.itech.common.services.ServiceLocator;
 import com.itech.config.ProjectConfigs;
 import com.itech.flower.manager.CustomerManager;
 import com.itech.flower.manager.FlowerManager;
-import com.itech.supplier.manager.SupplierManager;
+import com.itech.flower.manager.SupplierManager;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
 

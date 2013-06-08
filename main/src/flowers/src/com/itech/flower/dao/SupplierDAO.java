@@ -1,9 +1,9 @@
-package com.itech.supplier.dao;
+package com.itech.flower.dao;
 
 import java.util.List;
 
 import com.itech.common.db.CommonBaseDAO;
-import com.itech.supplier.model.Supplier;
+import com.itech.flower.model.Supplier;
 
 public interface SupplierDAO  extends CommonBaseDAO<Supplier>{
 
