@@ -34,6 +34,12 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	}
 
 	@Override
+	public Flower getFlowerById(long id) {
+		return getFlowerDAO().getById(id);
+	}
+
+
+	@Override
 	public List<Flower> searchFlowersFor(String searchString) {
 		if (searchString == null) {
 			searchString = "";
@@ -119,6 +125,7 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	public void setFlowerDAO(FlowerDAO flowerDAO) {
 		this.flowerDAO = flowerDAO;
 	}
+
 
 
 }

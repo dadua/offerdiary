@@ -13,6 +13,7 @@ public interface FlowerManager {
 	public void addOrUpdate(Flower flower);
 	public void delete(Flower flower);
 	public Flower getFlowerByName(String name);
+	public Flower getFlowerById(long id);
 	public List<Flower> searchFlowersFor(String searchString);
 
 
@@ -27,4 +28,5 @@ public interface FlowerManager {
 	public CustomerFlowerAssoc addFlowerToCustomer(Flower flower, Customer customer);
 	public List<Flower> getFlowersForCustomer(Customer customer);
 	public List<Customer> getCustomersForFlower(Flower flower);
+
 }
