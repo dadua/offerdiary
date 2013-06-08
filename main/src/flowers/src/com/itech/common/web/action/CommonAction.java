@@ -8,6 +8,9 @@ import com.itech.common.security.SecurityManager;
 import com.itech.common.security.ThreadLocalSecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
 import com.itech.config.ProjectConfigs;
+import com.itech.customer.manager.CustomerManager;
+import com.itech.flower.manager.FlowerManager;
+import com.itech.supplier.manager.SupplierManager;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
 
@@ -21,6 +24,9 @@ public class CommonAction {
 	private SecurityManager securityManager;
 	private SecurityContextHolder securityContextHolder;
 	private UserManager userManager;
+	private CustomerManager customerManager;
+	private SupplierManager supplierManager;
+	private FlowerManager flowerManager;
 
 	public User getLoggedInUser() {
 		return getSecurityManager().getLoggedInUser();
@@ -71,6 +77,39 @@ public class CommonAction {
 			securityManager = ServiceLocator.getInstance().getBean(SecurityManager.class);
 		}
 		return securityManager;
+	}
+
+	public CustomerManager getCustomerManager() {
+		if (customerManager == null) {
+			customerManager = ServiceLocator.getInstance().getBean(CustomerManager.class);
+		}
+		return customerManager;
+	}
+
+	public void setCustomerManager(CustomerManager customerManager) {
+		this.customerManager = customerManager;
+	}
+
+	public SupplierManager getSupplierManager() {
+		if (securityManager == null) {
+			supplierManager = ServiceLocator.getInstance().getBean(SupplierManager.class);
+		}
+		return supplierManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
+
+	public FlowerManager getFlowerManager() {
+		if (flowerManager == null) {
+			flowerManager = ServiceLocator.getInstance().getBean(FlowerManager.class);
+		}
+		return flowerManager;
+	}
+
+	public void setFlowerManager(FlowerManager flowerManager) {
+		this.flowerManager = flowerManager;
 	}
 
 }

@@ -15,8 +15,6 @@ import com.itech.common.web.action.Response;
 @Controller
 public class FlowerAction extends CommonAction {
 
-
-
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value=UrlConstants.FLOWERS_DO_RELATIVE_URL)
 	public Response goToFlowers(HttpServletRequest req, HttpServletResponse resp) {

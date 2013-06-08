@@ -4,6 +4,11 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.UUID;
 
+import com.itech.common.db.PersistableEntity;
+import com.itech.customer.model.Customer;
+import com.itech.flower.model.Flower;
+import com.itech.supplier.model.Supplier;
+
 public class CommonUtilities {
 	public static final long MILLIS_IN_A_DAY = 24*60*60*1000;
 
@@ -47,6 +52,27 @@ public class CommonUtilities {
 
 	public static boolean isNullOrZero(Integer i){
 		return ((i == null) || (i == 0));
+	}
+
+	public static String getUniqueId(PersistableEntity object) {
+		if (object.isTransient()) {
+			return null;
+		}
+		if (object instanceof Supplier) {
+			Supplier supplier = (Supplier) object;
+			return "SUP" + supplier.getId();
+		}
+
+		if (object instanceof Customer) {
+			Customer customer = (Customer) object;
+			return "CUS" + customer.getId();
+		}
+
+		if (object instanceof Flower) {
+			Flower flower = (Flower) object;
+			return "FLW" + flower.getId();
+		}
+		return object.getId().toString();
 	}
 
 }

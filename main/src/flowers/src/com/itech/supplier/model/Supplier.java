@@ -24,6 +24,9 @@ public class Supplier extends PersistableEntity {
 	@Column(name="NAME")
 	private String name;
 
+	@Column(name="NICK_NAME")
+	private String nickName;
+
 	@Column(name="BANK_ACCOUNT_DETAILS")
 	private String bankAccountDetails;
 
@@ -75,6 +78,7 @@ public class Supplier extends PersistableEntity {
 		this.id = id;
 	}
 
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -106,6 +110,14 @@ public class Supplier extends PersistableEntity {
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 }

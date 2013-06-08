@@ -14,6 +14,16 @@
 	</bean>
 	
      
-     
+    <bean id="itech.customerManager" class="com.itech.customer.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
+    	<property name="customerDAO" ref="itech.customerDAO"/>
+	</bean>
+	
+	<bean id="itech.supplierManager" class="com.itech.supplier.manager.SupplierManagerImpl" parent="itech.CommonBaseManager">
+    	<property name="supplierDAO" ref="itech.supplierDAO"/>
+	</bean>
+	
+	<bean id="itech.flowerManager" class="com.itech.flower.manager.FlowerManagerImpl" parent="itech.CommonBaseManager">
+    	<property name="flowerManager" ref="itech.flowerManager"/>
+	</bean>
      	   
 </beans>

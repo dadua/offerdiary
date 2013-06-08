@@ -38,7 +38,6 @@ public class LoginFilter implements Filter {
 		bypassUrls.add("/loginSignUp.jsp");
 		bypassUrls.add("/commonHeader.jsp");
 		bypassUrls.add("/getPassword.do");
-		bypassUrls.add("/verifyEmailForPassword.do");
 		bypassUrls.add("/gotPassword.do");
 		bypassUrls.add("/user/pages/signUpFailed.jsp");
 		bypassUrls.add("/authorizationFailureJsonResponse.do");
