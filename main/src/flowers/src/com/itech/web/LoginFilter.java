@@ -29,7 +29,7 @@ public class LoginFilter implements Filter {
 
 	private static Set<String> bypassUrls = new HashSet<String>();
 	static {
-		bypassUrls.add("/");
+		bypassUrls.add("/login.jsp");
 		bypassUrls.add("/logout.do");
 		bypassUrls.add("/login.do");
 		bypassUrls.add("/signup.do");
@@ -95,8 +95,9 @@ public class LoginFilter implements Filter {
 				return;
 			}
 
-			if ("/index.jsp".equals(reqUrl) || "/".equals(reqUrl)) {
-				httpRequest.getRequestDispatcher("/diary.do").forward(req, resp);
+			if ("/login.do".equals(reqUrl) || "/login.jsp".equals(reqUrl) || "/".equals(reqUrl)) {
+				httpResponse.sendRedirect("home.do");
+				//				httpRequest.getRequestDispatcher("/home.do").forward(req, resp);
 				return;
 			}
 		}
