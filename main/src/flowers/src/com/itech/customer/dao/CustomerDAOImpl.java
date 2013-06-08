@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
-import com.itech.customer.model.Customer;
+import com.itech.flower.model.Customer;
 
 public class CustomerDAOImpl extends HibernateCommonBaseDAO<Customer> implements CustomerDAO {
 

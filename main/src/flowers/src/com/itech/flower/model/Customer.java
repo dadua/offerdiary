@@ -1,4 +1,4 @@
-package com.itech.customer.model;
+package com.itech.flower.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

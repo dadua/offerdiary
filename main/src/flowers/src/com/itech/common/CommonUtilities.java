@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.itech.common.db.PersistableEntity;
-import com.itech.customer.model.Customer;
+import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.supplier.model.Supplier;
 

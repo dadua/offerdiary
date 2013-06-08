@@ -5,7 +5,7 @@ import java.util.List;
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.customer.dao.CustomerDAO;
-import com.itech.customer.model.Customer;
+import com.itech.flower.model.Customer;
 
 public class CustomerManagerImpl extends CommonBaseManager implements CustomerManager{
 	private CustomerDAO customerDAO;

@@ -8,7 +8,7 @@ import com.itech.common.security.SecurityManager;
 import com.itech.common.security.ThreadLocalSecurityContextHolder;
 import com.itech.common.services.ServiceLocator;
 import com.itech.config.ProjectConfigs;
-import com.itech.customer.manager.CustomerManager;
+import com.itech.flower.manager.CustomerManager;
 import com.itech.flower.manager.FlowerManager;
 import com.itech.supplier.manager.SupplierManager;
 import com.itech.user.manager.UserManager;

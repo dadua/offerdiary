@@ -16,7 +16,7 @@ import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.customer.model.Customer;
+import com.itech.flower.model.Customer;
 
 public class CustomerAction extends CommonAction {
 	private static final String CUSTOMER_PARAM = "customer";
