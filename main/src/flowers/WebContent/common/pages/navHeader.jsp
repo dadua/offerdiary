@@ -28,7 +28,7 @@
       		<div class="navbar-inner">
         		<div class="container navBarItems">
         			<a class="brand" href="home.do">
-        				<img src="images/logo_tag.png" class="brandImage" alt="Flower Account Management" />
+        				<img src="images/logo_tag.png" class="brandImage" alt="Flower Accounts" />
         			</a>
         			<c:if test="${userSession!=null}">
         			<div class="pull-right">

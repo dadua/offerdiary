@@ -1,0 +1,61 @@
+<%@page import="com.itech.web.LoginConstants"%>
+<%@include file="/common/pages/headBegin.jsp" %>
+
+		<title>Manager Flowers Transactions</title>
+		<script type="text/javascript">
+		</script>
+		<style type="text/css">
+			<%@include file="/common/css/layout.css" %>
+		</style>
+
+<%@include file="/common/pages/bodyBegin.jsp" %>
+		<div class="container" >
+			<div class="row">
+				<div class="span2">
+					<div class="span2 container-fluid options-left-container">
+	                    <ul class="nav nav-list offerFilters">
+	                        <li class="nav-header">Flowers:</li>
+	                        <li class="active validOffers"><a href="#">Valid</a></li>
+	                        <li class="allOffers"><a href="#">All</a></li>
+	                        <li class="divider"></li>
+	                        <li class="nav-header">Added in:</li>
+	                        <li class="addedLastweekOffers"><a href="#">Added in the last week</a></li>
+	                        <li class="addedLastmonthOffers"><a href="#">Added in the last month</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+				
+	            <div class="span10 "  >
+	                <div class="container-fluid content-container">
+	                    <div class="row-fluid">
+	                    	<div class="span6">
+		                    	<h3 class="bluishText">Flowers</h3>
+	                    	</div>
+	                    	<div class="span5">
+		                        <br/>
+		                        <div class="form-search">
+		                            <div class="input-append">
+		                                <input id="searchOfferQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Flowers" />
+		                                <button class="btn"><i class="icon-search"></i></button>
+		                            </div>
+		                        </div>
+	                        </div>
+	                    </div>
+	                    <br/>
+	                    <br/>
+	
+	                    <div class="row-fluid">
+	                        <div id="offerContainerFluid" class="container-fluid">
+	                        </div>
+	                        <div class="container-fluid">
+		                        <div id="offerPaginationContainer" class="row-fluid span6 offset6">
+		                        </div>
+		                    </div>
+	                    </div>
+	                    
+	
+	                </div>
+	            </div>
+			</div>
+		</div>
+<%@include file="/common/pages/bodyHtmlEnd.jsp" %>
