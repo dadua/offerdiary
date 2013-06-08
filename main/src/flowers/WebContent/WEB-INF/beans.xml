@@ -4,21 +4,21 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" >
     	
-	<bean id="itech.supplierDAO" class="com.itech.supplier.dao.SupplierDAOImpl" parent="itech.hibernateCommonDAO">
+	<bean id="itech.supplierDAO" class="com.itech.flower.dao.SupplierDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
-	<bean id="itech.customerDAO" class="com.itech.customer.dao.CustomerDAOImpl" parent="itech.hibernateCommonDAO">
+	<bean id="itech.customerDAO" class="com.itech.flower.dao.CustomerDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
      
 	<bean id="itech.flowerDAO" class="com.itech.flower.dao.FlowerDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
      
-    <bean id="itech.customerManager" class="com.itech.customer.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
+    <bean id="itech.customerManager" class="com.itech.flower.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="customerDAO" ref="itech.customerDAO"/>
 	</bean>
 	
-	<bean id="itech.supplierManager" class="com.itech.supplier.manager.SupplierManagerImpl" parent="itech.CommonBaseManager">
+	<bean id="itech.supplierManager" class="com.itech.flower.manager.SupplierManagerImpl" parent="itech.CommonBaseManager">
     	<property name="supplierDAO" ref="itech.supplierDAO"/>
 	</bean>
 	

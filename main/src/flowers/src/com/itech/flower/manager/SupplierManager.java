@@ -1,8 +1,8 @@
-package com.itech.supplier.manager;
+package com.itech.flower.manager;
 
 import java.util.List;
 
-import com.itech.supplier.model.Supplier;
+import com.itech.flower.model.Supplier;
 
 public interface SupplierManager {
 	public void addOrUpdate(Supplier supplier);

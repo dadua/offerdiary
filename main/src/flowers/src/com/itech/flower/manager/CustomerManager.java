@@ -1,4 +1,4 @@
-package com.itech.customer.manager;
+package com.itech.flower.manager;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package com.itech.supplier.manager;
+package com.itech.flower.manager;
 
 import java.util.List;
 
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
-import com.itech.supplier.dao.SupplierDAO;
-import com.itech.supplier.model.Supplier;
+import com.itech.flower.dao.SupplierDAO;
+import com.itech.flower.model.Supplier;
 
 public class SupplierManagerImpl extends CommonBaseManager implements SupplierManager{
 	private SupplierDAO supplierDAO;

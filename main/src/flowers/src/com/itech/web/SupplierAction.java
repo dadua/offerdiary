@@ -16,7 +16,7 @@ import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
-import com.itech.supplier.model.Supplier;
+import com.itech.flower.model.Supplier;
 
 public class SupplierAction extends CommonAction{
 	private static final String SUPPLIER_PARAM = "supplier";

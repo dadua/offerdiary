@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.itech.common.db.PersistableEntity;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
-import com.itech.supplier.model.Supplier;
+import com.itech.flower.model.Supplier;
 
 public class CommonUtilities {
 	public static final long MILLIS_IN_A_DAY = 24*60*60*1000;
