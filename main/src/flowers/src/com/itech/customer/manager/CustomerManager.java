@@ -2,7 +2,7 @@ package com.itech.customer.manager;
 
 import java.util.List;
 
-import com.itech.customer.model.Customer;
+import com.itech.flower.model.Customer;
 
 public interface CustomerManager {
 	public void addOrUpdate(Customer customer);
