@@ -20,6 +20,8 @@ import com.itech.common.web.action.Result;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.flower.model.Supplier;
+import com.itech.web.constants.CommonEntityUIOperations;
+import com.itech.web.constants.EachEntityConstants;
 
 
 @Controller
@@ -156,6 +158,34 @@ public class FlowerAction extends CommonAction {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="goToAddNewFlower.do")
+	public Response goToAddNewFlower(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_NAME, CommonEntityUIOperations.ADDNEW.getOperationVal());
+		return new Forward(UrlConstants.FLOWERS_EACH_FLOWER_JSP);
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="flower.do")
+	public Response viewFlower(HttpServletRequest req, HttpServletResponse resp) {
+		String flowerIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_NAME);
+
+		long flowerId = Long.parseLong(flowerIdStr);
+		Flower flower = getFlowerManager().getFlowerById(flowerId);
+
+		Gson gson = new Gson();
+		String flowerJson = gson.toJson(flower, Flower.class);
+
+		req.setAttribute(EachEntityConstants.ENTITY_JSON_ATTR_NAME, flowerJson);
+
+
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_NAME, CommonEntityUIOperations.VIEW.getOperationVal());
+		return new Forward(UrlConstants.FLOWERS_EACH_FLOWER_JSP);
+	}
+
+
+
 
 
 

@@ -14,11 +14,11 @@ input, button, select, textarea {
 
 .options-left-container {
 	 background-color: #FFFFFF;
-	 border-radius: 6px 6px 6px 6px;
+	 border-radius: 6px 0px 0px 6px;
 	 padding: 0;
 	 border: 1px solid #DDDDDD;
 	 position: fixed;
-
+	 border-right: none;
 	 top: 190px;
 }
 
@@ -27,7 +27,6 @@ input, button, select, textarea {
 	 border-right: 1px solid #DDDDDD;
 	 padding-top: 20px;
 	 min-height: 550px;
-	 margin-left: 16px;
 }
 
 .content-container > .container-fluid {
@@ -60,35 +59,4 @@ input, button, select, textarea {
 	margin-bottom: 5px;
 }
 
-
-@media (max-width: 767px) {
-    .itemContainer {
-        margin-left: 20px;
-    }
-    body {
-		padding-top: 0px;
-	}
-		
 	
-	
-	.options-left-container {
-		 padding: 0;
-		 position: static;
-		 top: 0px;
-		 margin-bottom: 10px;
-	}
-	
-	.content-container {
-		 border-left: 0px;
-		 border-right: 0px;
-		 padding-top: 20px;
-		 min-height: 100px;
-		 margin-left: 2px;
-	}
-	
-	.content-container > .container-fluid {
-		padding-left: 0;
-	}
-
-
-}
