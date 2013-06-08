@@ -34,7 +34,7 @@
 	    <url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
   <welcome-file-list>
-    <welcome-file>user/pages/login.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   	<servlet>
 		<description>

@@ -46,10 +46,7 @@ public class LoginAction extends CommonAction{
 	@ActionMapping(value="login.do")
 	public Response login(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute(PAGE_ATTR_KEY, "login");
-		if (getLoggedInUser()!=null) {
-			return new Redirect("home.do");
-		}
-		return new Forward("user/pages/login.jsp");
+		return new Forward("login.jsp");
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
