@@ -12,6 +12,9 @@
     <bean id="itech.CommonAction" class="com.itech.common.web.action.CommonAction" abstract="true">
     	<property name="securityContextHolder" ref="itech.SecurityContextHolder"/>
     	<property name="userManager" ref="itech.UserManager"/>
+    	<property name="customerManager" ref="itech.customerManager"/>
+    	<property name="flowerManager" ref="itech.flowerManager"/>
+    	<property name="supplierManager" ref="itech.supplierManager"/>
     </bean>
     
     <bean id="itech.LoginAction" class="com.itech.web.LoginAction" scope="prototype" parent="itech.CommonAction">
@@ -21,6 +24,12 @@
     </bean>	
     
 	<bean id="itech.FlowerAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
+	</bean>
+	
+	<bean id="itech.supplierAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
+	</bean>
+	
+	<bean id="itech.customerAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
 	</bean>
     
  </beans>
