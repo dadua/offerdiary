@@ -13,6 +13,11 @@
 	<bean id="itech.flowerDAO" class="com.itech.flower.dao.FlowerDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
+	<bean id="itech.supplierFlowerDAO" class="com.itech.flower.dao.SupplierFlowerAssocDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>
+	<bean id="itech.customerFlowerDAO" class="com.itech.flower.dao.CustomerFlowerAssocDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>		
+	
      
     <bean id="itech.customerManager" class="com.itech.flower.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="customerDAO" ref="itech.customerDAO"/>
@@ -23,7 +28,11 @@
 	</bean>
 	
 	<bean id="itech.flowerManager" class="com.itech.flower.manager.FlowerManagerImpl" parent="itech.CommonBaseManager">
-    	<property name="flowerManager" ref="itech.flowerManager"/>
+    	<property name="flowerDAO" ref="itech.flowerDAO"/>
+    	<property name="customerFlowerAssocDAO" ref="itech.customerFlowerDAO"/>
+    	<property name="supplierFlowerAssocDAO" ref="itech.supplierFlowerDAO"/>    	
 	</bean>
+	
+
      	   
 </beans>

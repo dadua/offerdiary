@@ -111,5 +111,4 @@ public class CommonAction {
 	public void setFlowerManager(FlowerManager flowerManager) {
 		this.flowerManager = flowerManager;
 	}
-
 }
