@@ -3,6 +3,7 @@
 
 		<title>Flowers</title>
 		<script type="text/javascript">
+			$('.allFlowers').addClass('active');
 		</script>
 		<style type="text/css">
 			<%@include file="/common/css/layout.css" %>

@@ -42,6 +42,8 @@ public class FlowerAction extends CommonAction {
 		Type resultFlowersType = new TypeToken<Result<Flower>>() {
 		}.getType();
 
+		result.setMsg("Flower " + flower.getName() + " updated.");
+
 		return new CommonBeanResponse(result, resultFlowersType);
 	}
 

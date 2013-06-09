@@ -26,10 +26,10 @@
 	<bean id="itech.FlowerAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
 	</bean>
 	
-	<bean id="itech.supplierAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
+	<bean id="itech.supplierAction" class="com.itech.web.SupplierAction" scope="prototype" parent="itech.CommonAction">
 	</bean>
 	
-	<bean id="itech.customerAction" class="com.itech.web.FlowerAction" scope="prototype" parent="itech.CommonAction">
+	<bean id="itech.customerAction" class="com.itech.web.CustomerAction" scope="prototype" parent="itech.CommonAction">
 	</bean>
     
  </beans>
