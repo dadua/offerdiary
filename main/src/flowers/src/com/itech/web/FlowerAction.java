@@ -186,4 +186,13 @@ public class FlowerAction extends CommonAction {
 		return new Forward(UrlConstants.FLOWERS_EACH_FLOWER_JSP);
 	}
 
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="flowers.do")
+	public Response viewAllFlowers(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(UrlConstants.FLOWERS_JSP_RELATIVE_URL);
+	}
+
+
+
 }

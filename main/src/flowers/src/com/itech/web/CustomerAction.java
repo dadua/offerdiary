@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 
 import com.google.gson.Gson;
@@ -17,15 +18,17 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.flower.model.Customer;
+import com.itech.web.constants.CommonEntityUIOperations;
+import com.itech.web.constants.EachEntityConstants;
 
+
+@Controller
 public class CustomerAction extends CommonAction {
-
-
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="addCustomer.do")
 	public Response addCustomer (HttpServletRequest req, HttpServletResponse resp) {
-		String customerJson = req.getParameter(WebConstatnts.CUSTOMER_PARAM);
+		String customerJson = req.getParameter(EachEntityConstants.ENTITY_JSON_KEY);
 		Gson gson = new Gson();
 		Type customerType = new TypeToken<Customer>() { }.getType();
 		Customer customer = gson.fromJson(customerJson, customerType);
@@ -70,6 +73,38 @@ public class CustomerAction extends CommonAction {
 		Type resultStringType = new TypeToken<Result<Customer>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="customers.do")
+	public Response viewAllCustomers(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(UrlConstants.CUSTOMERS_JSP_RELATIVE_URL);
+	}
+
+	@ActionMapping(value="customer.do")
+	public Response viewCustomer(HttpServletRequest req, HttpServletResponse resp) {
+		String customerIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
+
+		long customerId = Long.parseLong(customerIdStr);
+		Customer customer = getCustomerManager().getById(customerId);
+
+		Gson gson = new Gson();
+		String customerJson = gson.toJson(customer, Customer.class);
+
+		req.setAttribute(EachEntityConstants.ENTITY_JSON_KEY, customerJson);
+
+
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.VIEW.getOperationVal());
+		return new Forward(UrlConstants.CUSTOMERS_EACH_CUSTOMER_JSP);
+	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="viewAddNewCustomer.do")
+	public Response viewAddNewCustomer(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.ADDNEW.getOperationVal());
+		return new Forward(UrlConstants.CUSTOMERS_EACH_CUSTOMER_JSP);
 	}
 
 }

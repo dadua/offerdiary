@@ -1,18 +1,18 @@
 <%@page import="com.itech.web.LoginConstants"%>
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Flowers</title>
+		<title>Customers</title>
 		
-		<script src="flowers/js/flower.js" type="text/javascript"></script>
+		<script src="customers/js/customers.js" type="text/javascript"></script>
 		<script src="common/js/entityplotter.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">
 			$(function () {
-			    var flowerJson = '${entityJson}',
-			    	flower = $.parseJSON(flowerJson);
-			    it.flower.plot('${operation}', flower);
-			    $('.addFlowers').addClass('active');
-			    $('#flowersTab').addClass('active');
+			    var customerJson = '${entityJson}',
+			    	customer = $.parseJSON(customerJson);
+			    it.customer.plot('${operation}', customer);
+			    $('.addCustomers').addClass('active');
+			    $('#customersTab').addClass('active');
 			});
 		</script>
 		
@@ -25,14 +25,15 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-						<%@include file="/flowers/pages/flowerOptions.jsp" %>
+						<%@include file="/customers/pages/customerOptions.jsp" %>
 	                </div>
 	            </div>
+				
 				
 	            <div class="span10"  >
 	                <div class="container-fluid content-container">
 	                	<div class="row-fluid">
-	                		<div id="eachFlowerContainerFluid" class="span6 container-fluid">
+	                		<div id="eachCustomerContainerFluid" class="span8 container-fluid">
 	                		
 	                		</div>
 	                	</div>

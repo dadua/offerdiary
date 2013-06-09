@@ -1,10 +1,10 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Flowers</title>
+		<title>Suppliers</title>
 		<script type="text/javascript">
 		$(function(){
-			$('.allFlowers').addClass('active');
-			$('#flowersTab').addClass('active');
+			$('.allSuppliers').addClass('active');
+			$('#suppliersTab').addClass('active');
 		});
 		</script>
 		<style type="text/css">
@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-						<%@include file="/flowers/pages/flowerOptions.jsp" %>
+						<%@include file="/suppliers/pages/supplierOptions.jsp" %>
 	                </div>
 	            </div>
 				
@@ -24,7 +24,7 @@
 	                <div class="container-fluid content-container">
 	                    <div class="row-fluid">
 	                    	<div class="span6">
-		                    	<h3 class="bluishText">Flowers</h3>
+		                    	<h3 class="bluishText">Suppliers</h3>
 	                    	</div>
 	                    	<div class="span5">
 		                        <br/>
