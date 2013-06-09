@@ -58,12 +58,18 @@ public class SupplierAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getSuppliers.do")
 	public Response getSuppliers (HttpServletRequest req, HttpServletResponse resp) {
-		String searchString = req.getParameter(WebConstatnts.SUPPLIER_SEARCH_STRING_PARAM);
-		List<Supplier> suppliers = getSupplierManager().searchByName(searchString);
+		List<Supplier> suppliers = getSuppliers(req);
 		Result<List<Supplier>> result = new Result<List<Supplier>>(suppliers);
 		Type resultStringType = new TypeToken<Result<List<Supplier>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	private List<Supplier> getSuppliers(HttpServletRequest req) {
+		String searchString = req.getParameter(WebConstatnts.SUPPLIER_SEARCH_STRING_PARAM);
+		List<Supplier> suppliers = getSupplierManager().searchByName(searchString);
+		return suppliers;
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -82,6 +88,12 @@ public class SupplierAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="suppliers.do")
 	public Response viewAllSuppliers(HttpServletRequest req, HttpServletResponse resp) {
+		List<Supplier> suppliers = getSuppliers(req);
+		Gson gson = new Gson ();
+		Type suppliersType = new TypeToken<List<Supplier>>() {
+		}.getType();
+		String suppliersJSON = gson.toJson(suppliers, suppliersType);
+		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, suppliersJSON);
 		return new Forward(UrlConstants.SUPPLIERS_JSP_RELATIVE_URL);
 	}
 

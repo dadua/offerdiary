@@ -52,7 +52,7 @@ it.flower.fetchAll = function() {
 };
 
 it.flower.view = function () {
-    var _eachRowHtml = '<tr><td class="name"></td><td class="color"></td>',
+    var _eachRowHtml = '<tr><td class="name"></td><td class="color"></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
 
