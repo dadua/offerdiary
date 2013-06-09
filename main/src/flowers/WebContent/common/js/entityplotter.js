@@ -54,6 +54,7 @@ it.entityplotter.newInstance = function (config) {
 
         _$.find('.entityTitle').html(config.title);
 
+
         for (var i=0; i<attrPlotConfigs.length; i++) {
             var currentAttrPlotConfig = attrPlotConfigs[i];
 
@@ -138,6 +139,11 @@ it.entityplotter.newInstance = function (config) {
 
         });
 
+        var entityId = _parentElem$.data('entityId');
+        if (entityId > 0) {
+            data.id = entityId;
+        }
+
         return data;
     };
     
@@ -195,6 +201,8 @@ it.entityplotter.newInstance = function (config) {
         _config = $.extend({}, _config,{data: data});
         var _$ = _get$(_config);
         _parentElem$.html(_$);
+
+        _parentElem$.data('entityId', _config.data.id || 0);
         _addHandlers();
 
         if (_config.operation === 'VIEW') {
