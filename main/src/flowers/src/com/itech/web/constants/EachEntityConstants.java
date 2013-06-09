@@ -6,4 +6,7 @@ public class EachEntityConstants {
 	public static final String ENTITY_IDENTIFIER_PARAM_KEY = "id";
 	public static final String ENTITY_JSON_KEY = "entityJson";
 
+
+	public static final String ENTITIES_JSON_KEY = "entitiesJson";
+
 }

@@ -30,7 +30,7 @@
 		                        <br/>
 		                        <div class="form-search">
 		                            <div class="input-append">
-		                                <input id="searchOfferQuery" class="flowerSearch search-query input-xlarge" type="text" placeholder="Search Flowers" />
+		                                <input id="searchQuery" class="supplierSearch search-query input-xlarge" type="text" placeholder="Search Flowers" />
 		                                <button class="btn"><i class="icon-search"></i></button>
 		                            </div>
 		                        </div>
@@ -40,10 +40,10 @@
 	                    <br/>
 	
 	                    <div class="row-fluid">
-	                        <div id="flowerContainerFluid" class="container-fluid">
+	                        <div id="supplierContainerFluid" class="container-fluid">
 	                        </div>
 	                        <div class="container-fluid">
-		                        <div id="flowerPaginationContainer" class="row-fluid span6 offset6">
+		                        <div id="supplierPaginationContainer" class="row-fluid span6 offset6">
 		                        </div>
 		                    </div>
 	                    </div>

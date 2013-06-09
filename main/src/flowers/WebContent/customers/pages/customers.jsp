@@ -30,7 +30,7 @@
 		                        <br/>
 		                        <div class="form-search">
 		                            <div class="input-append">
-		                                <input id="searchOfferQuery" class="customerSearch search-query input-xlarge" type="text" placeholder="Search Customers" />
+		                                <input id="searchQuery" class="customerSearch search-query input-xlarge" type="text" placeholder="Search Customers" />
 		                                <button class="btn"><i class="icon-search"></i></button>
 		                            </div>
 		                        </div>

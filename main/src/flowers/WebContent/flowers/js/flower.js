@@ -41,3 +41,54 @@ it.flower.config = {
     }]
 };
  
+
+it.flower.fetchAll = function() {
+    var q = $('#searchQuery').val();
+
+    $.post('getFlowers.do', {q:q}, function (respJSON) {
+        var resp = $.parseJSON(respJSON);
+        it.flower.plotAll(resp.result);
+    });
+};
+
+it.flower.view = function () {
+    var _eachRowHtml = '<tr><td class="name"></td><td class="color"></td>',
+        
+        _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
+
+        _get$ = function (flowers) {
+            var _$ = $(_tableWithHeadingHtml),
+                _tableBody$ = _$.find('tbody'),
+                currentFlower = {};
+
+            for (var i=0; i< flowers.length; i++) {
+                currentFlower = flowers[i];
+                var _tr$ = $(_eachRowHtml);
+                _tr$.find('.name').html(currentFlower.name);
+                _tr$.find('.color').html(currentFlower.color);
+                _tr$.data('entityId', currentFlower.id);
+                _tableBody$.append(_tr$);
+            }
+            return _$;
+        };
+
+    return {
+        get$: _get$
+    };
+
+}();
+
+it.flower.plotAll = function (flowers) {
+    var _$ = this.view.get$(flowers);
+    $('#flowerContainerFluid').html(_$);
+};
+
+
+it.flower.addOneHandlers = function () {
+    $('#searchQuery').keyup(it.flower.fetchAll);
+};
+
+it.flower.initFlowersUI = function (flowers) {
+    this.plotAll(flowers);
+    this.addOneHandlers();
+};

@@ -63,12 +63,18 @@ public class FlowerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowers.do")
 	public Response getFlowers (HttpServletRequest req, HttpServletResponse resp) {
-		String searchString = req.getParameter(WebConstatnts.FLOWER_SEARCH_STRING_PARAM);
-		List<Flower> flowers = getFlowerManager().searchFlowersFor(searchString);
+		List<Flower> flowers = getFlowers(req);
 		Result<List<Flower>> result = new Result<List<Flower>>(flowers);
 		Type resultStringType = new TypeToken<Result<List<Flower>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	private List<Flower> getFlowers(HttpServletRequest req) {
+		String searchString = req.getParameter(WebConstatnts.FLOWER_SEARCH_STRING_PARAM);
+		List<Flower> flowers = getFlowerManager().searchFlowersFor(searchString);
+		return flowers;
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -190,7 +196,20 @@ public class FlowerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="flowers.do")
 	public Response viewAllFlowers(HttpServletRequest req, HttpServletResponse resp) {
+		List<Flower> flowers = getFlowers(req);
+		Gson gson = new Gson ();
+		Type flowersType = new TypeToken<List<Flower>>() {
+		}.getType();
+		String flowersJSON = gson.toJson(flowers, flowersType);
+		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, flowersJSON);
 		return new Forward(UrlConstants.FLOWERS_JSP_RELATIVE_URL);
+	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="home.do")
+	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
+		return viewAllFlowers(req, resp);
 	}
 
 

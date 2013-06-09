@@ -1,10 +1,14 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Flowers</title>
+		<script src="flowers/js/flower.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
-			$('.allFlowers').addClass('active');
-			$('#flowersTab').addClass('active');
+			$('.allFlowers').addClass('active'); $('#flowersTab').addClass('active');
+			var flowersJson = '${entitiesJson}',
+				flowers = $.parseJSON(flowersJson);
+			
+			it.flower.initFlowersUI(flowers);
 		});
 		</script>
 		<style type="text/css">
@@ -30,14 +34,12 @@
 		                        <br/>
 		                        <div class="form-search">
 		                            <div class="input-append">
-		                                <input id="searchOfferQuery" class="flowerSearch search-query input-xlarge" type="text" placeholder="Search Flowers" />
+		                                <input id="searchQuery" class="flowerSearch search-query input-xlarge" type="text" placeholder="Search Flowers" />
 		                                <button class="btn"><i class="icon-search"></i></button>
 		                            </div>
 		                        </div>
 	                        </div>
 	                    </div>
-	                    <br/>
-	                    <br/>
 	
 	                    <div class="row-fluid">
 	                        <div id="flowerContainerFluid" class="container-fluid">
