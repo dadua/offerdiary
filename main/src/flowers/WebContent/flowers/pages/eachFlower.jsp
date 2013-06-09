@@ -11,6 +11,7 @@
 			    var flowerJson = '${entityJson}',
 			    	flower = $.parseJSON(flowerJson);
 			    it.flower.plot('${operation}', flower);
+			    $('.addFlowers').addClass('active');
 			});
 		</script>
 		
