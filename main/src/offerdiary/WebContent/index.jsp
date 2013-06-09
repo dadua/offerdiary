@@ -270,45 +270,27 @@
 			                        <div id="vendorCarousel" data-pause="hover" class="carousel slide">
 				                        <div id="vendorItems" class="carousel-inner">
 					                        <div class="item active">
-					                        	<ul class="thumbnails">
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Flipkart.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Yebhi.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Myntra.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Myntra.jpg" />
-						                        	</li>
-					                        	</ul>
-					                        </div>
-					                        <div class="item">
-					                        	<ul class="thumbnails">
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Babyoye.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Yebhi.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Myntra.jpg" />
-						                        	</li>
-						                        	<li class="thumbnail">
-							                        	<img src="images/stores/Myntra.jpg" />
-						                        	</li>
-					                        	</ul>
+					                        	<div class="container-fluid">
+					                        		<br>
+					                        		<br>
+					                        		<div class="row-fluid">
+					                        			<div class="span4 offset5">
+					                        				<img src="images/loading/ajax-loader.gif" alt="Vendor Loading"/>
+					                        			
+					                        			</div>
+					                        		</div>
+					                        	</div>
 					                        </div>
 				                        </div>
 			                        </div>
 			                    </div>
+			                    <%--
 				                <div class="row-fluid bluishText">
 					                <h4 class="offset1 span10">
 					                Find Offers by Vendors
 					                </h4>
 				                </div>
+				                 --%>
 					        </div>
 				        </div>
 			        </div>
