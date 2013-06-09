@@ -33,7 +33,7 @@ public class FlowerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="addFlower.do")
 	public Response addFlower (HttpServletRequest req, HttpServletResponse resp) {
-		String flowerJson = req.getParameter(WebConstatnts.FLOWER_PARAM);
+		String flowerJson = req.getParameter(EachEntityConstants.ENTITY_JSON_KEY);
 		Gson gson = new Gson();
 		Type flowerType = new TypeToken<Flower>() { }.getType();
 		Flower flower = gson.fromJson(flowerJson, flowerType);
@@ -162,14 +162,14 @@ public class FlowerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="goToAddNewFlower.do")
 	public Response goToAddNewFlower(HttpServletRequest req, HttpServletResponse resp) {
-		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_NAME, CommonEntityUIOperations.ADDNEW.getOperationVal());
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.ADDNEW.getOperationVal());
 		return new Forward(UrlConstants.FLOWERS_EACH_FLOWER_JSP);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="flower.do")
 	public Response viewFlower(HttpServletRequest req, HttpServletResponse resp) {
-		String flowerIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_NAME);
+		String flowerIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
 
 		long flowerId = Long.parseLong(flowerIdStr);
 		Flower flower = getFlowerManager().getFlowerById(flowerId);
@@ -177,19 +177,11 @@ public class FlowerAction extends CommonAction {
 		Gson gson = new Gson();
 		String flowerJson = gson.toJson(flower, Flower.class);
 
-		req.setAttribute(EachEntityConstants.ENTITY_JSON_ATTR_NAME, flowerJson);
+		req.setAttribute(EachEntityConstants.ENTITY_JSON_KEY, flowerJson);
 
 
-		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_NAME, CommonEntityUIOperations.VIEW.getOperationVal());
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.VIEW.getOperationVal());
 		return new Forward(UrlConstants.FLOWERS_EACH_FLOWER_JSP);
 	}
-
-
-
-
-
-
-
-
 
 }

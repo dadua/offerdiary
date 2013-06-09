@@ -2,8 +2,18 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Flowers</title>
+		
+		<script src="flowers/js/flower.js" type="text/javascript"></script>
+		<script src="common/js/entityplotter.js" type="text/javascript"></script>
+		
 		<script type="text/javascript">
+			$(function () {
+			    var flowerJson = '${entityJson}',
+			    	flower = $.parseJSON(flowerJson);
+			    it.flower.plot('${operation}', flower);
+			});
 		</script>
+		
 		<style type="text/css">
 			<%@include file="/common/css/layout.css" %>
 		</style>
@@ -18,53 +28,12 @@
 	            </div>
 				
 	            <div class="span10"  >
-	                <div id="eachFlowerContainerFluid" class="container-fluid content-container">
-		                <div class="row-fluid">
-			                <span class="bluishText largeTitleFontSize">
-			                	Flower Details
-			                </span>
-			                <span class="pull-right">
-			                    <button class="operation editBtn btn btn-mini btn-info">
-			                        Edit
-			                    </button>
-			                    <button class="operation addNewBtn btn btn-mini btn-success hide">
-			                        Add New
-			                    </button>
-			                    <button class="operation saveBtn  btn btn-mini btn-success hide">
-			                        Save
-			                    </button>
-			                    <button class="operation cancelBtn btn btn-mini btn-success hide">
-			                        Cancel
-			                    </button>
-			                </span>
-			            </div>
-			            <br/>
-			            
-			            <div class="row-fluid">
-			                <table class="table table-striped table-bordered">
-			                    <tbody>
-			                        <tr>
-			                            <td><strong>Name</strong></td>
-			                            <td class="flowerName valueViewElement"></td>
-			                            <td class="valueEntryElement hide">
-			                                <div class="control-group" style="margin-bottom: 0px;">
-			                                    <div class="controls">
-			                                        <input type="text" class="flowerNameText"></input>
-			                                        <span class="help-block hide" style="font-size:.7em;">* Flower Name can't be empty</span>
-			                                    </div>
-			                                </div>
-			                            </td>
-			                        </tr>
-			                        <tr>
-			                            <td><strong>Color</strong></td>
-			                            <td class="flowerColor valueViewElement"></td>
-			                            <td class="valueEntryElement hide">
-			                                <input type="text" class="flowerColorText"></input>
-			                            </td>
-			                        </tr>
-			                    </tbody>
-			                </table>
-			            </div>
+	                <div class="container-fluid content-container">
+	                	<div class="row-fluid">
+	                		<div id="eachFlowerContainerFluid" class="span6 container-fluid">
+	                		
+	                		</div>
+	                	</div>
 	                </div>
 	            </div>
 			</div>
