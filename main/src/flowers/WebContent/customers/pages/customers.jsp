@@ -1,8 +1,11 @@
-<%@page import="com.itech.web.LoginConstants"%>
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Manager Flowers Transactions</title>
+		<title>Customers</title>
 		<script type="text/javascript">
+		$(function(){
+			$('.allCustomers').addClass('active');
+			$('#customersTab').addClass('active');
+		});
 		</script>
 		<style type="text/css">
 			<%@include file="/common/css/layout.css" %>
@@ -13,15 +16,7 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-	                    <ul class="nav nav-list offerFilters">
-	                        <li class="nav-header">Flowers:</li>
-	                        <li class="active validOffers"><a href="#">Valid</a></li>
-	                        <li class="allOffers"><a href="#">All</a></li>
-	                        <li class="divider"></li>
-	                        <li class="nav-header">Added in:</li>
-	                        <li class="addedLastweekOffers"><a href="#">Added in the last week</a></li>
-	                        <li class="addedLastmonthOffers"><a href="#">Added in the last month</a></li>
-	                    </ul>
+						<%@include file="/customers/pages/customerOptions.jsp" %>
 	                </div>
 	            </div>
 				
@@ -29,13 +24,13 @@
 	                <div class="container-fluid content-container">
 	                    <div class="row-fluid">
 	                    	<div class="span6">
-		                    	<h3 class="bluishText">Flowers</h3>
+		                    	<h3 class="bluishText">Customers</h3>
 	                    	</div>
 	                    	<div class="span5">
 		                        <br/>
 		                        <div class="form-search">
 		                            <div class="input-append">
-		                                <input id="searchOfferQuery" class="offerDetail search-query input-xlarge" type="text" placeholder="Search Flowers" />
+		                                <input id="searchOfferQuery" class="customerSearch search-query input-xlarge" type="text" placeholder="Search Customers" />
 		                                <button class="btn"><i class="icon-search"></i></button>
 		                            </div>
 		                        </div>
@@ -45,15 +40,13 @@
 	                    <br/>
 	
 	                    <div class="row-fluid">
-	                        <div id="offerContainerFluid" class="container-fluid">
+	                        <div id="customerContainerFluid" class="container-fluid">
 	                        </div>
 	                        <div class="container-fluid">
-		                        <div id="offerPaginationContainer" class="row-fluid span6 offset6">
+		                        <div id="customerPaginationContainer" class="row-fluid span6 offset6">
 		                        </div>
 		                    </div>
 	                    </div>
-	                    
-	
 	                </div>
 	            </div>
 			</div>

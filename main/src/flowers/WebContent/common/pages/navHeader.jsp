@@ -35,8 +35,24 @@
         			<a href="logout.do" class="btn">Logout</a>
         			</div>
         			</c:if>
+	        		<c:if test="${userSession!=null}">
+	       				<ul class="featureTabs nav nav-tabs" style="margin-left: 25px; margin-top:5px;color:#0088CC;">
+		       				<li class="divider-vertical"></li>
+		       				<li class="featureTab" id="flowersTab" >
+			       				<a href="flowers.do" style="color:#0088CC;">Flowers</a>
+		       				</li>
+		       				<li class="divider-vertical"></li>
+		       				<li class="featureTab" id="suppliersTab" >
+			       				<a href="suppliers.do" style="color:#0088CC;">Suppliers</a>
+			       			</li>
+			       			<li class="divider-vertical"></li>
+			       			<li class="featureTab" id="customersTab" >
+				       			<a href="customers.do" style="color:#0088CC;">Customers</a>
+			       			</li>
+			       			<li class="divider-vertical"></li>
+						</ul>
+					</c:if>
         		</div>
-        		
       		</div>
       		<div class="container">
 	       		<%@include file="/common/pages/actionInfoRow.jsp" %>

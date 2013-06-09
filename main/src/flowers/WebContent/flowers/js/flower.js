@@ -16,7 +16,7 @@ it.flower.plotEdit = function (data) {
 };
 
 it.flower.plotAddNew = function () {
-    this.plot('ADDNEw', {});
+    this.plot('ADDNEW', {});
 };
 
 it.flower.config = {

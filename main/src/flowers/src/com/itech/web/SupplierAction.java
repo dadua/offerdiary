@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 
 import com.google.gson.Gson;
@@ -17,7 +18,11 @@ import com.itech.common.web.action.Forward;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.flower.model.Supplier;
+import com.itech.web.constants.CommonEntityUIOperations;
+import com.itech.web.constants.EachEntityConstants;
 
+
+@Controller
 public class SupplierAction extends CommonAction{
 
 
@@ -25,7 +30,7 @@ public class SupplierAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="addSupplier.do")
 	public Response addSupplier (HttpServletRequest req, HttpServletResponse resp) {
-		String supplierJson = req.getParameter(WebConstatnts.SUPPLIER_PARAM);
+		String supplierJson = req.getParameter(EachEntityConstants.ENTITY_JSON_KEY);
 		Gson gson = new Gson();
 		Type supplierType = new TypeToken<Supplier>() { }.getType();
 		Supplier supplier = gson.fromJson(supplierJson, supplierType);
@@ -73,5 +78,37 @@ public class SupplierAction extends CommonAction{
 	}
 
 
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="suppliers.do")
+	public Response viewAllSuppliers(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(UrlConstants.SUPPLIERS_JSP_RELATIVE_URL);
+	}
+
+
+	@ActionMapping(value="supplier.do")
+	public Response viewSupplier(HttpServletRequest req, HttpServletResponse resp) {
+		String supplierIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
+
+		long supplierId = Long.parseLong(supplierIdStr);
+		Supplier supplier = getSupplierManager().getById(supplierId);
+
+		Gson gson = new Gson();
+		String supplierJson = gson.toJson(supplier, Supplier.class);
+
+		req.setAttribute(EachEntityConstants.ENTITY_JSON_KEY, supplierJson);
+
+
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.VIEW.getOperationVal());
+		return new Forward(UrlConstants.SUPPLIERS_EACH_SUPPLIER_JSP);
+	}
+
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="viewAddNewSupplier.do")
+	public Response viewAddNewSupplier(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.ADDNEW.getOperationVal());
+		return new Forward(UrlConstants.SUPPLIERS_EACH_SUPPLIER_JSP);
+	}
 
 }
