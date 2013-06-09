@@ -51,13 +51,13 @@
         			
 	
         			<div class="nav-collapse collapse">
-	        			<c:if test="${userSession!=null}">
 		     				<ul class="featureTabs nav nav-tabs" style="margin-left: 25px; margin-top:30px;color:#0088CC;">
 		     					<li class="divider-vertical"></li>
 								<li class="featureTab" id="publicOfferTab" >
 									 <a href="offers.do" style="color:#0088CC;">Find Offers</a>
 								</li>
 		     					<li class="divider-vertical"></li>
+		        			<c:if test="${userSession!=null}">
 								<li class="featureTab" id="offerTab" >
 									 <a href="myoffers.do" style="color:#0088CC;">My Offers</a>
 								</li>
@@ -81,8 +81,9 @@
 									Logout
 									</a>
 								</li>
+							</c:if>
+							
 							</ul>
-						</c:if>
 						
 						<c:choose>
 							<c:when test="${userSession !=null}">
