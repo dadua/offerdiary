@@ -1,10 +1,14 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Suppliers</title>
+		<script src="suppliers/js/suppliers.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('.allSuppliers').addClass('active');
 			$('#suppliersTab').addClass('active');
+			var suppliersJson = '${entitiesJson}',
+				suppliers = $.parseJSON(suppliersJson);
+			it.supplier.initSuppliersUI(suppliers);
 		});
 		</script>
 		<style type="text/css">

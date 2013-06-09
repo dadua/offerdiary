@@ -1,10 +1,15 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Customers</title>
+		<script src="customers/js/customers.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('.allCustomers').addClass('active');
 			$('#customersTab').addClass('active');
+			var customersJson = '${entitiesJson}',
+				customers = $.parseJSON(customersJson);
+			
+			it.customer.initCustomersUI(customers);
 		});
 		</script>
 		<style type="text/css">

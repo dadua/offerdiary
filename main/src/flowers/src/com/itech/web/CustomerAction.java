@@ -56,12 +56,18 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCustomers.do")
 	public Response getCustomer (HttpServletRequest req, HttpServletResponse resp) {
-		String searchString = req.getParameter(WebConstatnts.CUSTOMER_SEARCH_STRING_PARAM);
-		List<Customer> customers = getCustomerManager().searchByName(searchString);
+		List<Customer> customers = getCustomers(req);
 		Result<List<Customer>> result = new Result<List<Customer>>(customers);
 		Type resultStringType = new TypeToken<Result<List<Customer>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	private List<Customer> getCustomers(HttpServletRequest req) {
+		String searchString = req.getParameter(WebConstatnts.CUSTOMER_SEARCH_STRING_PARAM);
+		List<Customer> customers = getCustomerManager().searchByName(searchString);
+		return customers;
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
@@ -79,6 +85,12 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="customers.do")
 	public Response viewAllCustomers(HttpServletRequest req, HttpServletResponse resp) {
+		List<Customer> customers = getCustomers(req);
+		Gson gson = new Gson ();
+		Type customersType = new TypeToken<List<Customer>>() {
+		}.getType();
+		String customersJSON = gson.toJson(customers, customersType);
+		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, customersJSON);
 		return new Forward(UrlConstants.CUSTOMERS_JSP_RELATIVE_URL);
 	}
 

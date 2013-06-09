@@ -74,3 +74,60 @@ it.supplier.config = {
 ]
 };
  
+
+
+it.supplier.view = function () {
+    var _eachRowHtml = '<tr><td class="name"></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"</td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+        
+        _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
+
+        _get$ = function (suppliers) {
+            var _$ = $(_tableWithHeadingHtml),
+                _tableBody$ = _$.find('tbody'),
+                currentSupplier = {};
+
+            for (var i=0; i< suppliers.length; i++) {
+                currentSupplier = suppliers[i];
+                var _tr$ = $(_eachRowHtml);
+                _tr$.find('.name').html(currentSupplier.name);
+                _tr$.find('.bankAccountDetails').html(currentSupplier.bankAccountDetails);
+                _tr$.find('.billingName').html(currentSupplier.billingName);
+                _tr$.find('.phoneNo').html(currentSupplier.phoneNo);
+                _tr$.find('.alternativePhoneNo').html(currentSupplier.alternativePhoneNo);
+                _tr$.find('.address').html(currentSupplier.address);
+                _tr$.data('entityId', currentSupplier.id);
+                _tableBody$.append(_tr$);
+            }
+            return _$;
+        };
+
+    return {
+        get$: _get$
+    };
+
+}();
+
+it.supplier.plotAll = function (suppliers) {
+    var _$ = this.view.get$(suppliers);
+    $('#supplierContainerFluid').html(_$);
+};
+
+
+it.supplier.addOneHandlers = function () {
+    $('#searchQuery').keyup(it.supplier.fetchAll);
+};
+
+it.supplier.initSuppliersUI = function (suppliers) {
+    this.plotAll(suppliers);
+    this.addOneHandlers();
+};
+
+
+it.supplier.fetchAll = function() {
+    var q = $('#searchQuery').val();
+
+    $.post('getSuppliers.do', {q:q}, function (respJSON) {
+        var resp = $.parseJSON(respJSON);
+        it.supplier.plotAll(resp.result);
+    });
+};
