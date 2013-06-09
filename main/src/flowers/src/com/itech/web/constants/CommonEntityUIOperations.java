@@ -6,6 +6,6 @@ public enum CommonEntityUIOperations {
 
 
 	public String getOperationVal () {
-		return this.name().toLowerCase();
+		return this.name().toUpperCase();
 	}
 }

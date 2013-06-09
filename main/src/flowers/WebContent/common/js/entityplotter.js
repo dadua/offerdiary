@@ -5,10 +5,14 @@ it.entityplotter.view = it.entityplotter.view || {};
 /**
  * example config
  * config = {
- *              parentElemSelector: '#containerFluid', //Under which element to plot this entity
+ *              parentElemSelector: '#containerFluid', 
+ *                                      - Under which element to plot this entity
+ *                                      - Should be a container-fluid
  *              operation: 'VIEW' or 'EDIT' or 'ADDNEw',
+ *              title: 'Flower',
  *              getUrl: 'getFlower.do', - default id would return a result wrapped object
  *              saveUrl: 'saveFlower.do', 
+ *              refreshFromServer: default false,
  *              data: {
  *                      propName1: 'propVal1',
  *                      propName2: 'propVal2'
@@ -37,51 +41,6 @@ it.entityplotter.view = it.entityplotter.view || {};
  */
 it.entityplotter.newInstance = function (config) {
 
-    var _attrConfigs = null,
-    
-    
-    _newInstance = function (configs) {
-        _attrConfigs = configs;
-        //_attrNameToPlotConfigMap = _getAttrNameConfigMap (_attrConfigs);
-    }, 
-
-
-    /*
-    _getAttrNameConfigMap = function (attrConfigs) {
-        var attrNameToPlotConfigMap = {};
-
-        $.each(attrConfigs.plotConfigs, function(index, plotConfig) {
-            attrNameToPlotConfigMap[plotConfig.name] =
-        });
-
-    },
-   */
-
-    _view = null,
-    
-    _attrNameToPlotConfigMap = {};
-
-    /*
-    _defaultEditConfig = {},
-
-    _defaultViewConfig = {},
-
-    _defaultAddNewConfig = {},
-    
-    _configMap = {};
-
-   */
-
-    _newInstance(config);
-
-    return {
-    };
-};
-
-
-
-
-it.entityplotter.view.newInstance = function (config) {
     var _get$ = function (config) {
         var attrPlotConfigs = config.plotConfigs,
             _$ = $(_operationRowHtml + _tableBodyHtml),
@@ -92,16 +51,20 @@ it.entityplotter.view.newInstance = function (config) {
                                     isRequired: false
             };
 
+
+        _$.find('.entityTitle').html(config.title);
+
         for (var i=0; i<attrPlotConfigs.length; i++) {
             var currentAttrPlotConfig = attrPlotConfigs[i];
 
-            currentAttrPlotConfig = $.extend(_defaultPlotConfig, currentAttrPlotConfig);
+            currentAttrPlotConfig = $.extend({},  _defaultPlotConfig, currentAttrPlotConfig);
 
             var _eachAttr$ = $(_eachNameValRowHtml),
-                _attrName = currentAttrPlotConfig.name;
+                _attrName = currentAttrPlotConfig.name,
+                _attrValue = config.data[_attrName] || '';
             _eachAttr$.find('.attribName').html(currentAttrPlotConfig.displayKey);
-            _eachAttr$.find('.valueViewElement').html(config.data[_attrName]);
-            _eachAttr$.find('.valueEntryInputTextBox').val(config.data[_attrName]);
+            _eachAttr$.find('.valueViewElement').html(_attrValue);
+            _eachAttr$.find('.valueEntryInputTextBox').val(_attrValue);
 
             _eachAttr$.data('attrKey', _attrName);//This helps is fetching the data from the DOM
 
@@ -123,8 +86,36 @@ it.entityplotter.view.newInstance = function (config) {
     _parentElem$ = null,
 
     _newInstance = function (config) {
-        _config = config;
+        _setConfig(config);
         _parentElem$ = $(_config.parentElemSelector);
+        _showView(_config.data || {}, _config.refreshFromServer|| false);
+    },
+
+    _updateConfig = function (config) {
+        _config = $.extend({},_config, config);
+    },
+
+    _setConfig = function (config) {
+        var _defaultConfig = {  
+                                data: {}
+        
+        }; 
+        _config = $.extend({}, _defaultConfig, config);
+    },
+
+    _showView = function (data, refreshFromServer) {
+
+        if (typeof refreshFromServer === 'boolean' && refreshFromServer) {
+            _fetchAndPlot(data.id);
+        } else {
+            _plot(data);
+        }
+    },
+
+    _reInit = function (config) {
+        _updateConfig(config);
+        _parentElem$ = $(_config.parentElemSelector);
+        _showView(_config.data || {}, _config.refreshFromServer|| false);
     },
     
     _operationRowHtml = '<div class="row-fluid operationRow titleRow"> <span class="entityTitle largeTitleFontSize">  </span>  <span class="pull-right">  <button class="operation editBtn btn btn-mini btn-info hide">Edit</button> <button class="operation addNewBtn btn btn-mini btn-success hide">Add New</button><button class="operation saveBtn  btn btn-mini btn-success hide">Save</button><button class="operation cancelBtn btn btn-mini btn-success hide">Cancel</button></span></div><br/>',
@@ -136,7 +127,6 @@ it.entityplotter.view.newInstance = function (config) {
     _eachNameValRowHtml = '<tr class="eachAttrRow"> <td><strong class="attribName"></strong></td> <td class="valueViewElement"></td> <td class="valueEntryElement hide"> <div class="control-group" style="margin-bottom: 0px;"> <div class="controls"> <input type="text" class="valueEntryInputTextBox"></input> <span class="help-block hide" style="font-size:.7em;">* </span> </div> </div> </td> </tr>';
 
 
-    _newInstance(config);
 
     var _getObjFromDom = function () {
         var data = {};
@@ -161,6 +151,14 @@ it.entityplotter.view.newInstance = function (config) {
     };
 
     var _cancelHandler = function () {
+        if (_config.operation === 'ADDNEW') {
+            _showAddNewAtUI();
+        } else {
+            _showEditInUI();
+        }
+    };
+
+    var _showEditInUI = function () {
         _parentElem$.find('.valueEntryElement').hide();
         _parentElem$.find('.valueViewElement').show();
         _parentElem$.find('.operation').addClass('hide');
@@ -168,25 +166,63 @@ it.entityplotter.view.newInstance = function (config) {
     };
 
     var _editHandler =  function () {
+     
+        _copyValueViewToFormValues();
+        _showSaveCancelAtUI();
+
+        //TODO: Add validation handlers
+    };
+
+
+    var _showSaveCancelAtUI = function () {
         _parentElem$.find('.valueEntryElement').show();
         _parentElem$.find('.valueViewElement').hide();
         _parentElem$.find('.operation').addClass('hide');
         _parentElem$.find('.saveBtn').removeClass('hide');
         _parentElem$.find('.cancelBtn').removeClass('hide');
-        _copyValueViewToFormValues();
-        //TODO: Add validation handlers
     };
 
-    var _showView = function () {
+
+    var _showAddNewAtUI = function () {
+        _parentElem$.find('.valueEntryElement').show();
+        _parentElem$.find('.valueViewElement').hide();
+        _parentElem$.find('.operation').addClass('hide');
+        _parentElem$.find('.addNewBtn').removeClass('hide');
     };
+
+
+    var _plot = function (data) {
+        _config = $.extend({}, _config,{data: data});
+        var _$ = _get$(_config);
+        _parentElem$.html(_$);
+        _addHandlers();
+
+        if (_config.operation === 'VIEW') {
+            _showEditInUI();
+        } else if (_config.operation === 'EDIT') {
+            _showSaveCancelAtUI();
+        } else if (_config.operation === 'ADDNEW') {
+            _showAddNewAtUI();
+        }
+    };
+
+    var _fetchAndPlot = function (id) {
+        $.post(_config.getUrl, {id: id}, function(respJSON){
+            var resp = $.parseJSON(respJson);
+            _plot(resp.result);
+        });
+    };
+
 
     var _addNewHandler = function () {
         if (_parentElem$.find('.addNewBtn').hasClass('disabled')) {
             return;
         }
         var data = _getObjFromDom();
-        $.post(_config.saveUrl, {entityJson: JSON.stringify(data)}, function (data) {
-            _showView();
+        $.post(_config.saveUrl, {entityJson: JSON.stringify(data)}, function (respJson) {
+            var resp = $.parseJSON(respJson);
+            _config.operation = 'VIEW';
+            _showView(resp.result);
         });
     };
 
@@ -196,8 +232,12 @@ it.entityplotter.view.newInstance = function (config) {
         }
 
         var data = _getObjFromDom();
-        $.post(_config.saveUrl, {entityJson: JSON.stringify(data)}, function (data) {
-            _showView();
+        $.post(_config.saveUrl, {entityJson: JSON.stringify(data)}, function (respJson) {
+            var resp = $.parseJSON(respJson);
+            if (resp.success) {
+                _config.operation = 'VIEW';
+                _showView(resp.result);
+            }
         });
     };
 
@@ -208,9 +248,13 @@ it.entityplotter.view.newInstance = function (config) {
         _parentElem$.find('.addNewBtn').click(_addNewHandler);
     };
 
+    _newInstance(config);
     return {
-        get$: _getUserInfo$,
-        addHandlers: _addHandlers
+        get$: _get$,
+        addHandlers: _addHandlers,
+        reInit: _reInit,
+        setConfig: _setConfig,
+        updateConfig: _updateConfig
     };
 };
 
