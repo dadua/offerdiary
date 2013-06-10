@@ -52,7 +52,7 @@ it.flower.fetchAll = function() {
 };
 
 it.flower.view = function () {
-    var _eachRowHtml = '<tr><td class="name"></td><td class="color"></td></tr>',
+    var _eachRowHtml = '<tr><td ><a class="name"></a></td><td class="color"></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
 
@@ -65,6 +65,7 @@ it.flower.view = function () {
                 currentFlower = flowers[i];
                 var _tr$ = $(_eachRowHtml);
                 _tr$.find('.name').html(currentFlower.name);
+                _tr$.find('.name').attr('href', 'flower.do?id='+currentFlower.id);
                 _tr$.find('.color').html(currentFlower.color);
                 _tr$.data('entityId', currentFlower.id);
                 _tableBody$.append(_tr$);
