@@ -37,6 +37,7 @@ it.entityplotter.view = it.entityplotter.view || {};
  *                              }
  *                          ]
  *          };
+ *  @return - entityPlotter object
  *
  */
 it.entityplotter.newInstance = function (config) {
@@ -80,6 +81,55 @@ it.entityplotter.newInstance = function (config) {
         }
 
         return _$;
+    },
+
+    _isNotEmpty = function (elem$) {
+        if ($(elem$).val() === '') {
+            return false;
+        } else {
+            return true;
+        }
+    },
+
+    _getFormElementForAttrName = function (attrName) {
+        return _parentElem$.find('.eachAttrRow').filter(function(){return $(this).data('attrKey')==attrName;}).find('.valueEntryInputTextBox');
+    },
+
+    _elementNotEmptyHandler = function (elem$) {
+        elem$ = elem$;
+
+        if (_isNotEmpty(elem$)) {
+            elem$.parent().parent().removeClass('error').find('.help-block').addClass('hide');
+            _parentElem$.find('.saveBtn, .addNewBtn').removeClass('disabled');
+        } else {
+            elem$.parent().parent().addClass('error').find('.help-block').removeClass('hide');
+            _parentElem$.find('.saveBtn, .addNewBtn').addClass('disabled');
+        }
+    },
+
+    _getElemNotEmptyHandler = function (elem$) {
+        return function () {
+            _elementNotEmptyHandler(elem$);
+        };
+    },
+
+    _validationHandlers = [],
+
+    _addValidationHandlers = function () {
+        var plotConfigs = _config.plotConfigs;
+
+        for (var i=0; i< plotConfigs.length; i++) {
+            var currentAttrPlotConfig = plotConfigs[i];
+
+            if (currentAttrPlotConfig.isRequired) {
+                var formElementForAttrName$ = _getFormElementForAttrName(currentAttrPlotConfig.name);
+                var notEmptyHandler = _getElemNotEmptyHandler(formElementForAttrName$);
+                _validationHandlers.push(notEmptyHandler);
+                formElementForAttrName$.keyup(notEmptyHandler);
+                _elementNotEmptyHandler(formElementForAttrName$);
+            }
+        }
+
     },
 
     _config = null,
@@ -176,7 +226,7 @@ it.entityplotter.newInstance = function (config) {
         _copyValueViewToFormValues();
         _showSaveCancelAtUI();
 
-        //TODO: Add validation handlers
+        _runAllValidations();
     };
 
 
@@ -196,9 +246,16 @@ it.entityplotter.newInstance = function (config) {
         _parentElem$.find('.addNewBtn').removeClass('hide');
     };
 
+    var _runAllValidations = function () {
+        for (var i=0; i<_validationHandlers.length; i++) {
+            _validationHandlers[i]();
+        }
+    };
+
 
     var _plot = function (data) {
         _config = $.extend({}, _config,{data: data});
+        _validationHandlers = [];
         var _$ = _get$(_config);
         _parentElem$.html(_$);
 
@@ -254,6 +311,7 @@ it.entityplotter.newInstance = function (config) {
         _parentElem$.find('.saveBtn').click(_saveHandler);
         _parentElem$.find('.cancelBtn').click(_cancelHandler);
         _parentElem$.find('.addNewBtn').click(_addNewHandler);
+        _addValidationHandlers();
     };
 
     _newInstance(config);

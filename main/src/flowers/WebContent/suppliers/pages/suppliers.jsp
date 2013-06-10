@@ -41,7 +41,6 @@
 	                        </div>
 	                    </div>
 	                    <br/>
-	                    <br/>
 	
 	                    <div class="row-fluid">
 	                        <div id="supplierContainerFluid" class="container-fluid">
