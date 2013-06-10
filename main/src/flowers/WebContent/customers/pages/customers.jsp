@@ -42,7 +42,6 @@
 	                        </div>
 	                    </div>
 	                    <br/>
-	                    <br/>
 	
 	                    <div class="row-fluid">
 	                        <div id="customerContainerFluid" class="container-fluid">

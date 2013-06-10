@@ -40,6 +40,7 @@
 		                        </div>
 	                        </div>
 	                    </div>
+	                    <br/>
 	
 	                    <div class="row-fluid">
 	                        <div id="flowerContainerFluid" class="container-fluid">
