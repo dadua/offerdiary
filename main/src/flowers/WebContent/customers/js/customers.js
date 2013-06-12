@@ -87,8 +87,7 @@ it.customer.view = function () {
             for (var i=0; i< customers.length; i++) {
                 currentCustomer = customers[i];
                 var _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(currentCustomer.name);
-                _tr$.find('.name').attr('href', 'customer.do?id='+ currentCustomer.id);
+                _tr$.find('.name').html(currentCustomer.name).find('.name').attr('href', 'customer.do?id='+ currentCustomer.id);
                 _tr$.find('.bankAccountDetails').html(currentCustomer.bankAccountDetails);
                 _tr$.find('.billingName').html(currentCustomer.billingName);
                 _tr$.find('.phoneNo').html(currentCustomer.phoneNo);
