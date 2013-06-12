@@ -77,7 +77,7 @@ it.supplier.config = {
 
 
 it.supplier.view = function () {
-    var _eachRowHtml = '<tr><td class="name"></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"</td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+    var _eachRowHtml = '<tr><td ><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"</td><td class="alternativePhoneNo"><td class="address"></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
 
@@ -90,6 +90,7 @@ it.supplier.view = function () {
                 currentSupplier = suppliers[i];
                 var _tr$ = $(_eachRowHtml);
                 _tr$.find('.name').html(currentSupplier.name);
+                _tr$.find('.name').attr('href', 'supplier.do?id='+currentSupplier.id);
                 _tr$.find('.bankAccountDetails').html(currentSupplier.bankAccountDetails);
                 _tr$.find('.billingName').html(currentSupplier.billingName);
                 _tr$.find('.phoneNo').html(currentSupplier.phoneNo);
