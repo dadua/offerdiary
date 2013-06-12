@@ -9,10 +9,26 @@
 		<script type="text/javascript">
 			$(function () {
 			    var flowerJson = '${entityJson}',
-			    	flower = $.parseJSON(flowerJson);
-			    it.flower.plot('${operation}', flower);
-			    $('.addFlowers').addClass('active');
+			    	flower = $.parseJSON(flowerJson),
+			    	operation = '${operation}';
+			    it.flower.plot(operation, flower);
 			    $('#flowersTab').addClass('active');
+			    
+			    var _onFlowerViewEdit = function () {
+					$('.flowerDetailOptions li').removeClass('active');
+					$('.viewEditFlower').removeClass('hide').addClass('active');
+			    };
+			    
+			    $('#eachFlowerContainerFluid').on('entitySaved', function (e) {
+					_onFlowerViewEdit();
+			    });
+			    
+			    if (operation === 'ADDNEW') {
+					$('.addFlower').addClass('active');
+				
+			    } else if (operation === 'EDIT' || operation === 'VIEW') {
+					_onFlowerViewEdit();
+			    }
 			});
 		</script>
 		
@@ -25,7 +41,7 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-						<%@include file="/flowers/pages/flowerOptions.jsp" %>
+						<%@include file="/flowers/pages/flowerDetailOptions.jsp" %>
 	                </div>
 	            </div>
 				

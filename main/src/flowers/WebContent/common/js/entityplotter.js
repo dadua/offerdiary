@@ -227,6 +227,7 @@ it.entityplotter.newInstance = function (config) {
         _showSaveCancelAtUI();
 
         _runAllValidations();
+        _parentElem$.trigger('entityBeingEdited', _parentElem$.data('entityId'));
     };
 
 
@@ -264,10 +265,13 @@ it.entityplotter.newInstance = function (config) {
 
         if (_config.operation === 'VIEW') {
             _showEditInUI();
+            _parentElem$.trigger('entityViewPlotted', _parentElem$.data('entityId'));
         } else if (_config.operation === 'EDIT') {
             _showSaveCancelAtUI();
+            _parentElem$.trigger('entityEditlotted', _parentElem$.data('entityId'));
         } else if (_config.operation === 'ADDNEW') {
             _showAddNewAtUI();
+            _parentElem$.trigger('entityAddNewPlotted', _parentElem$.data('entityId'));
         }
     };
 
@@ -288,7 +292,9 @@ it.entityplotter.newInstance = function (config) {
             var resp = $.parseJSON(respJson);
             _config.operation = 'VIEW';
             _showView(resp.result);
+            _parentElem$.trigger('entitySaved', _parentElem$.data('entityId'));
         });
+        _parentElem$.trigger('entityBeingSaved', _parentElem$.data('entityId'));
     };
 
     var _saveHandler = function () {
@@ -302,8 +308,10 @@ it.entityplotter.newInstance = function (config) {
             if (resp.success) {
                 _config.operation = 'VIEW';
                 _showView(resp.result);
+                _parentElem$.trigger('entitySaved', _parentElem$.data('entityId'));
             }
         });
+        _parentElem$.trigger('entityBeingSaved', _parentElem$.data('entityId'));
     };
 
     var _addHandlers = function () {
