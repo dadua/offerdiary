@@ -89,8 +89,7 @@ it.supplier.view = function () {
             for (var i=0; i< suppliers.length; i++) {
                 currentSupplier = suppliers[i];
                 var _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(currentSupplier.name);
-                _tr$.find('.name').attr('href', 'supplier.do?id='+currentSupplier.id);
+                _tr$.find('.name').html(currentSupplier.name).find('.name').attr('href', 'supplier.do?id='+currentSupplier.id);
                 _tr$.find('.bankAccountDetails').html(currentSupplier.bankAccountDetails);
                 _tr$.find('.billingName').html(currentSupplier.billingName);
                 _tr$.find('.phoneNo').html(currentSupplier.phoneNo);
