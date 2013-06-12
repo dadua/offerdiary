@@ -9,10 +9,24 @@
 		<script type="text/javascript">
 			$(function () {
 			    var customerJson = '${entityJson}',
-			    	customer = $.parseJSON(customerJson);
-			    it.customer.plot('${operation}', customer);
-			    $('.addCustomers').addClass('active');
+			    	customer = $.parseJSON(customerJson),
+			    	operation = '${operation}';
+			    it.customer.plot(operation, customer);
 			    $('#customersTab').addClass('active');
+			    
+			    var _onCustomerViewEdit = function () {
+					$('.customerDetailOptions li').removeClass('active');
+					$('.viewEditCustomer').removeClass('hide').addClass('active');
+				};
+				
+				$('#eachCustomerContainerFluid').on('entitySaved', function (e) {
+				    _onCustomerViewEdit();
+				});
+				if (operation === 'ADDNEW') {
+				    $('.addCustomer').addClass('active');
+				} else if (operation === 'EDIT' || operation === 'VIEW') {
+					_onCustomerViewEdit();
+				}
 			});
 		</script>
 		
@@ -25,7 +39,13 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-						<%@include file="/customers/pages/customerOptions.jsp" %>
+						<ul class="nav nav-list customerDetailOptions">
+	                        <li class="nav-header">Options:</li>
+	                        <li class="divider " style="margin-bottom: 4px;margin-top: 0px;"></li>
+	                        <li class="allCustomers"><a href="customers.do">All Customers</a></li>
+	                        <li class="addCustomer"><a href="viewAddNewCustomer.do">Add New Customer</a></li>
+	                        <li class="viewEditCustomer hide"><a href="#">Customer Details</a></li>
+	                    </ul>
 	                </div>
 	            </div>
 				
