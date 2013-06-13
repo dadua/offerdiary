@@ -8,6 +8,7 @@ public interface SupplierManager {
 	public void addOrUpdate(Supplier supplier);
 	public void delete(Supplier supplier);
 	public void delete(Long id);
+	public void delete(List<Long> ids);
 	public Supplier getByUniqueId(String uniqueId);
 	public Supplier getById(Long id);
 	public List<Supplier> searchByName(String searchString);
