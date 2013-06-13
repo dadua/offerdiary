@@ -21,12 +21,14 @@ public interface FlowerManager {
 
 	public SupplierFlowerAssoc getAssocFor(Flower flower, Supplier supplier);
 	public SupplierFlowerAssoc addFlowerToSupplier(Flower flower, Supplier supplier);
+	public void  addFlowerToSupplier(List<Long> flowerIds, List<Long> supplierIds);
 	public List<Flower> getFlowersForSupplier(Supplier supplier);
 	public List<Supplier> getSuppliersForFlower(Flower flower);
 
 
 	public CustomerFlowerAssoc getAssocFor(Flower flower, Customer customer);
 	public CustomerFlowerAssoc addFlowerToCustomer(Flower flower, Customer customer);
+	public void addFlowerToCustomer(List<Long> flowerIds, List<Long> customerIds);
 	public List<Flower> getFlowersForCustomer(Customer customer);
 	public List<Customer> getCustomersForFlower(Flower flower);
 

@@ -16,6 +16,8 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	private FlowerDAO flowerDAO;
 	private CustomerFlowerAssocDAO customerFlowerAssocDAO;
 	private SupplierFlowerAssocDAO supplierFlowerAssocDAO;
+	private SupplierManager supplierManager;
+	private CustomerManager customerManager;
 
 
 	@Override
@@ -69,6 +71,19 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	}
 
 	@Override
+	public void addFlowerToSupplier(List<Long> flowerIds,
+			List<Long> supplierIds) {
+		for (Long flowerId : flowerIds) {
+			Flower flower = getFlowerDAO().getById(flowerId);
+			for (Long supplierId : supplierIds) {
+				Supplier supplier = getSupplierManager().getById(supplierId);
+				addFlowerToSupplier(flower, supplier);
+			}
+		}
+	}
+
+
+	@Override
 	public List<Flower> getFlowersForSupplier(Supplier supplier) {
 		return getSupplierFlowerAssocDAO().getFlowersFor(supplier);
 	}
@@ -98,6 +113,18 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 		CustomerFlowerAssoc assoc = new CustomerFlowerAssoc(flower, customer);
 		getCustomerFlowerAssocDAO().addOrUpdate(assoc);
 		return assoc;
+	}
+
+	@Override
+	public void addFlowerToCustomer(List<Long> flowerIds,
+			List<Long> customerIds) {
+		for (Long flowerId : flowerIds) {
+			Flower flower = getFlowerDAO().getById(flowerId);
+			for (Long customerId : customerIds) {
+				Customer customer = getCustomerManager().getById(customerId);
+				addFlowerToCustomer(flower, customer);
+			}
+		}
 	}
 
 	@Override
@@ -134,6 +161,21 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 		this.flowerDAO = flowerDAO;
 	}
 
+	public SupplierManager getSupplierManager() {
+		return supplierManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
+
+	public CustomerManager getCustomerManager() {
+		return customerManager;
+	}
+
+	public void setCustomerManager(CustomerManager customerManager) {
+		this.customerManager = customerManager;
+	}
 
 
 }

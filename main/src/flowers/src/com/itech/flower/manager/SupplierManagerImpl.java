@@ -28,6 +28,13 @@ public class SupplierManagerImpl extends CommonBaseManager implements SupplierMa
 	}
 
 	@Override
+	public void delete(List<Long> ids) {
+		for (Long id : ids) {
+			getSupplierDAO().delete(id);
+		}
+	}
+
+	@Override
 	public Supplier getByUniqueId(String uniqueId) {
 		return getSupplierDAO().getByUniqueId(uniqueId);
 	}

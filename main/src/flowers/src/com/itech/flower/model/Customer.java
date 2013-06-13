@@ -44,6 +44,9 @@ public class Customer extends PersistableEntity {
 	@Column(name="ADDRESS")
 	private String address;
 
+	@Column(name="PLACE")
+	private String place;
+
 	public String getName() {
 		return name;
 	}
@@ -120,5 +123,13 @@ public class Customer extends PersistableEntity {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
 	}
 }

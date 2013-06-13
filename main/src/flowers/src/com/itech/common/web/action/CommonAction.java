@@ -1,7 +1,12 @@
 package com.itech.common.web.action;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.itech.common.security.SecurityContext;
 import com.itech.common.security.SecurityContextHolder;
 import com.itech.common.security.SecurityManager;
@@ -30,6 +35,14 @@ public class CommonAction {
 
 	public User getLoggedInUser() {
 		return getSecurityManager().getLoggedInUser();
+	}
+
+	public List<Long> getIdListFromRequest(HttpServletRequest req, String paramName) {
+		String listJson = req.getParameter(paramName);
+		Gson gson = new Gson();
+		Type type = new TypeToken<List<Long>>() { }.getType();
+		List<Long> ids = gson.fromJson(listJson, type);
+		return ids;
 	}
 
 	public void updateLoggedInUser(HttpServletRequest req, User user) {

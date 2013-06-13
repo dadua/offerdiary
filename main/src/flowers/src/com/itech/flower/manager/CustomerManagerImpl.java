@@ -26,6 +26,12 @@ public class CustomerManagerImpl extends CommonBaseManager implements CustomerMa
 	public void delete(Long id) {
 		getCustomerDAO().delete(id);
 	}
+	@Override
+	public void delete(List<Long> ids) {
+		for (Long id : ids) {
+			getCustomerDAO().delete(id);
+		}
+	}
 
 	@Override
 	public Customer getByUniqueId(String uniqueId) {

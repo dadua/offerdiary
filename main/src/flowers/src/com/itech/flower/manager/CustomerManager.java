@@ -10,5 +10,6 @@ public interface CustomerManager {
 	public void delete(Long id);
 	public Customer getByUniqueId(String uniqueId);
 	public Customer getById(Long id);
+	public void delete(List<Long> ids);
 	public List<Customer> searchByName(String searchString);
 }
