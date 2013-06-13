@@ -12,6 +12,7 @@ public interface FlowerManager {
 
 	public void addOrUpdate(Flower flower);
 	public void delete(Flower flower);
+	public void delete(List<Long> Ids);
 	public Flower getFlowerByName(String name);
 	public Flower getFlowerById(long id);
 	public List<Flower> searchFlowersFor(String searchString);

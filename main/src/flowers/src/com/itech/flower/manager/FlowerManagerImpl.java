@@ -29,6 +29,14 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	}
 
 	@Override
+	public void delete(List<Long> ids) {
+		for (Long id : ids) {
+			getFlowerDAO().delete(id);
+		}
+	}
+
+
+	@Override
 	public Flower getFlowerByName(String name) {
 		return getFlowerDAO().getFlowerFor(name);
 	}
