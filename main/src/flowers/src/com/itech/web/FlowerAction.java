@@ -60,6 +60,21 @@ public class FlowerAction extends CommonAction {
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="deleteFlowers.do")
+	public Response deleteFlowers (HttpServletRequest req, HttpServletResponse resp) {
+		List<Long> flowerIdsToDelete = getIdListFromRequest(req, WebConstatnts.FLOWER_IDS_PARAM);
+		getFlowerManager().delete(flowerIdsToDelete);
+
+		Result<String> result = new Result<String>("");
+		result.setMsg("Removed " + flowerIdsToDelete.size() + " flowers");
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowers.do")
 	public Response getFlowers (HttpServletRequest req, HttpServletResponse resp) {

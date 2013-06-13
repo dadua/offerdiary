@@ -27,7 +27,7 @@
 	            <div class="span10 "  >
 	                <div class="container-fluid content-container">
 	                    <div class="row-fluid">
-	                    	<div class="span6">
+	                    	<div class="span4">
 		                    	<h3 class="bluishText">Flowers</h3>
 	                    	</div>
 	                    	<div class="span5">
@@ -39,11 +39,24 @@
 		                            </div>
 		                        </div>
 	                        </div>
+	                        
+	                        <div class="span1">
+	                        <br>
+		                        <div class="btn-group pull-right">
+			                        <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+			                        Actions
+			                        <span class="caret"></span>
+			                        </a>
+			                        <ul class="actionsPanel dropdown-menu">
+			                        	<li> <a class="deleteSelectedAction" href="#">Delete Selected</a></li>
+			                        </ul>
+		                        </div>
+	                        </div>
 	                    </div>
 	                    <br/>
 	
 	                    <div class="row-fluid">
-	                        <div id="flowerContainerFluid" class="container-fluid">
+	                        <div id="flowerContainerFluid" class="container-fluid span10">
 	                        </div>
 	                        <div class="container-fluid">
 		                        <div id="flowerPaginationContainer" class="row-fluid span6 offset6">
@@ -52,6 +65,9 @@
 	                    </div>
 	                </div>
 	            </div>
+			</div>
+			<div class="templates">
+				<%@include file="/common/pages/deleteConfirmModal.jsp" %>
 			</div>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
