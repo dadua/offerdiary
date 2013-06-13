@@ -25,6 +25,10 @@ public class Flower extends PersistableEntity {
 	@Column(name="COLOR")
 	private String color;
 
+	@Column(name="QUANT_IN_STOCK")
+	private Float quantityInStock;
+
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -52,5 +56,13 @@ public class Flower extends PersistableEntity {
 	@Override
 	public boolean isTransient() {
 		return id == null;
+	}
+
+	public Float getQuantityInStock() {
+		return quantityInStock;
+	}
+
+	public void setQuantityInStock(Float quantityInStock) {
+		this.quantityInStock = quantityInStock;
 	}
 }

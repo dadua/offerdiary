@@ -11,6 +11,7 @@ import com.itech.flower.model.Contact;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.flower.model.FlowerTransaction;
+import com.itech.flower.model.FlowerTransaction.FlowerTransactionType;
 import com.itech.flower.model.FlowerTransactionEntry;
 import com.itech.flower.model.Supplier;
 
@@ -31,9 +32,19 @@ FlowerTransactionManager {
 
 		for (FlowerTransactionEntry transactionEntry : flowerTransaction.getFlowerTransactionEntries()) {
 			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
+			Flower flower = getFlowerDAO().getById(transactionEntry.getFlower().getId());
+			transactionEntry.setFlower(flower);
+			if (FlowerTransactionType.IN.equals(flowerTransaction.getTransactionType())) {
+				flower.setQuantityInStock(flower.getQuantityInStock() + transactionEntry.getQuantity());
+			} else if (FlowerTransactionType.OUT.equals(flowerTransaction.getTransactionType())) {
+				flower.setQuantityInStock(flower.getQuantityInStock() - transactionEntry.getQuantity());
+			}
+			getFlowerDAO().addOrUpdate(flower);
 		}
 
 		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
+
+
 	}
 
 	@Override
