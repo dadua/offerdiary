@@ -52,9 +52,9 @@ it.flower.fetchAll = function() {
 };
 
 it.flower.view = function () {
-    var _eachRowHtml = '<tr><td ><a class="name"></a></td><td class="color"></td></tr>',
+    var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name"></a></td><td class="color"></td></tr>',
         
-        _tableWithHeadingHtml = '<table class="table table-striped table-condensed table-bordered"> <thead> <tr> <th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
+        _tableWithHeadingHtml = '<table class="table entityTable table-striped table-condensed table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th><th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
 
         _get$ = function (flowers) {
             var _$ = $(_tableWithHeadingHtml),
@@ -64,17 +64,42 @@ it.flower.view = function () {
             for (var i=0; i< flowers.length; i++) {
                 currentFlower = flowers[i];
                 var _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(currentFlower.name);
-                _tr$.find('.name').attr('href', 'flower.do?id='+currentFlower.id);
+                _tr$.find('.name').html(currentFlower.name).attr('href', 'flower.do?id='+currentFlower.id);
                 _tr$.find('.color').html(currentFlower.color);
                 _tr$.data('entityId', currentFlower.id);
                 _tableBody$.append(_tr$);
             }
             return _$;
+        },
+
+        _selectAllHandler = function () {
+            var container$ = $('#flowerContainerFluid'),
+                table$ = container$.find('.entityTable');
+            if ($(this).is(':checked')) {
+                table$.find('.rowSelect').prop('checked', true);
+                //selectAll$.tooltip({title: 'UnSelect All'});
+            } else {
+                table$.find('.rowSelect').prop('checked', false);
+                //selectAll$.tooltip({title: 'Select All'});
+            }
+        },
+        
+        _addHandlers = function () {
+            var container$ = $('#flowerContainerFluid'),
+                table$ = container$.find('.entityTable'),
+                selectAll$ = table$.find('.selectall'),
+                actionsPanel$ = $('.actionsPanel');
+
+            selectAll$.tooltip().click(_selectAllHandler);
+            actionsPanel$.find('.deleteSelectedAction').click(it.flower.remove.showConfirmPopup);
+            $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(it.flower.remove.allSelected);
+
+        
         };
 
     return {
-        get$: _get$
+        get$: _get$,
+        addHandlers: _addHandlers
     };
 
 }();
@@ -82,7 +107,56 @@ it.flower.view = function () {
 it.flower.plotAll = function (flowers) {
     var _$ = this.view.get$(flowers);
     $('#flowerContainerFluid').html(_$);
+    this.view.addHandlers();
 };
+
+it.flower.remove = function () {
+
+    var _getSelectedItemsToRemove = function () {
+
+        var idsToDelete = [];
+        $('#flowerContainerFluid').find('.rowSelect').each(function(i) {
+            if ($(this).is(':checked')) {
+                idsToDelete.push($(this).closest('tr').data('entityId'));
+            }
+        });
+        return idsToDelete;
+    },
+
+    _postDeleteAll = function () {
+        var idsToDelete = _getSelectedItemsToRemove();
+        $('#deleteConfirmModal').modal('hide');
+        $.post('deleteFlowers.do', {flower_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
+            var resp = $.parseJSON(respJSON);
+            if (resp.success) {
+                it.flower.fetchAll();
+            }
+        });
+    },
+
+    _removeAfterConfirm = function () {
+        var idsToDelete = _getSelectedItemsToRemove();
+        _showDeleteConfirmPopup(idsToDelete);
+
+    },
+
+    _showDeleteConfirmPopup = function(idsToDelete) {
+
+        var confirmModal$ = $('#deleteConfirmModal');
+        if (idsToDelete.length === 0) {
+            it.actionInfo.showInfoActionMsg('No Items to delete');
+        } else {
+            confirmModal$.find('.modal-body').html(idsToDelete.length + ' items would be deleted');
+            confirmModal$.modal('show');
+        }
+
+    };
+
+    return {
+        showConfirmPopup: _removeAfterConfirm,
+        allSelected: _postDeleteAll
+    };
+}();
 
 
 it.flower.addOneHandlers = function () {
