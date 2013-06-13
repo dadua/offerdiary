@@ -40,6 +40,20 @@
 		                            </div>
 		                        </div>
 	                        </div>
+	                        
+	                        <div class="span1">
+		                        <br>
+		                        <div class="btn-group pull-right">
+			                        <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+			                        Actions
+			                        <span class="caret"></span>
+			                        </a>
+			                        <ul class="actionsPanel dropdown-menu">
+			                        	<li> <a class="deleteSelectedAction" href="#">Delete Selected</a></li>
+			                        </ul>
+		                        </div>
+	                        
+	                        </div>
 	                    </div>
 	                    <br/>
 	
@@ -53,6 +67,9 @@
 	                    </div>
 	                </div>
 	            </div>
+			</div>
+			<div class="templates">
+				<%@include file="/common/pages/deleteConfirmModal.jsp" %>
 			</div>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>

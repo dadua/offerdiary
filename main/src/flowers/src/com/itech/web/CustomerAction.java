@@ -43,11 +43,24 @@ public class CustomerAction extends CommonAction {
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="deleteCustomer.do")
-	public Response deleteCustomers (HttpServletRequest req, HttpServletResponse resp) {
+	public Response deleteCustomer(HttpServletRequest req, HttpServletResponse resp) {
 		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		getCustomerManager().delete(customer);
 		Result<String> result = new Result<String>("Successfully removed the customer " + customer.getName());
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="deleteCustomers.do")
+	public Response deleteCustomers (HttpServletRequest req, HttpServletResponse resp) {
+		List<Long> customerIdsToDelete = getIdListFromRequest(req, WebConstatnts.CUSTOMER_IDS_PARAM);
+		getCustomerManager().delete(customerIdsToDelete);
+		Result<String> result = new Result<String>( );
+		result.setMsg("Successfully removed " + customerIdsToDelete.size() + " customers");
 		Type resultStringType = new TypeToken<Result<String>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);

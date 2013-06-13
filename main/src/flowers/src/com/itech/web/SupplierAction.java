@@ -56,6 +56,18 @@ public class SupplierAction extends CommonAction{
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="deleteSuppliers.do")
+	public Response deleteSuppliers (HttpServletRequest req, HttpServletResponse resp) {
+		List<Long> idsToDelete = getIdListFromRequest(req, WebConstatnts.SUPPLIER_IDS_PARAM);
+		getSupplierManager().delete(idsToDelete);
+		Result<String> result = new Result<String>();
+		result.setMsg("Removed " + idsToDelete.size() + " suppliers " );
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getSuppliers.do")
 	public Response getSuppliers (HttpServletRequest req, HttpServletResponse resp) {
 		List<Supplier> suppliers = getSuppliers(req);
