@@ -7,6 +7,8 @@ import java.util.UUID;
 import com.itech.common.db.PersistableEntity;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
+import com.itech.flower.model.FlowerTransaction;
+import com.itech.flower.model.FlowerTransactionEntry;
 import com.itech.flower.model.Supplier;
 
 public class CommonUtilities {
@@ -71,6 +73,16 @@ public class CommonUtilities {
 		if (object instanceof Flower) {
 			Flower flower = (Flower) object;
 			return "FLW" + flower.getId();
+		}
+
+		if (object instanceof FlowerTransaction) {
+			FlowerTransaction flowerTransaction = (FlowerTransaction) object;
+			return "TX" + flowerTransaction.getId();
+		}
+
+		if (object instanceof FlowerTransactionEntry) {
+			FlowerTransactionEntry flowerTransactionEntry = (FlowerTransactionEntry) object;
+			return "TXENTRY" + flowerTransactionEntry.getId();
 		}
 		return object.getId().toString();
 	}

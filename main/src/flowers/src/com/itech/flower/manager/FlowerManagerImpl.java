@@ -3,8 +3,11 @@ package com.itech.flower.manager;
 import java.util.List;
 
 import com.itech.common.services.CommonBaseManager;
+import com.itech.flower.dao.ContactDAO;
 import com.itech.flower.dao.CustomerFlowerAssocDAO;
 import com.itech.flower.dao.FlowerDAO;
+import com.itech.flower.dao.FlowerTransactionDAO;
+import com.itech.flower.dao.FlowerTransactionEntryDAO;
 import com.itech.flower.dao.SupplierFlowerAssocDAO;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.CustomerFlowerAssoc;
@@ -14,10 +17,13 @@ import com.itech.flower.model.SupplierFlowerAssoc;
 
 public class FlowerManagerImpl extends CommonBaseManager implements FlowerManager{
 	private FlowerDAO flowerDAO;
+	private ContactDAO contactDAO;
 	private CustomerFlowerAssocDAO customerFlowerAssocDAO;
 	private SupplierFlowerAssocDAO supplierFlowerAssocDAO;
 	private SupplierManager supplierManager;
 	private CustomerManager customerManager;
+	private FlowerTransactionDAO flowerTransactionDAO;
+	private FlowerTransactionEntryDAO flowerTransactionEntryDAO;
 
 
 	@Override
@@ -177,5 +183,28 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 		this.customerManager = customerManager;
 	}
 
+	public FlowerTransactionDAO getFlowerTransactionDAO() {
+		return flowerTransactionDAO;
+	}
+
+	public void setFlowerTransactionDAO(FlowerTransactionDAO flowerTransactionDAO) {
+		this.flowerTransactionDAO = flowerTransactionDAO;
+	}
+
+	public FlowerTransactionEntryDAO getFlowerTransactionEntryDAO() {
+		return flowerTransactionEntryDAO;
+	}
+
+	public void setFlowerTransactionEntryDAO(FlowerTransactionEntryDAO flowerTransactionEntryDAO) {
+		this.flowerTransactionEntryDAO = flowerTransactionEntryDAO;
+	}
+
+	public ContactDAO getContactDAO() {
+		return contactDAO;
+	}
+
+	public void setContactDAO(ContactDAO contactDAO) {
+		this.contactDAO = contactDAO;
+	}
 
 }

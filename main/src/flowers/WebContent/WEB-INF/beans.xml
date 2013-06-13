@@ -13,11 +13,16 @@
 	<bean id="itech.flowerDAO" class="com.itech.flower.dao.FlowerDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	
+	<bean id="itech.contactDAO" class="com.itech.flower.dao.ContactDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>		
 	<bean id="itech.supplierFlowerDAO" class="com.itech.flower.dao.SupplierFlowerAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>
 	<bean id="itech.customerFlowerDAO" class="com.itech.flower.dao.CustomerFlowerAssocDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>		
-	
+	<bean id="itech.flowerTransactionDAO" class="com.itech.flower.dao.FlowerTransactionDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>		
+	<bean id="itech.flowerTransactionEntryDAO" class="com.itech.flower.dao.FlowerTransactionEntryDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>		
      
     <bean id="itech.customerManager" class="com.itech.flower.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="customerDAO" ref="itech.customerDAO"/>
@@ -30,7 +35,17 @@
 	<bean id="itech.flowerManager" class="com.itech.flower.manager.FlowerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="flowerDAO" ref="itech.flowerDAO"/>
     	<property name="customerFlowerAssocDAO" ref="itech.customerFlowerDAO"/>
-    	<property name="supplierFlowerAssocDAO" ref="itech.supplierFlowerDAO"/>    	
+    	<property name="supplierFlowerAssocDAO" ref="itech.supplierFlowerDAO"/>  
+    	<property name="contactDAO" ref="itech.contactDAO"/>
+    	<property name="customerManager" ref="itech.customerManager"/>
+    	<property name="supplierManager" ref="itech.supplierManager"/>
+	</bean>
+	
+	<bean id="itech.flowerTransactionManagerImpl" class="com.itech.flower.manager.FlowerTransactionManagerImpl" parent="itech.CommonBaseManager">
+    	<property name="flowerDAO" ref="itech.flowerDAO"/>
+    	<property name="contactDAO" ref="itech.contactDAO"/>
+    	<property name="flowerTransactionDAO" ref="itech.flowerTransactionDAO"/>
+    	<property name="flowerTransactionEntryDAO" ref="itech.flowerTransactionEntryDAO"/>	
 	</bean>
 	
 
