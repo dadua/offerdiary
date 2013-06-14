@@ -51,6 +51,9 @@ public class FlowerTransaction extends PersistableEntity {
 	@Column(name="TOTAL_COST")
 	private float totalCost;
 
+	@Column(name="COMMENT")
+	private String comment;
+
 	@OneToMany
 	private List<FlowerTransactionEntry> flowerTransactionEntries;
 
@@ -123,6 +126,14 @@ public class FlowerTransaction extends PersistableEntity {
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 }
