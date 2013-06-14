@@ -16,6 +16,7 @@ import com.itech.config.ProjectConfigs;
 import com.itech.flower.manager.CustomerManager;
 import com.itech.flower.manager.FlowerManager;
 import com.itech.flower.manager.SupplierManager;
+import com.itech.flower.manager.TransactionManager;
 import com.itech.user.manager.UserManager;
 import com.itech.user.model.User;
 
@@ -32,6 +33,7 @@ public class CommonAction {
 	private CustomerManager customerManager;
 	private SupplierManager supplierManager;
 	private FlowerManager flowerManager;
+	private TransactionManager transactionManager;
 
 	public User getLoggedInUser() {
 		return getSecurityManager().getLoggedInUser();
@@ -123,5 +125,16 @@ public class CommonAction {
 
 	public void setFlowerManager(FlowerManager flowerManager) {
 		this.flowerManager = flowerManager;
+	}
+
+	public TransactionManager getTransactionManager() {
+		if (transactionManager == null) {
+			transactionManager = ServiceLocator.getInstance().getBean(TransactionManager.class);
+		}
+		return transactionManager;
+	}
+
+	public void setTransactionManager(TransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
 	}
 }

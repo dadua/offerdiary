@@ -2,6 +2,8 @@ package com.itech.flower.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
+
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
@@ -13,20 +15,29 @@ HibernateCommonBaseDAO<FlowerTransaction> implements FlowerTransactionDAO {
 
 	@Override
 	public List<FlowerTransaction> getFlowerTransactionsFor(Customer customer) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "select ft from " + getEntityClassName() + " ft where contact.id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", customer.getId());
+		List result = query.list();
+		return result;
 	}
 
 	@Override
 	public List<FlowerTransaction> getFlowerTransactionsFor(Supplier supplier) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "select ft from " + getEntityClassName() + " ft where contact.id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", supplier.getId());
+		List result = query.list();
+		return result;
 	}
 
 	@Override
 	public List<FlowerTransaction> getFlowerTransactionsFor(Flower flower) {
-		// TODO Auto-generated method stub
-		return null;
+		String hql = "select ft from " + getEntityClassName() + " ft inner join flower where contact.id = :id";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("id", supplier.getId());
+		List result = query.list();
+		return result;
 	}
 
 	@Override

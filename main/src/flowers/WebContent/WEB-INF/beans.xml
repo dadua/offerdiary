@@ -23,6 +23,8 @@
 	</bean>		
 	<bean id="itech.flowerTransactionEntryDAO" class="com.itech.flower.dao.FlowerTransactionEntryDAOImpl" parent="itech.hibernateCommonDAO">
 	</bean>		
+	<bean id="itech.cashTransactionDAO" class="com.itech.flower.dao.CashTransactionDAOImpl" parent="itech.hibernateCommonDAO">
+	</bean>			
      
     <bean id="itech.customerManager" class="com.itech.flower.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="customerDAO" ref="itech.customerDAO"/>
@@ -41,11 +43,12 @@
     	<property name="supplierManager" ref="itech.supplierManager"/>
 	</bean>
 	
-	<bean id="itech.flowerTransactionManagerImpl" class="com.itech.flower.manager.FlowerTransactionManagerImpl" parent="itech.CommonBaseManager">
+	<bean id="itech.transactionManagerImpl" class="com.itech.flower.manager.TransactionManagerImpl" parent="itech.CommonBaseManager">
     	<property name="flowerDAO" ref="itech.flowerDAO"/>
     	<property name="contactDAO" ref="itech.contactDAO"/>
     	<property name="flowerTransactionDAO" ref="itech.flowerTransactionDAO"/>
     	<property name="flowerTransactionEntryDAO" ref="itech.flowerTransactionEntryDAO"/>	
+    	<property name="cashTransactionDAO" ref="itech.cashTransactionDAO"/>
 	</bean>
 	
 

@@ -3,6 +3,7 @@ package com.itech.flower.manager;
 import java.util.List;
 
 import com.itech.common.services.CommonBaseManager;
+import com.itech.flower.dao.CashTransactionDAO;
 import com.itech.flower.dao.ContactDAO;
 import com.itech.flower.dao.FlowerDAO;
 import com.itech.flower.dao.FlowerTransactionDAO;
@@ -15,22 +16,26 @@ import com.itech.flower.model.FlowerTransaction.FlowerTransactionType;
 import com.itech.flower.model.FlowerTransactionEntry;
 import com.itech.flower.model.Supplier;
 
-public class FlowerTransactionManagerImpl extends CommonBaseManager implements
-FlowerTransactionManager {
+public class TransactionManagerImpl extends CommonBaseManager implements
+TransactionManager {
 
 	private FlowerDAO flowerDAO;
 	private ContactDAO contactDAO;
 	private FlowerTransactionDAO flowerTransactionDAO;
 	private FlowerTransactionEntryDAO flowerTransactionEntryDAO;
+	private CashTransactionDAO cashTransactionDAO;
 
 	@Override
-	public void saveFlowerTransaction(FlowerTransaction flowerTransaction) {
+	public void addOrUpdateFlowerTransaction(FlowerTransaction flowerTransaction) {
 		if (flowerTransaction.getContact() != null) {
 			Contact contact = getContactDAO().getById(flowerTransaction.getContact().getId());
 			flowerTransaction.setContact(contact);
 		}
 
 		for (FlowerTransactionEntry transactionEntry : flowerTransaction.getFlowerTransactionEntries()) {
+			if (!transactionEntry.isTransient()) {
+				continue;
+			}
 			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
 			Flower flower = getFlowerDAO().getById(transactionEntry.getFlower().getId());
 			transactionEntry.setFlower(flower);
@@ -94,6 +99,14 @@ FlowerTransactionManager {
 
 	public void setFlowerTransactionEntryDAO(FlowerTransactionEntryDAO flowerTransactionEntryDAO) {
 		this.flowerTransactionEntryDAO = flowerTransactionEntryDAO;
+	}
+
+	public CashTransactionDAO getCashTransactionDAO() {
+		return cashTransactionDAO;
+	}
+
+	public void setCashTransactionDAO(CashTransactionDAO cashTransactionDAO) {
+		this.cashTransactionDAO = cashTransactionDAO;
 	}
 
 }
