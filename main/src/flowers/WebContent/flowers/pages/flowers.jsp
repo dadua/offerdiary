@@ -8,7 +8,7 @@
 			var flowersJson = '${entitiesJson}',
 				flowers = $.parseJSON(flowersJson);
 			
-			it.flower.initFlowersUI(flowers);
+			it.flower.list.initFlowersUI(flowers);
 		});
 		</script>
 		<style type="text/css">

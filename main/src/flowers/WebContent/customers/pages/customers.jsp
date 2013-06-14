@@ -9,7 +9,7 @@
 			var customersJson = '${entitiesJson}',
 				customers = $.parseJSON(customersJson);
 			
-			it.customer.initCustomersUI(customers);
+			it.customer.list.initCustomersUI(customers);
 		});
 		</script>
 		<style type="text/css">

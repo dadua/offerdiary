@@ -74,7 +74,101 @@ it.customer.config = {
     ]
 };
 
-it.customer.view = function () {
+it.customer.list = it.customer.list || {};
+
+it.customer.list.newInstance = function (containerId$, searchQueryElem$) {
+    
+    var fetchAll = function() {
+        var q = searchQuery$.val();
+
+        $.post('getCustomers.do', {q:q}, function (respJSON) {
+            var resp = $.parseJSON(respJSON);
+            plotAll(resp.result);
+        });
+    },
+
+    plotAll = function (customers) {
+        var _$ = view.get$(customers);
+        container$.html(_$);
+        view.addHandlers();
+        if (!_isOneInited) {
+            addOneHandlers();
+            _isOneInited = true;
+        }
+    }, 
+
+    _isOneInited = false,
+
+    addOneHandlers = function () {
+        searchQuery$.keyup(fetchAll);
+    },
+
+    container$ = $(containerId$),
+
+    searchQuery$ = $(searchQueryElem$),
+
+    view = this.newViewInstance(containerId$);
+
+    return {
+        plotAll: plotAll,
+        addOneHandlers: addOneHandlers,
+        refresh: fetchAll,
+        view: view,
+        getSelectedItems: view.getSelectedItems
+    };
+
+};
+
+
+it.customer.list.actions = it.customer.list.actions || {};
+
+it.customer.list.actions.newRemoverInstance = function (customersList, removeConfirm$) {
+
+    var _postDeleteAll = function () {
+        var idsToDelete = _customersList.view.getSelectedItems();
+        $('#deleteConfirmModal').modal('hide');
+        $.post('deleteCustomers.do', {customer_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
+            var resp = $.parseJSON(respJSON);
+            if (resp.success) {
+                _customersList.refresh();
+            }
+        });
+    },
+
+    _removeAfterConfirm = function () {
+        var idsToDelete = _customersList.view.getSelectedItems();
+        _showDeleteConfirmPopup(idsToDelete);
+    },
+
+    _showDeleteConfirmPopup = function(idsToDelete) {
+
+        var confirmModal$ = $('#deleteConfirmModal');
+        if (idsToDelete.length === 0) {
+            it.actionInfo.showInfoActionMsg('No Items to delete');
+        } else {
+            confirmModal$.find('.modal-body').html(idsToDelete.length + ' items would be deleted');
+            confirmModal$.modal('show');
+        }
+
+    },
+
+    _addHandlers = function() {
+        _removeConfirm$.click(_removeAfterConfirm);
+        $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
+    },
+
+    _removeConfirm$ = $(removeConfirm$),
+
+    _customersList = customersList;
+
+    return {
+        showConfirmPopup: _removeAfterConfirm,
+        allSelected: _postDeleteAll,
+        addHandlers: _addHandlers
+    };
+}; 
+
+it.customer.list.newViewInstance = function (containerId$) {
     var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"</td><td class="alternativePhoneNo"><td class="address"></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
@@ -100,108 +194,42 @@ it.customer.view = function () {
         },
 
         _selectAllHandler = function () {
-            var container$ = $('#customerContainerFluid'),
-                table$ = container$.find('.entityTable');
             if ($(this).is(':checked')) {
-                table$.find('.rowSelect').prop('checked', true);
-                //selectAll$.tooltip({title: 'UnSelect All'});
+                container$.find('.entityTable').find('.rowSelect').prop('checked', true);
             } else {
-                table$.find('.rowSelect').prop('checked', false);
-                //selectAll$.tooltip({title: 'Select All'});
+                container$.find('.rowSelect').prop('checked', false);
             }
         },
-        
-        _addHandlers = function () {
-            var container$ = $('#customerContainerFluid'),
-                table$ = container$.find('.entityTable'),
-                selectAll$ = table$.find('.selectall'),
-                actionsPanel$ = $('.actionsPanel');
 
+        _addHandlers = function () {
+            selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
-            actionsPanel$.find('.deleteSelectedAction').click(it.customer.remove.showConfirmPopup);
-            $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(it.customer.remove.allSelected);
-        };
- 
+        },
+
+        _getSelectedItems = function () {
+            var selectedIds = [];
+            container$.find('.rowSelect').each(function(i) {
+                if ($(this).is(':checked')) {
+                    selectedIds.push($(this).closest('tr').data('entityId'));
+                }
+            });
+            return selectedIds;
+        },
+
+        container$ = $(containerId$);
 
     return {
         get$: _get$,
-        addHandlers: _addHandlers
+        addHandlers: _addHandlers,
+        getSelectedItems: _getSelectedItems
     };
-
-}();
-
-it.customer.plotAll = function (customers) {
-    var _$ = this.view.get$(customers);
-    $('#customerContainerFluid').html(_$);
-    this.view.addHandlers();
 };
 
+it.customer.list.initCustomersUI = function (customers) {
 
-it.customer.addOneHandlers = function () {
-    $('#searchQuery').keyup(it.customer.fetchAll);
+    var customerList = this.newInstance('#customerContainerFluid', '#searchQuery');
+    customerList.plotAll(customers);
+
+    var removeActionHandler = this.actions.newRemoverInstance(customerList, $('.actionsPanel').find('.deleteSelectedAction'));
+    removeActionHandler.addHandlers();
 };
-
-it.customer.initCustomersUI = function (customers) {
-    this.plotAll(customers);
-    this.addOneHandlers();
-};
-
-
-it.customer.fetchAll = function() {
-    var q = $('#searchQuery').val();
-
-    $.post('getCustomers.do', {q:q}, function (respJSON) {
-        var resp = $.parseJSON(respJSON);
-        it.customer.plotAll(resp.result);
-    });
-};
-
-it.customer.remove = function () {
- 
-    var _getSelectedItemsToRemove = function () {
-
-        var idsToDelete = [];
-       $('#customerContainerFluid').find('.rowSelect').each(function(i) {
-            if ($(this).is(':checked')) {
-                idsToDelete.push($(this).closest('tr').data('entityId'));
-            }
-        });
-        return idsToDelete;
-    },
-
-    _postDeleteAll = function () {
-        var idsToDelete = _getSelectedItemsToRemove();
-        $('#deleteConfirmModal').modal('hide');
-        $.post('deleteCustomers.do', {customer_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
-            var resp = $.parseJSON(respJSON);
-            if (resp.success) {
-                it.customer.fetchAll();
-            }
-        });
-    },
-
-    _removeAfterConfirm = function () {
-        var idsToDelete = _getSelectedItemsToRemove();
-        _showDeleteConfirmPopup(idsToDelete);
-
-    },
-
-    _showDeleteConfirmPopup = function(idsToDelete) {
-
-        var confirmModal$ = $('#deleteConfirmModal');
-        if (idsToDelete.length === 0) {
-            it.actionInfo.showInfoActionMsg('No Items to delete');
-        } else {
-            confirmModal$.find('.modal-body').html(idsToDelete.length + ' items would be deleted');
-            confirmModal$.modal('show');
-        }
-
-    };
-
-    return {
-        showConfirmPopup: _removeAfterConfirm,
-        allSelected: _postDeleteAll
-    };
-}();
-
-
