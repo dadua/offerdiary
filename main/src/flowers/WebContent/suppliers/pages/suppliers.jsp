@@ -8,7 +8,7 @@
 			$('#suppliersTab').addClass('active');
 			var suppliersJson = '${entitiesJson}',
 				suppliers = $.parseJSON(suppliersJson);
-			it.supplier.initSuppliersUI(suppliers);
+			it.supplier.list.initSuppliersUI(suppliers);
 		});
 		</script>
 		<style type="text/css">
