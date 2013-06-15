@@ -1,8 +1,8 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Flowers</title>
-		<script src="flowers/js/flower.js" type="text/javascript"></script>
-		<script src="customers/js/customers.js" type="text/javascript"></script>
+		<script src="flowers/js/flower.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="customers/js/customers.js" type="text/javascript" charset="UTF-8" ></script>
 		<script type="text/javascript">
 		$(function(){
 			$('.allFlowers').addClass('active'); $('#flowersTab').addClass('active');
@@ -72,7 +72,7 @@
 				<%@include file="/common/pages/deleteConfirmModal.jsp" %>
 				<div id="addFlowerToCustomerModal" data-backdrop="true" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFlowerToCustomerLabel" aria-hidden="true">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<button type="button" class="close btn btn-mini" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
 						<h4 class="addFlowerToCustomerLabel">
 						Add Flower to Customer
 						</h4>
