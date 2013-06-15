@@ -3,20 +3,20 @@ it.flower = it.flower || {};
 
 it.flower.plot = function (operation, data) {
     var config = this.config;
-    it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation}));
+    return it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation}));
 };
 
 it.flower.plotView = function (data) {
-    this.plot('VIEW', data);
+    return this.plot('VIEW', data);
 };
 
 
 it.flower.plotEdit = function (data) {
-    this.plot('EDIT', data);
+    return this.plot('EDIT', data);
 };
 
 it.flower.plotAddNew = function () {
-    this.plot('ADDNEW', {});
+    return this.plot('ADDNEW', {});
 };
 
 it.flower.config = {
@@ -39,6 +39,34 @@ it.flower.config = {
         type: 'string'
 
     }]
+};
+
+it.flower.fetchCustomers = function (flower) {
+	$.post('getCustomersForFlower.do', {flower_id: flower.id}, function (respJSON) {
+		var resp = $.parseJSON(respJSON),
+			customers = resp.result;
+		it.flower.plotCustomers (flower, customers);
+	});
+};
+
+it.flower.plotCustomers = function (flower, customers) {
+	var customersList = it.customer.list.plotMinimalCustomersUI(customers, '#customersContainerFluid');
+	customersList.plotAll(customers);
+	customersList.view.hideAllSelectCells();
+};
+
+it.flower.fetchSuppliers = function (flower) {
+	$.post('getSuppliersForFlower.do', {flower_id: flower.id}, function (respJSON) {
+		var resp = $.parseJSON(respJSON),
+			suppliers = resp.result;
+		it.flower.plotSuppliers (flower, suppliers);
+	});
+};
+
+it.flower.plotSuppliers = function (flower, suppliers) {
+	var suppliersList = it.supplier.list.plotMinimalSuppliersUI(suppliers, '#suppliersContainerFluid');
+	suppliersList.plotAll(suppliers);
+	suppliersList.view.hideAllSelectCells();
 };
 
 it.flower.list = it.flower.list || {};
@@ -140,7 +168,7 @@ it.flower.list.actions.newRemoverInstance = function (flowersList, removeConfirm
 
 it.flower.list.actions.newAddToCustomerInstance = function (flowersList, addFlowerToCustomerInvoker$) {
 
-    var addCustomersList = undefined,
+    var addCustomersList,
     
     _addFlowerToCustomer$ = $(addFlowerToCustomerInvoker$),
 

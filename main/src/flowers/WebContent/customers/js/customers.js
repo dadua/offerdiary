@@ -10,7 +10,6 @@ it.customer.plotView = function (data) {
     this.plot('VIEW', data);
 };
 
-
 it.customer.plotEdit = function (data) {
     this.plot('EDIT', data);
 };
@@ -83,9 +82,6 @@ it.customer.config = {
 
 it.customer.list = it.customer.list || {};
 
-
-
-
 it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
     
     var _isOneInited = false,
@@ -129,7 +125,6 @@ it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewCon
     };
 
 };
-
 
 it.customer.list.actions = it.customer.list.actions || {};
 
@@ -290,6 +285,11 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
             selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
         },
+        
+        _hideAllSelectCells = function () {
+            container$.find('.rowSelect').closest('td').addClass('hide');
+            container$.find('.selectall').closest('th').addClass('hide');
+        },
 
         _getSelectedItems = function () {
             var selectedIds = [];
@@ -305,13 +305,21 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
     return {
         get$: _get$,
         addHandlers: _addHandlers,
-        getSelectedItems: _getSelectedItems
+        getSelectedItems: _getSelectedItems,
+        hideAllSelectCells: _hideAllSelectCells
     };
 };
 
 it.customer.list.initMinimalCustomersUI = function(customerContainer$, searchElem$) {
     var customerList = this.newInstance(customerContainer$, searchElem$, this.defaultViewConfig);
     customerList.refresh();
+    return customerList;
+};
+
+
+it.customer.list.plotMinimalCustomersUI = function(customers, customerContainer$, searchElem$) {
+    var customerList = this.newInstance(customerContainer$, searchElem$, this.defaultViewConfig);
+    customerList.plotAll(customers);
     return customerList;
 };
 

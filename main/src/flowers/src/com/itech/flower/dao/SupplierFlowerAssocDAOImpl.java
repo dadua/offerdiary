@@ -33,7 +33,7 @@ implements SupplierFlowerAssocDAO {
 
 	@Override
 	public List<Supplier> getSuppliersFor(Flower flower) {
-		String hql = "select flower from " + getEntityClassName() + " where flower = :flower ";
+		String hql = "select supplier from " + getEntityClassName() + " where flower = :flower ";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("flower", flower);
 		List result = query.list();

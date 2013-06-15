@@ -4,6 +4,8 @@
 		<title>Flowers</title>
 		
 		<script src="flowers/js/flower.js" type="text/javascript"></script>
+		<script src="customers/js/customers.js" type="text/javascript"></script>
+		<script src="suppliers/js/suppliers.js" type="text/javascript"></script>
 		<script src="common/js/entityplotter.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">
@@ -17,6 +19,8 @@
 			    var _onFlowerViewEdit = function () {
 					$('.flowerDetailOptions li').removeClass('active');
 					$('.viewEditFlower').removeClass('hide').addClass('active');
+					it.flower.fetchCustomers(flower);
+					it.flower.fetchSuppliers(flower);
 			    };
 			    
 			    $('#eachFlowerContainerFluid').on('entitySaved', function (e) {
@@ -50,6 +54,30 @@
 	                	<div class="row-fluid">
 	                		<div id="eachFlowerContainerFluid" class="span6 container-fluid">
 	                		
+	                		</div>
+	                	</div>
+	                	<br/>
+	                	<div class="row-fluid viewEditFlower hide">
+	                		<div  class="span6 container-fluid">
+	                			<div class="row-fluid customersWithThisFlower">
+	                			Customers dealing in this flower
+	                			</div>
+	                			<br/>
+	                			<div class="row-fluid">
+	                				<div id="customersContainerFluid" class="container-fluid">
+	                				</div>
+	                			</div>
+	                		</div>
+	                		
+	                		<div  class="span6 container-fluid">
+	                			<div class="row-fluid suppliersWithThisFlower">
+	                			Suppliers dealing in this flower
+	                			</div>
+	                			<br/>
+	                			<div class="row-fluid">
+	                				<div id="suppliersContainerFluid" class="container-fluid">
+	                				</div>
+	                			</div>
 	                		</div>
 	                	</div>
 	                </div>
