@@ -45,7 +45,11 @@ it.flower.list = it.flower.list || {};
 
 it.flower.list.newInstance = function (containerId$, searchQueryElem$) {
     
-    var fetchAll = function() {
+    var container$ = $(containerId$),
+
+    searchQuery$ = $(searchQueryElem$),
+    
+    fetchAll = function() {
         var q = searchQuery$.val();
 
         $.post('getFlowers.do', {q:q}, function (respJSON) {
@@ -54,6 +58,8 @@ it.flower.list.newInstance = function (containerId$, searchQueryElem$) {
         });
     },
 
+    _isOneInited = false,
+    
     plotAll = function (flowers) {
         var _$ = view.get$(flowers);
         container$.html(_$);
@@ -64,15 +70,11 @@ it.flower.list.newInstance = function (containerId$, searchQueryElem$) {
         }
     }, 
 
-    _isOneInited = false,
 
     addOneHandlers = function () {
         searchQuery$.keyup(fetchAll);
     },
 
-    container$ = $(containerId$),
-
-    searchQuery$ = $(searchQueryElem$),
 
     view = this.newViewInstance(containerId$);
 
@@ -91,7 +93,11 @@ it.flower.list.actions = it.flower.list.actions || {};
 
 it.flower.list.actions.newRemoverInstance = function (flowersList, removeConfirm$) {
 
-    var _postDeleteAll = function () {
+    var _removeConfirm$ = $(removeConfirm$),
+
+    _flowersList = flowersList,
+    
+    _postDeleteAll = function () {
         var idsToDelete = _flowersList.view.getSelectedItems();
         $('#deleteConfirmModal').modal('hide');
         $.post('deleteFlowers.do', {flower_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
@@ -122,11 +128,8 @@ it.flower.list.actions.newRemoverInstance = function (flowersList, removeConfirm
     _addHandlers = function() {
         _removeConfirm$.click(_removeAfterConfirm);
         $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
-    },
+    };
 
-    _removeConfirm$ = $(removeConfirm$),
-
-    _flowersList = flowersList;
 
     return {
         showConfirmPopup: _removeAfterConfirm,
@@ -137,14 +140,18 @@ it.flower.list.actions.newRemoverInstance = function (flowersList, removeConfirm
 
 it.flower.list.actions.newAddToCustomerInstance = function (flowersList, addFlowerToCustomerInvoker$) {
 
-    var _fetchAllCustomers = function () {
+    var addCustomersList = undefined,
+    
+    _addFlowerToCustomer$ = $(addFlowerToCustomerInvoker$),
+
+    _flowersList = flowersList,
+    
+    _fetchAllCustomers = function () {
         addCustomersList = it.customer.list.initMinimalCustomersUI('#customerAddContainer', '#searchCustomerQuery');
 
         var addFlowerToCustomerModal$ = $('#addFlowerToCustomerModal');
         addFlowerToCustomerModal$.modal('show');
     },
-
-    addCustomersList = null,
 
     _associateFlowersToCustomer = function (customers) {
         var flowerIdsToAssociateWith = _flowersList.view.getSelectedItems();
@@ -173,11 +180,7 @@ it.flower.list.actions.newAddToCustomerInstance = function (flowersList, addFlow
     _addHandlers = function() {
         _addFlowerToCustomer$.click(_showCustomersToAddModal);
         $('#addFlowerToCustomerModal').find('.deleteSelectedItemsBtn').click(_associateFlowersToCustomer);
-    },
-
-    _addFlowerToCustomer$ = $(addFlowerToCustomerInvoker$),
-
-    _flowersList = flowersList;
+    };
 
     return {
         showCustomersToAdd: _showCustomersToAddModal,
@@ -187,8 +190,11 @@ it.flower.list.actions.newAddToCustomerInstance = function (flowersList, addFlow
 
 it.flower.list.newViewInstance = function (containerId$) {
     var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name"></a></td><td class="color"></td></tr>',
+    
         _tableWithHeadingHtml = '<table class="table entityTable table-striped table-condensed table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th><th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
 
+        container$ = $(containerId$),
+        
         _get$ = function (flowers) {
             var _$ = $(_tableWithHeadingHtml),
                 _tableBody$ = _$.find('tbody'),
@@ -226,9 +232,8 @@ it.flower.list.newViewInstance = function (containerId$) {
                 }
             });
             return selectedIds;
-        },
+        };
 
-        container$ = $(containerId$);
 
     return {
         get$: _get$,
@@ -236,6 +241,56 @@ it.flower.list.newViewInstance = function (containerId$) {
         getSelectedItems: _getSelectedItems
     };
 };
+
+it.flower.list.actions.newAddToSupplierInstance = function (flowersList, addFlowerToSupplierInvoker$) {
+
+    var addSuppliersList = undefined,
+    
+    _addFlowerToSupplier$ = $(addFlowerToSupplierInvoker$),
+
+    _flowersList = flowersList,
+    
+    _fetchAllSuppliers = function () {
+        addSuppliersList = it.supplier.list.initMinimalSuppliersUI('#supplierAddContainer', '#searchSupplierQuery');
+
+        var addFlowerToSupplierModal$ = $('#addFlowerToSupplierModal');
+        addFlowerToSupplierModal$.modal('show');
+    },
+
+    _associateFlowersToSupplier = function (suppliers) {
+        var flowerIdsToAssociateWith = _flowersList.view.getSelectedItems();
+        var supplierIdsToAssociateWith = addSuppliersList.view.getSelectedItems();
+        
+        $('#addFlowerToSupplierModal').modal('hide');
+        $.post('addFlowersToSuppliers.do', {
+            flower_ids: JSON.stringify(flowerIdsToAssociateWith),
+            supplier_ids: JSON.stringify(supplierIdsToAssociateWith)
+        }, function(respJSON) {
+            var resp = $.parseJSON(respJSON);
+        });
+    },
+
+    _showSuppliersToAddModal = function() {
+        var flowerIdsToAddToSupplier = _flowersList.view.getSelectedItems();
+
+        if (flowerIdsToAddToSupplier.length === 0) {
+            it.actionInfo.showInfoActionMsg('No Flower Items selected to be added to Supplier');
+        } else {
+            _fetchAllSuppliers();
+        }
+
+    },
+
+    _addHandlers = function() {
+        _addFlowerToSupplier$.click(_showSuppliersToAddModal);
+        $('#addFlowerToSupplierModal').find('.deleteSelectedItemsBtn').click(_associateFlowersToSupplier);
+    };
+
+    return {
+        showSuppliersToAdd: _showSuppliersToAddModal,
+        addHandlers: _addHandlers
+    };
+}; 
 
 it.flower.list.initFlowersUI = function (flowers) {
 
@@ -247,4 +302,7 @@ it.flower.list.initFlowersUI = function (flowers) {
 
     var addToCustomerActionHandler = this.actions.newAddToCustomerInstance(flowerList, $('.actionsPanel').find('.addFlowerToCustomerAction'));
     addToCustomerActionHandler.addHandlers();
+    
+    var addToSupplierActionHandler = this.actions.newAddToSupplierInstance(flowerList, $('.actionsPanel').find('.addFlowerToSupplierAction'));
+    addToSupplierActionHandler.addHandlers();
 };

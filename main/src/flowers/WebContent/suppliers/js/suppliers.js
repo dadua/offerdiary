@@ -49,13 +49,19 @@ it.supplier.config = {
         name: 'phoneNo',
         displayKey: 'Phone Number',
         type: 'string', 
-        sRequired: false
+        isRequired: false
     },
     {
         name: 'alternativePhoneNo',
         displayKey: 'Phone Number 2',
         type: 'string', 
-        sRequired: false
+        isRequired: false
+    },
+    {
+        name: 'place',
+        displayKey: 'Place',
+        type: 'string', 
+        isRequired: false
     },
         /*
         {
@@ -69,7 +75,7 @@ it.supplier.config = {
         name: 'address',
         displayKey: 'Address',
         type: 'string', 
-        sRequired: false
+        isRequired: false
     }
     ]
 
@@ -78,9 +84,15 @@ it.supplier.config = {
 
 it.supplier.list = it.supplier.list || {};
 
-it.supplier.list.newInstance = function (containerId$, searchQueryElem$) {
+it.supplier.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
     
-    var fetchAll = function() {
+    var container$ = $(containerId$),
+
+    searchQuery$ = $(searchQueryElem$),
+
+    _isOneInited = false,
+
+    fetchAll = function() {
         var q = searchQuery$.val();
 
         $.post('getSuppliers.do', {q:q}, function (respJSON) {
@@ -99,17 +111,11 @@ it.supplier.list.newInstance = function (containerId$, searchQueryElem$) {
         }
     }, 
 
-    _isOneInited = false,
-
     addOneHandlers = function () {
         searchQuery$.keyup(fetchAll);
     },
 
-    container$ = $(containerId$),
-
-    searchQuery$ = $(searchQueryElem$),
-
-    view = this.newViewInstance(containerId$);
+    view = this.newViewInstance(containerId$, viewConfig);
 
     return {
         plotAll: plotAll,
@@ -126,7 +132,11 @@ it.supplier.list.actions = it.supplier.list.actions || {};
 
 it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeConfirm$) {
 
-    var _postDeleteAll = function () {
+    var _removeConfirm$ = $(removeConfirm$),
+
+    _suppliersList = suppliersList,
+    
+    _postDeleteAll = function () {
         var idsToDelete = _suppliersList.view.getSelectedItems();
         $('#deleteConfirmModal').modal('hide');
         $.post('deleteSuppliers.do', {supplier_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
@@ -157,11 +167,7 @@ it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeCon
     _addHandlers = function() {
         _removeConfirm$.click(_removeAfterConfirm);
         $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
-    },
-
-    _removeConfirm$ = $(removeConfirm$),
-
-    _suppliersList = suppliersList;
+    };
 
     return {
         showConfirmPopup: _removeAfterConfirm,
@@ -170,26 +176,100 @@ it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeCon
     };
 }; 
 
-it.supplier.list.newViewInstance = function (containerId$) {
-    var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+it.supplier.list.defaultViewConfig = [
+    {
+        key: 'name',
+        displayKey: 'Name',
+        cellCustomHtml: '<a href="#" class="name"></a>',
+        customCellPlotCb: function (data, row$) {
+            $(row$).find('.name').html(data.name).attr('href', 'supplier.do?id='+data.id);
+        }
+    },
+    {
+        key: 'uniqueId',
+        displayKey: 'Supplier Id',
+        isViewOnly: true
+    },
+    {
+        key: 'billingName',
+        displayKey: 'Billing Name'
+    },
+    {
+        key: 'phoneNo',
+        displayKey:'Phone No.'
+    },
+    {
+        key: 'place',
+        displayKey: 'Place'
+    }
+];
+        
+it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
+
+   var _eachRowHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td><td><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+        
+        _eachRowEmptyHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
 
+        _tableWithHeadingEmptyHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr class="headingRow"><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></th></tr> </thead> <tbody></tbody></table>',
+
+        _viewConfig = viewConfig,
+        
+        container$ = $(containerId$);
+
+        _getEachRow$ = function (supplier) {
+            var _tr$ = null;
+            if ($.isArray(_viewConfig)) {
+                _tr$ = $(_eachRowEmptyHtml);
+                $.each(_viewConfig, function(i, config) {
+                    if (typeof config.cellCustomHtml === 'string') {
+                        var _cellContents$ = $('<td>'+config.cellCustomHtml +'</td>');
+                        _tr$.append(_cellContents$);
+                        if (typeof config.customCellPlotCb === 'function') {
+                            config.customCellPlotCb(supplier, _tr$);
+                        }
+                        _tr$.append(_cellContents$);
+
+                    } else {
+                        _tr$.append('<td class="'+config.key+'">'+supplier[config.key]||'' +'</td>');
+                    }
+                });
+            } else {
+                _tr$ = $(_eachRowHtml);
+                _tr$.find('.name').html(supplier.name).attr('href', 'supplier.do?id='+ supplier.id);
+                _tr$.find('.bankAccountDetails').html(supplier.bankAccountDetails);
+                _tr$.find('.billingName').html(supplier.billingName);
+                _tr$.find('.phoneNo').html(supplier.phoneNo);
+                _tr$.find('.alternativePhoneNo').html(supplier.alternativePhoneNo);
+                _tr$.find('.address').html(supplier.address);
+            }
+            _tr$.data('entityId', supplier.id);
+            return _tr$;
+        },
+
+        _getTableWithHeading$ = function () {
+            var _$ = null;
+            if ($.isArray(_viewConfig)) {
+                _$ = $(_tableWithHeadingEmptyHtml);
+                $.each(_viewConfig, function(i, config) {
+                    _$.find('.headingRow').append('<th>'+config.displayKey +'</td>');
+                });
+            } else {
+                _$ = $(_tableWithHeadingHtml);
+            }
+            return _$;
+        },
+    
+
         _get$ = function (suppliers) {
-            var _$ = $(_tableWithHeadingHtml),
+            var _$ = $(_getTableWithHeading$()),
                 _tableBody$ = _$.find('tbody'),
                 currentSupplier = {};
 
             for (var i=0; i< suppliers.length; i++) {
                 currentSupplier = suppliers[i];
-                var _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(currentSupplier.name).attr('href', 'supplier.do?id='+ currentSupplier.id);
-                _tr$.find('.bankAccountDetails').html(currentSupplier.bankAccountDetails);
-                _tr$.find('.billingName').html(currentSupplier.billingName);
-                _tr$.find('.phoneNo').html(currentSupplier.phoneNo);
-                _tr$.find('.alternativePhoneNo').html(currentSupplier.alternativePhoneNo);
-                _tr$.find('.address').html(currentSupplier.address);
-                _tr$.data('entityId', currentSupplier.id);
+                var _tr$ = _getEachRow$(currentSupplier);
                 _tableBody$.append(_tr$);
             }
             return _$;
@@ -216,9 +296,8 @@ it.supplier.list.newViewInstance = function (containerId$) {
                 }
             });
             return selectedIds;
-        },
+        };
 
-        container$ = $(containerId$);
 
     return {
         get$: _get$,
@@ -234,4 +313,11 @@ it.supplier.list.initSuppliersUI = function (suppliers) {
 
     var removeActionHandler = this.actions.newRemoverInstance(supplierList, $('.actionsPanel').find('.deleteSelectedAction'));
     removeActionHandler.addHandlers();
+};
+
+
+it.supplier.list.initMinimalSuppliersUI = function(supplierContainer$, searchElem$) {
+    var supplierList = this.newInstance(supplierContainer$, searchElem$, this.defaultViewConfig);
+    supplierList.refresh();
+    return supplierList;
 };

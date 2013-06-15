@@ -88,7 +88,13 @@ it.customer.list = it.customer.list || {};
 
 it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
     
-    var fetchAll = function() {
+    var _isOneInited = false,
+    
+    container$ = $(containerId$),
+
+    searchQuery$ = $(searchQueryElem$),
+    
+    fetchAll = function() {
         var q = searchQuery$.val();
 
         $.post('getCustomers.do', {q:q}, function (respJSON) {
@@ -107,15 +113,10 @@ it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewCon
         }
     }, 
 
-    _isOneInited = false,
 
     addOneHandlers = function () {
         searchQuery$.keyup(fetchAll);
     },
-
-    container$ = $(containerId$),
-
-    searchQuery$ = $(searchQueryElem$),
 
     view = this.newViewInstance(containerId$, viewConfig);
 
@@ -134,7 +135,11 @@ it.customer.list.actions = it.customer.list.actions || {};
 
 it.customer.list.actions.newRemoverInstance = function (customersList, removeConfirm$) {
 
-    var _postDeleteAll = function () {
+    var _removeConfirm$ = $(removeConfirm$),
+
+    _customersList = customersList,
+    
+    _postDeleteAll = function () {
         var idsToDelete = _customersList.view.getSelectedItems();
         $('#deleteConfirmModal').modal('hide');
         $.post('deleteCustomers.do', {customer_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
@@ -165,11 +170,8 @@ it.customer.list.actions.newRemoverInstance = function (customersList, removeCon
     _addHandlers = function() {
         _removeConfirm$.click(_removeAfterConfirm);
         $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
-    },
+    };
 
-    _removeConfirm$ = $(removeConfirm$),
-
-    _customersList = customersList;
 
     return {
         showConfirmPopup: _removeAfterConfirm,
@@ -215,6 +217,10 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
 
         _tableWithHeadingEmptyHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr class="headingRow"><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></th></tr> </thead> <tbody></tbody></table>',
+        
+        container$ = $(containerId$),
+        
+        _viewConfig = viewConfig,
 
         _getEachRow$ = function (customer) {
             var _tr$ = null;
@@ -293,11 +299,8 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
                 }
             });
             return selectedIds;
-        },
+        };
 
-        _viewConfig = viewConfig;
-
-        container$ = $(containerId$);
 
     return {
         get$: _get$,
