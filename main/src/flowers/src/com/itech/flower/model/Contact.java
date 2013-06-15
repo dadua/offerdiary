@@ -52,6 +52,9 @@ public abstract class Contact extends PersistableEntity{
 	@Column(name="CONTACT_TYPE")
 	protected ContactType type;
 
+	@Column(name="BALANCE")
+	private float balance;
+
 	public enum ContactType {
 		CUSTOMER, SUPPLIER, EMPLOYEE, OTHER
 	}
@@ -148,5 +151,13 @@ public abstract class Contact extends PersistableEntity{
 
 	public void setType(ContactType type) {
 		this.type = type;
+	}
+
+	public float getBalance() {
+		return balance;
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
 	}
 }

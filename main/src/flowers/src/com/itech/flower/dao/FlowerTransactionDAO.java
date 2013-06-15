@@ -15,4 +15,6 @@ public interface FlowerTransactionDAO extends  CommonBaseDAO<FlowerTransaction>{
 	public List<FlowerTransaction> getFlowerTransactionsFor(Supplier supplier);
 
 	public List<FlowerTransaction> getFlowerTransactionsFor(Flower flower);
+
+	public List<FlowerTransaction> getFlowerTransactionsFor(String searchString);
 }

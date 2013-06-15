@@ -33,6 +33,8 @@
 	
 	<bean id="itech.customerAction" class="com.itech.web.CustomerAction" scope="prototype" parent="itech.CommonAction">
 	</bean>
-    
+
+	<bean id="itech.transactionAction" class="com.itech.web.TransactionAction" scope="prototype" parent="itech.CommonAction">
+	</bean>    
  </beans>
     

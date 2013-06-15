@@ -12,6 +12,10 @@ import com.itech.flower.model.Supplier;
 
 public class FlowerTransactionDAOImpl extends
 HibernateCommonBaseDAO<FlowerTransaction> implements FlowerTransactionDAO {
+	@Override
+	protected Class getEntityClass() {
+		return FlowerTransaction.class;
+	}
 
 	@Override
 	public List<FlowerTransaction> getFlowerTransactionsFor(Customer customer) {
@@ -33,16 +37,17 @@ HibernateCommonBaseDAO<FlowerTransaction> implements FlowerTransactionDAO {
 
 	@Override
 	public List<FlowerTransaction> getFlowerTransactionsFor(Flower flower) {
-		String hql = "select ft from " + getEntityClassName() + " ft inner join flower where contact.id = :id";
-		Query query = getSession().createQuery(hql);
-		query.setParameter("id", supplier.getId());
-		List result = query.list();
-		return result;
+		return null;
 	}
 
+
 	@Override
-	protected Class getEntityClass() {
-		return FlowerTransaction.class;
+	public List<FlowerTransaction> getFlowerTransactionsFor(String searchString) {
+		String hql = "select ft from " + getEntityClassName() + " ft where ft.uniqueId like :searchString or ft.contact.name like :searchString";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("searchString", searchString);
+		List result = query.list();
+		return result;
 	}
 
 
