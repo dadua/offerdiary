@@ -36,10 +36,10 @@
 	
 	<bean id="itech.flowerManager" class="com.itech.flower.manager.FlowerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="flowerDAO" ref="itech.flowerDAO"/>
+    	<property name="customerManager" ref="itech.customerManager"/>
     	<property name="customerFlowerAssocDAO" ref="itech.customerFlowerDAO"/>
     	<property name="supplierFlowerAssocDAO" ref="itech.supplierFlowerDAO"/>  
     	<property name="contactDAO" ref="itech.contactDAO"/>
-    	<property name="customerManager" ref="itech.customerManager"/>
     	<property name="supplierManager" ref="itech.supplierManager"/>
 	</bean>
 	

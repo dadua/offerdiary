@@ -57,26 +57,36 @@ it.customer.config = {
         name: 'phoneNo',
         displayKey: 'Phone Number',
         type: 'string', 
-        sRequired: false
+        isRequired: false
     },
     {
         name: 'alternativePhoneNo',
         displayKey: 'Phone Number 2',
         type: 'string', 
-        sRequired: false
+        isRequired: false
+    },
+    {
+        name: 'place',
+        displayKey: 'Place',
+        helpMsg: 'This is a shorter version of address',
+        type: 'string',
+        isRequired: false
     },
     {
         name: 'address',
         displayKey: 'Address',
         type: 'string', 
-        sRequired: false
+        isRequired: false
     }
     ]
 };
 
 it.customer.list = it.customer.list || {};
 
-it.customer.list.newInstance = function (containerId$, searchQueryElem$) {
+
+
+
+it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
     
     var fetchAll = function() {
         var q = searchQuery$.val();
@@ -107,7 +117,7 @@ it.customer.list.newInstance = function (containerId$, searchQueryElem$) {
 
     searchQuery$ = $(searchQueryElem$),
 
-    view = this.newViewInstance(containerId$);
+    view = this.newViewInstance(containerId$, viewConfig);
 
     return {
         plotAll: plotAll,
@@ -168,26 +178,95 @@ it.customer.list.actions.newRemoverInstance = function (customersList, removeCon
     };
 }; 
 
-it.customer.list.newViewInstance = function (containerId$) {
-    var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"</td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+it.customer.list.defaultViewConfig = [
+    {
+        key: 'name',
+        displayKey: 'Name',
+        cellCustomHtml: '<a href="#" class="name"></a>',
+        customCellPlotCb: function (data, row$) {
+            $(row$).find('.name').html(data.name).attr('href', 'customer.do?id='+data.id);
+        }
+    },
+
+    {
+        key: 'uniqueId',
+        displayKey: 'Customer Id',
+        isViewOnly: true
+    },
+    {
+        key: 'billingName',
+        displayKey: 'Billing Name'
+    },
+    {
+        key: 'phoneNo',
+        displayKey:'Phone No.'
+    },
+    {
+        key: 'place',
+        displayKey: 'Place'
+    }
+];
+
+it.customer.list.newViewInstance = function (containerId$, viewConfig) {
+    var _eachRowHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td><td><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+        
+        _eachRowEmptyHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
 
+        _tableWithHeadingEmptyHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr class="headingRow"><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></th></tr> </thead> <tbody></tbody></table>',
+
+        _getEachRow$ = function (customer) {
+            var _tr$ = null;
+            if ($.isArray(_viewConfig)) {
+                _tr$ = $(_eachRowEmptyHtml);
+                $.each(_viewConfig, function(i, config) {
+                    if (typeof config.cellCustomHtml === 'string') {
+                        var _cellContents$ = $('<td>'+config.cellCustomHtml +'</td>');
+                        _tr$.append(_cellContents$);
+                        if (typeof config.customCellPlotCb === 'function') {
+                            config.customCellPlotCb(customer, _tr$);
+                        }
+                        _tr$.append(_cellContents$);
+
+                    } else {
+                        _tr$.append('<td class="'+config.key+'">'+customer[config.key]||'' +'</td>');
+                    }
+                });
+            } else {
+                _tr$ = $(_eachRowHtml);
+                _tr$.find('.name').html(customer.name).attr('href', 'customer.do?id='+ customer.id);
+                _tr$.find('.bankAccountDetails').html(customer.bankAccountDetails);
+                _tr$.find('.billingName').html(customer.billingName);
+                _tr$.find('.phoneNo').html(customer.phoneNo);
+                _tr$.find('.alternativePhoneNo').html(customer.alternativePhoneNo);
+                _tr$.find('.address').html(customer.address);
+            }
+            _tr$.data('entityId', customer.id);
+            return _tr$;
+        },
+
+        _getTableWithHeading$ = function () {
+            var _$ = null;
+            if ($.isArray(_viewConfig)) {
+                _$ = $(_tableWithHeadingEmptyHtml);
+                $.each(_viewConfig, function(i, config) {
+                    _$.find('.headingRow').append('<th>'+config.displayKey +'</td>');
+                });
+            } else {
+                _$ = $(_tableWithHeadingHtml);
+            }
+            return _$;
+        },
+
         _get$ = function (customers) {
-            var _$ = $(_tableWithHeadingHtml),
+            var _$ = _getTableWithHeading$(),
                 _tableBody$ = _$.find('tbody'),
                 currentCustomer = {};
 
             for (var i=0; i< customers.length; i++) {
                 currentCustomer = customers[i];
-                var _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(currentCustomer.name).attr('href', 'customer.do?id='+ currentCustomer.id);
-                _tr$.find('.bankAccountDetails').html(currentCustomer.bankAccountDetails);
-                _tr$.find('.billingName').html(currentCustomer.billingName);
-                _tr$.find('.phoneNo').html(currentCustomer.phoneNo);
-                _tr$.find('.alternativePhoneNo').html(currentCustomer.alternativePhoneNo);
-                _tr$.find('.address').html(currentCustomer.address);
-                _tr$.data('entityId', currentCustomer.id);
+                var _tr$ = _getEachRow$(currentCustomer);
                 _tableBody$.append(_tr$);
             }
             return _$;
@@ -216,6 +295,8 @@ it.customer.list.newViewInstance = function (containerId$) {
             return selectedIds;
         },
 
+        _viewConfig = viewConfig;
+
         container$ = $(containerId$);
 
     return {
@@ -223,6 +304,12 @@ it.customer.list.newViewInstance = function (containerId$) {
         addHandlers: _addHandlers,
         getSelectedItems: _getSelectedItems
     };
+};
+
+it.customer.list.initMinimalCustomersUI = function(customerContainer$, searchElem$) {
+    var customerList = this.newInstance(customerContainer$, searchElem$, this.defaultViewConfig);
+    customerList.refresh();
+    return customerList;
 };
 
 it.customer.list.initCustomersUI = function (customers) {

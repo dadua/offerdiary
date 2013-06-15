@@ -2,6 +2,7 @@
 
 		<title>Flowers</title>
 		<script src="flowers/js/flower.js" type="text/javascript"></script>
+		<script src="customers/js/customers.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('.allFlowers').addClass('active'); $('#flowersTab').addClass('active');
@@ -49,6 +50,7 @@
 			                        </a>
 			                        <ul class="actionsPanel dropdown-menu">
 			                        	<li> <a class="deleteSelectedAction" href="#">Delete Selected</a></li>
+			                        	<li> <a class="addFlowerToCustomerAction" href="#">Add Flowers to Customer</a></li>
 			                        </ul>
 		                        </div>
 	                        </div>
@@ -68,6 +70,38 @@
 			</div>
 			<div class="templates">
 				<%@include file="/common/pages/deleteConfirmModal.jsp" %>
+				<div id="addFlowerToCustomerModal" data-backdrop="true" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFlowerToCustomerLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h4 class="addFlowerToCustomerLabel">
+						Add Flower to Customer
+						</h4>
+					</div>
+					<div class="modal-body">
+						<div>
+							<div class="container-fluid">
+								<div class="row-fluid">
+									<div class="form-search span6 offset3">
+			                            <div class="input-append">
+			                                <input id="searchCustomerQuery" class="customerSearch search-query input-xlarge" type="text" placeholder="Search Customer" />
+			                                <button class="btn"><i class="icon-search"></i></button>
+			                            </div>
+			                        </div>
+								</div>
+								<br/>
+								<div class="row-fluid">
+									<div id="customerAddContainer" class="container-fluid">
+									
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						<button class="deleteSelectedItemsBtn btn btn-primary">Add to Customer</button>
+					</div>
+				</div>
 			</div>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>
