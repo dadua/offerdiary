@@ -33,7 +33,7 @@ CustomerFlowerAssocDAO {
 
 	@Override
 	public List<Customer> getCustomersFor(Flower flower) {
-		String hql = "select flower from " + getEntityClassName() + " where flower = :flower ";
+		String hql = "select customer from " + getEntityClassName() + " where flower = :flower ";
 		Query query = getSession().createQuery(hql);
 		query.setParameter("flower", flower);
 		List result = query.list();

@@ -287,6 +287,11 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
             selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
         },
+        
+        _hideAllSelectCells = function () {
+            container$.find('.rowSelect').closest('td').addClass('hide');
+            container$.find('.selectall').closest('th').addClass('hide');
+        },
 
         _getSelectedItems = function () {
             var selectedIds = [];
@@ -302,7 +307,8 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
     return {
         get$: _get$,
         addHandlers: _addHandlers,
-        getSelectedItems: _getSelectedItems
+        getSelectedItems: _getSelectedItems,
+        hideAllSelectCells: _hideAllSelectCells
     };
 };
 
@@ -319,5 +325,12 @@ it.supplier.list.initSuppliersUI = function (suppliers) {
 it.supplier.list.initMinimalSuppliersUI = function(supplierContainer$, searchElem$) {
     var supplierList = this.newInstance(supplierContainer$, searchElem$, this.defaultViewConfig);
     supplierList.refresh();
+    return supplierList;
+};
+
+
+it.supplier.list.plotMinimalSuppliersUI = function(suppliers, supplierContainer$, searchElem$) {
+    var supplierList = this.newInstance(supplierContainer$, searchElem$, this.defaultViewConfig);
+    supplierList.plotAll(suppliers);
     return supplierList;
 };
