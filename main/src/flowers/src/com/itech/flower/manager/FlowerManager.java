@@ -28,7 +28,7 @@ public interface FlowerManager {
 
 	public CustomerFlowerAssoc getAssocFor(Flower flower, Customer customer);
 	public CustomerFlowerAssoc addFlowerToCustomer(Flower flower, Customer customer);
-	public void addFlowerToCustomer(List<Long> flowerIds, List<Long> customerIds);
+	public void addFlowersToCustomers(List<Long> flowerIds, List<Long> customerIds);
 	public List<Flower> getFlowersForCustomer(Customer customer);
 	public List<Customer> getCustomersForFlower(Flower flower);
 

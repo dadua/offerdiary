@@ -132,6 +132,21 @@ public class FlowerAction extends CommonAction {
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="addFlowersToCustomers.do")
+	public Response addFlowersToCustomers(HttpServletRequest req, HttpServletResponse resp) {
+		List<Long> flowerIds = getIdListFromRequest(req, WebConstatnts.FLOWER_IDS_PARAM);
+		List<Long> customerIds = getIdListFromRequest(req, WebConstatnts.CUSTOMER_IDS_PARAM);
+
+		getFlowerManager().addFlowersToCustomers(flowerIds, customerIds);
+		Result<String> result = new Result<String>();
+		result.setMsg("Successfully added " + flowerIds.size() + " flowers to " + customerIds.size() + " customers");
+		Type resultStringType = new TypeToken<Result<String>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultStringType);
+	}
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowersForSupplier.do")
 	public Response getFlowersForSupplier (HttpServletRequest req, HttpServletResponse resp) {

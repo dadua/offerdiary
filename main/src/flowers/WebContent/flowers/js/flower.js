@@ -135,6 +135,56 @@ it.flower.list.actions.newRemoverInstance = function (flowersList, removeConfirm
     };
 }; 
 
+it.flower.list.actions.newAddToCustomerInstance = function (flowersList, addFlowerToCustomerInvoker$) {
+
+    var _fetchAllCustomers = function () {
+        addCustomersList = it.customer.list.initMinimalCustomersUI('#customerAddContainer', '#searchCustomerQuery');
+
+        var addFlowerToCustomerModal$ = $('#addFlowerToCustomerModal');
+        addFlowerToCustomerModal$.modal('show');
+    },
+
+    addCustomersList = null,
+
+    _associateFlowersToCustomer = function (customers) {
+        var flowerIdsToAssociateWith = _flowersList.view.getSelectedItems();
+        var customerIdsToAssociateWith = addCustomersList.view.getSelectedItems();
+        
+        $('#addFlowerToCustomerModal').modal('hide');
+        $.post('addFlowersToCustomers.do', {
+            flower_ids: JSON.stringify(flowerIdsToAssociateWith),
+            customer_ids: JSON.stringify(customerIdsToAssociateWith)
+        }, function(respJSON) {
+            var resp = $.parseJSON(respJSON);
+        });
+    },
+
+    _showCustomersToAddModal = function() {
+        var flowerIdsToAddToCustomer = _flowersList.view.getSelectedItems();
+
+        if (flowerIdsToAddToCustomer.length === 0) {
+            it.actionInfo.showInfoActionMsg('No Flower Items selected to be added to Customer');
+        } else {
+            _fetchAllCustomers();
+        }
+
+    },
+
+    _addHandlers = function() {
+        _addFlowerToCustomer$.click(_showCustomersToAddModal);
+        $('#addFlowerToCustomerModal').find('.deleteSelectedItemsBtn').click(_associateFlowersToCustomer);
+    },
+
+    _addFlowerToCustomer$ = $(addFlowerToCustomerInvoker$),
+
+    _flowersList = flowersList;
+
+    return {
+        showCustomersToAdd: _showCustomersToAddModal,
+        addHandlers: _addHandlers
+    };
+}; 
+
 it.flower.list.newViewInstance = function (containerId$) {
     var _eachRowHtml = '<tr><td><input type="checkbox" class="rowSelect"></input></td><td ><a class="name"></a></td><td class="color"></td></tr>',
         _tableWithHeadingHtml = '<table class="table entityTable table-striped table-condensed table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th><th> Name </th> <th>Color</th> </tr> </thead> <tbody></tbody></table>',
@@ -194,4 +244,7 @@ it.flower.list.initFlowersUI = function (flowers) {
 
     var removeActionHandler = this.actions.newRemoverInstance(flowerList, $('.actionsPanel').find('.deleteSelectedAction'));
     removeActionHandler.addHandlers();
+
+    var addToCustomerActionHandler = this.actions.newAddToCustomerInstance(flowerList, $('.actionsPanel').find('.addFlowerToCustomerAction'));
+    addToCustomerActionHandler.addHandlers();
 };

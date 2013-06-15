@@ -122,7 +122,7 @@ public class FlowerManagerImpl extends CommonBaseManager implements FlowerManage
 	}
 
 	@Override
-	public void addFlowerToCustomer(List<Long> flowerIds,
+	public void addFlowersToCustomers(List<Long> flowerIds,
 			List<Long> customerIds) {
 		for (Long flowerId : flowerIds) {
 			Flower flower = getFlowerDAO().getById(flowerId);
