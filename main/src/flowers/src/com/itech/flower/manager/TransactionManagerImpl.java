@@ -90,8 +90,6 @@ TransactionManager {
 	}
 
 
-
-
 	@Override
 	public void addOrUpdateCashTransaction(CashTransaction cashTransaction) {
 		if (cashTransaction.getContact() != null) {
@@ -104,10 +102,12 @@ TransactionManager {
 		float balance = contact.getBalance();
 
 		if (CashFlowType.IN.equals(cashTransaction.getFlowType())) {
-			balance = balance - cashTransaction.getAmmount();
+			balance = balance - cashTransaction.getAmount();
 		} else if (CashFlowType.OUT.equals(cashTransaction.getFlowType())) {
-			balance = balance + cashTransaction.getAmmount();
+			balance = balance + cashTransaction.getAmount();
 		}
+
+		contact.setBalance(balance);
 
 		getContactDAO().addOrUpdate(contact);
 	}
@@ -172,7 +172,5 @@ TransactionManager {
 	public void setCashTransactionDAO(CashTransactionDAO cashTransactionDAO) {
 		this.cashTransactionDAO = cashTransactionDAO;
 	}
-
-
 
 }
