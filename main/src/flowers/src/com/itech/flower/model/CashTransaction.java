@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.itech.common.db.PersistableEntity;
@@ -37,6 +39,11 @@ public class CashTransaction extends  PersistableEntity{
 
 	@Column(name="COMMENT")
 	private String comment;
+
+
+	@ManyToOne
+	@JoinColumn(name="CONTACT_ID")
+	private Contact contact;
 
 	@Column(name="DATE")
 	private Date date;
@@ -98,5 +105,13 @@ public class CashTransaction extends  PersistableEntity{
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
 	}
 }
