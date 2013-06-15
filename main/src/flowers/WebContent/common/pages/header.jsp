@@ -1,4 +1,6 @@
+<%--
 		<%@include file="/common/pages/fontsInclude.html" %>
+		 --%>
 		<%@include file="/common/pages/jqueryAllInclude.jsp" %>
 		<%@include file="/common/pages/bootstrapHeadInclude.jsp" %>
 		<link rel="shortcut icon" href="favicon.ico" />

@@ -16,15 +16,21 @@
 			    it.flower.plot(operation, flower);
 			    $('#flowersTab').addClass('active');
 			    
-			    var _onFlowerViewEdit = function () {
+			    var _onFlowerViewEdit = function (_flowerp) {
+					var _flower = {};
+					if (typeof _flowerp === 'object' && typeof _flowerp.id == 'number') {
+					    _flower = _flowerp;
+					} else {
+					    _flower = flower;
+					}
 					$('.flowerDetailOptions li').removeClass('active');
 					$('.viewEditFlower').removeClass('hide').addClass('active');
-					it.flower.fetchCustomers(flower);
-					it.flower.fetchSuppliers(flower);
+					it.flower.fetchCustomers(_flower);
+					it.flower.fetchSuppliers(_flower);
 			    };
 			    
-			    $('#eachFlowerContainerFluid').on('entitySaved', function (e) {
-					_onFlowerViewEdit();
+			    $('#eachFlowerContainerFluid').on('entitySaved', function (e, id) {
+					_onFlowerViewEdit({id: id});
 			    });
 			    
 			    if (operation === 'ADDNEW') {
