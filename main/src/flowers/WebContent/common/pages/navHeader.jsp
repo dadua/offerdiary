@@ -50,6 +50,10 @@
 				       			<a href="customers.do" style="color:#0088CC;">Customers</a>
 			       			</li>
 			       			<li class="divider-vertical"></li>
+			       			<li class="featureTab" id="transactionsTab" >
+				       			<a href="transactions.do" style="color:#0088CC;">Transactions</a>
+			       			</li>
+			       			<li class="divider-vertical"></li>
 						</ul>
 					</c:if>
         		</div>

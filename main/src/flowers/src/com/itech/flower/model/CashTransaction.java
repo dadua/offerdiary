@@ -27,15 +27,15 @@ public class CashTransaction extends  PersistableEntity{
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="FLOW_TYEP")
+	@Column(name="FLOW_TYPE")
 	private CashFlowType flowType;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="TRANSACTION_TYPE")
 	private CashTransactionType transactionType;
 
-	@Column(name="AMMOUNT")
-	private float ammount;
+	@Column(name="AMOUNT")
+	private float amount;
 
 	@Column(name="COMMENT")
 	private String comment;
@@ -83,14 +83,6 @@ public class CashTransaction extends  PersistableEntity{
 		this.transactionType = transactionType;
 	}
 
-	public float getAmmount() {
-		return ammount;
-	}
-
-	public void setAmmount(float ammount) {
-		this.ammount = ammount;
-	}
-
 	public String getComment() {
 		return comment;
 	}
@@ -113,5 +105,13 @@ public class CashTransaction extends  PersistableEntity{
 
 	public void setContact(Contact contact) {
 		this.contact = contact;
+	}
+
+	public void setAmount(float amount) {
+		this.amount = amount;
+	}
+
+	public float getAmount() {
+		return amount;
 	}
 }

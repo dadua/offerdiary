@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 
 import com.google.gson.Gson;
@@ -22,11 +23,12 @@ import com.itech.flower.model.FlowerTransaction;
 import com.itech.flower.model.Supplier;
 import com.itech.web.constants.EachEntityConstants;
 
+@Controller
 public class TransactionAction extends CommonAction {
 
 
 
-	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="addFlowerTransaction.do")
 	public Response addFlowerTransaction (HttpServletRequest req, HttpServletResponse resp) {
 		String flowerTransactionJson = req.getParameter(WebConstatnts.FLOWER_TRANSACTION_PARAM_KEY);
@@ -51,7 +53,7 @@ public class TransactionAction extends CommonAction {
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="flowerTransactions.do")
 	public Response getFlowerTransactions (HttpServletRequest req, HttpServletResponse resp) {
 		String searchString = req.getParameter(WebConstatnts.SEARCH_STRING_PARAM_KEY);
@@ -89,7 +91,7 @@ public class TransactionAction extends CommonAction {
 	}
 
 
-	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="addCashTransaction.do")
 	public Response addCashTransaction (HttpServletRequest req, HttpServletResponse resp) {
 		String cashTransactionJson = req.getParameter(WebConstatnts.CASH_TRANSACTION_PARAM_KEY);
@@ -150,7 +152,4 @@ public class TransactionAction extends CommonAction {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
-
-
-
 }
