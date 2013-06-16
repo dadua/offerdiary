@@ -12,4 +12,12 @@ public class UrlConstants {
 	public static final String CUSTOMERS_JSP_RELATIVE_URL = "customers/pages/customers.jsp";
 	public static final String CUSTOMERS_EACH_CUSTOMER_JSP = "customers/pages/eachCustomer.jsp";
 
+
+	public static final String FLOWER_TRANSACTIONS_JSP_RELATIVE_URL = "transactions/pages/flowerTransactions.jsp";
+	public static final String FLOWER_TRANSACTION_EACH_TRANSACTION_JSP = "transactions/pages/eachFlowerTransaction.jsp";
+
+
+	public static final String CASH_TRANSACTIONS_JSP_RELATIVE_URL = "transactions/pages/cashTransactions.jsp";
+	public static final String CASH_TRANSACTION_EACH_TRANSACTION_JSP = "transactions/pages/eachCashTransaction.jsp";
+
 }

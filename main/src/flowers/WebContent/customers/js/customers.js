@@ -281,14 +281,31 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
             }
         },
 
+        
+        _entityClickedHandler = function (e) {
+            var this$ = $(this),
+                entityId = this$.closest('tr').data('entityId');
+
+            if (this$.is(':checked')) {
+                container$.trigger('entityInListSelected', [entityId, this$]);
+            } else {
+                container$.trigger('entityInListUnSelected', [entityId, this$]);
+            }
+        },
+
         _addHandlers = function () {
             selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
+            container$.find('.entityTable').find('.rowSelect').click(_entityClickedHandler);
+        },
+
+        _hideSelectUnselectAllOption = function () {
+            container$.find('.selectall').closest('th').addClass('hide');
         },
         
-        _hideAllSelectCells = function () {
+        _hideEntitySelectCells = function () {
             container$.find('.rowSelect').closest('td').addClass('hide');
-            container$.find('.selectall').closest('th').addClass('hide');
+            _hideSelectUnselectAllOption();
         },
 
         _getSelectedItems = function () {
@@ -306,7 +323,8 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
         get$: _get$,
         addHandlers: _addHandlers,
         getSelectedItems: _getSelectedItems,
-        hideAllSelectCells: _hideAllSelectCells
+        hideAllSelectCells: _hideEntitySelectCells,
+        hideSelectAllOption: _hideSelectUnselectAllOption
     };
 };
 

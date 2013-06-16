@@ -1,38 +1,45 @@
 var it = it || {};
-it.supplier = it.supplier || {};
+it.flowertx = it.flowertx || {};
 
-it.supplier.plot = function (operation, data) {
+it.flowertx.plot = function (operation, data) {
     var config = this.config;
     it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation}));
 };
 
-it.supplier.plotView = function (data) {
+it.flowertx.plotView = function (data) {
     this.plot('VIEW', data);
 };
 
-
-it.supplier.plotEdit = function (data) {
+it.flowertx.plotEdit = function (data) {
     this.plot('EDIT', data);
 };
 
-it.supplier.plotAddNew = function () {
+it.flowertx.plotAddNew = function () {
     this.plot('ADDNEW', {});
 };
 
-it.supplier.config = {
-    parentElemSelector: '#eachSupplierContainerFluid', 
-    getUrl: 'getSupplierDetails.do',
-    saveUrl: 'addSupplier.do', 
-    title: 'Supplier',
+it.flowertx.config = {
+    parentElemSelector: '#eachCustomerContainerFluid', 
+    getUrl: 'getCustomerDetails.do',
+    saveUrl: 'addCustomer.do', 
+    title: 'Customer',
     plotConfigs: [
         {
         name: 'name',
         displayKey: 'Name',
         type: 'string', 
-        helpMsg: 'Supplier Name cant be empty',
+        helpMsg: 'Customer Name cant be empty',
         isRequired: true
     },
+    /*
+    {
+        name: 'nickName',
+        displayKey: 'Nick Name',
+        isRequired: false,
+        type: 'string'
 
+    },
+    */
     {
         name: 'bankAccountDetails',
         displayKey: 'Bank Account Details',
@@ -60,17 +67,10 @@ it.supplier.config = {
     {
         name: 'place',
         displayKey: 'Place',
-        type: 'string', 
+        helpMsg: 'This is a shorter version of address',
+        type: 'string',
         isRequired: false
     },
-        /*
-        {
-            name: 'nickName',
-            displayKey: 'Nick Name',
-            isRequired: false,
-            type: 'string'
-        },
-        */
     {
         name: 'address',
         displayKey: 'Address',
@@ -78,31 +78,29 @@ it.supplier.config = {
         isRequired: false
     }
     ]
-
 };
- 
 
-it.supplier.list = it.supplier.list || {};
+it.flowertx.list = it.flowertx.list || {};
 
-it.supplier.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
+it.flowertx.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
     
-    var container$ = $(containerId$),
+    var _isOneInited = false,
+    
+    container$ = $(containerId$),
 
     searchQuery$ = $(searchQueryElem$),
-
-    _isOneInited = false,
-
+    
     fetchAll = function() {
         var q = searchQuery$.val();
 
-        $.post('getSuppliers.do', {q:q}, function (respJSON) {
+        $.post('getCustomers.do', {q:q}, function (respJSON) {
             var resp = $.parseJSON(respJSON);
             plotAll(resp.result);
         });
     },
 
-    plotAll = function (suppliers) {
-        var _$ = view.get$(suppliers);
+    plotAll = function (flowertxs) {
+        var _$ = view.get$(flowertxs);
         container$.html(_$);
         view.addHandlers();
         if (!_isOneInited) {
@@ -110,6 +108,7 @@ it.supplier.list.newInstance = function (containerId$, searchQueryElem$, viewCon
             _isOneInited = true;
         }
     }, 
+
 
     addOneHandlers = function () {
         searchQuery$.keyup(fetchAll);
@@ -127,28 +126,27 @@ it.supplier.list.newInstance = function (containerId$, searchQueryElem$, viewCon
 
 };
 
+it.flowertx.list.actions = it.flowertx.list.actions || {};
 
-it.supplier.list.actions = it.supplier.list.actions || {};
-
-it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeConfirm$) {
+it.flowertx.list.actions.newRemoverInstance = function (flowertxsList, removeConfirm$) {
 
     var _removeConfirm$ = $(removeConfirm$),
 
-    _suppliersList = suppliersList,
+    _flowertxsList = flowertxsList,
     
     _postDeleteAll = function () {
-        var idsToDelete = _suppliersList.view.getSelectedItems();
+        var idsToDelete = _flowertxsList.view.getSelectedItems();
         $('#deleteConfirmModal').modal('hide');
-        $.post('deleteSuppliers.do', {supplier_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
+        $.post('deleteCustomers.do', {flowertx_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
             var resp = $.parseJSON(respJSON);
             if (resp.success) {
-                _suppliersList.refresh();
+                _flowertxsList.refresh();
             }
         });
     },
 
     _removeAfterConfirm = function () {
-        var idsToDelete = _suppliersList.view.getSelectedItems();
+        var idsToDelete = _flowertxsList.view.getSelectedItems();
         _showDeleteConfirmPopup(idsToDelete);
     },
 
@@ -169,6 +167,7 @@ it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeCon
         $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
     };
 
+
     return {
         showConfirmPopup: _removeAfterConfirm,
         allSelected: _postDeleteAll,
@@ -176,18 +175,19 @@ it.supplier.list.actions.newRemoverInstance = function (suppliersList, removeCon
     };
 }; 
 
-it.supplier.list.defaultViewConfig = [
+it.flowertx.list.defaultViewConfig = [
     {
         key: 'name',
         displayKey: 'Name',
         cellCustomHtml: '<a href="#" class="name"></a>',
         customCellPlotCb: function (data, row$) {
-            $(row$).find('.name').html(data.name).attr('href', 'supplier.do?id='+data.id);
+            $(row$).find('.name').html(data.name).attr('href', 'flowertx.do?id='+data.id);
         }
     },
+
     {
         key: 'uniqueId',
-        displayKey: 'Supplier Id',
+        displayKey: 'Customer Id',
         isViewOnly: true
     },
     {
@@ -203,22 +203,21 @@ it.supplier.list.defaultViewConfig = [
         displayKey: 'Place'
     }
 ];
-        
-it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
 
-   var _eachRowHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td><td><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
+it.flowertx.list.newViewInstance = function (containerId$, viewConfig) {
+    var _eachRowHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td><td><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
         
         _eachRowEmptyHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td></tr>',
         
         _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
 
         _tableWithHeadingEmptyHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr class="headingRow"><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></th></tr> </thead> <tbody></tbody></table>',
-
-        _viewConfig = viewConfig,
         
-        container$ = $(containerId$);
+        container$ = $(containerId$),
+        
+        _viewConfig = viewConfig,
 
-        _getEachRow$ = function (supplier) {
+        _getEachRow$ = function (flowertx) {
             var _tr$ = null;
             if ($.isArray(_viewConfig)) {
                 _tr$ = $(_eachRowEmptyHtml);
@@ -227,24 +226,24 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
                         var _cellContents$ = $('<td>'+config.cellCustomHtml +'</td>');
                         _tr$.append(_cellContents$);
                         if (typeof config.customCellPlotCb === 'function') {
-                            config.customCellPlotCb(supplier, _tr$);
+                            config.customCellPlotCb(flowertx, _tr$);
                         }
                         _tr$.append(_cellContents$);
 
                     } else {
-                        _tr$.append('<td class="'+config.key+'">'+supplier[config.key]||'' +'</td>');
+                        _tr$.append('<td class="'+config.key+'">'+flowertx[config.key]||'' +'</td>');
                     }
                 });
             } else {
                 _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(supplier.name).attr('href', 'supplier.do?id='+ supplier.id);
-                _tr$.find('.bankAccountDetails').html(supplier.bankAccountDetails);
-                _tr$.find('.billingName').html(supplier.billingName);
-                _tr$.find('.phoneNo').html(supplier.phoneNo);
-                _tr$.find('.alternativePhoneNo').html(supplier.alternativePhoneNo);
-                _tr$.find('.address').html(supplier.address);
+                _tr$.find('.name').html(flowertx.name).attr('href', 'flowertx.do?id='+ flowertx.id);
+                _tr$.find('.bankAccountDetails').html(flowertx.bankAccountDetails);
+                _tr$.find('.billingName').html(flowertx.billingName);
+                _tr$.find('.phoneNo').html(flowertx.phoneNo);
+                _tr$.find('.alternativePhoneNo').html(flowertx.alternativePhoneNo);
+                _tr$.find('.address').html(flowertx.address);
             }
-            _tr$.data('entityId', supplier.id);
+            _tr$.data('entityId', flowertx.id);
             return _tr$;
         },
 
@@ -260,15 +259,15 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
             }
             return _$;
         },
-    
-        _get$ = function (suppliers) {
-            var _$ = $(_getTableWithHeading$()),
-                _tableBody$ = _$.find('tbody'),
-                currentSupplier = {};
 
-            for (var i=0; i< suppliers.length; i++) {
-                currentSupplier = suppliers[i];
-                var _tr$ = _getEachRow$(currentSupplier);
+        _get$ = function (flowertxs) {
+            var _$ = _getTableWithHeading$(),
+                _tableBody$ = _$.find('tbody'),
+                currentCustomer = {};
+
+            for (var i=0; i< flowertxs.length; i++) {
+                currentCustomer = flowertxs[i];
+                var _tr$ = _getEachRow$(currentCustomer);
                 _tableBody$.append(_tr$);
             }
             return _$;
@@ -282,30 +281,14 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
             }
         },
 
-        _entityClickedHandler = function (e) {
-            var this$ = $(this),
-                entityId = this$.closest('tr').data('entityId');
-
-            if (this$.is(':checked')) {
-                container$.trigger('entityInListSelected', [entityId, this$]);
-            } else {
-                container$.trigger('entityInListUnSelected', [entityId, this$]);
-            }
-        },
-
         _addHandlers = function () {
-            var selectAll$ = container$.find('.entityTable').find('.selectall');
+            selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
-            container$.find('.entityTable').find('.rowSelect').click(_entityClickedHandler);
-        },
-
-        _hideSelectUnselectAllOption = function () {
-            container$.find('.selectall').closest('th').addClass('hide');
         },
         
-        _hideEntitySelectCells = function () {
+        _hideAllSelectCells = function () {
             container$.find('.rowSelect').closest('td').addClass('hide');
-            _hideSelectUnselectAllOption();
+            container$.find('.selectall').closest('th').addClass('hide');
         },
 
         _getSelectedItems = function () {
@@ -323,30 +306,28 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
         get$: _get$,
         addHandlers: _addHandlers,
         getSelectedItems: _getSelectedItems,
-        hideAllSelectCells: _hideEntitySelectCells,
-        hideSelectAllOption: _hideSelectUnselectAllOption
+        hideAllSelectCells: _hideAllSelectCells
     };
 };
 
-it.supplier.list.initSuppliersUI = function (suppliers) {
+it.flowertx.list.initMinimalCustomersUI = function(flowertxContainer$, searchElem$) {
+    var flowertxList = this.newInstance(flowertxContainer$, searchElem$, this.defaultViewConfig);
+    flowertxList.refresh();
+    return flowertxList;
+};
 
-    var supplierList = this.newInstance('#supplierContainerFluid', '#searchQuery');
-    supplierList.plotAll(suppliers);
 
-    var removeActionHandler = this.actions.newRemoverInstance(supplierList, $('.actionsPanel').find('.deleteSelectedAction'));
+it.flowertx.list.plotMinimalCustomersUI = function(flowertxs, flowertxContainer$, searchElem$) {
+    var flowertxList = this.newInstance(flowertxContainer$, searchElem$, this.defaultViewConfig);
+    flowertxList.plotAll(flowertxs);
+    return flowertxList;
+};
+
+it.flowertx.list.initCustomersUI = function (flowertxs) {
+
+    var flowertxList = this.newInstance('#flowertxContainerFluid', '#searchQuery');
+    flowertxList.plotAll(flowertxs);
+
+    var removeActionHandler = this.actions.newRemoverInstance(flowertxList, $('.actionsPanel').find('.deleteSelectedAction'));
     removeActionHandler.addHandlers();
-};
-
-
-it.supplier.list.initMinimalSuppliersUI = function(supplierContainer$, searchElem$) {
-    var supplierList = this.newInstance(supplierContainer$, searchElem$, this.defaultViewConfig);
-    supplierList.refresh();
-    return supplierList;
-};
-
-
-it.supplier.list.plotMinimalSuppliersUI = function(suppliers, supplierContainer$, searchElem$) {
-    var supplierList = this.newInstance(supplierContainer$, searchElem$, this.defaultViewConfig);
-    supplierList.plotAll(suppliers);
-    return supplierList;
 };
