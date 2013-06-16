@@ -2,6 +2,7 @@ package com.itech.flower.manager;
 
 import java.util.List;
 
+import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.flower.dao.CashTransactionDAO;
 import com.itech.flower.dao.ContactDAO;
@@ -39,6 +40,8 @@ TransactionManager {
 				continue;
 			}
 			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
+			transactionEntry.setUniqueId(CommonUtilities.getUniqueId(transactionEntry));
+			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
 			Flower flower = getFlowerDAO().getById(transactionEntry.getFlower().getId());
 			transactionEntry.setFlower(flower);
 			if (FlowerTransactionType.IN.equals(flowerTransaction.getTransactionType())) {
@@ -59,6 +62,8 @@ TransactionManager {
 
 		getContactDAO().addOrUpdate(contact);
 
+		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
+		flowerTransaction.setUniqueId(CommonUtilities.getUniqueId(flowerTransaction));
 		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
 
 	}
