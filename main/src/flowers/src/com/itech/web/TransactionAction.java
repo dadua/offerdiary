@@ -61,10 +61,17 @@ public class TransactionAction extends CommonAction {
 		Gson gson = new Gson ();
 		Type flowerTransactionType = new TypeToken<List<FlowerTransaction>>() {
 		}.getType();
-		String customersJSON = gson.toJson(flowerTransactions, flowerTransactionType);
-		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, customersJSON);
-		return new Forward(UrlConstants.CUSTOMERS_JSP_RELATIVE_URL);
+		String flowerTransactionsJSON = gson.toJson(flowerTransactions, flowerTransactionType);
+		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, flowerTransactionsJSON);
+		return new Forward(UrlConstants.FLOWER_TRANSACTIONS_JSP_RELATIVE_URL);
 	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="transactions.do")
+	public Response getTransactions(HttpServletRequest req, HttpServletResponse resp) {
+		return getFlowerTransactions(req, resp);
+	}
+
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowerTransactionsForCustomer.do")
@@ -116,7 +123,7 @@ public class TransactionAction extends CommonAction {
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="cashTransactions.do")
 	public Response getCashTransactions (HttpServletRequest req, HttpServletResponse resp) {
 		String searchString = req.getParameter(WebConstatnts.SEARCH_STRING_PARAM_KEY);
@@ -124,9 +131,9 @@ public class TransactionAction extends CommonAction {
 		Gson gson = new Gson ();
 		Type cashTransactionType = new TypeToken<List<CashTransaction>>() {
 		}.getType();
-		String customersJSON = gson.toJson(cashTransactions, cashTransactionType);
-		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, customersJSON);
-		return new Forward(UrlConstants.CUSTOMERS_JSP_RELATIVE_URL);
+		String cashTransactionsJSON = gson.toJson(cashTransactions, cashTransactionType);
+		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, cashTransactionsJSON);
+		return new Forward(UrlConstants.CASH_TRANSACTIONS_JSP_RELATIVE_URL);
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)

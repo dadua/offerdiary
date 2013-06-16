@@ -10,7 +10,6 @@
 			text-align:center;
 		}
 		.brandImage {
-			height: 50px;
 		}
 		
 		.featureTabs {

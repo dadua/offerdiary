@@ -247,9 +247,22 @@ it.flower.list.newViewInstance = function (containerId$) {
             }
         },
 
+        _entitySelectedHandler = function (e) {
+            var this$ = $(this),
+                entityId = this$.closest('tr').data('entityId');
+
+            if (this$.is(':checked')) {
+                container$.trigger('entityInListSelected', [entityId, this$]);
+            } else {
+                container$.trigger('entityInListUnSelected', [entityId, this$]);
+            }
+        },
+
         _addHandlers = function () {
-            selectAll$ = container$.find('.entityTable').find('.selectall');
+            var selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
+
+            container$.find('.entityTable').find('.rowSelect').click(_entitySelectedHandler);
         },
 
         _getSelectedItems = function () {
@@ -272,47 +285,47 @@ it.flower.list.newViewInstance = function (containerId$) {
 
 it.flower.list.actions.newAddToSupplierInstance = function (flowersList, addFlowerToSupplierInvoker$) {
 
-    var addSuppliersList = undefined,
+    var addSuppliersList,
     
-    _addFlowerToSupplier$ = $(addFlowerToSupplierInvoker$),
+        _addFlowerToSupplier$ = $(addFlowerToSupplierInvoker$),
 
-    _flowersList = flowersList,
-    
-    _fetchAllSuppliers = function () {
-        addSuppliersList = it.supplier.list.initMinimalSuppliersUI('#supplierAddContainer', '#searchSupplierQuery');
-
-        var addFlowerToSupplierModal$ = $('#addFlowerToSupplierModal');
-        addFlowerToSupplierModal$.modal('show');
-    },
-
-    _associateFlowersToSupplier = function (suppliers) {
-        var flowerIdsToAssociateWith = _flowersList.view.getSelectedItems();
-        var supplierIdsToAssociateWith = addSuppliersList.view.getSelectedItems();
+        _flowersList = flowersList,
         
-        $('#addFlowerToSupplierModal').modal('hide');
-        $.post('addFlowersToSuppliers.do', {
-            flower_ids: JSON.stringify(flowerIdsToAssociateWith),
-            supplier_ids: JSON.stringify(supplierIdsToAssociateWith)
-        }, function(respJSON) {
-            var resp = $.parseJSON(respJSON);
-        });
-    },
+        _fetchAllSuppliers = function () {
+            addSuppliersList = it.supplier.list.initMinimalSuppliersUI('#supplierAddContainer', '#searchSupplierQuery');
 
-    _showSuppliersToAddModal = function() {
-        var flowerIdsToAddToSupplier = _flowersList.view.getSelectedItems();
+            var addFlowerToSupplierModal$ = $('#addFlowerToSupplierModal');
+            addFlowerToSupplierModal$.modal('show');
+        },
 
-        if (flowerIdsToAddToSupplier.length === 0) {
-            it.actionInfo.showInfoActionMsg('No Flower Items selected to be added to Supplier');
-        } else {
-            _fetchAllSuppliers();
-        }
+        _associateFlowersToSupplier = function (suppliers) {
+            var flowerIdsToAssociateWith = _flowersList.view.getSelectedItems();
+            var supplierIdsToAssociateWith = addSuppliersList.view.getSelectedItems();
+            
+            $('#addFlowerToSupplierModal').modal('hide');
+            $.post('addFlowersToSuppliers.do', {
+                flower_ids: JSON.stringify(flowerIdsToAssociateWith),
+                supplier_ids: JSON.stringify(supplierIdsToAssociateWith)
+            }, function(respJSON) {
+                var resp = $.parseJSON(respJSON);
+            });
+        },
 
-    },
+        _showSuppliersToAddModal = function() {
+            var flowerIdsToAddToSupplier = _flowersList.view.getSelectedItems();
 
-    _addHandlers = function() {
-        _addFlowerToSupplier$.click(_showSuppliersToAddModal);
-        $('#addFlowerToSupplierModal').find('.deleteSelectedItemsBtn').click(_associateFlowersToSupplier);
-    };
+            if (flowerIdsToAddToSupplier.length === 0) {
+                it.actionInfo.showInfoActionMsg('No Flower Items selected to be added to Supplier');
+            } else {
+                _fetchAllSuppliers();
+            }
+
+        },
+
+        _addHandlers = function() {
+            _addFlowerToSupplier$.click(_showSuppliersToAddModal);
+            $('#addFlowerToSupplierModal').find('.deleteSelectedItemsBtn').click(_associateFlowersToSupplier);
+        };
 
     return {
         showSuppliersToAdd: _showSuppliersToAddModal,

@@ -30,6 +30,10 @@ public class CashTransaction extends  PersistableEntity{
 	@Column(name="FLOW_TYPE")
 	private CashFlowType flowType;
 
+
+	@Column(name="UNIQUE_ID")
+	private String uniqueId;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name="TRANSACTION_TYPE")
 	private CashTransactionType transactionType;
@@ -113,5 +117,13 @@ public class CashTransaction extends  PersistableEntity{
 
 	public float getAmount() {
 		return amount;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
 	}
 }

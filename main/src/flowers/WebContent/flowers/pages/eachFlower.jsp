@@ -65,7 +65,7 @@
 	                	<br/>
 	                	<div class="row-fluid viewEditFlower hide">
 	                		<div  class="span6 container-fluid">
-	                			<div class="row-fluid customersWithThisFlower">
+	                			<div class="row-fluid bluishText customersWithThisFlower">
 	                			Customers dealing in this flower
 	                			</div>
 	                			<br/>
@@ -76,7 +76,7 @@
 	                		</div>
 	                		
 	                		<div  class="span6 container-fluid">
-	                			<div class="row-fluid suppliersWithThisFlower">
+	                			<div class="row-fluid bluishText suppliersWithThisFlower">
 	                			Suppliers dealing in this flower
 	                			</div>
 	                			<br/>
