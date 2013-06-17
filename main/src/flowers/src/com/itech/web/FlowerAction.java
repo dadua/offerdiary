@@ -95,7 +95,7 @@ public class FlowerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowerDetails.do")
 	public Response getFlowerDetails (HttpServletRequest req, HttpServletResponse resp) {
-		String flowerId = req.getParameter(WebConstatnts.FLOWER_ID_PARAM);
+		String flowerId = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
 		Flower flower = getFlowerManager().getFlowerById(Long.parseLong(flowerId));
 		Result<Flower> result = new Result<Flower>(flower);
 		Type resultStringType = new TypeToken<Result<Flower>>() {

@@ -62,8 +62,6 @@
 	                    <div class="row-fluid customerDetail contactDetail hide">
 	                		<div id="eachCustomerContainerFluid" class="span8 container-fluid">
 	                		</div>
-	                		
-	                		</div>
 	                	</div>
 	                    
 	                    <div class="row-fluid supplierDetail contactDetail hide">

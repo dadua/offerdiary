@@ -87,7 +87,8 @@ it.supplier.config = {
  
 it.supplier.getFlowers = function (supplierId, onFlowersFetchCb) {
 
-    $.getJSON('getFlowersForSupplier.do', {supplier_id: supplierId}, function(resp) {
+    $.post('getFlowersForSupplier.do', {supplier_id: supplierId + ''}, function(respJSON) {
+    	var resp = $.parseJSON(respJSON);
         if (typeof onFlowersFetchCb === 'function') {
             onFlowersFetchCb(resp.result);
         }
@@ -314,12 +315,12 @@ it.supplier.list.newViewInstance = function (containerId$, viewConfig) {
         },
 
         _hideSelectUnselectAllOption = function () {
-            container$.find('.selectall').closest('th').addClass('hide');
+            container$.find('.selectall').addClass('hide');
         },
         
         _hideEntitySelectCells = function () {
             container$.find('.rowSelect').closest('td').addClass('hide');
-            _hideSelectUnselectAllOption();
+            container$.find('.selectall').closest('th').addClass('hide');
         },
 
         _getSelectedItems = function () {
