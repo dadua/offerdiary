@@ -11,6 +11,7 @@
 		
 		<script type="text/javascript">
 			$(function () {
+			    $('#transactionsTab').addClass('active');
 			    it.flowertx.plotAddNew ({});
 			    
 			    /*
@@ -18,7 +19,6 @@
 			    	customer = $.parseJSON(customerJson),
 			    	operation = '${operation}';
 			    it.customer.plot(operation, customer);
-			    $('#transactionsTab').addClass('active');
 			    
 			    var _onCustomerViewEdit = function () {
 					$('.customerDetailOptions li').removeClass('active');
@@ -72,7 +72,9 @@
 	                	
 	                	<%@include file="/transactions/pages/flowerTransactionEntries.jsp" %>
 	                	
-
+	                	<div id="saveTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Save Transaction</div>
+	                	<div id="editTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Edit Transaction</div>
+	                	<div id="cancelTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Cancel Transaction</div>
 			             
 			             <div class="row-fluid navigationControls hide">
 	                	

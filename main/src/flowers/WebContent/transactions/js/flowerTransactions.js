@@ -240,11 +240,16 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
         _showEditInUi = function () {
             txEntriesTable$.find('.valueViewElement').addClass('hide');
             txEntriesTable$.find('.valueEntryElement').removeClass('hide');
+            $('.txOperation').addClass('hide');
+            $('#saveTransaction').removeClass('hide');
+            //$('#cancelTransaction').removeClass('hide');
         },
 
         _showViewInUi = function () {
             txEntriesTable$.find('.valueViewElement').removeClass('hide');
             txEntriesTable$.find('.valueEntryElement').addClass('hide');
+            $('.txOperation').addClass('hide');
+            //$('#editTransaction').removeClass('hide');
         },
         
         _allowOnlyNumber = function(event) {
@@ -256,8 +261,13 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
                 (event.keyCode >= 35 && event.keyCode <= 39)) {
                      // let it happen, don't do anything
                      return;
-            }
-            else if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) { //// Ensure that it is a number and stop the keypress
+            } else if (event.keyCode == 190) {
+                if($(this).val().indexOf('.')===-1) {
+                    return;
+                } else {
+                    event.preventDefault();
+                }
+            } else if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) { //// Ensure that it is a number and stop the keypress
                 event.preventDefault(); 
             }
         },
@@ -271,13 +281,23 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
 
             totalCost$.val(unitPrice$.val()*quantity$.val());
         },
-        
-        _onAddNewRow = function (e) {
-        	plot();
+
+        _checkAddRemoveState = function () {
+            var txRows$ = txEntriesTable$.find('.eachTransactionEntryRow');
+            if (txRows$.size() == 1) {
+                txRows$.find('.removeTxEntry').addClass('invisible');
+            } else {
+                txRows$.find('.removeTxEntry').removeClass('invisible');
+            }
         },
-        
+
+        _onAddNewRow = function (e) {
+            plot();
+        },
+
         _onRemoveRow = function (e) {
-        	$(this).closest('tr').remove();
+            $(this).closest('tr').remove();
+            _checkAddRemoveState();
         },
         
         addHandlers = function () {
@@ -300,6 +320,8 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
 
             txEntriesTable$.find('.valueEntryElement').find('[name="date"]').datepicker({"dateFormat": 'dd/mm/yy'}).datepicker("setDate", new Date());
             
+            _checkAddRemoveState();
+            
 
         },
 
@@ -316,6 +338,10 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
             } else {
                 _showViewInUi();
             }
+        },
+        
+        _getDataFromDom = function () {
+        	
         };
 
         plot(flowerTxEntries);
@@ -324,7 +350,4 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
         plot: plot
     };
 
-};
-
-it.flowertx.newViewInstance = function () {
 };
