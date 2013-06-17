@@ -1,4 +1,4 @@
-				<div class="row-fluid">
+				<div class="row-fluid hide flowerTxEntryRowFluid">
 					<div class="container-fluid">
 						<h4 class="bluishText">Enter Transaction Details</h4>
 					
