@@ -1,7 +1,7 @@
  
 	                    <div class="row-fluid supplierChoose contactChoose hide">
 	                    	<div class="span6">
-		                    	<h3 class="bluishText">Choose Supplier for entering transaction</h3>
+		                    	<h4 class="bluishText">Choose Supplier for entering transaction</h4>
 	                    	</div>
 	                    	<div class="span5">
 		                        <br/>
