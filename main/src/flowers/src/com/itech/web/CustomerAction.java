@@ -86,7 +86,7 @@ public class CustomerAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCustomerDetails.do")
 	public Response getCustomerDetails (HttpServletRequest req, HttpServletResponse resp) {
-		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
+		String customerId = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		Result<Customer> result = new Result<Customer>(customer);
 		Type resultStringType = new TypeToken<Result<Customer>>() {

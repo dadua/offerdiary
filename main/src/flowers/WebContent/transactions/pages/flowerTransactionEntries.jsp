@@ -1,3 +1,7 @@
+				<div class="row-fluid">
+					<div class="container-fluid">
+						<h4 class="bluishText">Enter Transaction Details</h4>
+					
 	                	<table id="transactionEntries" class="table table-striped table-condensed table-bordered txTable">
 		                	<thead>
 			                	<tr class="headingRow">
@@ -16,10 +20,12 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <select name="flower" class="valueEntrySelectBox">
+								                <select name="flower" class="valueEntrySelectBox input-medium">
+								                	<%--
 								                	<option value="flower_id">
 								                		flower.name
 								                	</option>
+								                	 --%>
 								                </select>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
@@ -32,7 +38,7 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <input name="date" type="text" class="valueEntryInputTextBox"></input>
+								                <input name="date" type="text" class="valueEntryInputTextBox input-medium"></input>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
 						                </div>
@@ -42,7 +48,7 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <input name="price" type="text" class="valueEntryInputTextBox"></input>
+								                <input name="price" type="text" class="valueEntryInputTextBox input-small"></input>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
 						                </div>
@@ -52,7 +58,7 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <input name="quantity" type="text" class="valueEntryInputTextBox"></input>
+								                <input name="quantity" type="text" class="valueEntryInputTextBox input-small"></input>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
 						                </div>
@@ -69,10 +75,12 @@
 					                </td>
 					                
 					                <td class="valueEntryElement hide">
-					                	<button class="btn addNewTxEntry">+</button>
-					                	<button class="btn removeTxEntry">-</button>
+					                	<button class="btn btn-mini addNewTxEntry">+</button>
+					                	<button class="btn btn-mini removeTxEntry">-</button>
 					                </td>
 			                	</tr>
 			                </tbody>
 			             </table>
+		             </div>
+	             </div>
 			             

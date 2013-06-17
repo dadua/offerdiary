@@ -13,7 +13,7 @@
 		                        </div>
 	                        </div>
 	                    </div>
-	                    <br class="supplierChoose contactChoose hide/>
+	                    <br class="supplierChoose contactChoose hide" />
 	
 	                    <div class="row-fluid supplierChoose contactChoose hide">
 	                        <div id="supplierChooseContainerFluid" class="container-fluid">

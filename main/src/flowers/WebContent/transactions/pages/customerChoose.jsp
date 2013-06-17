@@ -1,4 +1,4 @@
-						<div class="row-fluid customerChoose contactChoose hide">
+                            <div class="row-fluid customerChoose contactChoose hide">
 	                    	<div class="span6">
 		                    	<h3 class="bluishText">Choose Customer for entering transaction</h3>
 	                    	</div>

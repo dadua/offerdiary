@@ -67,6 +67,7 @@ it.flowertx.newInstance = function(operation, data) {
 
             customerListContainer$.on('entityPlotted', function(e, customers) {
                 customersList.view.hideSelectAllOption();
+                $('.customerChoose').removeClass('hide');
                 customerListContainer$.on('entityInListSelected', function(e, customerId) {
                     plotCustomer(customerId);
                 });
@@ -82,6 +83,7 @@ it.flowertx.newInstance = function(operation, data) {
 
             supplierListContainer$.on('entityPlotted', function(e, suppliers) {
                 suppliersList.view.hideSelectAllOption();
+                $('.supplierChoose').removeClass('hide');
                 supplierListContainer$.on('entityInListSelected', function(e, supplierId) {
                     plotSupplier(supplierId);
                 });
@@ -89,17 +91,21 @@ it.flowertx.newInstance = function(operation, data) {
         },
 
         plotCustomer = function(customerId, flowerTxEntries) {
-            it.entityplotter.newInstance($.extend({}, {parentElemSelector: customerDetailContainer$, data: {id: customerId}, refreshFromServer: true, operation: 'VIEW'},
-                                                  it.supplier.config));
+            it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachCustomerContainerFluid', data: {id: customerId}, refreshFromServer: true, operation: 'VIEW'},
+                                                  it.customer.config));
+            $('.customerChoose').addClass('hide');
+            $('.customerDetail').removeClass('hide');
+
             customerDetailContainer$.data('entityId', customerId);
             it.customer.getFlowers(customerId, function(flowers) {
                 plotFlowerTxEntries(flowers, flowerTxEntries);
+                
             });
 
         },
 
         plotSupplier = function (supplierId, flowerTxEntries) {
-            it.entityplotter.newInstance($.extend({}, {parentElemSelector: supplierDetailContainer$, data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
+            it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachSupplierContainerFluid', data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
                                                   it.supplier.config));
             supplierDetailContainer$.data('entityId', supplierId);
             it.supplier.getFlowers(supplierId, function(flowers) {
@@ -157,7 +163,7 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
 
         txEntriesTableBody$ = txEntriesTable$.find('tbody'),
 
-        txEntryRowTemplate$ = txEntriesTable$.find('.eachTransactionEntryRowTemplate').clone().removeClass('eachTransactionEntryRowTemplate').addClass('eachTransactionEntryRow'),
+        txEntryRowTemplate$ = txEntriesTable$.find('.eachTransactionEntryRowTemplate').clone().removeClass('eachTransactionEntryRowTemplate hide').addClass('eachTransactionEntryRow'),
 
         _flowerTxEntries = flowerTxEntries,
 
@@ -227,7 +233,17 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
                 txEntryRows$.push(_getFlowerTxEntry$({}));
 
             }
+            return txEntryRows$;
+        },
 
+        _showEditInUi = function () {
+            txEntriesTable$.find('.valueViewElement').addClass('hide');
+            txEntriesTable$.find('.valueEntryElement').removeClass('hide');
+        },
+
+        _showViewInUi = function () {
+            txEntriesTable$.find('.valueViewElement').removeClass('hide');
+            txEntriesTable$.find('.valueEntryElement').addClass('hide');
         },
 
         plot = function (flowerTxEntriesP) {
@@ -235,6 +251,12 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
             $.each(txEntryRows$, function(i, txEntryRow$) {
                 txEntriesTableBody$.append(txEntryRow$);
             });
+
+            if (_operation === 'ADDNEW' || _operation === 'EDIT') {
+                _showEditInUi();
+            } else {
+                _showViewInUi();
+            }
         };
 
         plot(flowerTxEntries);

@@ -82,7 +82,8 @@ it.customer.config = {
 
 it.customer.getFlowers = function (customerId, onFlowersFetchCb) {
 
-    $.getJSON('getFlowersForCustomer.do', {customer_id: customerId}, function(resp) {
+    $.post('getFlowersForCustomer.do', {customer_id: customerId + ''}, function(respJSON) {
+    	var resp = $.parseJSON(respJSON);
         if (typeof onFlowersFetchCb === 'function') {
             onFlowersFetchCb(resp.result);
         }
@@ -311,12 +312,12 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
         },
 
         _hideSelectUnselectAllOption = function () {
-            container$.find('.selectall').closest('th').addClass('hide');
+            container$.find('.selectall').addClass('hide');
         },
         
         _hideEntitySelectCells = function () {
             container$.find('.rowSelect').closest('td').addClass('hide');
-            _hideSelectUnselectAllOption();
+            container$.find('.selectall').closest('th').addClass('hide');
         },
 
         _getSelectedItems = function () {
