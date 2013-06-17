@@ -1,18 +1,22 @@
 var it = it || {};
 it.supplier = it.supplier || {};
 
-it.supplier.plot = function (operation, data) {
+it.supplier.plot = function (operation, data, refreshFromServer) {
     var config = this.config;
-    it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation}));
+
+    if (typeof refreshFromServer !== 'boolean') {
+        refreshFromServer = false;
+    }
+    it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation, refreshFromServer: refreshFromServer}));
 };
 
-it.supplier.plotView = function (data) {
-    this.plot('VIEW', data);
+it.supplier.plotView = function (data, refreshFromServer) {
+    this.plot('VIEW', data, refreshFromServer);
 };
 
 
-it.supplier.plotEdit = function (data) {
-    this.plot('EDIT', data);
+it.supplier.plotEdit = function (data, refreshFromServer) {
+    this.plot('EDIT', data, refreshFromServer);
 };
 
 it.supplier.plotAddNew = function () {
@@ -81,6 +85,15 @@ it.supplier.config = {
 
 };
  
+it.supplier.getFlowers = function (supplierId, onFlowersFetchCb) {
+
+    $.getJSON('getFlowersForSupplier.do', {supplier_id: supplierId}, function(resp) {
+        if (typeof onFlowersFetchCb === 'function') {
+            onFlowersFetchCb(resp.result);
+        }
+    });
+
+};
 
 it.supplier.list = it.supplier.list || {};
 
@@ -109,6 +122,7 @@ it.supplier.list.newInstance = function (containerId$, searchQueryElem$, viewCon
             addOneHandlers();
             _isOneInited = true;
         }
+        container$.trigger('entityPlotted', [suppliers]);
     }, 
 
     addOneHandlers = function () {

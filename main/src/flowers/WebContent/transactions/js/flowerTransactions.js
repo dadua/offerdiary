@@ -1,333 +1,249 @@
 var it = it || {};
 it.flowertx = it.flowertx || {};
 
-it.flowertx.plot = function (operation, data) {
-    var config = this.config;
-    it.entityplotter.newInstance($.extend(config, {data: data||{}, operation: operation}));
+
+
+
+/**
+ * data = {
+ *              transactionType: 'IN' or 'OUT',
+ *                  //IN implies Supplier,
+ *                  //OUT implies customer
+ *              contact: {  
+ *                          id: number,
+ *                          type: 'CUSTOMER' or 'SUPPLIER',
+ *                          ...
+ *              }, //In case of operation == 'ADDNEW' contact wouldn't be there
+ */
+it.flowertx.plotUI = function(operation, dataJSON) {
+
+    var data = $.parseJSON(dataJSON);
+    if (operation === 'ADDNEW') {
+        this.plotAddNew(data);
+    } else if (operation === 'VIEW') {
+        this.plotView(data);
+    } else if (operation === 'EDIT') {
+        this.plotEdit(data);
+    }
+};
+
+it.flowertx.plotAddNew = function (data) {
+    this.newInstance('ADDNEW', data);
 };
 
 it.flowertx.plotView = function (data) {
-    this.plot('VIEW', data);
+    this.newInstance('VIEW', data);
 };
 
 it.flowertx.plotEdit = function (data) {
-    this.plot('EDIT', data);
+    this.newInstance('EDIT', data);
 };
 
-it.flowertx.plotAddNew = function () {
-    this.plot('ADDNEW', {});
-};
+it.flowertx.newInstance = function(operation, data) {
 
-it.flowertx.config = {
-    parentElemSelector: '#eachCustomerContainerFluid', 
-    getUrl: 'getCustomerDetails.do',
-    saveUrl: 'addCustomer.do', 
-    title: 'Customer',
-    plotConfigs: [
-        {
-        name: 'name',
-        displayKey: 'Name',
-        type: 'string', 
-        helpMsg: 'Customer Name cant be empty',
-        isRequired: true
-    },
-    /*
-    {
-        name: 'nickName',
-        displayKey: 'Nick Name',
-        isRequired: false,
-        type: 'string'
+    var customerDetail$ = $('.customerDetail'),
 
-    },
-    */
-    {
-        name: 'bankAccountDetails',
-        displayKey: 'Bank Account Details',
-        type: 'string', 
-        isRequired: false
-    },
-    {
-        name: 'billingName',
-        displayKey: 'Billing Name',
-        type: 'string', 
-        isRequired: false
-    },
-    {
-        name: 'phoneNo',
-        displayKey: 'Phone Number',
-        type: 'string', 
-        isRequired: false
-    },
-    {
-        name: 'alternativePhoneNo',
-        displayKey: 'Phone Number 2',
-        type: 'string', 
-        isRequired: false
-    },
-    {
-        name: 'place',
-        displayKey: 'Place',
-        helpMsg: 'This is a shorter version of address',
-        type: 'string',
-        isRequired: false
-    },
-    {
-        name: 'address',
-        displayKey: 'Address',
-        type: 'string', 
-        isRequired: false
-    }
-    ]
-};
+        customerDetailContainer$ = customerDetail$.find('#eachCustomerContainerFluid'),
 
-it.flowertx.list = it.flowertx.list || {};
+        supplierDetail$ = $('.supplierDetail'),
 
-it.flowertx.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
-    
-    var _isOneInited = false,
-    
-    container$ = $(containerId$),
+        supplierDetailContainer$ = supplierDetail$.find('#eachSupplierContainerFluid'),
 
-    searchQuery$ = $(searchQueryElem$),
-    
-    fetchAll = function() {
-        var q = searchQuery$.val();
+        customerListContainer$ = $('#customerChooseContainerFluid'),
 
-        $.post('getCustomers.do', {q:q}, function (respJSON) {
-            var resp = $.parseJSON(respJSON);
-            plotAll(resp.result);
-        });
-    },
+        supplierListContainer$ = $('#supplierChooseContainerFluid'),
 
-    plotAll = function (flowertxs) {
-        var _$ = view.get$(flowertxs);
-        container$.html(_$);
-        view.addHandlers();
-        if (!_isOneInited) {
-            addOneHandlers();
-            _isOneInited = true;
-        }
-    }, 
+        _data = data,
 
+        _operation = operation,
 
-    addOneHandlers = function () {
-        searchQuery$.keyup(fetchAll);
-    },
+        //view = this.newViewInstance(_data),
 
-    view = this.newViewInstance(containerId$, viewConfig);
+        fetchCustomers = function () {
+            var customersList = it.customer.list.initMinimalCustomersUI(
+                customerListContainer$,
+                '.customerSearch'
+            );
 
-    return {
-        plotAll: plotAll,
-        addOneHandlers: addOneHandlers,
-        refresh: fetchAll,
-        view: view,
-        getSelectedItems: view.getSelectedItems
-    };
-
-};
-
-it.flowertx.list.actions = it.flowertx.list.actions || {};
-
-it.flowertx.list.actions.newRemoverInstance = function (flowertxsList, removeConfirm$) {
-
-    var _removeConfirm$ = $(removeConfirm$),
-
-    _flowertxsList = flowertxsList,
-    
-    _postDeleteAll = function () {
-        var idsToDelete = _flowertxsList.view.getSelectedItems();
-        $('#deleteConfirmModal').modal('hide');
-        $.post('deleteCustomers.do', {flowertx_ids: JSON.stringify(idsToDelete)}, function(respJSON) {
-            var resp = $.parseJSON(respJSON);
-            if (resp.success) {
-                _flowertxsList.refresh();
-            }
-        });
-    },
-
-    _removeAfterConfirm = function () {
-        var idsToDelete = _flowertxsList.view.getSelectedItems();
-        _showDeleteConfirmPopup(idsToDelete);
-    },
-
-    _showDeleteConfirmPopup = function(idsToDelete) {
-
-        var confirmModal$ = $('#deleteConfirmModal');
-        if (idsToDelete.length === 0) {
-            it.actionInfo.showInfoActionMsg('No Items to delete');
-        } else {
-            confirmModal$.find('.modal-body').html(idsToDelete.length + ' items would be deleted');
-            confirmModal$.modal('show');
-        }
-
-    },
-
-    _addHandlers = function() {
-        _removeConfirm$.click(_removeAfterConfirm);
-        $('#deleteConfirmModal').find('.deleteSelectedItemsBtn').click(_postDeleteAll);
-    };
-
-
-    return {
-        showConfirmPopup: _removeAfterConfirm,
-        allSelected: _postDeleteAll,
-        addHandlers: _addHandlers
-    };
-}; 
-
-it.flowertx.list.defaultViewConfig = [
-    {
-        key: 'name',
-        displayKey: 'Name',
-        cellCustomHtml: '<a href="#" class="name"></a>',
-        customCellPlotCb: function (data, row$) {
-            $(row$).find('.name').html(data.name).attr('href', 'flowertx.do?id='+data.id);
-        }
-    },
-
-    {
-        key: 'uniqueId',
-        displayKey: 'Customer Id',
-        isViewOnly: true
-    },
-    {
-        key: 'billingName',
-        displayKey: 'Billing Name'
-    },
-    {
-        key: 'phoneNo',
-        displayKey:'Phone No.'
-    },
-    {
-        key: 'place',
-        displayKey: 'Place'
-    }
-];
-
-it.flowertx.list.newViewInstance = function (containerId$, viewConfig) {
-    var _eachRowHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td><td><a class="name" href="#"></a></td><td class="bankAccountDetails"></td><td class="billingName"></td><td class="phoneNo"></td><td class="alternativePhoneNo"><td class="address"></td></tr>',
-        
-        _eachRowEmptyHtml = '<tr class="eachRow"><td><input type="checkbox" class="rowSelect"></input></td></tr>',
-        
-        _tableWithHeadingHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></input></th> <th> Name </th> <th>Bank Details</th> <th>Billing Name</th> <th>Phone No.</th> <th>Phone no. 2</th> <th>Address</th> </tr> </thead> <tbody></tbody></table>',
-
-        _tableWithHeadingEmptyHtml = '<table class="table table-striped table-condensed entityTable table-bordered"> <thead> <tr class="headingRow"><th><input title="Select/Un-Select All" type="checkbox" class="selectall"></th></tr> </thead> <tbody></tbody></table>',
-        
-        container$ = $(containerId$),
-        
-        _viewConfig = viewConfig,
-
-        _getEachRow$ = function (flowertx) {
-            var _tr$ = null;
-            if ($.isArray(_viewConfig)) {
-                _tr$ = $(_eachRowEmptyHtml);
-                $.each(_viewConfig, function(i, config) {
-                    if (typeof config.cellCustomHtml === 'string') {
-                        var _cellContents$ = $('<td>'+config.cellCustomHtml +'</td>');
-                        _tr$.append(_cellContents$);
-                        if (typeof config.customCellPlotCb === 'function') {
-                            config.customCellPlotCb(flowertx, _tr$);
-                        }
-                        _tr$.append(_cellContents$);
-
-                    } else {
-                        _tr$.append('<td class="'+config.key+'">'+flowertx[config.key]||'' +'</td>');
-                    }
+            customerListContainer$.on('entityPlotted', function(e, customers) {
+                customersList.view.hideSelectAllOption();
+                customerListContainer$.on('entityInListSelected', function(e, customerId) {
+                    plotCustomer(customerId);
                 });
-            } else {
-                _tr$ = $(_eachRowHtml);
-                _tr$.find('.name').html(flowertx.name).attr('href', 'flowertx.do?id='+ flowertx.id);
-                _tr$.find('.bankAccountDetails').html(flowertx.bankAccountDetails);
-                _tr$.find('.billingName').html(flowertx.billingName);
-                _tr$.find('.phoneNo').html(flowertx.phoneNo);
-                _tr$.find('.alternativePhoneNo').html(flowertx.alternativePhoneNo);
-                _tr$.find('.address').html(flowertx.address);
-            }
-            _tr$.data('entityId', flowertx.id);
-            return _tr$;
-        },
-
-        _getTableWithHeading$ = function () {
-            var _$ = null;
-            if ($.isArray(_viewConfig)) {
-                _$ = $(_tableWithHeadingEmptyHtml);
-                $.each(_viewConfig, function(i, config) {
-                    _$.find('.headingRow').append('<th>'+config.displayKey +'</td>');
-                });
-            } else {
-                _$ = $(_tableWithHeadingHtml);
-            }
-            return _$;
-        },
-
-        _get$ = function (flowertxs) {
-            var _$ = _getTableWithHeading$(),
-                _tableBody$ = _$.find('tbody'),
-                currentCustomer = {};
-
-            for (var i=0; i< flowertxs.length; i++) {
-                currentCustomer = flowertxs[i];
-                var _tr$ = _getEachRow$(currentCustomer);
-                _tableBody$.append(_tr$);
-            }
-            return _$;
-        },
-
-        _selectAllHandler = function () {
-            if ($(this).is(':checked')) {
-                container$.find('.entityTable').find('.rowSelect').prop('checked', true);
-            } else {
-                container$.find('.rowSelect').prop('checked', false);
-            }
-        },
-
-        _addHandlers = function () {
-            selectAll$ = container$.find('.entityTable').find('.selectall');
-            selectAll$.tooltip().click(_selectAllHandler);
-        },
-        
-        _hideAllSelectCells = function () {
-            container$.find('.rowSelect').closest('td').addClass('hide');
-            container$.find('.selectall').closest('th').addClass('hide');
-        },
-
-        _getSelectedItems = function () {
-            var selectedIds = [];
-            container$.find('.rowSelect').each(function(i) {
-                if ($(this).is(':checked')) {
-                    selectedIds.push($(this).closest('tr').data('entityId'));
-                }
             });
-            return selectedIds;
+
+        },
+
+        fetchSuppliers = function () {
+            var suppliersList = it.supplier.list.initMinimalSuppliersUI(
+                supplierListContainer$,
+                '.supplierSearch'
+            );
+
+            supplierListContainer$.on('entityPlotted', function(e, suppliers) {
+                suppliersList.view.hideSelectAllOption();
+                supplierListContainer$.on('entityInListSelected', function(e, supplierId) {
+                    plotSupplier(supplierId);
+                });
+            });
+        },
+
+        plotCustomer = function(customerId, flowerTxEntries) {
+            it.entityplotter.newInstance($.extend({}, {parentElemSelector: customerDetailContainer$, data: {id: customerId}, refreshFromServer: true, operation: 'VIEW'},
+                                                  it.supplier.config));
+            customerDetailContainer$.data('entityId', customerId);
+            it.customer.getFlowers(customerId, function(flowers) {
+                plotFlowerTxEntries(flowers, flowerTxEntries);
+            });
+
+        },
+
+        plotSupplier = function (supplierId, flowerTxEntries) {
+            it.entityplotter.newInstance($.extend({}, {parentElemSelector: supplierDetailContainer$, data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
+                                                  it.supplier.config));
+            supplierDetailContainer$.data('entityId', supplierId);
+            it.supplier.getFlowers(supplierId, function(flowers) {
+                plotFlowerTxEntries(flowers, flowerTxEntries);
+            });
+        },
+
+        plotFlowerTxEntries = function (flowersForContact, flowerTxEntries) {
+
+            it.flowertx.newFlowerTxEntriesInstance(_operation, flowerTxEntries, flowersForContact);
+
+        },
+
+        _plot = function (flowertx, operation) {
+            if (operation === 'ADDNEW') {
+                if (_data.transactionType === 'IN') {
+                    fetchSuppliers();
+                } else {
+                    fetchCustomers();
+                }
+
+            } else if (operation === 'VIEW') {
+                if (_data.contact.type === 'CUSTOMER') {
+                    plotCustomer(_data.contact.id, _data.flowerTransactionEntries);
+                } else if (_data.contact.type === 'SUPPLIER'){
+                    plotSupplier(_data.contact.id, _data.flowerTransactionEntries);
+                }
+            } else if (operation === 'EDIT') {
+                if (_data.contact.type === 'CUSTOMER') {
+                    plotCustomer(_data.contact.id, _data.flowerTransactionEntries);
+                } else if (_data.contact.type === 'SUPPLIER'){
+                    plotSupplier(_data.contact.id, _data.flowerTransactionEntries);
+                }
+            }
+        },
+
+        fetch = function (flowertx, operation) {
+            $.post('getFlowerTransactionDetail.do', {flower_tx_id: flowertx.id}, function (respJSON) {
+                var resp = $.parseJSON(respJSON);
+                _plot(resp.result, operation);
+            });
+
         };
 
+        _plot(_data, operation);
 
     return {
-        get$: _get$,
-        addHandlers: _addHandlers,
-        getSelectedItems: _getSelectedItems,
-        hideAllSelectCells: _hideAllSelectCells
+        fetch: fetch,
+        plot: _plot
     };
 };
 
-it.flowertx.list.initMinimalCustomersUI = function(flowertxContainer$, searchElem$) {
-    var flowertxList = this.newInstance(flowertxContainer$, searchElem$, this.defaultViewConfig);
-    flowertxList.refresh();
-    return flowertxList;
+it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, flowers) {
+    var txEntriesTable$ = $('#transactionEntries'),
+
+        txEntriesTableBody$ = txEntriesTable$.find('tbody'),
+
+        txEntryRowTemplate$ = txEntriesTable$.find('.eachTransactionEntryRowTemplate').clone().removeClass('eachTransactionEntryRowTemplate').addClass('eachTransactionEntryRow'),
+
+        _flowerTxEntries = flowerTxEntries,
+
+        _operation = operation,
+
+        _flowers = flowers,
+
+        _getFlowerTxEntry$ = function(flowerTxEntry) {
+            var txEntryRow$ = txEntryRowTemplate$.clone(),
+                emptyFlowerTxEntry = {
+                                        id: 0,
+                                        uniqueId: '',
+                                        flower: {
+                                            name: '',
+                                            id: 0
+                                        },
+                                        date: '', //Today's Date??
+                                        unitPrice: 0,
+                                        quantity: 0,
+                                        totalCost: 0
+                };
+
+            flowerTxEntry = $.extend({},flowerTxEntry, emptyFlowerTxEntry);
+
+            if (flowerTxEntry.flower.id === 0) {
+                txEntryRow$.find('.flower').html(flowerTxEntry.flower.name).attr('href', 'flower.do?id='+flowerTxEntry.flower.id);
+            } else {
+                txEntryRow$.find('.flower').html(flowerTxEntry.flower.name);
+            }
+
+            $.each(_flowers, function (i, flower) {
+                txEntryRow$.find('.valueEntryElement').find('select[name="flower"]').append('<option value="'+flower.id+'">'+flower.name+'</option>');
+            });
+
+            txEntryRow$.find('.valueEntryElement').find('[name="flower"]').val(flowerTxEntry.flower.id);
+
+            txEntryRow$.find('.uniqueId').html(flowerTxEntry.uniqueId);
+
+            txEntryRow$.find('.unitPrice').html(flowerTxEntry.unitPrice);
+
+            txEntryRow$.find('.valueEntryElement').find('[name="unitPrice"]').val(flowerTxEntry.unitPrice);
+
+            txEntryRow$.find('.quantity').html(flowerTxEntry.quantity);
+
+            txEntryRow$.find('.valueEntryElement').find('[name="quantity"]').val(flowerTxEntry.quantity);
+
+            txEntryRow$.find('.totalCost').html(flowerTxEntry.totalCost);
+
+            txEntryRow$.find('.valueEntryElement').find('[name="totalCost"]').val(flowerTxEntry.totalCost);
+
+            txEntryRow$.find('.date').html(flowerTxEntry.date);//TODO: This would be problematic
+
+            txEntryRow$.find('.valueEntryElement').find('[name="date"]').val(flowerTxEntry.date);
+
+            return txEntryRow$;
+        },
+
+        getEntries$ = function (flowerTxEntriesP) {
+            var txEntryRows$ =[];
+
+            if ($.isArray(flowerTxEntriesP)) {
+                $.each(flowerTxEntriesP, function(i, flowerTxEntry) {
+                    txEntryRows$.push(_getFlowerTxEntry$(flowerTxEntry));
+                });
+            } else {
+                //Default one empty row
+                txEntryRows$.push(_getFlowerTxEntry$({}));
+
+            }
+
+        },
+
+        plot = function (flowerTxEntriesP) {
+            var txEntryRows$ = getEntries$(flowerTxEntriesP);
+            $.each(txEntryRows$, function(i, txEntryRow$) {
+                txEntriesTableBody$.append(txEntryRow$);
+            });
+        };
+
+        plot(flowerTxEntries);
+
+    return {
+        plot: plot
+    };
+
 };
 
-
-it.flowertx.list.plotMinimalCustomersUI = function(flowertxs, flowertxContainer$, searchElem$) {
-    var flowertxList = this.newInstance(flowertxContainer$, searchElem$, this.defaultViewConfig);
-    flowertxList.plotAll(flowertxs);
-    return flowertxList;
-};
-
-it.flowertx.list.initCustomersUI = function (flowertxs) {
-
-    var flowertxList = this.newInstance('#flowertxContainerFluid', '#searchQuery');
-    flowertxList.plotAll(flowertxs);
-
-    var removeActionHandler = this.actions.newRemoverInstance(flowertxList, $('.actionsPanel').find('.deleteSelectedAction'));
-    removeActionHandler.addHandlers();
+it.flowertx.newViewInstance = function () {
 };

@@ -276,7 +276,7 @@ it.entityplotter.newInstance = function (config) {
     };
 
     var _fetchAndPlot = function (id) {
-        $.post(_config.getUrl, {id: id}, function(respJSON){
+        $.post(_config.getUrl, {id: id}, function(respJson){
             var resp = $.parseJSON(respJson);
             _plot(resp.result);
         });

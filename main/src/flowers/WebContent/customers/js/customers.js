@@ -80,6 +80,16 @@ it.customer.config = {
     ]
 };
 
+it.customer.getFlowers = function (customerId, onFlowersFetchCb) {
+
+    $.getJSON('getFlowersForCustomer.do', {customer_id: customerId}, function(resp) {
+        if (typeof onFlowersFetchCb === 'function') {
+            onFlowersFetchCb(resp.result);
+        }
+    });
+
+};
+
 it.customer.list = it.customer.list || {};
 
 it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewConfig) {
@@ -107,6 +117,7 @@ it.customer.list.newInstance = function (containerId$, searchQueryElem$, viewCon
             addOneHandlers();
             _isOneInited = true;
         }
+        container$.trigger('entityPlotted', [customers]);
     }, 
 
 
@@ -294,7 +305,7 @@ it.customer.list.newViewInstance = function (containerId$, viewConfig) {
         },
 
         _addHandlers = function () {
-            selectAll$ = container$.find('.entityTable').find('.selectall');
+            var selectAll$ = container$.find('.entityTable').find('.selectall');
             selectAll$.tooltip().click(_selectAllHandler);
             container$.find('.entityTable').find('.rowSelect').click(_entityClickedHandler);
         },
