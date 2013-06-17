@@ -1,13 +1,19 @@
 <%@page import="com.itech.web.LoginConstants"%>
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Customers</title>
+		<title>Flower Transactions</title>
 		
+		<script src="transactions/js/flowerTransactions.js" type="text/javascript"></script>
 		<script src="customers/js/customers.js" type="text/javascript"></script>
+		<script src="suppliers/js/suppliers.js" type="text/javascript"></script>
+		<script src="flowers/js/flower.js" type="text/javascript"></script>
 		<script src="common/js/entityplotter.js" type="text/javascript"></script>
 		
 		<script type="text/javascript">
 			$(function () {
+			    it.flowertx.plotAddNew ({});
+			    
+			    /*
 			    var customerJson = '${entityJson}',
 			    	customer = $.parseJSON(customerJson),
 			    	operation = '${operation}';
@@ -27,6 +33,7 @@
 				} else if (operation === 'EDIT' || operation === 'VIEW') {
 					_onCustomerViewEdit();
 				}
+				*/
 			});
 		</script>
 		
@@ -39,24 +46,50 @@
 			<div class="row">
 				<div class="span2">
 					<div class="span2 container-fluid options-left-container">
-						<ul class="nav nav-list customerDetailOptions">
-	                        <li class="nav-header">Options:</li>
-	                        <li class="divider " style="margin-bottom: 4px;margin-top: 0px;"></li>
-	                        <li class="allCustomers"><a href="customers.do">All Customers</a></li>
-	                        <li class="addCustomer"><a href="viewAddNewCustomer.do">Add New Customer</a></li>
-	                        <li class="viewEditCustomer hide"><a href="#">Customer Details</a></li>
-	                    </ul>
+						<%@include file="/transactions/pages/transactionOptions.jsp" %>
 	                </div>
 	            </div>
 				
-				
 	            <div class="span10"  >
-	                <div class="container-fluid content-container">
-	                	<div class="row-fluid">
+	                <div class="container-fluid  content-container">
+	                
+	                
+	                	<%@include file="/transactions/pages/customerChoose.jsp" %>
+	                	
+	                	
+	                	<%@include file="/transactions/pages/supplierChoose.jsp" %>
+	                    
+	                    <div class="row-fluid customerDetail contactDetail hide">
 	                		<div id="eachCustomerContainerFluid" class="span8 container-fluid">
+	                		</div>
 	                		
 	                		</div>
 	                	</div>
+	                    
+	                    <div class="row-fluid supplierDetail contactDetail hide">
+	                		<div id="eachSupplierContainerFluid" class="span8 container-fluid">
+	                		
+	                		</div>
+	                	</div>
+	                	
+	                	<%@include file="/transactions/pages/flowerTransactionEntries.jsp" %>
+	                	
+
+			             
+			             <div class="row-fluid navigationControls hide">
+	                	
+		                	<div class="navigationControl forwardControl pull-right btn btn-info contactChoose customerChoose">Select a Customer</div>
+		                	<div class="navigationControl forwardControl pull-right btn btn-info contactConfirm customerChoose">Add Transaction for Selected Customer</div>
+		                	
+		                	<div class="navigationControl forwardControl pull-right btn btn-info contactChoose supplierChoose">Select a Supplier</div>
+		                	<div class="navigationControl forwardControl pull-right btn btn-info contactConfirm supplierChoose">Add Transaction for Selected Supplier</div>
+		                	
+		                	<div class="navigationControl forwardControl pull-right btn btn-info saveTransaction">Save Transaction</div>
+		                	
+		                	<div class="navigationControl navigationHelp"></div>
+		                	
+	                	</div>
+	                    
 	                </div>
 	            </div>
 			</div>

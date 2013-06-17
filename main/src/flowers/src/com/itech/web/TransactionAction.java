@@ -42,6 +42,12 @@ public class TransactionAction extends CommonAction {
 		return new CommonBeanResponse(result, resultStringType);
 	}
 
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="viewAddNewFlowerTransaction.do")
+	public Response viewAddNewFlowerTransaction(HttpServletRequest req, HttpServletResponse resp) {
+		return new Forward(UrlConstants.FLOWER_TRANSACTION_EACH_TRANSACTION_JSP);
+	}
+
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getFlowerTransactionDetail.do")
 	public Response getFlowerTransactionDetail (HttpServletRequest req, HttpServletResponse resp) {
