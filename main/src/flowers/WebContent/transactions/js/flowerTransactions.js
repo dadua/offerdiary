@@ -245,12 +245,55 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
             txEntriesTable$.find('.valueViewElement').removeClass('hide');
             txEntriesTable$.find('.valueEntryElement').addClass('hide');
         },
+        
+        _allowOnlyNumber = function(event) {
+            // Allow: backspace, delete, tab, escape, and enter
+            if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 || 
+                 // Allow: Ctrl+A
+                (event.keyCode == 65 && event.ctrlKey === true) || 
+                 // Allow: home, end, left, right
+                (event.keyCode >= 35 && event.keyCode <= 39)) {
+                     // let it happen, don't do anything
+                     return;
+            }
+            else if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) { //// Ensure that it is a number and stop the keypress
+                event.preventDefault(); 
+            }
+        },
+        
+        _onPriceQtyChangedHandler = function () {
+        	var this$ = $(this),
+        		tr$ = this$.closest('tr'),
+        		unitPrice$ = tr$.find('[name="unitPrice"]'),
+        		quantity$ = tr$.find('[name="quantity"]'),
+        		totalCost$ = tr$.find('[name="totalCost"]');
+        	
+        	totalCost$.val(unitPrice$.val()*quantity$.val());
+        },
+        
+        addHandlers = function () {
+            
+            txEntriesTable$.find('.valueEntryElement').find('[name="flower"]');//keyup(_onPriceQtyChangedHandler);
+
+            txEntriesTable$.find('.valueEntryElement').find('[name="unitPrice"]').off('keyup', _onPriceQtyChangedHandler).off('keydown', _allowOnlyNumber);
+            txEntriesTable$.find('.valueEntryElement').find('[name="unitPrice"]').on('keyup', _onPriceQtyChangedHandler).on('keydown', _allowOnlyNumber);
+
+            txEntriesTable$.find('.valueEntryElement').find('[name="quantity"]').off('keyup', _onPriceQtyChangedHandler).off('keydown', _allowOnlyNumber);
+            txEntriesTable$.find('.valueEntryElement').find('[name="quantity"]').on('keyup', _onPriceQtyChangedHandler).on('keydown', _allowOnlyNumber);
+
+            txEntriesTable$.find('.valueEntryElement').find('[name="totalCost"]');//.val(flowerTxEntry.totalCost);
+
+            txEntriesTable$.find('.valueEntryElement').find('[name="date"]');//.val(flowerTxEntry.date);
+
+        },
 
         plot = function (flowerTxEntriesP) {
             var txEntryRows$ = getEntries$(flowerTxEntriesP);
             $.each(txEntryRows$, function(i, txEntryRow$) {
                 txEntriesTableBody$.append(txEntryRow$);
             });
+            
+            addHandlers();
 
             if (_operation === 'ADDNEW' || _operation === 'EDIT') {
                 _showEditInUi();

@@ -48,7 +48,7 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <input name="price" type="text" class="valueEntryInputTextBox input-small"></input>
+								                <input name="unitPrice" type="text" class="valueEntryInputTextBox input-small"></input>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
 						                </div>
@@ -68,7 +68,7 @@
 					                <td class="valueEntryElement hide">
 						                <div class="control-group" style="margin-bottom: 0px;">
 							                <div class="controls">
-								                <input name="totalCost" type="text" class="uneditable-input valueEntryInputTextBox"></input>
+								                <input name="totalCost" type="text" class="uneditable-input valueEntryInputTextBox input-small"></input>
 								                <span class="help-block hide" style="font-size:.7em;">* </span>
 							                </div>
 						                </div>
