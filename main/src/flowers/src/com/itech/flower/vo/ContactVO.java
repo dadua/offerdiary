@@ -37,11 +37,11 @@ public class ContactVO {
 
 	public static Contact fromVO(ContactVO contactVO) {
 
-		if (contactVO.type == ContactType.CUSTOMER.name()){
+		if (ContactType.CUSTOMER.name().equalsIgnoreCase(contactVO.getType())){
 			Customer customer = new Customer();
 			customer.setId(contactVO.getId());
 			return customer;
-		} else if (contactVO.type == ContactType.SUPPLIER.name()){
+		} else if (ContactType.SUPPLIER.name().equalsIgnoreCase(contactVO.getType())){
 			Supplier supplier = new Supplier();
 			supplier.setId(contactVO.getId());
 			return supplier;
