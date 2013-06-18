@@ -56,6 +56,8 @@ it.flowertx.newInstance = function(operation, data) {
         _data = data,
 
         _operation = operation,
+        
+        _flowerTxEntriesObj = {},
 
         //view = this.newViewInstance(_data),
 
@@ -89,9 +91,24 @@ it.flowertx.newInstance = function(operation, data) {
                 });
             });
         },
+        
+        
+        _showEditInUi = function () {
+            $('.txOperation').addClass('hide');
+            $('#saveTransaction').removeClass('hide');
+            
+            _flowerTxEntriesObj.showOp(_operation);
+            //$('#cancelTransaction').removeClass('hide');
+        },
+
+        _showViewInUi = function () {
+            $('.txOperation').addClass('hide');
+            _flowerTxEntriesObj.showOp(_operation);
+            //$('#editTransaction').removeClass('hide');
+        },
 
         plotCustomer = function(customerId, flowerTxEntries) {
-            it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachCustomerContainerFluid', data: {id: customerId}, refreshFromServer: true, operation: 'VIEW'},
+            _customerInstance = it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachCustomerContainerFluid', data: {id: customerId}, refreshFromServer: true, operation: 'VIEW'},
                                                   it.customer.config));
             $('.customerChoose').addClass('hide');
             $('.customerDetail').removeClass('hide');
@@ -105,7 +122,7 @@ it.flowertx.newInstance = function(operation, data) {
         },
 
         plotSupplier = function (supplierId, flowerTxEntries) {
-            it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachSupplierContainerFluid', data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
+            _supplierInstance = it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachSupplierContainerFluid', data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
                                                   it.supplier.config));
             supplierDetailContainer$.data('entityId', supplierId);
             it.supplier.getFlowers(supplierId, function(flowers) {
@@ -115,9 +132,55 @@ it.flowertx.newInstance = function(operation, data) {
 
         plotFlowerTxEntries = function (flowersForContact, flowerTxEntries) {
 
-            it.flowertx.newFlowerTxEntriesInstance(_operation, flowerTxEntries, flowersForContact);
+            _flowerTxEntriesObj = it.flowertx.newFlowerTxEntriesInstance(_operation, flowerTxEntries, flowersForContact);
             $('.flowerTxEntryRowFluid').removeClass('hide');
+        	_addHandlers();
 
+        },
+        
+        _getTxType = function () {
+        	if (_data.transactionType === 'IN') {
+        		return 'SUPPLIER';
+        	} else {
+        		return 'CUSTOMER';
+        	}
+        	
+        },
+        
+        _saveHandler = function () {
+            var flowerTxEntries = _flowerTxEntriesObj.getData(),
+            	flowerTx;
+            
+            if (_getTxType() === 'SUPPLIER')  {
+            	var supplierId = supplierDetailContainer$.data('entityId');
+            	flowerTx = {
+            		transactionType: 'IN',
+            		contact: {
+            			id: supplierId,
+            			type: 'SUPPLIER'
+            		},
+            		flowerTransactionEntries: flowerTxEntries
+            	};
+            } else {
+            	var customerId = customerDetailContainer$.data('entityId');
+               	flowerTx = {
+            		transactionType: 'OUT',
+            		contact: {
+            			id: customerId,
+            			type: 'CUSTOMER'
+            		},
+            		flowerTransactionEntries: flowerTxEntries
+            	};
+            }
+            
+            $.post('addFlowerTransaction.do', {flowertx: JSON.stringify(flowerTx)}, function(respJSON) {
+            	var resp = $.parseJSON(respJSON);
+            	
+            });
+        },
+        
+        _addHandlers = function () {
+            $('#saveTransaction').off('click', _saveHandler).on('click', _saveHandler);
         },
 
         _plot = function (flowertx, operation) {
@@ -127,6 +190,7 @@ it.flowertx.newInstance = function(operation, data) {
                 } else {
                     fetchCustomers();
                 }
+                _showEditInUi(operation);
 
             } else if (operation === 'VIEW') {
                 if (_data.contact.type === 'CUSTOMER') {
@@ -134,12 +198,15 @@ it.flowertx.newInstance = function(operation, data) {
                 } else if (_data.contact.type === 'SUPPLIER'){
                     plotSupplier(_data.contact.id, _data.flowerTransactionEntries);
                 }
+                _showViewInUi(operation);
             } else if (operation === 'EDIT') {
                 if (_data.contact.type === 'CUSTOMER') {
                     plotCustomer(_data.contact.id, _data.flowerTransactionEntries);
                 } else if (_data.contact.type === 'SUPPLIER'){
                     plotSupplier(_data.contact.id, _data.flowerTransactionEntries);
                 }
+                _showEditInUi(operation);
+                
             }
         },
 
@@ -240,16 +307,11 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
         _showEditInUi = function () {
             txEntriesTable$.find('.valueViewElement').addClass('hide');
             txEntriesTable$.find('.valueEntryElement').removeClass('hide');
-            $('.txOperation').addClass('hide');
-            $('#saveTransaction').removeClass('hide');
-            //$('#cancelTransaction').removeClass('hide');
         },
 
         _showViewInUi = function () {
             txEntriesTable$.find('.valueViewElement').removeClass('hide');
             txEntriesTable$.find('.valueEntryElement').addClass('hide');
-            $('.txOperation').addClass('hide');
-            //$('#editTransaction').removeClass('hide');
         },
         
         _allowOnlyNumber = function(event) {
@@ -333,21 +395,53 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
             
             addHandlers();
 
-            if (_operation === 'ADDNEW' || _operation === 'EDIT') {
-                _showEditInUi();
-            } else {
+            _showOperation(_operation);
+            //console.log(_getDataFromDom());
+        },
+        
+        _showOperation = function (op) {
+        	if (op === 'ADDNEW' || op === 'EDIT') {
+        		_showEditInUi();
+        		
+        	} else {
                 _showViewInUi();
-            }
+        	}
+        	
         },
         
         _getDataFromDom = function () {
+        	var txEntries = [];
         	
+        	txEntriesTable$.find('.eachTransactionEntryRow').each(function(i, elem) {
+        		var row$ = $(this),
+        			totalCost = row$.find('[name="totalCost"]').val(),
+        			quantity = row$.find('[name="quantity"]').val(),
+        			unitPrice = row$.find('[name="unitPrice"]').val(),
+        			flowerId = row$.find('[name="flower"]').val(),
+        			dateMillis = row$.find('[name="date"]').datepicker('getDate').getTime(),
+        			id = row$.data('entityId'),
+        			txEntry = {
+        			           id: id,
+        			           totalCost: totalCost,
+        			           quantity: quantity,
+        			           unitPrice: unitPrice,
+        			           flower: {
+	        			           id: flowerId,
+				        		},
+        			           dateMillis: dateMillis
+        			};
+        		txEntries.push(txEntry);
+        	});
+        	
+        	return txEntries;
         };
 
         plot(flowerTxEntries);
 
     return {
-        plot: plot
+        plot: plot,
+        getData: _getDataFromDom,
+        showOp: _showOperation
     };
 
 };
