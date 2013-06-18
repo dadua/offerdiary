@@ -3,7 +3,6 @@ package com.itech.flower.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itech.flower.model.Contact;
 import com.itech.flower.model.FlowerTransaction;
 import com.itech.flower.model.FlowerTransaction.FlowerTransactionType;
 import com.itech.flower.model.FlowerTransactionEntry;
@@ -14,7 +13,7 @@ public class FlowerTransactionVO {
 
 	private String uniqueId;
 
-	private Contact contact;
+	private ContactVO contact;
 
 	//TODO: Do we need this??
 	//This isn't sent from UI or shown at UI
@@ -38,7 +37,7 @@ public class FlowerTransactionVO {
 		FlowerTransactionVO flowerTransactionVO = new FlowerTransactionVO();
 
 		flowerTransactionVO.setId(flowerTransaction.getId());
-		flowerTransactionVO.setContact(flowerTransaction.getContact());
+		flowerTransactionVO.setContact(ContactVO.toVO(flowerTransaction.getContact()));
 		flowerTransactionVO.setUniqueId(flowerTransaction.getUniqueId());
 		flowerTransactionVO.setTransactionType(flowerTransaction.getTransactionType());
 		flowerTransactionVO.setComment(flowerTransaction.getComment());
@@ -54,7 +53,7 @@ public class FlowerTransactionVO {
 		FlowerTransaction flowerTransaction = new FlowerTransaction();
 
 		flowerTransaction.setId(flowerTransactionVO.getId());
-		flowerTransaction.setContact(flowerTransactionVO.getContact());
+		flowerTransaction.setContact(ContactVO.fromVO(flowerTransactionVO.getContact()));
 		flowerTransaction.setUniqueId(flowerTransactionVO.getUniqueId());
 		flowerTransaction.setTransactionType(flowerTransactionVO.getTransactionType());
 		flowerTransaction.setComment(flowerTransactionVO.getComment());
@@ -97,14 +96,6 @@ public class FlowerTransactionVO {
 
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
-	}
-
-	public Contact getContact() {
-		return contact;
-	}
-
-	public void setContact(Contact contact) {
-		this.contact = contact;
 	}
 
 	/*
@@ -164,6 +155,14 @@ public class FlowerTransactionVO {
 	public void setFlowerTransactionEntries(
 			List<FlowerTransactionEntryVO> flowerTransactionEntries) {
 		this.flowerTransactionEntries = flowerTransactionEntries;
+	}
+
+	public void setContact(ContactVO contact) {
+		this.contact = contact;
+	}
+
+	public ContactVO getContact() {
+		return contact;
 	}
 
 

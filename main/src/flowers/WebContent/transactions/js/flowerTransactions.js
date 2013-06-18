@@ -97,13 +97,17 @@ it.flowertx.newInstance = function(operation, data) {
             $('.txOperation').addClass('hide');
             $('#saveTransaction').removeClass('hide');
             
-            _flowerTxEntriesObj.showOp(_operation);
+            if (typeof _flowerTxEntriesObj.showOp === 'function') {
+            	_flowerTxEntriesObj.showOp(_operation);
+            }
             //$('#cancelTransaction').removeClass('hide');
         },
 
         _showViewInUi = function () {
             $('.txOperation').addClass('hide');
-            _flowerTxEntriesObj.showOp(_operation);
+            if (typeof _flowerTxEntriesObj.showOp === 'function') {
+            	_flowerTxEntriesObj.showOp(_operation);
+            }
             //$('#editTransaction').removeClass('hide');
         },
 
@@ -173,7 +177,7 @@ it.flowertx.newInstance = function(operation, data) {
             	};
             }
             
-            $.post('addFlowerTransaction.do', {flowertx: JSON.stringify(flowerTx)}, function(respJSON) {
+            $.post('addFlowerTransaction.do', {flower_tx: JSON.stringify(flowerTx)}, function(respJSON) {
             	var resp = $.parseJSON(respJSON);
             	
             });
