@@ -21,6 +21,7 @@ import com.itech.flower.model.CashTransaction;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.FlowerTransaction;
 import com.itech.flower.model.Supplier;
+import com.itech.flower.vo.FlowerTransactionVO;
 import com.itech.web.constants.EachEntityConstants;
 
 @Controller
@@ -33,8 +34,9 @@ public class TransactionAction extends CommonAction {
 	public Response addFlowerTransaction (HttpServletRequest req, HttpServletResponse resp) {
 		String flowerTransactionJson = req.getParameter(WebConstatnts.FLOWER_TRANSACTION_PARAM_KEY);
 		Gson gson = new Gson();
-		Type flowerTxType = new TypeToken<FlowerTransaction>() { }.getType();
-		FlowerTransaction flowerTransaction = gson.fromJson(flowerTransactionJson, flowerTxType);
+		Type flowerTxVOType = new TypeToken<FlowerTransactionVO>() { }.getType();
+		FlowerTransactionVO flowerTransactionVO = gson.fromJson(flowerTransactionJson, flowerTxVOType);
+		FlowerTransaction flowerTransaction = FlowerTransactionVO.fromVO(flowerTransactionVO);
 		getTransactionManager().addOrUpdateFlowerTransaction(flowerTransaction);
 		Result<String> result = new Result<String>("Successfully updated the transaction");
 		Type resultStringType = new TypeToken<Result<String>>() {

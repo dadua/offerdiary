@@ -26,7 +26,7 @@ public class Flower extends PersistableEntity {
 	private String color;
 
 	@Column(name="QUANT_IN_STOCK")
-	private Float quantityInStock;
+	private float quantityInStock;
 
 	@Override
 	public Long getId() {
@@ -58,7 +58,7 @@ public class Flower extends PersistableEntity {
 		return id == null;
 	}
 
-	public Float getQuantityInStock() {
+	public float getQuantityInStock() {
 		return quantityInStock;
 	}
 
