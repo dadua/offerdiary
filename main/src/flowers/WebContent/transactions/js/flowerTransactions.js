@@ -61,6 +61,10 @@ it.flowertx.newInstance = function(operation, data) {
 
         //view = this.newViewInstance(_data),
         //
+        _customersList = null,
+
+        _suppliersList = null,
+
 
         fetchCustomer = function(e) {
             if ($(this).hasClass('disabled')) {
@@ -70,8 +74,15 @@ it.flowertx.newInstance = function(operation, data) {
             plotCustomer(customerId);
         },
 
-        _customersList = null;
+        fetchSupplier = function(e) {
+            if ($(this).hasClass('disabled')) {
+                return;
+            }
+            var supplierId = _suppliersList.getSelectedItems()[0];
+            plotSupplier(supplierId);
+        },
 
+        
         fetchCustomers = function () {
             _customersList = it.customer.list.initMinimalCustomersUI(
                 customerListContainer$,
@@ -118,18 +129,40 @@ it.flowertx.newInstance = function(operation, data) {
         },
 
         fetchSuppliers = function () {
-            var suppliersList = it.supplier.list.initMinimalSuppliersUI(
+            ///From here..
+            _suppliersList = it.supplier.list.initMinimalSuppliersUI(
                 supplierListContainer$,
                 '.supplierSearch'
-            );
+            ),
+            entitySelected = 0;
+
+            $('.supplierChoose').removeClass('hide');
+
 
             supplierListContainer$.on('entityPlotted', function(e, suppliers) {
-                suppliersList.view.hideSelectAllOption();
-                $('.supplierChoose').removeClass('hide');
+                _suppliersList.view.hideSelectAllOption();
+                $('.navigationControl').addClass('hide');
+                $('#selectSupplier').removeClass('hide').addClass('disabled');
                 supplierListContainer$.on('entityInListSelected', function(e, supplierId) {
-                    plotSupplier(supplierId);
+                    entitySelected = entitySelected +1;
+
+                    if (entitySelected === 1) {
+                        $('#selectSupplier').removeClass('disabled').click(fetchSupplier);
+                    } else {
+                        $('#selectSupplier').addClass('disabled');
+                    }
+                });
+                supplierListContainer$.on('entityInListUnSelected', function(e, supplierId) {
+                    entitySelected = entitySelected -1;
+
+                    if (entitySelected === 1) {
+                        $('#selectSupplier').removeClass('disabled');
+                    } else {
+                        $('#selectSupplier').addClass('disabled');
+                    }
                 });
             });
+
         },
         
         
@@ -168,6 +201,9 @@ it.flowertx.newInstance = function(operation, data) {
         plotSupplier = function (supplierId, flowerTxEntries) {
             _supplierInstance = it.entityplotter.newInstance($.extend({}, {parentElemSelector: '#eachSupplierContainerFluid', data: {id: supplierId}, refreshFromServer: true, operation: 'VIEW'},
                                                   it.supplier.config));
+
+            $('.supplierChoose').addClass('hide');
+            $('.supplierDetail').removeClass('hide');
             supplierDetailContainer$.data('entityId', supplierId);
             it.supplier.getFlowers(supplierId, function(flowers) {
                 plotFlowerTxEntries(flowers, flowerTxEntries);
