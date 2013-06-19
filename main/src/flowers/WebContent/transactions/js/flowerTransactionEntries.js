@@ -6,7 +6,7 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
 
         txEntriesTableBody$ = txEntriesTable$.find('tbody'),
 
-        txEntryRowTemplate$ = txEntriesTable$.find('.eachTransactionEntryRowTemplate').clone().removeClass('eachTransactionEntryRowTemplate hide').addClass('eachTransactionEntryRow'),
+        txEntryRowTemplate$ = $('.eachTransactionEntryRowTemplate').clone().removeClass('eachTransactionEntryRowTemplate hide').addClass('eachTransactionEntryRow'),
 
         _flowerTxEntries = flowerTxEntries,
 
@@ -29,9 +29,9 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
                                         totalCost: 0
                 };
 
-            flowerTxEntry = $.extend({},flowerTxEntry, emptyFlowerTxEntry);
+            flowerTxEntry = $.extend({}, emptyFlowerTxEntry, flowerTxEntry);
 
-            if (flowerTxEntry.flower.id === 0) {
+            if (typeof flowerTxEntry.flower.id === 'number' && flowerTxEntry.flower.id !== 0) {
                 txEntryRow$.find('.flower').html(flowerTxEntry.flower.name).attr('href', 'flower.do?id='+flowerTxEntry.flower.id);
             } else {
                 txEntryRow$.find('.flower').html(flowerTxEntry.flower.name);
@@ -65,7 +65,7 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
                 entityDate = new Date();
             }
             dateElem$.datepicker({"dateFormat": 'dd/mm/yy'}).datepicker("setDate", entityDate);
-            txEntryRow$.find('.date').html(dateElem$.datepicker("getDate"));
+            txEntryRow$.find('.date').html($.datepicker.formatDate('dd/mm/yy', dateElem$.datepicker("getDate")));
 
             return txEntryRow$;
         },
@@ -139,7 +139,10 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
         },
 
         _onAddNewRow = function (e) {
-            plot();
+            var emptyRow = _getFlowerTxEntry$({});
+            txEntriesTable$.append(emptyRow);
+            addHandlers();
+            _showOperation(_operation);
         },
 
         _onRemoveRow = function (e) {
@@ -173,6 +176,7 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
 
         plot = function (flowerTxEntriesP) {
             var txEntryRows$ = getEntries$(flowerTxEntriesP);
+            txEntriesTableBody$.html('');
             $.each(txEntryRows$, function(i, txEntryRow$) {
                 txEntriesTableBody$.append(txEntryRow$);
             });

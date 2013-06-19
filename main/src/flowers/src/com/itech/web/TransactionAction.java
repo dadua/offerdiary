@@ -38,10 +38,11 @@ public class TransactionAction extends CommonAction {
 		FlowerTransactionVO flowerTransactionVO = gson.fromJson(flowerTransactionJson, flowerTxVOType);
 		FlowerTransaction flowerTransaction = FlowerTransactionVO.fromVO(flowerTransactionVO);
 		getTransactionManager().addOrUpdateFlowerTransaction(flowerTransaction);
-		Result<String> result = new Result<String>("Successfully updated the transaction");
-		Type resultStringType = new TypeToken<Result<String>>() {
+		Result<FlowerTransactionVO> result = new Result<FlowerTransactionVO>(FlowerTransactionVO.toVO(flowerTransaction));
+		Type resultFlowerTxVOType = new TypeToken<Result<FlowerTransactionVO>>() {
 		}.getType();
-		return new CommonBeanResponse(result, resultStringType);
+		result.setMsg("Flower Transaction is successfully updated");
+		return new CommonBeanResponse(result, resultFlowerTxVOType);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
