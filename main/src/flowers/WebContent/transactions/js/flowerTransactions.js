@@ -219,16 +219,23 @@ it.flowertx.newInstance = function(operation, data) {
 
             $.post('addFlowerTransaction.do', {flower_tx: JSON.stringify(flowerTx)}, function(respJSON) {
                 var resp = $.parseJSON(respJSON);
-
+                _plot('VIEW', resp.result);
             });
         },
 
         _addHandlers = function () {
             $('#saveTransaction').off('click', _saveHandler).on('click', _saveHandler);
-            //$('#selectCustomer').off('click', plotCustomer).on('click', plotCustomer);
         },
 
-        _plot = function (flowertx, operation) {
+        _fetchTransaction = function (flowerTxId, operation) {
+            $.post('getFlowerTransactionDetail.do', {flower_tx_id: flowerTxId}, function (respJSON) {
+                var resp = $.parseJSON(respJSON);
+            }); 
+        },
+
+        _plot = function (operation, flowerTx) {
+            _operation = operation;
+            _data = flowerTx;
             if (operation === 'ADDNEW') {
                 if (_data.transactionType === 'IN') {
                     fetchSuppliers();
@@ -255,15 +262,16 @@ it.flowertx.newInstance = function(operation, data) {
             }
         },
 
-        fetch = function (flowertx, operation) {
-            $.post('getFlowerTransactionDetail.do', {flower_tx_id: flowertx.id}, function (respJSON) {
+        fetch = function (operation, flowerTx) {
+            _operation = operation;
+            $.post('getFlowerTransactionDetail.do', {flower_tx_id: flowerTx.id}, function (respJSON) {
                 var resp = $.parseJSON(respJSON);
-                _plot(resp.result, operation);
+                _plot(operation, resp.result);
             });
 
         };
 
-        _plot(_data, operation);
+        _plot(operation, _data);
 
     return {
         fetch: fetch,
