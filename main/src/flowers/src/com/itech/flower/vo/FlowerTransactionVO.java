@@ -1,5 +1,6 @@
 package com.itech.flower.vo;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,8 @@ public class FlowerTransactionVO {
 
 	private String comment;
 
+	private Long dateMillis;
+
 	private List<FlowerTransactionEntryVO> flowerTransactionEntries;
 
 	public static FlowerTransactionVO toVO(FlowerTransaction flowerTransaction) {
@@ -44,6 +47,7 @@ public class FlowerTransactionVO {
 		flowerTransactionVO.setPayment(flowerTransaction.getPayment());
 		flowerTransactionVO.setTotalCost(flowerTransaction.getTotalCost());
 		flowerTransactionVO.setFlowerTransactionEntries(getFlowerTransactionEntryVOs(flowerTransaction.getFlowerTransactionEntries()));
+		flowerTransactionVO.setDateMillis(flowerTransaction.getDate().getTime());
 
 		return flowerTransactionVO;
 
@@ -60,6 +64,7 @@ public class FlowerTransactionVO {
 		flowerTransaction.setPayment(flowerTransactionVO.getPayment());
 		flowerTransaction.setTotalCost(flowerTransactionVO.getTotalCost());
 		flowerTransaction.setFlowerTransactionEntries(getFlowerTransactionEntries(flowerTransactionVO.getFlowerTransactionEntries()));
+		flowerTransaction.setDate(new Date(flowerTransactionVO.getDateMillis()));
 
 		return flowerTransaction;
 	}
@@ -163,6 +168,14 @@ public class FlowerTransactionVO {
 
 	public ContactVO getContact() {
 		return contact;
+	}
+
+	public Long getDateMillis() {
+		return dateMillis;
+	}
+
+	public void setDateMillis(Long dateMillis) {
+		this.dateMillis = dateMillis;
 	}
 
 
