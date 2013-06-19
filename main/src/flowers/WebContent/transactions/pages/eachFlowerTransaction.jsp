@@ -13,7 +13,16 @@
 		<script type="text/javascript">
 			$(function () {
 			    $('#transactionsTab').addClass('active');
-			    it.flowertx.plotAddNew ({transactionType: "IN"});
+			    
+			    var flowerTxJSON = '${entityJson}',
+			    	operation = '${operation}',
+			    	txType = '${txType}';
+			    
+			    if (operation === 'ADDNEW') {
+					it.flowertx.plotAddNew ({transactionType: txType});
+			    } else if (operation === 'VIEW' || operation === 'EDIT') {
+					it.flowertx.plotUI(operation, flowerTxJSON);
+			    }
 			    
 			    /*
 			    var customerJson = '${entityJson}',

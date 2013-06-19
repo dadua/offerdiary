@@ -96,7 +96,8 @@ it.flowertx.newFlowerTxEntriesInstance = function (operation, flowerTxEntries, f
             txEntriesTable$.find('.valueViewElement').removeClass('hide');
             txEntriesTable$.find('.valueEntryElement').addClass('hide');
             $('.navigationControl').addClass('hide');
-            $('#editTransaction').removeClass('hide');
+            //TODO: Edit Operation has to be added
+            //$('#editTransaction').removeClass('hide');
         },
         
         _allowOnlyNumber = function(event) {
