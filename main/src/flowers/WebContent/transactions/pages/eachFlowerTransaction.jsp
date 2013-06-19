@@ -4,6 +4,7 @@
 		<title>Flower Transactions</title>
 		
 		<script src="transactions/js/flowerTransactions.js" type="text/javascript"></script>
+		<script src="transactions/js/flowerTransactionEntries.js" type="text/javascript"></script>
 		<script src="customers/js/customers.js" type="text/javascript"></script>
 		<script src="suppliers/js/suppliers.js" type="text/javascript"></script>
 		<script src="flowers/js/flower.js" type="text/javascript"></script>
@@ -72,24 +73,20 @@
 	                	
 	                	<%@include file="/transactions/pages/flowerTransactionEntries.jsp" %>
 	                	
-	                	<div id="saveTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Save Transaction</div>
-	                	<div id="editTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Edit Transaction</div>
-	                	<div id="cancelTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Cancel Transaction</div>
-			             
-			             <div class="row-fluid navigationControls hide">
-	                	
-		                	<div class="navigationControl forwardControl pull-right btn btn-info contactChoose customerChoose">Select a Customer</div>
-		                	<div class="navigationControl forwardControl pull-right btn btn-info contactConfirm customerChoose">Add Transaction for Selected Customer</div>
-		                	
-		                	<div class="navigationControl forwardControl pull-right btn btn-info contactChoose supplierChoose">Select a Supplier</div>
-		                	<div class="navigationControl forwardControl pull-right btn btn-info contactConfirm supplierChoose">Add Transaction for Selected Supplier</div>
-		                	
-		                	<div class="navigationControl forwardControl pull-right btn btn-info saveTransaction">Save Transaction</div>
-		                	
+                                <%--
+                                <div id="saveTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Save Transaction</div>
+                                <div id="editTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Edit Transaction</div>
+                                <div id="cancelTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Cancel Transaction</div>
+                                <div class="navigationControl forwardControl pull-right btn btn-info contactConfirm supplierChoose">Add Transaction for Selected Supplier</div>
+                                <div class="navigationControl forwardControl pull-right btn btn-info contactConfirm customerChoose">Add Transaction for Selected Customer</div>
+                                --%>
+                      	<div class="container-fluid navigationControls">
+		                	<div id="selectCustomer" class="navigationControl hide forwardControl pull-right btn btn-info contactChoose customerChoose">Add Transactions</div>
+		                	<div id="selectSupplier" class="navigationControl hide forwardControl pull-right btn btn-info contactChoose supplierChoose">Add Transactions</div>
+		                	<div id="saveTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Save Transaction</div>
+		                	<div id="editTransaction" class="navigationControl hide forwardControl pull-right btn btn-info txOperation">Edit Transaction</div>
 		                	<div class="navigationControl navigationHelp"></div>
-		                	
 	                	</div>
-	                    
 	                </div>
 	            </div>
 			</div>
