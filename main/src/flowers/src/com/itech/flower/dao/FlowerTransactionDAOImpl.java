@@ -45,7 +45,7 @@ HibernateCommonBaseDAO<FlowerTransaction> implements FlowerTransactionDAO {
 	public List<FlowerTransaction> getFlowerTransactionsFor(String searchString) {
 		String hql = "select ft from " + getEntityClassName() + " ft where ft.uniqueId like :searchString or ft.contact.name like :searchString";
 		Query query = getSession().createQuery(hql);
-		query.setParameter("searchString", searchString);
+		query.setParameter("searchString", '%' + searchString + '%');
 		List result = query.list();
 		return result;
 	}
