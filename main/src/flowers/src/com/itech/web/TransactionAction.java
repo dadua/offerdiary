@@ -22,6 +22,7 @@ import com.itech.flower.model.Customer;
 import com.itech.flower.model.FlowerTransaction;
 import com.itech.flower.model.Supplier;
 import com.itech.flower.vo.FlowerTransactionVO;
+import com.itech.web.constants.CommonEntityUIOperations;
 import com.itech.web.constants.EachEntityConstants;
 
 @Controller
@@ -48,6 +49,9 @@ public class TransactionAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="viewAddNewFlowerTransaction.do")
 	public Response viewAddNewFlowerTransaction(HttpServletRequest req, HttpServletResponse resp) {
+		String txType = req.getParameter("txType");
+		req.setAttribute("txType", txType);
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.ADDNEW.getOperationVal());
 		return new Forward(UrlConstants.FLOWER_TRANSACTION_EACH_TRANSACTION_JSP);
 	}
 
@@ -63,17 +67,52 @@ public class TransactionAction extends CommonAction {
 		return new CommonBeanResponse(result, resultFlowerTxVOType);
 	}
 
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="getFlowerTransactions.do")
+	public Response getAllFlowerTransactions(HttpServletRequest req, HttpServletResponse resp) {
+		List<FlowerTransaction> flowerTransactions = getFlowerTransactions(req);
+		Result<List<FlowerTransaction>> result = new Result<List<FlowerTransaction>>(flowerTransactions);
+		Type resultFlowerTxnsType = new TypeToken<Result<List<FlowerTransaction>>>() {
+		}.getType();
+		return new CommonBeanResponse(result, resultFlowerTxnsType);
+	}
+
 	@ActionResponseAnnotation(responseType=Forward.class)
 	@ActionMapping(value="flowerTransactions.do")
 	public Response getFlowerTransactions (HttpServletRequest req, HttpServletResponse resp) {
-		String searchString = req.getParameter(WebConstatnts.SEARCH_STRING_PARAM_KEY);
-		List<FlowerTransaction> flowerTransactions = getTransactionManager().getFlowerTransactionsFor(searchString);
+		List<FlowerTransaction> flowerTransactions = getFlowerTransactions(req);
 		Gson gson = new Gson ();
 		Type flowerTransactionType = new TypeToken<List<FlowerTransaction>>() {
 		}.getType();
 		String flowerTransactionsJSON = gson.toJson(flowerTransactions, flowerTransactionType);
 		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, flowerTransactionsJSON);
 		return new Forward(UrlConstants.FLOWER_TRANSACTIONS_JSP_RELATIVE_URL);
+	}
+
+	private List<FlowerTransaction> getFlowerTransactions(HttpServletRequest req) {
+		String searchString = req.getParameter(WebConstatnts.SEARCH_STRING_PARAM_KEY);
+		List<FlowerTransaction> flowerTransactions = getTransactionManager().getFlowerTransactionsFor(searchString);
+		return flowerTransactions;
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="flowerTransaction.do")
+	public Response getFlowerTransaction (HttpServletRequest req, HttpServletResponse resp) {
+
+		String flowerTxIdStr = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
+
+		FlowerTransaction flowerTransaction = getTransactionManager().getFlowerTransactionById(Long.parseLong(flowerTxIdStr));
+		FlowerTransactionVO flowerTransactionVO = FlowerTransactionVO.toVO(flowerTransaction);
+
+		req.setAttribute(EachEntityConstants.ENTITY_REQUESTED_OPERATION_ATTR_KEY, CommonEntityUIOperations.VIEW.getOperationVal());
+
+		Gson gson = new Gson ();
+		Type flowerTransactionVoType = new TypeToken<FlowerTransactionVO>() {
+		}.getType();
+		String flowerTransactionVoJSON = gson.toJson(flowerTransactionVO, flowerTransactionVoType);
+		req.setAttribute(EachEntityConstants.ENTITY_JSON_KEY, flowerTransactionVoJSON);
+
+		return new Forward(UrlConstants.FLOWER_TRANSACTION_EACH_TRANSACTION_JSP);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)

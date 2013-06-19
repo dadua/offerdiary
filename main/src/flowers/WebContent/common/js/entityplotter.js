@@ -169,7 +169,7 @@ it.entityplotter.newInstance = function (config) {
         _showView(_config.data || {}, _config.refreshFromServer|| false);
     },
     
-    _operationRowHtml = '<div class="row-fluid operationRow titleRow"> <span class="entityTitle largeTitleFontSize">  </span>  <span class="pull-right">  <button class="operation editBtn btn btn-mini btn-info hide">Edit</button> <button class="operation addNewBtn btn btn-mini btn-success hide">Add New</button><button class="operation saveBtn  btn btn-mini btn-success hide">Save</button><button class="operation cancelBtn btn btn-mini btn-success hide">Cancel</button></span></div><br/>',
+    _operationRowHtml = '<div class="row-fluid operationRow titleRow"> <span class="entityTitle bluishText largeTitleFontSize">  </span>  <span class="pull-right">  <button class="operation editBtn btn btn-mini btn-info hide">Edit</button> <button class="operation addNewBtn btn btn-mini btn-success hide">Add New</button><button class="operation saveBtn  btn btn-mini btn-success hide">Save</button><button class="operation cancelBtn btn btn-mini btn-success hide">Cancel</button></span></div><br/>',
 
 
     _tableBodyHtml = '<div class="row-fluid tableContentRow"> <table class="table table-striped table-bordered nameValTable"> <tbody class="nameValTableBody"> </tbody> </table> </div>',

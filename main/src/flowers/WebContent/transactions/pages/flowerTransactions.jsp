@@ -1,15 +1,15 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
 		<title>Customers</title>
-		<script src="customers/js/customers.js" type="text/javascript"></script>
+		<script src="transactions/js/flowerTransactionList.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
 			$('.allFlowerTransactions').addClass('active');
 			$('#transactionsTab').addClass('active');
-			var customersJson = '${entitiesJson}',
-				customers = $.parseJSON(customersJson);
+			var flowerTransactionsJson = '${entitiesJson}',
+				flowerTransactions = $.parseJSON(flowerTransactionsJson);
 			
-			it.customer.list.initCustomersUI(customers);
+			it.flowertx.list.initFlowerTxUIForTxs(flowerTransactions, '#flowerTransactionContainerFluid', '#searchQuery');
 		});
 		</script>
 		<style type="text/css">
@@ -29,19 +29,19 @@
 	                <div class="container-fluid content-container">
 	                    <div class="row-fluid">
 	                    	<div class="span6">
-		                    	<h3 class="bluishText">Customers</h3>
+		                    	<h3 class="bluishText">Flower Transactions</h3>
 	                    	</div>
 	                    	<div class="span5">
 		                        <br/>
 		                        <div class="form-search">
 		                            <div class="input-append">
-		                                <input id="searchQuery" class="customerSearch search-query input-xlarge" type="text" placeholder="Search Customers" />
+		                                <input id="searchQuery" class="flowerTransactionSearch search-query input-xlarge" type="text" placeholder="Search Flower Transactions" />
 		                                <button class="btn"><i class="icon-search"></i></button>
 		                            </div>
 		                        </div>
 	                        </div>
 	                        
-	                        <div class="span1">
+	                        <div class="span1 hide">
 		                        <br>
 		                        <div class="btn-group pull-right">
 			                        <a class="btn btn-small btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
@@ -58,10 +58,10 @@
 	                    <br/>
 	
 	                    <div class="row-fluid">
-	                        <div id="customerContainerFluid" class="container-fluid">
+	                        <div id="flowerTransactionContainerFluid" class="container-fluid">
 	                        </div>
 	                        <div class="container-fluid">
-		                        <div id="customerPaginationContainer" class="row-fluid span6 offset6">
+		                        <div id="flowerTransactionPaginationContainer" class="row-fluid span6 offset6">
 		                        </div>
 		                    </div>
 	                    </div>

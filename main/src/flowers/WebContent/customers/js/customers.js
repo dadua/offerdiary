@@ -83,7 +83,7 @@ it.customer.config = {
 it.customer.getFlowers = function (customerId, onFlowersFetchCb) {
 
     $.post('getFlowersForCustomer.do', {customer_id: customerId + ''}, function(respJSON) {
-    	var resp = $.parseJSON(respJSON);
+        var resp = $.parseJSON(respJSON);
         if (typeof onFlowersFetchCb === 'function') {
             onFlowersFetchCb(resp.result);
         }
