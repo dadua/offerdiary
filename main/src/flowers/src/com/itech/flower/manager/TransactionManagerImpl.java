@@ -63,8 +63,6 @@ TransactionManager {
 		getContactDAO().addOrUpdate(contact);
 
 		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
-		flowerTransaction.setUniqueId(CommonUtilities.getUniqueId(flowerTransaction));
-		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
 
 		flowerTransaction.setUniqueId(CommonUtilities.getUniqueId(flowerTransaction));
 		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);

@@ -87,7 +87,7 @@ public class SupplierAction extends CommonAction{
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getSupplierDetails.do")
 	public Response getSupplierDetails (HttpServletRequest req, HttpServletResponse resp) {
-		String supplierId = req.getParameter(WebConstatnts.SUPPLIER_ID_PARAM);
+		String supplierId = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
 		Supplier supplier = getSupplierManager().getById(Long.parseLong(supplierId));
 		Result<Supplier> result = new Result<Supplier>(supplier);
 		Type resultStringType = new TypeToken<Result<Supplier>>() {
