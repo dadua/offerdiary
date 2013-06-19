@@ -35,10 +35,12 @@ TransactionManager {
 			flowerTransaction.setContact(contact);
 		}
 
+		float totalCost = 0.0f;
 		for (FlowerTransactionEntry transactionEntry : flowerTransaction.getFlowerTransactionEntries()) {
 			if (!transactionEntry.isTransient()) {
 				continue;
 			}
+			totalCost += transactionEntry.getTotalCost();
 			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
 			transactionEntry.setUniqueId(CommonUtilities.getUniqueId(transactionEntry));
 			getFlowerTransactionEntryDAO().addOrUpdate(transactionEntry);
@@ -51,6 +53,8 @@ TransactionManager {
 			}
 			getFlowerDAO().addOrUpdate(flower);
 		}
+
+		flowerTransaction.setTotalCost(totalCost);
 
 		Contact contact = flowerTransaction.getContact();
 		float balance = contact.getBalance();
