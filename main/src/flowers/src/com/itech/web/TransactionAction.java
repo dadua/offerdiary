@@ -55,10 +55,11 @@ public class TransactionAction extends CommonAction {
 	public Response getFlowerTransactionDetail (HttpServletRequest req, HttpServletResponse resp) {
 		String flowerTransactionId = req.getParameter(WebConstatnts.FLOWER_TRANSACTION_ID_PARAM_KEY);
 		FlowerTransaction flowerTransaction = getTransactionManager().getFlowerTransactionById(Long.parseLong(flowerTransactionId));
-		Result<FlowerTransaction> result = new Result<FlowerTransaction>(flowerTransaction);
-		Type resultStringType = new TypeToken<Result<FlowerTransaction>>() {
+		FlowerTransactionVO flowerTransactionVO = FlowerTransactionVO.toVO(flowerTransaction);
+		Result<FlowerTransactionVO> result = new Result<FlowerTransactionVO>(flowerTransactionVO );
+		Type resultFlowerTxVOType = new TypeToken<Result<FlowerTransactionVO>>() {
 		}.getType();
-		return new CommonBeanResponse(result, resultStringType);
+		return new CommonBeanResponse(result, resultFlowerTxVOType);
 	}
 
 	@ActionResponseAnnotation(responseType=Forward.class)
