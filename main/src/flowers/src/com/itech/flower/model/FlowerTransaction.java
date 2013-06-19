@@ -3,6 +3,7 @@ package com.itech.flower.model;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -57,7 +58,7 @@ public class FlowerTransaction extends PersistableEntity {
 	@Column(name="COMMENT")
 	private String comment;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<FlowerTransactionEntry> flowerTransactionEntries;
 
 	@Override

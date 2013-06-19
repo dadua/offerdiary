@@ -1,6 +1,7 @@
 package com.itech.web;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.itech.flower.model.CashTransaction;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.FlowerTransaction;
 import com.itech.flower.model.Supplier;
+import com.itech.flower.vo.CashTransactionVO;
 import com.itech.flower.vo.FlowerTransactionVO;
 import com.itech.web.constants.CommonEntityUIOperations;
 import com.itech.web.constants.EachEntityConstants;
@@ -71,8 +73,8 @@ public class TransactionAction extends CommonAction {
 	@ActionMapping(value="getFlowerTransactions.do")
 	public Response getAllFlowerTransactions(HttpServletRequest req, HttpServletResponse resp) {
 		List<FlowerTransaction> flowerTransactions = getFlowerTransactions(req);
-		Result<List<FlowerTransaction>> result = new Result<List<FlowerTransaction>>(flowerTransactions);
-		Type resultFlowerTxnsType = new TypeToken<Result<List<FlowerTransaction>>>() {
+		Result<List<FlowerTransactionVO>> result = new Result<List<FlowerTransactionVO>>(getFLowerTransactionVos(flowerTransactions));
+		Type resultFlowerTxnsType = new TypeToken<Result<List<FlowerTransactionVO>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultFlowerTxnsType);
 	}
@@ -82,9 +84,9 @@ public class TransactionAction extends CommonAction {
 	public Response getFlowerTransactions (HttpServletRequest req, HttpServletResponse resp) {
 		List<FlowerTransaction> flowerTransactions = getFlowerTransactions(req);
 		Gson gson = new Gson ();
-		Type flowerTransactionType = new TypeToken<List<FlowerTransaction>>() {
+		Type flowerTransactionType = new TypeToken<List<FlowerTransactionVO>>() {
 		}.getType();
-		String flowerTransactionsJSON = gson.toJson(flowerTransactions, flowerTransactionType);
+		String flowerTransactionsJSON = gson.toJson(getFLowerTransactionVos(flowerTransactions), flowerTransactionType);
 		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, flowerTransactionsJSON);
 		return new Forward(UrlConstants.FLOWER_TRANSACTIONS_JSP_RELATIVE_URL);
 	}
@@ -128,7 +130,7 @@ public class TransactionAction extends CommonAction {
 		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		List<FlowerTransaction> flowerTransactions = getTransactionManager().getFlowerTransactionsFor(customer);
-		Result<List<FlowerTransaction>> result = new Result<List<FlowerTransaction>>(flowerTransactions);
+		Result<List<FlowerTransactionVO>> result = new Result<List<FlowerTransactionVO>>(getFLowerTransactionVos(flowerTransactions));
 		Type resultStringType = new TypeToken<Result<List<FlowerTransaction>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
@@ -140,7 +142,7 @@ public class TransactionAction extends CommonAction {
 		String customerId = req.getParameter(WebConstatnts.SUPPLIER_ID_PARAM);
 		Supplier supplier = getSupplierManager().getById(Long.parseLong(customerId));
 		List<FlowerTransaction> flowerTransactions = getTransactionManager().getFlowerTransactionsFor(supplier);
-		Result<List<FlowerTransaction>> result = new Result<List<FlowerTransaction>>(flowerTransactions);
+		Result<List<FlowerTransactionVO>> result = new Result<List<FlowerTransactionVO>>(getFLowerTransactionVos(flowerTransactions));
 		Type resultStringType = new TypeToken<Result<List<FlowerTransaction>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
@@ -152,8 +154,9 @@ public class TransactionAction extends CommonAction {
 	public Response addCashTransaction (HttpServletRequest req, HttpServletResponse resp) {
 		String cashTransactionJson = req.getParameter(WebConstatnts.CASH_TRANSACTION_PARAM_KEY);
 		Gson gson = new Gson();
-		Type flowerTxType = new TypeToken<CashTransaction>() { }.getType();
-		CashTransaction cashTransaction = gson.fromJson(cashTransactionJson, flowerTxType);
+		Type cashTxVOType = new TypeToken<CashTransactionVO>() { }.getType();
+		CashTransactionVO cashTransactionVO = gson.fromJson(cashTransactionJson, cashTxVOType);
+		CashTransaction cashTransaction = CashTransactionVO.fromVO(cashTransactionVO);
 		getTransactionManager().addOrUpdateCashTransaction(cashTransaction);
 		Result<String> result = new Result<String>("Successfully updated the transaction");
 		Type resultStringType = new TypeToken<Result<String>>() {
@@ -166,7 +169,7 @@ public class TransactionAction extends CommonAction {
 	public Response getCashTransactionDetail (HttpServletRequest req, HttpServletResponse resp) {
 		String cashTransactionId = req.getParameter(WebConstatnts.CASH_TRANSACTION_ID_PARAM_KEY);
 		CashTransaction cashTransaction = getTransactionManager().getCashTransactionById(Long.parseLong(cashTransactionId));
-		Result<CashTransaction> result = new Result<CashTransaction>(cashTransaction);
+		Result<CashTransactionVO> result = new Result<CashTransactionVO>(CashTransactionVO.toVO(cashTransaction));
 		Type resultStringType = new TypeToken<Result<CashTransaction>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
@@ -178,12 +181,14 @@ public class TransactionAction extends CommonAction {
 		String searchString = req.getParameter(WebConstatnts.SEARCH_STRING_PARAM_KEY);
 		List<CashTransaction> cashTransactions = getTransactionManager().getCashTransactionsFor(searchString);
 		Gson gson = new Gson ();
-		Type cashTransactionType = new TypeToken<List<CashTransaction>>() {
+		Type cashTransactionType = new TypeToken<List<CashTransactionVO>>() {
 		}.getType();
-		String cashTransactionsJSON = gson.toJson(cashTransactions, cashTransactionType);
+		String cashTransactionsJSON = gson.toJson(getCashTransactionVos(cashTransactions), cashTransactionType);
 		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, cashTransactionsJSON);
 		return new Forward(UrlConstants.CASH_TRANSACTIONS_JSP_RELATIVE_URL);
 	}
+
+
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCashTransactionsForCustomer.do")
@@ -191,8 +196,8 @@ public class TransactionAction extends CommonAction {
 		String customerId = req.getParameter(WebConstatnts.CUSTOMER_ID_PARAM);
 		Customer customer = getCustomerManager().getById(Long.parseLong(customerId));
 		List<CashTransaction> cashTransactions = getTransactionManager().getCashTransactionsFor(customer);
-		Result<List<CashTransaction>> result = new Result<List<CashTransaction>>(cashTransactions);
-		Type resultStringType = new TypeToken<Result<List<CashTransaction>>>() {
+		Result<List<CashTransactionVO>> result = new Result<List<CashTransactionVO>>(getCashTransactionVos(cashTransactions));
+		Type resultStringType = new TypeToken<Result<List<CashTransactionVO>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
 	}
@@ -203,9 +208,25 @@ public class TransactionAction extends CommonAction {
 		String customerId = req.getParameter(WebConstatnts.SUPPLIER_ID_PARAM);
 		Supplier supplier = getSupplierManager().getById(Long.parseLong(customerId));
 		List<CashTransaction> cashTransactions = getTransactionManager().getCashTransactionsFor(supplier);
-		Result<List<CashTransaction>> result = new Result<List<CashTransaction>>(cashTransactions);
-		Type resultStringType = new TypeToken<Result<List<CashTransaction>>>() {
+		Result<List<CashTransactionVO>> result = new Result<List<CashTransactionVO>>(getCashTransactionVos(cashTransactions));
+		Type resultStringType = new TypeToken<Result<List<CashTransactionVO>>>() {
 		}.getType();
 		return new CommonBeanResponse(result, resultStringType);
+	}
+
+	private List<FlowerTransactionVO> getFLowerTransactionVos(List<FlowerTransaction> flowerTransactions) {
+		List<FlowerTransactionVO> flowerTransactionVOs = new ArrayList<FlowerTransactionVO>();
+		for (FlowerTransaction flowerTransaction : flowerTransactions) {
+			flowerTransactionVOs.add(FlowerTransactionVO.toVO(flowerTransaction));
+		}
+		return flowerTransactionVOs;
+	}
+
+	private List<CashTransactionVO> getCashTransactionVos(List<CashTransaction> cashTransactions) {
+		List<CashTransactionVO> cashTransactionVOs = new ArrayList<CashTransactionVO>();
+		for (CashTransaction cashTransaction : cashTransactions) {
+			cashTransactionVOs.add(CashTransactionVO.toVO(cashTransaction));
+		}
+		return cashTransactionVOs;
 	}
 }

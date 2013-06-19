@@ -63,7 +63,7 @@ public class CashTransaction extends  PersistableEntity{
 
 	@Override
 	public boolean isTransient() {
-		return id == null;
+		return getId() == null;
 	}
 
 	@Override
@@ -125,5 +125,9 @@ public class CashTransaction extends  PersistableEntity{
 
 	public String getUniqueId() {
 		return uniqueId;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
