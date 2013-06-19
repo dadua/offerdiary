@@ -1,6 +1,6 @@
 				<div class="row-fluid hide flowerTxEntryRowFluid">
 					<div class="container-fluid">
-						<h4 class="bluishText">Enter Transaction Details</h4>
+						<h4 class="bluishText">Transaction Details</h4>
 					
 	                	<table id="transactionEntries" class="table table-striped table-condensed table-bordered txTable">
 		                	<thead>

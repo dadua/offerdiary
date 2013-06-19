@@ -66,6 +66,9 @@ TransactionManager {
 		flowerTransaction.setUniqueId(CommonUtilities.getUniqueId(flowerTransaction));
 		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
 
+		flowerTransaction.setUniqueId(CommonUtilities.getUniqueId(flowerTransaction));
+		getFlowerTransactionDAO().addOrUpdate(flowerTransaction);
+
 	}
 
 	@Override
