@@ -50,7 +50,7 @@ it.flowertx.list.newInstance = function (containerId$, searchQueryElem$, viewCon
 it.flowertx.list.defaultViewConfig = [
     {
         key: 'uniqueId',
-        displayKey: 'Flower Id',
+        displayKey: 'Transaction Id',
         cellCustomHtml: '<a href="#" class="uniqueId"></a>',
         customCellPlotCb: function (data, row$) {
             $(row$).find('.uniqueId').html("Details for Tx:"+data.uniqueId).attr('href', 'flowerTransaction.do?id='+data.id);
@@ -59,31 +59,31 @@ it.flowertx.list.defaultViewConfig = [
     {
     	key: 'contact',
     	displayKey: 'Contact',
-    	cellCustomHtml: '<span class="contact"></span>',
+    	cellCustomHtml: '<a href="#" class="contact"></a>',
     	customCellPlotCb: function (data, row$) {
     		var displayContents = data.contact.name,
     			contactDetailUrl = '.do?id=' + data.contact.id;
     		if (data.contact.type === 'CUSTOMER') {
-    			displayContents =+ '(Customer)';
+    			displayContents = displayContents +  '(Customer)';
     			contactDetailUrl = 'customer' + contactDetailUrl;
     		} else {
-    			displayContents =+ '(Supplier)';
+    			displayContents =  displayContents + '(Supplier)';
     			contactDetailUrl = 'supplier' + contactDetailUrl;
     		}
     		$(row$).find('.contact').html(displayContents).attr('href', contactDetailUrl);
 	    }
     },
     {
+    	key: 'dateMillis',
+    	displayKey: "Date",
+    	cellCustomHtml: '<span class="date"></span>',
+    	customCellPlotCb: function (data, row$) {
+    		$(row$).find('.date').html($.datepicker.formatDate('dd/mm/yy', new Date(data.dateMillis)));
+	    }
+    },
+    {
         key: 'totalCost',
         displayKey: 'Total Cost'
-    },
-    {
-        key: 'payment',
-        displayKey:'Payment'
-    },
-    {
-        key: 'comment',
-        displayKey: 'Comment'
     }
 ];
 

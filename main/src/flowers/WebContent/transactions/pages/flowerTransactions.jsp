@@ -1,6 +1,6 @@
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Customers</title>
+		<title>Flower Transactions</title>
 		<script src="transactions/js/flowerTransactionList.js" type="text/javascript"></script>
 		<script type="text/javascript">
 		$(function(){
