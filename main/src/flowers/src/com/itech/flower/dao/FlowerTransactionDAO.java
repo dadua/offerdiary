@@ -3,6 +3,7 @@ package com.itech.flower.dao;
 import java.util.List;
 
 import com.itech.common.db.CommonBaseDAO;
+import com.itech.flower.model.Contact;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.flower.model.FlowerTransaction;
@@ -17,4 +18,6 @@ public interface FlowerTransactionDAO extends  CommonBaseDAO<FlowerTransaction>{
 	public List<FlowerTransaction> getFlowerTransactionsFor(Flower flower);
 
 	public List<FlowerTransaction> getFlowerTransactionsFor(String searchString);
+
+	public void deleteTransactionsFor(Contact contact);
 }

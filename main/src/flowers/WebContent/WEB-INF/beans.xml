@@ -28,10 +28,14 @@
      
     <bean id="itech.customerManager" class="com.itech.flower.manager.CustomerManagerImpl" parent="itech.CommonBaseManager">
     	<property name="customerDAO" ref="itech.customerDAO"/>
+    	<property name="customerFlowerAssocDAO" ref="itech.customerFlowerDAO"/>
+    	<property name="transactionManager" ref="itech.transactionManagerImpl"/>
 	</bean>
 	
 	<bean id="itech.supplierManager" class="com.itech.flower.manager.SupplierManagerImpl" parent="itech.CommonBaseManager">
     	<property name="supplierDAO" ref="itech.supplierDAO"/>
+    	<property name="transactionManager" ref="itech.transactionManagerImpl"/>
+    	<property name="supplierFlowerAssocDAO" ref="itech.supplierFlowerDAO"/>
 	</bean>
 	
 	<bean id="itech.flowerManager" class="com.itech.flower.manager.FlowerManagerImpl" parent="itech.CommonBaseManager">

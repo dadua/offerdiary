@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.itech.common.db.hibernate.HibernateCommonBaseDAO;
+import com.itech.flower.model.Contact;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.flower.model.FlowerTransaction;
@@ -51,6 +52,14 @@ HibernateCommonBaseDAO<FlowerTransaction> implements FlowerTransactionDAO {
 		query.setParameter("searchString", '%' + searchString + '%');
 		List result = query.list();
 		return result;
+	}
+
+	@Override
+	public void deleteTransactionsFor(Contact contact) {
+		String hql = "delete from  " + getEntityClassName() + " where contact = :contact ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("contact", contact);
+		query.executeUpdate();
 	}
 
 

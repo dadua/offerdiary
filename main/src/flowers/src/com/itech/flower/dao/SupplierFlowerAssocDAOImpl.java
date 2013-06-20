@@ -41,6 +41,14 @@ implements SupplierFlowerAssocDAO {
 	}
 
 	@Override
+	public void deleteAssoscsFor(Supplier supplier) {
+		String hql = "delete from  " + getEntityClassName() + " where supplier = :supplier ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("supplier", supplier);
+		query.executeUpdate();
+	}
+
+	@Override
 	protected Class getEntityClass() {
 		return SupplierFlowerAssoc.class;
 	}

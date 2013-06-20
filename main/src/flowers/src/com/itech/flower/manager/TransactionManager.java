@@ -3,6 +3,7 @@ package com.itech.flower.manager;
 import java.util.List;
 
 import com.itech.flower.model.CashTransaction;
+import com.itech.flower.model.Contact;
 import com.itech.flower.model.Customer;
 import com.itech.flower.model.Flower;
 import com.itech.flower.model.FlowerTransaction;
@@ -22,4 +23,9 @@ public interface TransactionManager {
 	public List<CashTransaction> getCashTransactionsFor(Supplier supplier);
 	public CashTransaction getCashTransactionById(long txId);
 	public List<CashTransaction> getCashTransactionsFor(String searchString);
+
+
+
+	public void deleteAllFlowerTransactionsFor(Contact contact);
+	public void deleteAllCashTransactionsFor(Contact contact);
 }

@@ -44,4 +44,12 @@ CustomerFlowerAssocDAO {
 	protected Class getEntityClass() {
 		return CustomerFlowerAssoc.class;
 	}
+
+	@Override
+	public void deleteAssoscsFor(Customer customer) {
+		String hql = "delete from  " + getEntityClassName() + " where customer = :customer ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("customer", customer);
+		query.executeUpdate();
+	}
 }
