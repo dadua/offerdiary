@@ -31,4 +31,5 @@ public class SupplierDAOImpl extends HibernateCommonBaseDAO<Supplier> implements
 		return result;
 	}
 
+
 }

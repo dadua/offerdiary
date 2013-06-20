@@ -5,10 +5,13 @@ import java.util.List;
 import com.itech.common.CommonUtilities;
 import com.itech.common.services.CommonBaseManager;
 import com.itech.flower.dao.SupplierDAO;
+import com.itech.flower.dao.SupplierFlowerAssocDAO;
 import com.itech.flower.model.Supplier;
 
 public class SupplierManagerImpl extends CommonBaseManager implements SupplierManager{
 	private SupplierDAO supplierDAO;
+	private TransactionManager transactionManager;
+	private SupplierFlowerAssocDAO supplierFlowerAssocDAO;
 
 	@Override
 	public void addOrUpdate(Supplier supplier) {
@@ -20,17 +23,22 @@ public class SupplierManagerImpl extends CommonBaseManager implements SupplierMa
 	@Override
 	public void delete(Supplier supplier) {
 		getSupplierDAO().delete(supplier);
+		getTransactionManager().deleteAllFlowerTransactionsFor(supplier);
+		getTransactionManager().deleteAllCashTransactionsFor(supplier);
+		getSupplierFlowerAssocDAO().deleteAssoscsFor(supplier);
 	}
 
 	@Override
 	public void delete(Long id) {
-		getSupplierDAO().delete(id);
+		Supplier supplier = getSupplierDAO().getById(id);
+		delete(supplier);
 	}
 
 	@Override
 	public void delete(List<Long> ids) {
 		for (Long id : ids) {
-			getSupplierDAO().delete(id);
+			Supplier supplier = getSupplierDAO().getById(id);
+			delete(supplier);
 		}
 	}
 
@@ -58,5 +66,21 @@ public class SupplierManagerImpl extends CommonBaseManager implements SupplierMa
 
 	public void setSupplierDAO(SupplierDAO supplierDAO) {
 		this.supplierDAO = supplierDAO;
+	}
+
+	public TransactionManager getTransactionManager() {
+		return transactionManager;
+	}
+
+	public void setTransactionManager(TransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+
+	public SupplierFlowerAssocDAO getSupplierFlowerAssocDAO() {
+		return supplierFlowerAssocDAO;
+	}
+
+	public void setSupplierFlowerAssocDAO(SupplierFlowerAssocDAO supplierFlowerAssocDAO) {
+		this.supplierFlowerAssocDAO = supplierFlowerAssocDAO;
 	}
 }

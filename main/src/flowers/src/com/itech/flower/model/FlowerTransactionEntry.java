@@ -45,6 +45,10 @@ public class FlowerTransactionEntry  extends PersistableEntity{
 	@Column(name="TOTAL_COST")
 	private float totalCost;
 
+	@ManyToOne
+	@JoinColumn(name="TX_ID", nullable=false)
+	private FlowerTransaction flowerTransaction;
+
 	@Override
 	public Long getId() {
 		return id;
@@ -113,6 +117,14 @@ public class FlowerTransactionEntry  extends PersistableEntity{
 
 	public void setQuantity(float quantity) {
 		this.quantity = quantity;
+	}
+
+	public FlowerTransaction getFlowerTransaction() {
+		return flowerTransaction;
+	}
+
+	public void setFlowerTransaction(FlowerTransaction flowerTransaction) {
+		this.flowerTransaction = flowerTransaction;
 	}
 
 

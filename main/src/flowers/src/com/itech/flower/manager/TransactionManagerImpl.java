@@ -142,6 +142,16 @@ TransactionManager {
 		return getCashTransactionDAO().getCashTransactionsFor(searchString);
 	}
 
+	@Override
+	public void deleteAllFlowerTransactionsFor(Contact contact) {
+		getFlowerTransactionDAO().deleteTransactionsFor(contact);
+	}
+
+	@Override
+	public void deleteAllCashTransactionsFor(Contact contact) {
+		getCashTransactionDAO().deleteTransactionsFor(contact);
+	}
+
 
 	public FlowerDAO getFlowerDAO() {
 		return flowerDAO;

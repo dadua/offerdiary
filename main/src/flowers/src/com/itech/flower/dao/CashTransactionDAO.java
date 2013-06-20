@@ -12,4 +12,6 @@ public interface CashTransactionDAO extends CommonBaseDAO<CashTransaction> {
 
 	List<CashTransaction> getCashTransactionsFor(String searchString);
 
+	void deleteTransactionsFor(Contact contact);
+
 }

@@ -58,7 +58,7 @@ public class FlowerTransaction extends PersistableEntity {
 	@Column(name="COMMENT")
 	private String comment;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="flowerTransaction", cascade=CascadeType.ALL)
 	private List<FlowerTransactionEntry> flowerTransactionEntries;
 
 	@Override

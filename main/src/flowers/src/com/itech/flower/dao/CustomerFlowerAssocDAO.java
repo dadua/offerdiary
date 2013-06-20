@@ -11,4 +11,5 @@ public interface CustomerFlowerAssocDAO extends CommonBaseDAO<CustomerFlowerAsso
 	public CustomerFlowerAssoc getAssocFor(Customer customer, Flower flower);
 	public List<Flower> getFlowersFor(Customer customer);
 	public List<Customer> getCustomersFor(Flower flower);
+	public void deleteAssoscsFor(Customer customer);
 }

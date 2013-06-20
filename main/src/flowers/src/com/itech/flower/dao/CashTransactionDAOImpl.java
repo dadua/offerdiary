@@ -34,6 +34,14 @@ CashTransactionDAO {
 		return result;
 	}
 
+	@Override
+	public void deleteTransactionsFor(Contact contact) {
+		String hql = "delete from  " + getEntityClassName() + " where contact = :contact ";
+		Query query = getSession().createQuery(hql);
+		query.setParameter("contact", contact);
+		query.executeUpdate();
+	}
+
 
 
 
