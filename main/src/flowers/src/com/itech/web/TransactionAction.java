@@ -152,7 +152,7 @@ public class TransactionAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="addCashTransaction.do")
 	public Response addCashTransaction (HttpServletRequest req, HttpServletResponse resp) {
-		String cashTransactionJson = req.getParameter(WebConstatnts.CASH_TRANSACTION_PARAM_KEY);
+		String cashTransactionJson = req.getParameter(EachEntityConstants.ENTITY_JSON_KEY);
 		Gson gson = new Gson();
 		Type cashTxVOType = new TypeToken<CashTransactionVO>() { }.getType();
 		CashTransactionVO cashTransactionVO = gson.fromJson(cashTransactionJson, cashTxVOType);
@@ -167,7 +167,7 @@ public class TransactionAction extends CommonAction {
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="getCashTransactionDetail.do")
 	public Response getCashTransactionDetail (HttpServletRequest req, HttpServletResponse resp) {
-		String cashTransactionId = req.getParameter(WebConstatnts.CASH_TRANSACTION_ID_PARAM_KEY);
+		String cashTransactionId = req.getParameter(EachEntityConstants.ENTITY_IDENTIFIER_PARAM_KEY);
 		CashTransaction cashTransaction = getTransactionManager().getCashTransactionById(Long.parseLong(cashTransactionId));
 		Result<CashTransactionVO> result = new Result<CashTransactionVO>(CashTransactionVO.toVO(cashTransaction));
 		Type resultStringType = new TypeToken<Result<CashTransaction>>() {

@@ -11,6 +11,8 @@ public class ContactVO {
 
 	private String type;
 
+	private String name;
+
 	public String getType() {
 		return type;
 	}
@@ -32,6 +34,7 @@ public class ContactVO {
 		ContactVO contactVO = new ContactVO();
 		contactVO.setId(contact.getId());
 		contactVO.setType(contact.getType().name());
+		contactVO.setName(contact.getName());
 		return contactVO;
 	}
 
@@ -40,16 +43,26 @@ public class ContactVO {
 		if (ContactType.CUSTOMER.name().equalsIgnoreCase(contactVO.getType())){
 			Customer customer = new Customer();
 			customer.setId(contactVO.getId());
+			customer.setName(contactVO.getName());
 			return customer;
 		} else if (ContactType.SUPPLIER.name().equalsIgnoreCase(contactVO.getType())){
 			Supplier supplier = new Supplier();
 			supplier.setId(contactVO.getId());
+			supplier.setName(contactVO.getName());
 			return supplier;
 		}
 
 		return null;
 
 
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 }

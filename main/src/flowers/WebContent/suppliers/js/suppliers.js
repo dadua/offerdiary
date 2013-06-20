@@ -88,7 +88,7 @@ it.supplier.config = {
 it.supplier.getFlowers = function (supplierId, onFlowersFetchCb) {
 
     $.post('getFlowersForSupplier.do', {supplier_id: supplierId + ''}, function(respJSON) {
-    	var resp = $.parseJSON(respJSON);
+        var resp = $.parseJSON(respJSON);
         if (typeof onFlowersFetchCb === 'function') {
             onFlowersFetchCb(resp.result);
         }

@@ -252,6 +252,9 @@ it.flowertx.newInstance = function(operation, data) {
                     flowerTransactionEntries: flowerTxEntries
                 };
             }
+            
+            var currentDate = new Date();
+            flowerTx.dateMillis = currentDate.getTime();
 
             $.post('addFlowerTransaction.do', {flower_tx: JSON.stringify(flowerTx)}, function(respJSON) {
                 var resp = $.parseJSON(respJSON);
