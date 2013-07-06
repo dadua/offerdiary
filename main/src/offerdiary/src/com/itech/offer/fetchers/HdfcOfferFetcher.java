@@ -12,7 +12,7 @@ import com.itech.common.util.UtilHttp;
 import com.itech.offer.hdfc.parser.HdfcOfferParser;
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class HdfcOfferFetcher implements OfferFetcher{
+public class HdfcOfferFetcher implements CardOfferFetcher{
 
 
 	private static final Logger logger = Logger.getLogger(HdfcOfferFetcher.class);

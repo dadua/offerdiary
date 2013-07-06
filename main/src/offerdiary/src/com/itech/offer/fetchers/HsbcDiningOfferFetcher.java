@@ -7,7 +7,7 @@ import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.HsbcDiningOfferParser;
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class HsbcDiningOfferFetcher implements OfferFetcher {
+public class HsbcDiningOfferFetcher implements CardOfferFetcher {
 
 	private static final String HSBC_DINING_GOLD_BASE_URL = "http://mail.hsbc.com.hk/in/cc_dining_gold/";
 	private static final String HSBC_DINING_GOLD_CC_OFFER_URL = HSBC_DINING_GOLD_BASE_URL + "cc_dining_alliances.htm";

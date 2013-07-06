@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 import com.itech.parser.offer.model.CardOfferVO;
 
 
-public class HsbcDiningOfferParser extends CommonHttpParser {
+public class HsbcDiningOfferParser extends CommonHtmlParser {
 
 	public HsbcDiningOfferParser(String response) {
 		super(response);

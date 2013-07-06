@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.itech.parser.offer.model.CardOfferVO;
 
-public interface OfferFetcher {
+public interface CardOfferFetcher {
 
 	public List<CardOfferVO> fetchAllOffers();
 

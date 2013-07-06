@@ -7,7 +7,7 @@ import com.itech.common.util.UtilHttp;
 import com.itech.offer.fetchers.parser.ICICIOfferParser;
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class ICICIOfferFetcher implements OfferFetcher{
+public class ICICIOfferFetcher implements CardOfferFetcher{
 
 	public static final String ICICI_BANK_OFFER_ZONE = "http://www.icicibank.com/online-services/offer-zone/";
 	public static final String ICICI_OFFERS_BASE_URL="http://www.icicibank.com/Personal-Banking/cards/Consumer-Cards/Credit-Card/special-offers/";
