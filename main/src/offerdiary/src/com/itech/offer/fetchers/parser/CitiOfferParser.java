@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class CitiOfferParser extends CommonHttpParser {
+public class CitiOfferParser extends CommonHtmlParser {
 
 	private final Logger logger = Logger.getLogger(CitiOfferParser.class);
 

@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class ICICIOfferParser extends CommonHttpParser{
+public class ICICIOfferParser extends CommonHtmlParser{
 
 
 	Logger logger = Logger.getLogger(ICICIOfferParser.class);

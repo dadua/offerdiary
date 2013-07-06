@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.jsoup.nodes.Element;
 
-import com.itech.offer.fetchers.parser.CommonHttpParser;
+import com.itech.offer.fetchers.parser.CommonHtmlParser;
 import com.itech.parser.offer.model.CardOfferVO;
 
-public class HdfcOfferParser extends CommonHttpParser{
+public class HdfcOfferParser extends CommonHtmlParser{
 
 
 	public HdfcOfferParser(String html) {
