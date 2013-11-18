@@ -1,0 +1,34 @@
+var it = it || {};
+it.flower = it.flower || {};
+it.flower.opts = it.flower.opts || {};
+
+it.flower.opts= function () {
+    var _rootOptionElem = '.flowerOptions',
+
+    showViewFlower = function () {
+        $(_rootOptionElem).find('.viewFlower').removeClass('hide').addClass('active');
+    },
+
+    showDefaultOpts = function(){
+
+    },
+
+
+    showOptionByOperation = function (operation) {
+        if (operation === 'VIEW') {
+            showViewFlower ();
+            
+        } else if (operation === 'EDIT') {
+        } else if (operation === 'ADDNEW') {
+        } else {
+        }
+    };
+
+
+
+
+
+    return {
+        showOptionsByOperation: showOptionByOperation
+    };
+};

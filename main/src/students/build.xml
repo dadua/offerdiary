@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<project basedir="." default="dist" name="Where">
+	<property name="basedir" location="."/>
+	<property environment="env"/>
+	<property file="build.properties"/>
+	<property name="lib" location="${web.home}/WEB-INF/lib"/>
+	<property name="build.home" location="${basedir}/build"/>
+	<property name="compile.home" location="${build.home}/compile-release"/>	
+	<property name="pre.home" location="${build.home}/pre-release"/>
+	<property name="dist.home" location="${build.home}/release"/>
+	<property name="dist.web.home" location="${build.home}/release/${product.war.name}"/>
+	<property name="src" location="${product.src.path}"/>
+	<property name="itech.config" location="${src}/config.properties"/>
+
+	<path id="classpath">
+	    <fileset dir="${contrib.home}" includes="*.jar"/>
+	    <fileset dir="${devtools.home}/tomcat" includes="*.jar"/>
+	    <fileset dir="${lib}" includes="*.jar"/>
+	    <pathelement path="${compile.home}/classes"/>
+	</path>
+	<target name="init">
+		<delete file="src/config.properties" />
+		<copy file="${itech.config}.temp" tofile="${itech.config}" />
+		<replace file="${itech.config}" token="SERVER_MODE" value="${servermode}" />
+	</target>		
+	<target name="compile-init">
+		<delete dir="${build.home}"/>
+		<mkdir dir="${build.home}" />
+		<mkdir dir="${compile.home}/classes" />
+		<mkdir dir="${dist.home}" />
+		<mkdir dir="${dist.web.home}" />
+	</target>
+
+	<target name="setupeclipse" description="sets up the .classpath file required for autoloading of eclipse project" depends="init,cleanupsetup">
+		<echo message="Setting up .classpath and properties files for the eclipse project." />
+		<copy file=".classpath.temp" tofile=".classpath" />
+		<replace file=".classpath" token="$contrib.home" value="${contrib.home}" />
+		<replace file=".classpath" token="$devTools.home" value="${devtools.home}" />
+
+	</target>
+
+	<target name="cleanupsetup">
+		<delete file=".classpath" />
+	</target>
+
+	<target name="compile" description="compile classes" depends="init,compile-init">
+		<echo message="Compiling java classes"/>		
+		<javac srcdir="${src}" destdir="${compile.home}/classes" fork="yes" includes="**/*.*" memoryMaximumSize="128m" debug="on" deprecation="on">
+			<classpath refid="classpath"/>
+		</javac>
+		<copy  todir="${compile.home}/classes" file="${src}/log4j.properties"/>
+	    <copy todir="${compile.home}/classes">
+			<fileset dir="${src}" includes="**" />
+	    </copy>
+		
+	    <copy todir="${compile.home}/classes">
+			<fileset dir="${src}/resources" includes="**/**" />
+	    </copy>
+	    <!--<jar destfile="${compile.home}/${product.jar.name}.jar" basedir="${compile.home}/classes">
+			<manifest>
+			
+				<attribute name="Built-By" value="Itech inc"/>
+			
+				<attribute name="Implementation-Vendor" value="Itech inc."/>
+				<attribute name="Implementation-Title" value="OfferDiary"/>
+				<attribute name="Implementation-Version" value="1.0.0 alpha"/>
+
+			</manifest>
+		</jar>-->
+	</target>
+
+	<target name="dist" description="Make a package" depends="compile">
+		<!-- <copy todir="${dist.web.home}/WEB-INF/lib" file="${compile.home}/${product.jar.name}.jar"/>-->
+		<copy todir="${dist.web.home}/">
+		<fileset dir="${web.home}" includes="**" />
+	    </copy>
+	    <copy todir="${dist.web.home}/WEB-INF">
+		<fileset dir="${compile.home}" includes="**" />
+	    </copy>
+	    <echo message="Making package"/>
+	    <echo message="Zipping the content into war file"/>    
+    	    <war destfile="${dist.home}/${product.war.name}.war" webxml="${dist.web.home}/WEB-INF/web.xml">
+		<fileset dir="${dist.web.home}" includes="**" />
+	    </war>
+	</target>
+
+	<target name="deploy" depends="dist" description="creates war and deployes to tomcat">
+	    <delete dir="${tomcat.home}/webapps/${product.war.name}"/>
+	    <echo message="${tomcat.home}/webapps/${product.war.name}"/>
+	    <copy file="${dist.home}/${product.war.name}.war" todir="${tomcat.home}/webapps" overwrite="true"/>
+	</target>
+
+        <target name="refreshEclipse" description="Refresh OD project in
+            eclipse">
+        </target>
+
+</project>
+
+

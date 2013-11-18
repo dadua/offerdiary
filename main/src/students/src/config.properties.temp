@@ -1,0 +1,7 @@
+initializeRedWineData=false
+initializeScotchWorldData=false
+defaultOfferNotificationTriggerTimeInDays=7
+#dev/live
+serverMode=SERVER_MODE
+defaultServerUrl=DEFAULT_SERVER_URL
+

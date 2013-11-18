@@ -1,0 +1,65 @@
+body {
+	color: #808080;
+}
+
+body {
+	/*BS Accounts*/
+	padding-top: 110px;
+	font-family: 'Open Sans', 'lucida sans unicode', 'lucida grande', 'Trebuchet MS', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input, button, select, textarea {
+    font-family: 'Open Sans',"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.options-left-container {
+	 background-color: #FFFFFF;
+	 border-radius: 6px 0px 0px 6px;
+	 padding: 0;
+	 border: 1px solid #DDDDDD;
+	 position: fixed;
+	 border-right: none;
+	 top: 190px;
+}
+
+.content-container {
+	 border-left: 1px solid #DDDDDD;
+	 border-right: 1px solid #DDDDDD;
+	 padding-top: 20px;
+	 min-height: 550px;
+}
+
+.content-container > .container-fluid {
+	padding-left: 5%;
+}
+
+
+.ui-autocomplete-loading {
+    background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+.bluishText {
+	color: #0088CC;
+}
+
+		.featureTab {
+			color: #0088CC;
+		}
+		
+		.featureTab.active {
+			color: #0088CC;
+			font-weight: bold;
+		}
+		
+.modal-backdrop {
+	background-color: #FDFDFD;
+}
+
+#actionInfoRow {
+	margin-bottom: 5px;
+}
+
+.largeTitleFontSize {
+	font-size: 1.4em;
+}
+	
