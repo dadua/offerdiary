@@ -1,5 +1,5 @@
 <%@include file="/common/pages/headBegin.jsp" %>
-		<title>Sign Up to Offer Diary</title>
+		<title>Sign Up to VVS</title>
 		
 		<script type="text/javascript">
 			var it = it || {};
@@ -123,21 +123,6 @@
 		<div class="container" >
 			<div class="row-fluid">
 				<div class="span6 offset3">
-					<div class="row">
-						<div class="span4 offset4">
-							<form id="goToWallet" action="diary.do" method="post">
-								<input id="loginToFb" class="btn btn-large btn-primary"  type="button" value="Connect with Facebook" />
-								<input type="hidden" name="login" value="success" />
-							</form>
-						</div>
-					</div>
-					<div class="row">
-						<hr class="span3 offset2">
-						<div class="span2">
-							<span class="inBetweenSmallText">or</span>
-						</div>
-						<hr class="span3">
-					</div>
 					<div class="row">
 						<div class="span6 offset3">
 							<div id="invalidUserNamePassword" class="hide alert alert-error">

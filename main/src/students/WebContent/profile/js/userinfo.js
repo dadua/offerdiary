@@ -20,9 +20,12 @@ it.profile.userInfo.view = function(){
         _userInfo$.find('.userCity').html(userInfo.city);
         _userInfo$.find('.userEmail').html(userInfo.emailId);
         _userInfo$.find('.dob').html(userInfo.dobMillis);
-        _userInfo$.find('.nickName').html(userInfo.nickname);
+        _userInfo$.find('.address').html(userInfo.address);
+        _userInfo$.find('.yearOfPassing').html(userInfo.yearOfPassing);
         _userInfo$.find('.pinCode').html(userInfo.pinCode);
         _userInfo$.find('.mobileNumber').html(userInfo.mobileNumber);
+        _userInfo$.find('.designation').html(userInfo.designation);
+        _userInfo$.find('.companyName').html(userInfo.companyName);
         return _userInfo$;
     };
 
@@ -32,6 +35,8 @@ it.profile.userInfo.view = function(){
             var this$ = $(this), 
                 val = this$.parent().find('.valColumn').html();
             this$.find('input').val(val); 
+            this$.find('select').val(val); 
+            this$.find('textarea').val(val); 
         });
 
     };
@@ -62,14 +67,19 @@ it.profile.userInfo.view = function(){
             userCity = userInfo$.find('.userCityText').val(),
             mobileNumber = userInfo$.find('.mobileNumberText').val(),
             pinCode = userInfo$.find('.pincodeText').val(),
-            dob = userInfo$.find('.dobText').val(),
-            nickName = userInfo$.find('.nickNameText').val();
+            yearOfPassing = userInfo$.find('.yearOfPassingText').val(),
+            designation = userInfo$.find('.designationText').val(),
+            companyName = userInfo$.find('.companyNameText').val(),
+            address = userInfo$.find('.addressText').val();
             userInfoVO = {  name: userName,
                             emailId: userEmail,
                             city: userCity,
                             mobileNumber: mobileNumber,
                             pinCode: pinCode,
-                            nickname: nickName
+                            yearOfPassing: yearOfPassing,
+                            designation: designation,
+                            companyName: companyName,
+                            address: address
                             //dob: dob, handle dobMillis
             };
 

@@ -27,7 +27,7 @@
       		<div class="navbar-inner">
         		<div class="container navBarItems">
         			<a class="brand" href="home.do">
-        				<img src="images/logo_tag.png" class="brandImage" alt="SCHOOL LOGO" />
+        				<img src="images/logo_tag.png" class="brandImage" alt="VVans Sankalpa" />
         			</a>
         			<c:choose>
 	        			<c:when  test="${userSession!=null}">
@@ -58,7 +58,7 @@
 			       			</li>
 			       			<li class="divider-vertical"></li>
 			       			<li class="featureTab" id="blogTab" >
-				       			<a href="customers.do" style="color:#0088CC;">Blog</a>
+				       			<a href="http://www.vvans-sankalpa.org/" style="color:#0088CC;">Blog</a>
 			       			</li>
 			       			<li class="divider-vertical"></li>
 						</ul>

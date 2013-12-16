@@ -7,12 +7,30 @@
 	<script src="profile/js/userinfo.js"></script>
 	<script src="profile/js/passwordchange.js"></script>
 	<script src="common/libs/history.js/scripts/bundled/html4+html5/jquery.history.js"></script>
+	<script src="common/libs/jQuery-File-Upload-9.5.0/js/jquery.iframe-transport.js"></script>
+	<script src="common/libs/jQuery-File-Upload-9.5.0/js/jquery.fileupload.js"></script>
 
 	<script type="text/javascript">
 
 		$(function(){
 			$('#profileTab').addClass('active');
 			it.profile.init('${option}');
+			
+			$('#uploadProfilePic').fileupload({
+			    dataType: 'json',
+			    done: function(e, data) {
+					$.noop;
+			    },
+			    url: 'uploadProfilePic.do'
+			});
+			
+			/*
+			$('#initUploadBtn').click(function(e) {
+			    $('#uploadProfilePic').fileupload({
+					'add'
+			    });
+			});
+			*/
 		});
 		
 		
@@ -56,6 +74,16 @@
 				<div class="span10 "  >
 					<div class="container-fluid content-container" id="profileContainer" >
 					</div>
+					
+					<%--
+					<form method="POST" enctype="multipart/form-data" action="updateProfilePic.do">
+						 File to upload:
+						  --%>
+						 <input id="uploadProfilePic" type="file" name="upfile" > </input>
+						 
+						 <%-- <input type="submit" value="Press"> to upload the file!</input>
+					 </form>
+					  --%>
 				</div>
 			</div>
 		</div>

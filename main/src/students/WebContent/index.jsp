@@ -1,5 +1,5 @@
 <%@include file="/common/pages/headBegin.jsp" %>
-	<title>OfferDiary : Never miss an offer!</title>
+	<title>VVS: Alumni, Students and beyond</title>
 	<script type="text/javascript">
 		var it = it || {};
 		it.scroll = it.scroll || {};

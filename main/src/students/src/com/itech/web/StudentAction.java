@@ -150,10 +150,6 @@ public class StudentAction extends CommonAction {
 		return new Forward(UrlConstants.FLOWERS_JSP_RELATIVE_URL);
 	}
 
-	@ActionResponseAnnotation(responseType=Forward.class)
-	@ActionMapping(value="home.do")
-	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
-		return viewAllFlowers(req, resp);
-	}
+
 
 }

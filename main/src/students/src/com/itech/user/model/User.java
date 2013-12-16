@@ -45,6 +45,21 @@ public class User extends PersistableEntity{
 	@Column(name=UserModelConstants.COL_AGE)
 	private int age;
 
+	@Column(name="YEAR_OF_PASSING")
+	private String yearOfPassing;
+
+	@Column(name="DESIGNATION")
+	private String designation;
+
+	@Column(name="COMPANY_NAME")
+	private String companyName;
+
+	@Column(name="ADDRESS")
+	private String address;
+
+	@Column(name="PROFILE_IMG_PATH")
+	private String profileImgPath;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name=UserModelConstants.COL_GENDER)
 	private Gender gender = Gender.UNKNOWN;
@@ -243,6 +258,36 @@ public class User extends PersistableEntity{
 	}
 	public Date getLastLoginTime() {
 		return lastLoginTime;
+	}
+	public void setYearOfPassing(String yearOfPassing) {
+		this.yearOfPassing = yearOfPassing;
+	}
+	public String getYearOfPassing() {
+		return yearOfPassing;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setProfileImgPath(String profileImgPath) {
+		this.profileImgPath = profileImgPath;
+	}
+	public String getProfileImgPath() {
+		return profileImgPath;
 	}
 
 }
