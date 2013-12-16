@@ -1,7 +1,7 @@
 <%@page import="com.itech.web.LoginConstants"%>
 <%@include file="/common/pages/headBegin.jsp" %>
 
-		<title>Login to Offer Diary</title>
+		<title>Login to VVS</title>
 		<script type="text/javascript">
 			var it = it || {};
 			it.user = it.user || {};

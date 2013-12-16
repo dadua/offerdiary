@@ -1,16 +1,23 @@
 package com.itech.web;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.itech.common.server.ProjectContextListener;
 import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
@@ -63,6 +70,22 @@ public class ProfileAction extends CommonAction {
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	@ActionMapping(value="updateProfilePic.do")
+	public Response uploadProfilePic(HttpServletRequest req, HttpServletResponse resp) throws FileUploadException {
+		// Create a factory for disk-based file
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletContext servletContext = ProjectContextListener.getServletContext();
+		// Configure a repository (to ensure a secure temp location is used)
+		File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
+		factory.setRepository(repository);
+		// Create a new file upload handler
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		// Parse the request
+		List<FileItem> items = upload.parseRequest(req);
+		return new CommonBeanResponse();
+	}
+
+	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
 	@ActionMapping(value="updateUserInfo.do")
 	public Response updateUserInfo(HttpServletRequest req, HttpServletResponse resp) {
 		String userInfoJson = req.getParameter(USER_INFO_PARAM_KEY);
@@ -97,5 +120,11 @@ public class ProfileAction extends CommonAction {
 		List<User> allUsers = getUserManager().getAllUsers();
 		req.setAttribute("users", allUsers);
 		return new Forward("profile/pages/profiles.jsp");
+	}
+
+	@ActionResponseAnnotation(responseType=Forward.class)
+	@ActionMapping(value="home.do")
+	public Response goToHome(HttpServletRequest req, HttpServletResponse resp) {
+		return goToProfile(req, resp);
 	}
 }
