@@ -148,6 +148,7 @@ public class StudentAction extends CommonAction {
 		String flowersJSON = gson.toJson(flowers, flowersType);
 		req.setAttribute(EachEntityConstants.ENTITIES_JSON_KEY, flowersJSON);
 		return new Forward(UrlConstants.FLOWERS_JSP_RELATIVE_URL);
+
 	}
 
 

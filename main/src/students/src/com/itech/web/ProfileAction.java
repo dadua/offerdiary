@@ -22,6 +22,7 @@ import com.itech.common.web.action.ActionResponseAnnotation;
 import com.itech.common.web.action.CommonAction;
 import com.itech.common.web.action.CommonBeanResponse;
 import com.itech.common.web.action.Forward;
+import com.itech.common.web.action.Redirect;
 import com.itech.common.web.action.Response;
 import com.itech.common.web.action.Result;
 import com.itech.user.model.User;
@@ -69,7 +70,16 @@ public class ProfileAction extends CommonAction {
 		return new CommonBeanResponse(result, type);
 	}
 
-	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
+	private String getFileName(List<FileItem> items) {
+		for (FileItem fileItem : items) {
+			if (!fileItem.isFormField()) {
+				return fileItem.getName();
+			}
+		}
+		return null;
+	}
+
+	@ActionResponseAnnotation(responseType=Redirect.class)
 	@ActionMapping(value="updateProfilePic.do")
 	public Response uploadProfilePic(HttpServletRequest req, HttpServletResponse resp) throws FileUploadException {
 		// Create a factory for disk-based file
@@ -82,7 +92,35 @@ public class ProfileAction extends CommonAction {
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		// Parse the request
 		List<FileItem> items = upload.parseRequest(req);
-		return new CommonBeanResponse();
+
+		String profilePicsDirPath = ProjectContextListener.getServletContext().getRealPath("images/profilepics");
+
+
+		FileItem fileItem = getFileItem(items);
+		String fileName = fileItem.getName();
+		try {
+			String userId = getLoggedInUser().getUserId();
+			String imageFileName = userId.replace("@", "_").replace(".", "_") + "_"+ fileName;
+
+			fileItem.write(new File(profilePicsDirPath+ File.separatorChar + imageFileName));
+			User user = getUserManager().getByUserId(getLoggedInUser().getUserId());
+			user.setProfileImgPath("images/profilepics/"+imageFileName);
+			getUserManager().save(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new Redirect("profile.do");
+	}
+
+	private FileItem getFileItem(List<FileItem> items) {
+		for (FileItem fileItem : items) {
+			if (!fileItem.isFormField()) {
+				return fileItem;
+			}
+		}
+		return null;
 	}
 
 	@ActionResponseAnnotation(responseType=CommonBeanResponse.class)
