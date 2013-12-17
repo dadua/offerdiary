@@ -19,8 +19,29 @@ it.profile.toggler = function () {
         it.profile.notification.refresh ();
     },
 
-    _showPoints = function () {
-
+    _showChangeProfilePic = function () {
+        _resetOptionsLeftContainer();
+        $('#changeProfilePicOption').parent().addClass('active');
+        var changeProfilePicHtml$ = $('.update_profile_pic_template').clone().removeClass('update_profile_pic_template');
+        $('#profileContainer').html(changeProfilePicHtml$);
+        $('#uploadProfilePic').change(function(){
+        	console.log($(this).val());
+        	if ($(this).val() === '') {
+        		$('#submitProfilePic').addClass('disabled');
+        	} else {
+        		$('#submitProfilePic').removeClass('disabled');
+        	}
+        });
+        
+        $('#submitProfilePic').click(function(e){
+        	if ($(this).hasClass('disabled')) {
+        		e.preventDefault();
+        		return;
+        	}
+        	
+        });
+        
+        
     },
 
     _showChangePassword = function () {
@@ -42,6 +63,11 @@ it.profile.toggler = function () {
         e.preventDefault();
         History.pushState({opt: 'details'}, 'Details', '?o=details');
     },
+    
+    _changeProfilePicHandler = function (e) {
+        e.preventDefault();
+        History.pushState({opt: 'changeProfilePic'}, 'Change Profile Pic', '?o=changeProfilePic');
+    },
 
     _changeNotificationSettingsHandler = function (e) {
         e.preventDefault();
@@ -55,11 +81,12 @@ it.profile.toggler = function () {
     return {
         showUserDetails: _showUserDetails,
         showNotificationsettings: _showNotificationsettings,
-        showPoints: _showPoints,
         showLinkedAccounts: _showLinkedAccounts,
         showChangePassword: _showChangePassword,
+        showChangeProfilePic: _showChangeProfilePic,
         changePasswordHandler: _changePasswordHandler,
         changeDetailsHandler: _changeDetailsHandler,
+        changeProfilePicHandler: _changeProfilePicHandler,
         changeNotificationSettingsHandler: _changeNotificationSettingsHandler
     };
 }();
@@ -80,6 +107,7 @@ it.profile.addOptionHandlers = function () {
     $('#userDetails').click(this.toggler.changeDetailsHandler);
     $('#notificationSettings').click(this.toggler.changeNotificationSettingsHandler);
     $('#changePasswordOption').click(this.toggler.changePasswordHandler);
+    $('#changeProfilePicOption').click(this.toggler.changeProfilePicHandler);
 };
 
 it.profile.toggleBasedOnOpt = function(opt) {
@@ -87,6 +115,8 @@ it.profile.toggleBasedOnOpt = function(opt) {
         this.toggler.showChangePassword();
     } else if (opt === 'notificationSettings') {
         this.toggler.showNotificationsettings();
+    } else if (opt === 'changeProfilePic') {
+    	this.toggler.showChangeProfilePic();
     } else {
         this.toggler.showUserDetails();
     }

@@ -16,6 +16,7 @@
 			$('#profileTab').addClass('active');
 			it.profile.init('${option}');
 			
+			/*
 			$('#uploadProfilePic').fileupload({
 			    dataType: 'json',
 			    done: function(e, data) {
@@ -24,7 +25,6 @@
 			    url: 'uploadProfilePic.do'
 			});
 			
-			/*
 			$('#initUploadBtn').click(function(e) {
 			    $('#uploadProfilePic').fileupload({
 					'add'
@@ -59,6 +59,8 @@
 							<c:if test="${!isLinkedUser}">
 								<li><a href="?o=changePassword" id="changePasswordOption">Change Password</a></li>
 							</c:if>
+							<li><a href="?o=changeProfilePic" id="changeProfilePicOption">Change Profile Pic</a></li>
+							
 							<%--
 							<li><a href="#">Points</a></li>
 							<li><a href="#">Linked Accounts</a></li>
@@ -75,20 +77,32 @@
 					<div class="container-fluid content-container" id="profileContainer" >
 					</div>
 					
-					<%--
-					<form method="POST" enctype="multipart/form-data" action="updateProfilePic.do">
-						 File to upload:
-						  --%>
-						 <input id="uploadProfilePic" type="file" name="upfile" > </input>
-						 
-						 <%-- <input type="submit" value="Press"> to upload the file!</input>
-					 </form>
-					  --%>
+					
 				</div>
 			</div>
 		</div>
 		<div class="hide" style="display:none">
 			<%@include file="/profile/templates/userDetails.html" %>
 			<%@include file="/profile/templates/passwordChange.html" %>
+			<div class="update_profile_pic_template">
+				<div class="container-fluid">
+					<div class="row-fluid">
+		                <span class="bluishText largeTitleFontSize">
+		                    <strong>
+		                    Upload your Profile Pic 
+		                    </strong>
+		                </span>
+	                </div>
+	                <br />
+	                <br />
+ 
+	 				<div class="row-fluid">
+						<form method="POST" enctype="multipart/form-data" action="updateProfilePic.do">
+							File to upload: <input id="uploadProfilePic" type="file" name="upfile" > </input>
+							<input type="submit" id="submitProfilePic" class="disabled" value="Press" class="btn btn-info" > to upload the file!</input>
+						</form>
+					</div>
+                </div>
+			</div>
 		</div>
 <%@include file="/common/pages/bodyHtmlEnd.jsp" %>

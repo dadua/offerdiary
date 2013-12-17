@@ -81,11 +81,13 @@
 
 <%@include file="/common/pages/bodyBegin.jsp" %>
 		<div class="container" >
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-			<br/>
+			<div class="row">
+				<div class="span6 offset3">
+					<img alt="VVans Sankalpa" src="images/logo_large.png" />
+				</div>
+			</div>
+			<br />
+			<br />
 			<div class="row">
 				<div class="span6 offset3">
 					<div class="container-fluid">

@@ -33,15 +33,23 @@
 						<thead>
 							<tr>
 							<%-- select name, email_id, LOGIN_TYPE from users; --%>
-								<th>
-								Name
-								</th>
-								<th>
-								Email Id
-								</th>
-								<th>
-								User Id
-								</th>
+								
+								<th><strong>Name</strong></th>
+								<th><strong>Email</strong></th>
+
+                            <th><strong>Mobile Number</strong></th>
+                        
+                            <th><strong>Year of passing 10th</strong></th>
+  
+                            <th><strong>Currently Working at</strong></th>
+                        
+                            <th><strong>Designation</strong></th>
+                        
+                            <th><strong>Address</strong></th>
+                        
+                            <th><strong>City</strong></th>
+                        
+                            <th><strong>Pin Code</strong></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -54,18 +62,28 @@
                                                                 ${user.emailId}
                                                             </td>
                                                             <td>
-                                                            	<c:choose>
-	                                                            	<c:when test="${user.loginType =='FACEBOOK'}">
-	                                                            	<a href="https://facebook.com/${user.userId}" target="_blank">
-	                                                                ${user.userId} on FB
-	                                                                </a>
-	                                                                </c:when>
-	                                                                <c:otherwise>
-	                                                                ${user.userId}
-	                                                                
-	                                                                </c:otherwise>
-                                                                </c:choose>
+	                                                            ${user.mobileNumber}
                                                             </td>
+                                                            <td>
+	                                                            ${user.yearOfPassing}
+                                                            </td>
+                                                            <td>
+	                                                            ${user.companyName}
+                                                            </td>
+                                                            <td>
+	                                                            ${user.designation}
+                                                            </td>
+                                                            <td>
+	                                                            ${user.address}
+                                                            </td>
+                                                            
+                                                            <td>
+	                                                            ${user.city}
+                                                            </td>
+                                                            <td>
+	                                                            ${user.pinCode}
+                                                            </td>
+                                                            
                                                         </tr>
 							</c:forEach>
 						</tbody>
