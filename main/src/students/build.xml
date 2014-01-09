@@ -10,7 +10,6 @@
 	<property name="dist.home" location="${build.home}/release"/>
 	<property name="dist.web.home" location="${build.home}/release/${product.war.name}"/>
 	<property name="src" location="${product.src.path}"/>
-	<property name="itech.config" location="${src}/config.properties"/>
 
 	<path id="classpath">
 	    <fileset dir="${contrib.home}" includes="*.jar"/>
@@ -19,9 +18,11 @@
 	    <pathelement path="${compile.home}/classes"/>
 	</path>
 	<target name="init">
+            <!--
 		<delete file="src/config.properties" />
 		<copy file="${itech.config}.temp" tofile="${itech.config}" />
 		<replace file="${itech.config}" token="SERVER_MODE" value="${servermode}" />
+                -->
 	</target>		
 	<target name="compile-init">
 		<delete dir="${build.home}"/>
