@@ -56,7 +56,17 @@
 							<c:forEach var="user" items="${users}">
                                                         <tr>
                                                             <td>
-                                                                ${user.name}
+	                                                            <c:choose>
+		                                                            <c:when test="${user.profileImgPath != null}">
+			                                                            <a href="${user.profileImgPath}" >
+		                                                            </c:when>
+		                                                            <c:otherwise>
+			                                                            <a href="images/profile/batman.jpg" title="Profile Image of ${user.name}">
+		                                                            </c:otherwise>
+	                                                            </c:choose>
+	                                                            
+		                                                                ${user.name}
+			                                                            </a>
                                                             </td>
                                                             <td>
                                                                 ${user.emailId}
