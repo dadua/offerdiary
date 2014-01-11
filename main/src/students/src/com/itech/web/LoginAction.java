@@ -160,7 +160,7 @@ public class LoginAction extends CommonAction{
 				user.setPassword(password);
 				getUserManager().save(user);
 				updateLoggedInUser(req, user);
-				return new Redirect("diary.do");
+				return new Redirect("profile.do");
 			}
 
 			if(null != user){
