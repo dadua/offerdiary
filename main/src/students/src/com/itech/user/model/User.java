@@ -60,6 +60,12 @@ public class User extends PersistableEntity{
 	@Column(name="PROFILE_IMG_PATH")
 	private String profileImgPath;
 
+	@Column(name="AWARDS")
+	private String awards;
+
+	@Column(name="OCCUPATION")
+	private String occupation;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name=UserModelConstants.COL_GENDER)
 	private Gender gender = Gender.UNKNOWN;
@@ -288,6 +294,18 @@ public class User extends PersistableEntity{
 	}
 	public String getProfileImgPath() {
 		return profileImgPath;
+	}
+	public String getAwards() {
+		return awards;
+	}
+	public void setAwards(String awards) {
+		this.awards = awards;
+	}
+	public String getOccupation() {
+		return occupation;
+	}
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
 	}
 
 }
