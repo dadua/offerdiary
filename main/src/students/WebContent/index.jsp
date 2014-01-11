@@ -127,6 +127,22 @@
 	<div class="container content-container">
 		<div class="container-fluid ">
 		Home Page
+			<div class="row-fluid">
+				<div class="offset3 span6">
+				
+					<br/>
+					<br/>
+					<div class="row-fluid">
+						<a href="signup.do" class="btn btn-info btn-block">Signup </a>
+					</div>
+					<br/>
+					<br/>
+					<div class="row-fluid">
+						<a href="login.do" class="btn btn-success btn-block" >Login </a>
+					</div>
+				</div>
+			
+			</div>
 		</div>
 	</div>
 	
