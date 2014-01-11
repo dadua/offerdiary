@@ -26,6 +26,8 @@ public class UserInfoVO {
 	private String address;
 	private String designation;
 	private String companyName;
+	private String occupation;
+	private String awards;
 
 	public String getName() {
 		return name;
@@ -125,6 +127,8 @@ public class UserInfoVO {
 		userInfoVO.setDesignation(user.getDesignation());
 		userInfoVO.setCompanyName(user.getCompanyName());
 		userInfoVO.setPinCode(user.getPinCode());
+		userInfoVO.setAwards(user.getAwards());
+		userInfoVO.setOccupation(user.getOccupation());
 		if (user.getDob()!=null) {
 			userInfoVO.setDobMillis(user.getDob().getTime());
 		}
@@ -146,6 +150,8 @@ public class UserInfoVO {
 		user.setAddress(userInfoVO.getAddress());
 		user.setCompanyName(userInfoVO.getCompanyName());
 		user.setDesignation(userInfoVO.getDesignation());
+		user.setAwards(userInfoVO.getAwards());
+		user.setOccupation(userInfoVO.getOccupation());
 	}
 
 
@@ -194,6 +200,18 @@ public class UserInfoVO {
 	}
 	public String getDesignation() {
 		return designation;
+	}
+	public String getOccupation() {
+		return occupation;
+	}
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
+	public String getAwards() {
+		return awards;
+	}
+	public void setAwards(String awards) {
+		this.awards = awards;
 	}
 
 

@@ -22,6 +22,8 @@ it.profile.userInfo.view = function(){
         _userInfo$.find('.dob').html(userInfo.dobMillis);
         _userInfo$.find('.address').html(userInfo.address);
         _userInfo$.find('.yearOfPassing').html(userInfo.yearOfPassing);
+        _userInfo$.find('.occupation').html(userInfo.occupation);
+        _userInfo$.find('.awards').html(userInfo.awards);
         _userInfo$.find('.pinCode').html(userInfo.pinCode);
         _userInfo$.find('.mobileNumber').html(userInfo.mobileNumber);
         _userInfo$.find('.designation').html(userInfo.designation);
@@ -70,6 +72,8 @@ it.profile.userInfo.view = function(){
             yearOfPassing = userInfo$.find('.yearOfPassingText').val(),
             designation = userInfo$.find('.designationText').val(),
             companyName = userInfo$.find('.companyNameText').val(),
+            awards = userInfo$.find('.awardsText').val(),
+            occupation = userInfo$.find('.occupationText').val(),
             address = userInfo$.find('.addressText').val();
             userInfoVO = {  name: userName,
                             emailId: userEmail,
@@ -79,6 +83,8 @@ it.profile.userInfo.view = function(){
                             yearOfPassing: yearOfPassing,
                             designation: designation,
                             companyName: companyName,
+                            occupation: occupation,
+                            awards: awards,
                             address: address
                             //dob: dob, handle dobMillis
             };

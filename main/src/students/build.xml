@@ -18,11 +18,9 @@
 	    <pathelement path="${compile.home}/classes"/>
 	</path>
 	<target name="init">
-            <!--
 		<delete file="src/config.properties" />
 		<copy file="${itech.config}.temp" tofile="${itech.config}" />
 		<replace file="${itech.config}" token="SERVER_MODE" value="${servermode}" />
-                -->
 	</target>		
 	<target name="compile-init">
 		<delete dir="${build.home}"/>
