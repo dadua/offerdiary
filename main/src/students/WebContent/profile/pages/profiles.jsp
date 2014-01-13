@@ -44,6 +44,8 @@
                             <th><strong>Currently Working at</strong></th>
                         
                             <th><strong>Designation</strong></th>
+                            
+                            <th><strong>Awards</strong></th>
                         
                             <th><strong>Address</strong></th>
                         
@@ -82,6 +84,9 @@
                                                             </td>
                                                             <td>
 	                                                            ${user.designation}
+                                                            </td>
+                                                            <td>
+	                                                            ${user.awards}
                                                             </td>
                                                             <td>
 	                                                            ${user.address}

@@ -52,10 +52,12 @@
 		       				<li class="featureTab" id="profileTab" >
 			       				<a href="profile.do" style="color:#0088CC;">My Profile</a>
 		       				</li>
+		       				<%--
 		       				<li class="divider-vertical"></li>
 		       				<li class="featureTab" id="alumniTab" >
 			       				<a href="alumni.do" style="color:#0088CC;">Alumni</a>
 			       			</li>
+			       			 --%>
 			       			<li class="divider-vertical"></li>
 			       			<li class="featureTab" id="blogTab" >
 				       			<a href="http://www.vvans-sankalpa.org/" style="color:#0088CC;">Blog</a>
