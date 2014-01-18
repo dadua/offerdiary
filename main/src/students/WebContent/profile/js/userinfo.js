@@ -39,6 +39,12 @@ it.profile.userInfo.view = function(){
             this$.find('input').val(val); 
             this$.find('select').val(val); 
             this$.find('textarea').val(val); 
+            
+            if ($('.userInfo').find('.occupationText').val()==='Others' ) {
+            	
+            } else {
+            	this$.find('.otherOccupationText').val('');
+            }
         });
 
     };
@@ -56,6 +62,7 @@ it.profile.userInfo.view = function(){
         $('.saveCancel').removeClass('hide');
         $('.editBtn').hide();
         _copyValsToEditCols();
+        _handleOtherOccupation();
         it.profile.userInfo.validation.userDetailsNotEmptyHandler();
     };
 
@@ -75,6 +82,11 @@ it.profile.userInfo.view = function(){
             awards = userInfo$.find('.awardsText').val(),
             occupation = userInfo$.find('.occupationText').val(),
             address = userInfo$.find('.addressText').val();
+            
+            if (occupation === 'Others') {
+            	occupation = userInfo$.find('.otherOccupationText').val();
+            }
+            
             userInfoVO = {  name: userName,
                             emailId: userEmail,
                             city: userCity,
@@ -94,11 +106,22 @@ it.profile.userInfo.view = function(){
         });
 
     };
+    
+    var _handleOtherOccupation = function (e) {
+    	var occupation$ = $('.userInfo').find('.occupationText');
+    	if (occupation$.val() == 'Others') {
+    		$('.otherOccupationText').show();
+    	} else {
+    		$('.otherOccupationText').hide();
+    	}
+    };
 
     var _addHandlers = function () {
         $('.editBtn').click(_editHandler);
         $('.saveBtn').click(_saveHandler);
         $('.cancelBtn').click(_cancelHandler);
+        $('.occupationText').change(_handleOtherOccupation);
+        
         it.profile.userInfo.validation.addHandlers();
         _cancelHandler();
     };
