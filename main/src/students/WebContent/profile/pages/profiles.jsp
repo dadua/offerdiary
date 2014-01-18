@@ -49,9 +49,11 @@
                         
                             <th><strong>Address</strong></th>
                         
+                        <%--
                             <th><strong>City</strong></th>
                         
                             <th><strong>Pin Code</strong></th>
+                             --%>
 							</tr>
 						</thead>
 						<tbody>
@@ -92,13 +94,14 @@
 	                                                            ${user.address}
                                                             </td>
                                                             
+                                                            <%--
                                                             <td>
 	                                                            ${user.city}
                                                             </td>
                                                             <td>
 	                                                            ${user.pinCode}
                                                             </td>
-                                                            
+                                                             --%>
                                                         </tr>
 							</c:forEach>
 						</tbody>
