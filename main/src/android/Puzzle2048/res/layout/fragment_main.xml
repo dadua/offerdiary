@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.socialbaba.games.pairmerge.MainActivity$PlaceholderFragment" xmlns:app="http://schemas.android.com/apk/res/com.socialbaba.games">
+    
+
+ 
+
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        android:hapticFeedbackEnabled="true"
+        android:numColumns="4" >
+    </GridView>
+
+    <android.support.v7.widget.GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:columnCount="3"
+        app:rowCount="2"
+        android:paddingBottom="0dp"
+        >
+        
+        	<TextView />
+        	
+            <Button
+                android:id="@+id/moveUp"
+                style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/ic_action_collapse"
+                />
+        
+        	<TextView />
+        
+        
+            <Button
+                android:id="@+id/moveLeft"
+                style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/ic_action_previous_item"
+                />
+        	<TextView />
+                
+            <Button
+                android:id="@+id/moveRight"
+                style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/ic_action_next_item"
+                />
+
+        	<TextView />
+            <Button
+                android:id="@+id/moveDown"
+                style="?android:attr/buttonStyleSmall"
+                android:background="@drawable/ic_action_expand"
+                />
+
+        	<TextView />
+        
+
+    </android.support.v7.widget.GridLayout>
+    
+
+    <TextView
+        android:id="@+id/currentScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:textColor="#AAAAAA"
+        android:textSize="40sp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>
