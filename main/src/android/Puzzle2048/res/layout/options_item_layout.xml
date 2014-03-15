@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:onClick="onItemClicked"
+    android:orientation="vertical"
+    android:paddingLeft="2dp"
+    android:id="@+id/optionItemLayout"
+    android:background="@drawable/greenroundedbackground"
+    >
+
+    <TextView
+        android:id="@+id/optionsToDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:height="?android:attr/listPreferredItemHeight"
+        android:textSize="30sp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</LinearLayout>
