@@ -1,2 +1,2 @@
-A wallet for Coupon Wallet it is.
+A wallet for Coupon Wallet it is..
 
